@@ -37,8 +37,6 @@ class _Address_DetailsState extends State<Address_Details> {
     // State
     final response1 = await dio.get('https://countriesnow.space/api/v0.1/countries/states',);
     final response2 = await dio.get('http://universities.hipolabs.com/search?country=United+States',);
-    final response3 = await dio.get('https://official-joke-api.appspot.com/random_joke',);
-    final response4 = await dio.get('https://official-joke-api.appspot.com/random_joke',);
     // final response2 = await dio.post('https://countriesnow.space/api/v0.1/countries/cities',data: {
     //   "country": "Nigeria",
     //   "state": "Lagos"
@@ -46,8 +44,7 @@ class _Address_DetailsState extends State<Address_Details> {
     print(response);
     print(response1);
     print(response2);
-    print(response3);
-    print(response4);
+
   }
   @override
   void initState() {

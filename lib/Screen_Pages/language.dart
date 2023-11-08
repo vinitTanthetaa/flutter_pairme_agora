@@ -8,6 +8,7 @@ import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/stepper.dart';
 import 'package:pair_me/helper/App_Colors.dart';
+import 'package:pair_me/helper/App_Language.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class Language_Screen extends StatefulWidget {
@@ -48,6 +49,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
                      custom_header(text: 'Language'),
+                    // custom_header(text: AppLocalization.of(context).getTranslatedValue("Language").toString()),
                      skip_button(context, onTap: () {
                        Navigator.push(context, MaterialPageRoute(builder: (context) {
                          return const Login_page();
