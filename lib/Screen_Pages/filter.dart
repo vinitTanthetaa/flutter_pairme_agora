@@ -70,14 +70,14 @@ class _Filter_pageState extends State<Filter_page> {
                               Navigator.pop(context);
                             },
                             child: Container(
-                              height: screenHeight(context,dividedBy: 50),
-                              width: screenHeight(context,dividedBy: 50),
+                              height: screenHeight(context,dividedBy: 40),
+                              width: screenHeight(context,dividedBy: 40),
                               decoration: const BoxDecoration(
-                                 image: DecorationImage(image: AssetImage('assets/Images/back.png'),)
+                                 image: DecorationImage(image: AssetImage('assets/Images/back.png'),fit: BoxFit.contain)
                               ),
                             ),
                           ),
-                          SizedBox(width: screenWidth(context,dividedBy: 60),),
+                          SizedBox(width: screenWidth(context,dividedBy: 50),),
                           const Text('Filter by',style: TextStyle(color: AppColor.blackHeader,fontWeight: FontWeight.w600,fontFamily: 'Roboto',fontSize: 25),),
                         ],
                       ),

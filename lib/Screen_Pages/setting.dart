@@ -48,7 +48,7 @@ class _Setting_pageState extends State<Setting_page> {
         ),
         const SizedBox(height: 10,),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -212,7 +212,7 @@ class _Setting_pageState extends State<Setting_page> {
                       from: 10,
                       child: Container(
                         margin: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 60)),
-                        height: screenHeight(context,dividedBy: 5.5),
+                        height: screenHeight(context,dividedBy: 5.3),
                         width: screenWidth(context,dividedBy: 1.15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
@@ -232,6 +232,7 @@ class _Setting_pageState extends State<Setting_page> {
                         child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
                             child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: _language.length,
                               padding: EdgeInsets.zero,
                               itemBuilder: (context, index) {

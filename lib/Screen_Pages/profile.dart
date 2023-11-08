@@ -63,9 +63,9 @@ class _Profile_pageState extends State<Profile_page> {
                                       shape: BoxShape.circle
                                     ),
                                   ),
-                                  const Positioned(
-                                    bottom: 5.0,
-                                    left: 5.0,
+                                   Positioned(
+                                    bottom: screenHeight(context,dividedBy: 400),
+                                    left: screenWidth(context,dividedBy: 150),
                                     child: CircleAvatar(
                                       radius: 7,
                                       backgroundColor: Color(0xff45E05E),
@@ -164,7 +164,7 @@ class _Profile_pageState extends State<Profile_page> {
                       ),
                       custom_textfield_header(text: 'Bio'),
                       Container(
-                        margin: EdgeInsets.only(top: screenHeight(context, dividedBy: 90),bottom: screenHeight(context, dividedBy: 50)),
+                        margin: EdgeInsets.only(top: screenHeight(context, dividedBy: 90),bottom: screenHeight(context, dividedBy: 100)),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
                           color: AppColor.white,
@@ -208,6 +208,7 @@ class _Profile_pageState extends State<Profile_page> {
                         ),
                       ),
                       custom_textfield_header(text: 'My Documents'),
+                      SizedBox(height: screenHeight(context,dividedBy: 150),),
                       SizedBox(
                         height: screenHeight(context,dividedBy: 4.3),
                         width: screenWidth(context),
@@ -217,7 +218,7 @@ class _Profile_pageState extends State<Profile_page> {
                           itemCount: 3,
                           itemBuilder: (context, index) {
                             return  Container(
-                              margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200)),
+                              margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 190)),
                               height: screenHeight(context,dividedBy: 15),
                               width: screenWidth(context),
                               decoration: BoxDecoration(
@@ -260,6 +261,7 @@ class _Profile_pageState extends State<Profile_page> {
                             );
                           },),
                       ),
+                      SizedBox(height: screenHeight(context,dividedBy: 150),),
                       custom_textfield_header(text: 'Address'),
                       Container(
                         margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 90)),

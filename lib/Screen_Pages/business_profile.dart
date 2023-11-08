@@ -233,7 +233,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           dividedBy: 100)),
                                                   child: Row(
                                                     children: [
-                                                      Container(
+                                                      SizedBox(
                                                         height: screenHeight(
                                                             context,
                                                             dividedBy: 17),
@@ -322,6 +322,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                       );
                                                       print('Details ===> ${details}');
                                                       _selectedimag1 = details!.selectedFiles[0];
+                                                      Navigator.pop(context);
                                                       setState(() { });
                                                       print('selectedByte ==> ${_selectedimag1?.selectedFile}');
                                                       // if (details != null) await displayDetails(details);
@@ -490,7 +491,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                   //  image: AssetImage('assets/Images/vincenzo.png'),
                                     image: FileImage(_selectedimag2!.selectedFile),
                                     fit: BoxFit.fill) :
-                                DecorationImage(
+                                const DecorationImage(
                                     image: AssetImage('assets/Images/placeHolderImage.png'),
                                     fit: BoxFit.fill)),
                             child: Stack(
@@ -636,6 +637,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                       );
                                                       print('Details ===> ${details}');
                                                       _selectedimag2 = details!.selectedFiles[0];
+                                                      Navigator.pop(context);
                                                       setState(() {});
                                                       print('selectedByte ==> ${_selectedimag2?.selectedFile}');
                                                       setState(() {});
@@ -951,6 +953,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                       print('Details ===> ${details}');
                                                       _selectedimag3 = details!.selectedFiles[0];
                                                       print('selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                      Navigator.pop(context);
                                                       setState(() {});
                                                       // if (details != null) await displayDetails(details);
                                                     },

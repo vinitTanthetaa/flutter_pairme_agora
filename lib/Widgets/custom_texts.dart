@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 
@@ -10,7 +11,7 @@ Widget custom_header({required String text}) {
         color: AppColor.blackHeader,
         fontFamily: "Roboto",
         fontWeight: FontWeight.w600),
-  );
+  ).tr();
 }
 
 Widget custom_discription({required String text}) {

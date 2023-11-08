@@ -19,7 +19,7 @@ class _SpleshScreenState extends State<SpleshScreen> {
     Splash_Timer();
   }
   Splash_Timer(){
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 1), () {
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Language_Screen(),), (route) => false);
     });
   }

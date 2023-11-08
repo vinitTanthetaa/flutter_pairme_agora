@@ -68,22 +68,16 @@ class _Message_pageState extends State<Message_page> {
                                    image: DecorationImage(image: AssetImage('assets/Images/delete.png'))
                                ),
                              ) ,
-                             // child: customText(
-                             //     "Delete",
-                             //     Colors.white,
-                             //     18,
-                             //     FontWeight.w700,
-                             //     poppins),
                            ),
                            child: SizedBox(
                              // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                             height: screenHeight(context,dividedBy: 10.1),
+                             height: screenHeight(context,dividedBy: 10),
                              width: screenHeight(context),
                              child: Padding(
-                               padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15),vertical: screenHeight(context,dividedBy: 60)),
+                               padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 90)),
                                child: Row(
-                                 mainAxisAlignment: MainAxisAlignment.start,
-                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 mainAxisAlignment: MainAxisAlignment.center,
+                                 crossAxisAlignment: CrossAxisAlignment.center,
                                  children: [
                                    Container(
                                      height: screenHeight(context,dividedBy: 15),
@@ -93,7 +87,7 @@ class _Message_pageState extends State<Message_page> {
                                          image: DecorationImage(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU'),fit: BoxFit.fill)
                                      ),
                                    ),
-                                   SizedBox(width: screenWidth(context,dividedBy: 50),),
+                                   SizedBox(width: screenWidth(context,dividedBy: 40),),
                                    Column(
                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                      crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +133,7 @@ class _Message_pageState extends State<Message_page> {
                          color: Color(0xffF5F5F5),
                        );
                      },
-                     itemCount: 10))
+                     itemCount: 10)),
                ],
              )),
 

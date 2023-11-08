@@ -114,7 +114,7 @@ class _Location_pageState extends State<Location_page> {
             Positioned(
               bottom: 0.0,
               child: Container(
-                height: screenHeight(context,dividedBy: 2.3),
+                height: screenHeight(context,dividedBy: 2.281),
                 width: screenWidth(context),
                 decoration: const BoxDecoration(
                   color: AppColor.white,

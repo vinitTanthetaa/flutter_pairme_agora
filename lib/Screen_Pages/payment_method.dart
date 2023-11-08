@@ -127,7 +127,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           top: screenHeight(context,dividedBy: 40),
                           bottom: screenHeight(context,dividedBy: 70),
                         ),
-                        height: screenHeight(context,dividedBy: 8.5),
+                        height: screenHeight(context,dividedBy: 7.7),
                         width: screenWidth(context),
                         decoration: BoxDecoration(
                             color: AppColor.white,

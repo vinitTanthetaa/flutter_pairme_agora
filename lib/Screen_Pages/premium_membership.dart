@@ -174,7 +174,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                         ],
                       ),
                     ),
-                    Custom_botton(context, text: 'continue', onTap: () {
+                    Custom_botton(context, text: 'Continue', onTap: () {
 
                     }, height: screenHeight(context,dividedBy: 15))
                   ],

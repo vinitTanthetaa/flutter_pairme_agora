@@ -102,10 +102,10 @@ class _MessageRequestState extends State<MessageRequest> {
                           ),
                           child: SizedBox(
                             // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                            height: screenHeight(context,dividedBy: 9.5),
+                            height: screenHeight(context,dividedBy: 10),
                             width: screenHeight(context),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15),vertical: screenHeight(context,dividedBy: 60)),
+                              padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15),vertical: screenHeight(context,dividedBy: 90)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,

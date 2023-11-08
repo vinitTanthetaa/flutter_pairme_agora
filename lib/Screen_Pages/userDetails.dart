@@ -145,7 +145,7 @@ List list = [
                           ],
                         ),
                         const Text('Entrepreneur',style: TextStyle(fontWeight: FontWeight.w400,color: AppColor.fontdarkgray,fontSize: 13,fontFamily: 'Roboto'),),
-                        SizedBox(height: screenHeight(context,dividedBy: 500),),
+                        SizedBox(height: screenHeight(context,dividedBy: 400),),
                         const Row(
                           children: [
                             Text('City/Country: ',style: TextStyle(fontWeight: FontWeight.w500,color: AppColor.skyBlue,fontSize: 12,fontFamily: 'Roboto'),),
@@ -177,11 +177,11 @@ List list = [
                           width: screenWidth(context),
                           child: ListView.builder(
                             itemCount: lookingFor.length,
-                            padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 300)),
+                            padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 300),horizontal: screenWidth(context,dividedBy: 100)),
                             physics: const ClampingScrollPhysics(),
                             itemBuilder: (context, index) {
                             return Padding(
-                              padding:  EdgeInsets.only(bottom:screenHeight(context,dividedBy: 500) ,top:  0),
+                              padding:  EdgeInsets.only(bottom:screenHeight(context,dividedBy: 300) ,top:  0),
                               child: Row(
                                 children: [
                                   Container(
@@ -205,9 +205,10 @@ List list = [
                             );
                           },),
                         ),
+                        SizedBox(height: screenHeight(context,dividedBy: 200),),
                         custom_textfield_header(text: 'Bio'),
                         Container(
-                          margin: EdgeInsets.only(top: screenHeight(context, dividedBy: 90),bottom: screenHeight(context, dividedBy: 50)),
+                          margin: EdgeInsets.only(top: screenHeight(context, dividedBy: 90),bottom: screenHeight(context, dividedBy: 100)),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
                             color: AppColor.white,
@@ -252,6 +253,7 @@ List list = [
                         ),
                         custom_textfield_header(text: 'Documents'),
                         Container(
+                          margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150)),
                           height: screenHeight(context,dividedBy: 4.3),
                            width: screenWidth(context),
                           child: ListView.builder(

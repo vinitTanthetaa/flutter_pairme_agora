@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
@@ -111,7 +112,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                    animate: true,
                    from: 10,
                    child: Container(
-                     height: screenHeight(context,dividedBy: 6),
+                     height: screenHeight(context,dividedBy: 5.3),
                      width: screenWidth(context,dividedBy: 1.15),
                      decoration: BoxDecoration(
                          borderRadius: BorderRadius.circular(7),
@@ -131,6 +132,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                      child: Padding(
                        padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
                        child: ListView.builder(
+                         physics: const NeverScrollableScrollPhysics(),
                          itemCount: _language.length,
                          padding: EdgeInsets.zero,
                          itemBuilder: (context, index) {
@@ -143,6 +145,9 @@ class _Language_ScreenState extends State<Language_Screen> {
                                  language = !language;
                                  if(language == false){
                                    show_box = !show_box;
+                                   show_box ?
+                                   context.setLocale(Locale('sp')):
+                                   context.setLocale(Locale('hi'));
                                    Timer(const Duration(milliseconds: 600), () {
                                      setState(() {
                                        show_box = !show_box;
@@ -185,13 +190,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                            itemBuilder: (context, index) {
                              return Padding(
                                padding: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 95)),
-                               child: InkWell(
-                                   onTap: () {
-                                     setState(() {
-                                       _selected_language = _language[index];
-                                     });
-                                   },
-                                   child: custom_text(text: _language[index], color: AppColor.dropdownfont)),
+                               child: custom_text(text: _language[index], color: AppColor.dropdownfont),
                              );
                            },)
                      ),

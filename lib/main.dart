@@ -1,11 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/App_Language.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  runApp(EasyLocalization(supportedLocales: const [Locale('en'), Locale('es'), Locale('hi')],
+      fallbackLocale: const Locale('en'),
+      path: 'assets/Language', child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,22 +24,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColor.skyBlue),
         useMaterial3: true,
       ),
-      locale: Locale('en'),
-      localizationsDelegates: const [
-      //  AppLocalization.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'), // English
-        Locale('es'),
-        Locale('hi'),
-        Locale('can'),
-        Locale('man'),
-      ],
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
       home: const SpleshScreen(),
     );
   }

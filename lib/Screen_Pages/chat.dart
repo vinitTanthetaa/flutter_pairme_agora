@@ -36,7 +36,7 @@ bool showCard = false;
                   borderRadius: BorderRadius.circular(23),
                   boxShadow: const [
                     BoxShadow(
-                      color: Colors.grey,
+                      color: AppColor.fontgray,
                       offset: Offset(
                         0,
                         4,
@@ -58,7 +58,7 @@ bool showCard = false;
                   borderRadius: BorderRadius.circular(23),
                   boxShadow: const [
                     BoxShadow(
-                      color: Colors.grey,
+                      color: AppColor.fontgray,
                       offset: Offset(
                         0,
                         4,
@@ -80,7 +80,7 @@ bool showCard = false;
                   borderRadius: BorderRadius.circular(23),
                   boxShadow: const [
                     BoxShadow(
-                      color: Colors.grey,
+                      color: AppColor.fontgray,
                       offset: Offset(
                         0,
                         4,
@@ -90,7 +90,7 @@ bool showCard = false;
                     ),
                   ]
               ),
-              child: Text('Accept',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xff1D1D1D)),),
+              child: const Text('Accept',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xff1D1D1D)),),
             ),
           ],
         ),

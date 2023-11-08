@@ -31,8 +31,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final GlobalKey _key4 = GlobalKey();
   final GlobalKey _key5 = GlobalKey();
   final GlobalKey _key6 = GlobalKey();
-
-  GlobalKey _key7 = GlobalKey();
   int pageViewIndex = 0;
   final List _colors = [
     Colors.teal,
@@ -78,23 +76,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     },
   ];
   bool exchang = false;
-  Future<void> Show_case() async {
-    showcase = (await prefsService.getBoolData('showcase'))!;
-    if (showcase) {
-      createTutorial();
-    } else {
-      setState(() {});
-    }
-  }
+
 
   @override
   void initState() {
-     Show_case();
-    //createTutorial();
+    createTutorial();
     Future.delayed(Duration.zero, showTutorial);
     super.initState();
-    // controller.addListener(() {});
-    // setState(() {});
   }
 
   Widget build(BuildContext context) {
@@ -252,7 +240,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     alignment: Alignment.bottomCenter,
                                     child: Container(
                                       height:
-                                          screenHeight(context, dividedBy: 3.5),
+                                          screenHeight(context, dividedBy: 3.16),
                                       width: screenWidth(context),
                                       decoration: const BoxDecoration(
                                           gradient: LinearGradient(
@@ -844,8 +832,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     tutorialCoachMark.show(context: context);
   }
 
-  void createTutorial() {
-    tutorialCoachMark = TutorialCoachMark(
+  Future<void> createTutorial() async {
+    showcase = await prefsService.getBoolData('showcase') ?? true;
+    if (showcase == false) {
+      setState(() {});
+    } else {
+       tutorialCoachMark = TutorialCoachMark(
       targets: _createTargets(),
       colorShadow: Colors.black12,
       textSkip: "SKIP",
@@ -869,7 +861,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
       onClickTargetWithTapPosition: (target, tapDetails) {
         print("target: $target");
         print(
-            "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
+            "clicked at position local: ${tapDetails
+                .localPosition} - global: ${tapDetails.globalPosition}");
       },
       onClickOverlay: (target) {
         print('onClickOverlay: $target');
@@ -881,12 +874,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         return true;
       },
     );
+    }
   }
 
   List<TargetFocus> _createTargets() {
     List<TargetFocus> targets = [];
-    targets.add(
-      TargetFocus(
+    targets.add(TargetFocus(
         identify: "keyBottomNavigation",
         keyTarget: _key,
         alignSkip: Alignment.topLeft,
@@ -913,15 +906,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             },
           ),
         ],
-      ),
-    );
-    targets.add(
-      TargetFocus(
+      ),);
+    targets.add(TargetFocus(
         identify: "keyBottomNavigation1",
         keyTarget: _key1,
         alignSkip: Alignment.topRight,
         enableOverlayTab: true,
-        shape: ShapeLightFocus.RRect,
+        shape: ShapeLightFocus.Circle,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
@@ -963,8 +954,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             },
           ),
         ],
-      ),
-    );
+      ),);
     targets.add(TargetFocus(
         identify: "swipe",
         keyTarget: _key3,
