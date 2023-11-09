@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
@@ -935,7 +934,6 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                       await picker.pickBoth(
                                                         source:
                                                         ImageSource.gallery,
-
                                                         /// On long tap, it will be available.
                                                         multiSelection: true,
                                                         galleryDisplaySettings:

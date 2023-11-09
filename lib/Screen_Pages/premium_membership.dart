@@ -42,10 +42,10 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                             },
                             child: const Icon(
                               Icons.close,
-                              size: 25,
+                              size: 23,
                             )),
                         SizedBox(
-                          width: screenWidth(context, dividedBy: 70),
+                          width: screenWidth(context, dividedBy: 30),
                         ),
                         custom_header(text: 'Premium membership')
                         // IconButton(onPressed: () {

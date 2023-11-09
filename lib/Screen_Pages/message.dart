@@ -40,11 +40,11 @@ class _Message_pageState extends State<Message_page> {
                      ],
                    ),
                  ),
-                 SizedBox(height: screenHeight(context,dividedBy: 50),),
+                 SizedBox(height: screenHeight(context,dividedBy: 70),),
                  Expanded(child:
                  ListView.separated(
                    physics: const ClampingScrollPhysics(),
-                     padding: EdgeInsets.zero,
+                     padding: EdgeInsets.symmetric(vertical:screenHeight(context,dividedBy: 50) ),
                      itemBuilder: (context, index) {
                        return  GestureDetector(
                          onTap: () {
@@ -130,7 +130,9 @@ class _Message_pageState extends State<Message_page> {
                      separatorBuilder: (context, index) {
                        return  const Divider(
                          height: 0,
-                         color: Color(0xffF5F5F5),
+                         thickness: 2,
+                         //color: Color(0xffF5F5F5),
+                         color: Colors.black26,
                        );
                      },
                      itemCount: 10)),
