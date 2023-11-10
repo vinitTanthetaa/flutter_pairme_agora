@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:fast_image_resizer/fast_image_resizer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Screen_Pages/describe_yourself.dart';
@@ -319,11 +321,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               true,
                                                         ),
                                                       );
+                                                      final rawImage = await details!.selectedFiles[0].selectedFile.readAsBytes();
+                                                      final bytes = await resizeImage(Uint8List.view(rawImage.buffer), height: 1000,width: 1000);
                                                       print('Details ===> ${details}');
-                                                      _selectedimag1 = details!.selectedFiles[0];
-                                                      Navigator.pop(context);
-                                                      setState(() { });
-                                                      print('selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                      if(bytes != null) {
+                                                        final testing = Image.memory(Uint8List.view(bytes.buffer),filterQuality: FilterQuality.high,);
+                                                        _selectedimag1 = testing.toString() as SelectedByte;
+                                                        Navigator.pop(context);
+                                                        setState(() { });
+                                                        print('selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                        print('selectedByte ==> +  ${testing}');
+                                                      }
                                                       // if (details != null) await displayDetails(details);
                                                     },
                                                     child: Row(

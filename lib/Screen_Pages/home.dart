@@ -37,39 +37,41 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     {
       'Name': 'Jane Koblenz',
       'images': [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU'
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D',
+        'https://images.unsplash.com/photo-1653505425983-a5c89ae5986a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8&w=1000&q=80',
+        'https://images.unsplash.com/photo-1661635577898-4bd9049fe8f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&w=1000&q=80'
       ]
     },
     {
       'Name': 'Larry Ellison',
       'images': [
-        'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS92eisuWOx3tEjeW14mT9ACVgXDwIRBGtnww&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdX029ohIUSygq9zirl9fSNBwSLqEOaKEYuw&usqp=CAU'
+        'https://images.unsplash.com/photo-1594745561149-2211ca8c5d98?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHx8&w=1000&q=80',
+        'https://images.unsplash.com/photo-1594744803086-b902dd06f88a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&w=1000&q=80',
+        'https://images.unsplash.com/photo-1653762384105-e0c693636509?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80'
       ]
     },
     {
       'Name': 'James Smith',
       'images': [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU'
+        'https://louellareese.com/wp-content/uploads/2018/09/Louella-Reese-Fall-Weekend-Casual-2.jpg',
+        'https://images.squarespace-cdn.com/content/v1/5bf4e70b5cfd79de099a3f2b/1559507245723-2Y26J95GALHDEOX37DIK/coffee-shop-senior-portraits_0002.jpg',
+        'https://i.pinimg.com/1200x/ae/18/50/ae185049c32fc24c3a02f465b41e488a.jpg'
       ]
     },
     {
       'Name': 'Michael Bloomberg',
       'images': [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU'
+        'https://i.pinimg.com/1200x/9a/00/8e/9a008e0ae4b10ecab9c2d583e452a879.jpg',
+        'https://images.unsplash.com/photo-1538576048537-3e17ed5b1792?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&w=1000&q=80',
+        'https://images.unsplash.com/photo-1507019403270-cca502add9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8&w=1000&q=80'
       ]
     },
   ];
   bool exchang = false;
  List _skills = [
-   ''
+   '',
+   '',
+   '',
  ];
 
   @override
@@ -105,7 +107,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                             decoration: const BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
-                                        'assets/Images/pairme.png'))),
+                                        'assets/Images/pairme.png'
+                                       // 'assets/Images/MicrosoftTeams-image (1).png'
+                                    ))),
                           ),
                           InkWell(
                             onTap: () {
@@ -134,7 +138,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight(context, dividedBy: 80),
+                    height: screenHeight(context, dividedBy: 100),
                   ),
                   Expanded(
                       child: appinioSwip(
@@ -144,10 +148,21 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                           onEnd: _onEnd,
                           cardsSpacing: screenHeight(context),
                           allowUnswipe: true,
+                          loop: true,
                           onSwiping: (direction) {
                             if(direction.name == 'left'){
                               print('========>'+ 'left '+direction.toString());
                             }
+                            if(direction.name == 'bottom'){
+                              pageViewIndex = 0;
+                              print('========>'+ 'bottom '+direction.toString());
+                            }
+                            if(direction.name == 'top'){
+                              pageViewIndex = 0;
+                              print('========>'+ 'top '+direction.toString());
+                            }
+
+                            print('========>'+direction.toString());
                           },
                           swipeOptions: const AppinioSwipeOptions.only(
                               top: true, bottom: true, left: true),
@@ -166,7 +181,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                   image: DecorationImage(
                                       image: NetworkImage(users[index]['images']
                                           [pageViewIndex]),
-                                      fit: BoxFit.fill),
+                                      fit: BoxFit.fill,filterQuality: FilterQuality.high),
                                   borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(23),
                                       topLeft: Radius.circular(23))),
@@ -454,7 +469,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       borderRadius: BorderRadius.circular(5)
                                                   ),
                                                   child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
                                                     child: Text(
                                                       'Startup founder',
                                                       style: TextStyle(
@@ -473,7 +488,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       borderRadius: BorderRadius.circular(5)
                                                   ),
                                                   child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
                                                     child: Text(
                                                       'Startup founder',
                                                       style: TextStyle(
@@ -492,7 +507,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       borderRadius: BorderRadius.circular(5)
                                                   ),
                                                   child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
                                                     child: Text(
                                                       'Startup founder',
                                                       style: TextStyle(
@@ -526,14 +541,16 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             //     ),
                                             //   ],
                                             // ),
+                                            //SizedBox(height: screenHeight(context,dividedBy: 50),),
+                                            Spacer(),
                                             Padding(
-                                              padding: EdgeInsets.symmetric(
+                                              padding: EdgeInsets.only(
                                                   // horizontal: screenWidth(
                                                   //     context,
                                                   //     dividedBy: 7),
-                                                  vertical: screenHeight(
+                                                  bottom: screenHeight(
                                                       context,
-                                                      dividedBy: 30)
+                                                      dividedBy: 50)
                                               ),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -558,15 +575,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           //         'assets/Images/button1.png'))
                                                       ),
                                                       child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 80)),
+                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 150)),
                                                         child: Row(
                                                           mainAxisAlignment: MainAxisAlignment.center,
                                                           children: [
                                                             Image(
                                                               color: AppColor.skyBlue,
                                                                 image: AssetImage('assets/Images/button1.png'),
-                                                              height: screenHeight(context,dividedBy: 40),
-                                                              width: screenHeight(context,dividedBy: 35),
+                                                              height: screenHeight(context,dividedBy: 50),
+                                                              width: screenHeight(context,dividedBy: 45),
                                                             ),
                                                             SizedBox(width: screenWidth(context,dividedBy: 60),),
                                                             Text('Reject',style: TextStyle(color: AppColor.skyBlue,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
@@ -603,15 +620,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                         //         'assets/Images/button1.png'))
                                                       ),
                                                       child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 80)),
+                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 150)),
                                                         child: Row(
                                                           mainAxisAlignment: MainAxisAlignment.center,
                                                           children: [
                                                             Image(
                                                               color: AppColor.white,
                                                               image: AssetImage('assets/Images/button2.png'),
-                                                              height: screenHeight(context,dividedBy: 40),
-                                                              width: screenHeight(context,dividedBy: 35),
+                                                              height: screenHeight(context,dividedBy: 50),
+                                                              width: screenHeight(context,dividedBy: 45),
                                                             ),
                                                             SizedBox(width: screenWidth(context,dividedBy: 60),),
                                                             Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
@@ -633,25 +650,26 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       //     context,
                                                       //     dividedBy: 3),
                                                       decoration:  BoxDecoration(
-                                                          border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
-                                                          borderRadius: BorderRadius.circular(20)
+                                                          //border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
+                                                        borderRadius: BorderRadius.circular(50),
+                                                        gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
                                                         // image: DecorationImage(
                                                         //     image: AssetImage(
                                                         //         'assets/Images/button1.png'))
                                                       ),
                                                       child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:20),vertical: screenHeight(context,dividedBy: 80)),
+                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:20),vertical: screenHeight(context,dividedBy: 150)),
                                                         child: Row(
                                                           mainAxisAlignment: MainAxisAlignment.center,
                                                           children: [
                                                             Image(
-                                                              color: AppColor.skyBlue,
+                                                              color: AppColor.white,
                                                               image: AssetImage('assets/Images/button3.png'),
-                                                              height: screenHeight(context,dividedBy: 40),
-                                                              width: screenHeight(context,dividedBy: 35),
+                                                              height: screenHeight(context,dividedBy: 50),
+                                                              width: screenHeight(context,dividedBy: 45),
                                                             ),
                                                             SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                            Text('Connect',style: TextStyle(color: AppColor.skyBlue,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                                                            Text('Connect',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
                                                           ],
                                                         ),
                                                       ),
@@ -1617,7 +1635,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     //     ],
     //   ),
     // );
-
     return targets;
   }
 }
