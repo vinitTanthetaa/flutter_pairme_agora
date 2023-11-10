@@ -6,7 +6,6 @@ import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
-import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/swiper.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
