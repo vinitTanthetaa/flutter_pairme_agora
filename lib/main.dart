@@ -7,8 +7,8 @@ import 'package:pair_me/helper/App_Language.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  runApp(EasyLocalization(supportedLocales: const [Locale('en'), Locale('es'), Locale('hi')],
-      fallbackLocale: const Locale('en'),
+  runApp(EasyLocalization(supportedLocales: const [Locale('en'), Locale('sp'), Locale('hi')],
+      fallbackLocale: const Locale('hi'),
       path: 'assets/Language', child: const MyApp()));
 }
 
@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      locale: Locale('hi'),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColor.skyBlue),
         useMaterial3: true,

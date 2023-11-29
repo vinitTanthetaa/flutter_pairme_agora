@@ -1,11 +1,11 @@
 import 'dart:ui';
-
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/Widgets/slidable_widget.dart';
 import 'package:pair_me/Widgets/swiper.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -77,6 +77,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   void initState() {
     createTutorial();
     Future.delayed(Duration.zero, showTutorial);
+    FocusManager.instance.primaryFocus?.unfocus();
     super.initState();
   }
 
@@ -139,32 +140,605 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                   SizedBox(
                     height: screenHeight(context, dividedBy: 100),
                   ),
+                  // Expanded(
+                  //     child: SlidableWidget(
+                  //       child: Container(
+                  //         // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
+                  //         height: screenHeight(context),
+                  //         width: screenWidth(context),
+                  //         decoration: BoxDecoration(
+                  //             image: DecorationImage(
+                  //                 image: NetworkImage(users[0]['images']
+                  //                 [pageViewIndex]),
+                  //                 fit: BoxFit.fill,filterQuality: FilterQuality.high),
+                  //             borderRadius: const BorderRadius.only(
+                  //                 topRight: Radius.circular(23),
+                  //                 topLeft: Radius.circular(23))),
+                  //         child: Stack(
+                  //           children: [
+                  //             Align(
+                  //               alignment: Alignment.topCenter,
+                  //               child: Padding(
+                  //                 padding: EdgeInsets.symmetric(
+                  //                     vertical: screenHeight(context,
+                  //                         dividedBy: 35)),
+                  //                 child: TabPageSelector(
+                  //                   // key:showcase ? _key1 :_key5,
+                  //                   key: _key1,
+                  //                   controller: TabController(
+                  //                       vsync: this,
+                  //                       length: 3,
+                  //                       initialIndex: pageViewIndex),
+                  //                   color: AppColor.gray,
+                  //                   borderStyle: BorderStyle.none,
+                  //                   indicatorSize: 8,
+                  //                   selectedColor: AppColor.skyBlue,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             Row(
+                  //               children: [
+                  //                 Expanded(
+                  //                   child: InkWell(
+                  //                     overlayColor:
+                  //                     const MaterialStatePropertyAll(
+                  //                         Colors.transparent),
+                  //                     onTap: () {
+                  //                       setState(() {
+                  //                         pageViewIndex <= 2 &&
+                  //                             pageViewIndex > 0
+                  //                             ? pageViewIndex--
+                  //                             : null;
+                  //                       });
+                  //                     },
+                  //                     child: Container(
+                  //                       height: screenHeight(context),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //                 Expanded(
+                  //                   child: InkWell(
+                  //                     overlayColor:
+                  //                     const MaterialStatePropertyAll(
+                  //                         Colors.transparent),
+                  //                     onTap: () {
+                  //                       setState(() {
+                  //                         pageViewIndex >= 2 &&
+                  //                             pageViewIndex < 6
+                  //                             ? null
+                  //                             : pageViewIndex++;
+                  //                       });
+                  //                     },
+                  //                     child: Container(
+                  //                       height: screenHeight(context),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //             Align(
+                  //               alignment: Alignment.bottomCenter,
+                  //               child: Container(
+                  //                 height:
+                  //                 screenHeight(context, dividedBy: 3.2),
+                  //                 width: screenWidth(context),
+                  //                 decoration: const BoxDecoration(
+                  //                     gradient: LinearGradient(
+                  //                         begin: Alignment.topCenter,
+                  //                         end: Alignment.bottomCenter,
+                  //                         colors: [
+                  //                           Colors.black12,
+                  //                           Colors.white10
+                  //                         ])),
+                  //                 child: Padding(
+                  //                   padding: EdgeInsets.symmetric(
+                  //                       horizontal: screenWidth(context,
+                  //                           dividedBy: 20)),
+                  //                   child: Column(
+                  //                     crossAxisAlignment:
+                  //                     CrossAxisAlignment.start,
+                  //                     children: [
+                  //                       Row(
+                  //                         mainAxisAlignment:
+                  //                         MainAxisAlignment
+                  //                             .spaceBetween,
+                  //                         children: [
+                  //                           SizedBox(
+                  //                               width: screenWidth(context,
+                  //                                   dividedBy: 2),
+                  //                               child: Row(
+                  //                                 children: [
+                  //                                   const Text(
+                  //                                     'Jane Koblenz',
+                  //                                     maxLines: 2,
+                  //                                     style: TextStyle(
+                  //                                         color:
+                  //                                         Colors.white,
+                  //                                         fontFamily:
+                  //                                         'Roboto',
+                  //                                         fontSize: 25,
+                  //                                         fontWeight:
+                  //                                         FontWeight
+                  //                                             .w600),
+                  //                                   ),
+                  //                                   Container(
+                  //                                     margin: EdgeInsets.symmetric(
+                  //                                         horizontal:
+                  //                                         screenWidth(
+                  //                                             context,
+                  //                                             dividedBy:
+                  //                                             70)),
+                  //                                     height: screenHeight(
+                  //                                         context,
+                  //                                         dividedBy: 35),
+                  //                                     width: screenWidth(
+                  //                                         context,
+                  //                                         dividedBy: 20),
+                  //                                     decoration: const BoxDecoration(
+                  //                                         image: DecorationImage(
+                  //                                             image: AssetImage(
+                  //                                                 'assets/Images/verified.png'))),
+                  //                                   )
+                  //                                 ],
+                  //                               )),
+                  //                           GestureDetector(
+                  //
+                  //                             onTap: () {
+                  //                               Navigator.push(context,
+                  //                                   SwipeablePageRoute(
+                  //                                     builder: (context) {
+                  //                                       return ShowUsers(
+                  //                                         list: users[0]
+                  //                                         ['images'],
+                  //                                       );
+                  //                                     },
+                  //                                   ));
+                  //                             },
+                  //                             child: Container(
+                  //                               key: _key2,
+                  //                               height: screenHeight(
+                  //                                   context,
+                  //                                   dividedBy: 25),
+                  //                               width: screenWidth(context,
+                  //                                   dividedBy: 15),
+                  //                               decoration: const BoxDecoration(
+                  //                                   image: DecorationImage(
+                  //                                       image: AssetImage(
+                  //                                           'assets/Images/side.png'))),
+                  //                             ),
+                  //                           )
+                  //                         ],
+                  //                       ),
+                  //                       const Text(
+                  //                         'Entrepreneur',
+                  //                         style: TextStyle(
+                  //                             fontSize: 15,
+                  //                             fontFamily: 'Roboto',
+                  //                             fontWeight: FontWeight.w400,
+                  //                             color: Colors.white),
+                  //                       ),
+                  //                       const Row(
+                  //                         children: [
+                  //                           Text(
+                  //                             'City/Country: ',
+                  //                             style: TextStyle(
+                  //                                 fontSize: 12,
+                  //                                 fontFamily: 'Roboto',
+                  //                                 fontWeight:
+                  //                                 FontWeight.w500,
+                  //                                 color: Colors.white),
+                  //                           ),
+                  //                           Text(
+                  //                             'Yorktown',
+                  //                             style: TextStyle(
+                  //                                 fontSize: 12,
+                  //                                 fontFamily: 'Roboto',
+                  //                                 fontWeight:
+                  //                                 FontWeight.w400,
+                  //                                 color: Colors.white),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                       const Row(
+                  //                         children: [
+                  //                           Text(
+                  //                             'Company: ',
+                  //                             style: TextStyle(
+                  //                                 fontSize: 12,
+                  //                                 fontFamily: 'Roboto',
+                  //                                 fontWeight:
+                  //                                 FontWeight.w500,
+                  //                                 color: Colors.white),
+                  //                           ),
+                  //                           Text(
+                  //                             'Infosys',
+                  //                             style: TextStyle(
+                  //                                 fontSize: 12,
+                  //                                 fontFamily: 'Roboto',
+                  //                                 fontWeight:
+                  //                                 FontWeight.w400,
+                  //                                 color: Colors.white),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                       SizedBox(
+                  //                         height: screenHeight(context,dividedBy: 90),
+                  //                       ),
+                  //                       _skills.length == 1 ?
+                  //                       Row(
+                  //                         children: [
+                  //                           Container(
+                  //                             alignment: Alignment.center,
+                  //                             decoration: BoxDecoration(
+                  //                                 border: Border.all(color: AppColor.white ),
+                  //                                 borderRadius: BorderRadius.circular(5)
+                  //                             ),
+                  //                             child:   Padding(
+                  //                               padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                  //                               child: Text(
+                  //                                 'Startup founder',
+                  //                                 style: TextStyle(
+                  //                                     fontSize: 12,
+                  //                                     fontFamily: 'Roboto',
+                  //                                     fontWeight: FontWeight.w400,
+                  //                                     color: Colors.white),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                         ],
+                  //                       ) : _skills.length == 2 ?
+                  //                       Row(
+                  //                         children: [
+                  //                           Container(
+                  //                             alignment: Alignment.center,
+                  //                             decoration: BoxDecoration(
+                  //                                 border: Border.all(color: AppColor.white ),
+                  //                                 borderRadius: BorderRadius.circular(5)
+                  //                             ),
+                  //                             child:   Padding(
+                  //                               padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                  //                               child: Text(
+                  //                                 'Startup founder',
+                  //                                 style: TextStyle(
+                  //                                     fontSize: 12,
+                  //                                     fontFamily: 'Roboto',
+                  //                                     fontWeight: FontWeight.w400,
+                  //                                     color: Colors.white),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                           SizedBox(
+                  //                             width: screenWidth(context,dividedBy: 100),
+                  //                           ),
+                  //                           Container(
+                  //                             alignment: Alignment.center,
+                  //                             decoration: BoxDecoration(
+                  //                                 border: Border.all(color: AppColor.white ),
+                  //                                 borderRadius: BorderRadius.circular(5)
+                  //                             ),
+                  //                             child:   Padding(
+                  //                               padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                  //                               child: Text(
+                  //                                 'Startup founder',
+                  //                                 style: TextStyle(
+                  //                                     fontSize: 12,
+                  //                                     fontFamily: 'Roboto',
+                  //                                     fontWeight: FontWeight.w400,
+                  //                                     color: Colors.white),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                         ],
+                  //                       )  : Row(
+                  //                         children: [
+                  //                           Container(
+                  //                             alignment: Alignment.center,
+                  //                             decoration: BoxDecoration(
+                  //                                 border: Border.all(color: AppColor.white ),
+                  //                                 borderRadius: BorderRadius.circular(5)
+                  //                             ),
+                  //                             child:   Padding(
+                  //                               padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                  //                               child: Text(
+                  //                                 'Startup founder',
+                  //                                 style: TextStyle(
+                  //                                     fontSize: 12,
+                  //                                     fontFamily: 'Roboto',
+                  //                                     fontWeight: FontWeight.w400,
+                  //                                     color: Colors.white),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                           SizedBox(width: screenWidth(context,dividedBy: 100),),
+                  //                           Container(
+                  //                             alignment: Alignment.center,
+                  //                             decoration: BoxDecoration(
+                  //                                 border: Border.all(color: AppColor.white ),
+                  //                                 borderRadius: BorderRadius.circular(5)
+                  //                             ),
+                  //                             child:   Padding(
+                  //                               padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                  //                               child: Text(
+                  //                                 'Startup founder',
+                  //                                 style: TextStyle(
+                  //                                     fontSize: 12,
+                  //                                     fontFamily: 'Roboto',
+                  //                                     fontWeight: FontWeight.w400,
+                  //                                     color: Colors.white),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                           SizedBox(width: screenWidth(context,dividedBy: 100),),
+                  //                           Container(
+                  //                             alignment: Alignment.center,
+                  //                             decoration: BoxDecoration(
+                  //                                 border: Border.all(color: AppColor.white ),
+                  //                                 borderRadius: BorderRadius.circular(5)
+                  //                             ),
+                  //                             child:   Padding(
+                  //                               padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                  //                               child: Text(
+                  //                                 'Startup founder',
+                  //                                 style: TextStyle(
+                  //                                     fontSize: 12,
+                  //                                     fontFamily: 'Roboto',
+                  //                                     fontWeight: FontWeight.w400,
+                  //                                     color: Colors.white),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                       // Row(
+                  //                       //   children: [
+                  //                       //
+                  //                       //     const Text(
+                  //                       //       'Investor',
+                  //                       //       style: TextStyle(
+                  //                       //           fontSize: 12,
+                  //                       //           fontFamily: 'Roboto',
+                  //                       //           fontWeight: FontWeight.w400,
+                  //                       //           color: Colors.white),
+                  //                       //     ),
+                  //                       //     const Text(
+                  //                       //       'Corporate executive',
+                  //                       //       style: TextStyle(
+                  //                       //           fontSize: 12,
+                  //                       //           fontFamily: 'Roboto',
+                  //                       //           fontWeight: FontWeight.w400,
+                  //                       //           color: Colors.white),
+                  //                       //     ),
+                  //                       //   ],
+                  //                       // ),
+                  //                       //SizedBox(height: screenHeight(context,dividedBy: 50),),
+                  //                       Spacer(),
+                  //                       Padding(
+                  //                         padding: EdgeInsets.only(
+                  //                           // horizontal: screenWidth(
+                  //                           //     context,
+                  //                           //     dividedBy: 7),
+                  //                             bottom: screenHeight(
+                  //                                 context,
+                  //                                 dividedBy: 50)
+                  //                         ),
+                  //                         child: Row(
+                  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //                           children: [
+                  //                             GestureDetector(
+                  //                               onTap: () {
+                  //                                 controller.swipeUp();
+                  //                               },
+                  //                               child: Container(
+                  //                                 key: _key4,
+                  //                                 // height: screenHeight(
+                  //                                 //     context,
+                  //                                 //     dividedBy: 17),
+                  //                                 // width: screenWidth(
+                  //                                 //     context,
+                  //                                 //     dividedBy: 3),
+                  //                                 decoration:  BoxDecoration(
+                  //                                     border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
+                  //                                     borderRadius: BorderRadius.circular(20)
+                  //                                   // image: DecorationImage(
+                  //                                   //     image: AssetImage(
+                  //                                   //         'assets/Images/button1.png'))
+                  //                                 ),
+                  //                                 child: Padding(
+                  //                                   padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 150)),
+                  //                                   child: Row(
+                  //                                     mainAxisAlignment: MainAxisAlignment.center,
+                  //                                     children: [
+                  //                                       Image(
+                  //                                         color: AppColor.skyBlue,
+                  //                                         image: AssetImage('assets/Images/button1.png'),
+                  //                                         height: screenHeight(context,dividedBy: 50),
+                  //                                         width: screenHeight(context,dividedBy: 45),
+                  //                                       ),
+                  //                                       SizedBox(width: screenWidth(context,dividedBy: 60),),
+                  //                                       Text('Reject',style: TextStyle(color: AppColor.skyBlue,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                  //                                     ],
+                  //                                   ),
+                  //                                 ),
+                  //                               ),
+                  //                             ),
+                  //                             GestureDetector(
+                  //                                 onTap: () {
+                  //                                   Navigator.push(context,
+                  //                                       MaterialPageRoute(
+                  //                                         builder: (context) {
+                  //                                           return Chatting_Page(
+                  //                                             name: 'chatting',
+                  //                                           );
+                  //                                         },
+                  //                                       ));
+                  //                                   // controller.swipeUp();
+                  //                                 },
+                  //                                 child: Container(
+                  //                                   key: _key5,
+                  //                                   // height: screenHeight(
+                  //                                   //     context,
+                  //                                   //     dividedBy: 17),
+                  //                                   // width: screenWidth(
+                  //                                   //     context,
+                  //                                   //     dividedBy: 3),
+                  //                                   decoration:  BoxDecoration(
+                  //                                       border: Border.all(color: AppColor.white,style: BorderStyle.solid,width: 1.5),
+                  //                                       borderRadius: BorderRadius.circular(20)
+                  //                                     // image: DecorationImage(
+                  //                                     //     image: AssetImage(
+                  //                                     //         'assets/Images/button1.png'))
+                  //                                   ),
+                  //                                   child: Padding(
+                  //                                     padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 150)),
+                  //                                     child: Row(
+                  //                                       mainAxisAlignment: MainAxisAlignment.center,
+                  //                                       children: [
+                  //                                         Image(
+                  //                                           color: AppColor.white,
+                  //                                           image: AssetImage('assets/Images/button2.png'),
+                  //                                           height: screenHeight(context,dividedBy: 50),
+                  //                                           width: screenHeight(context,dividedBy: 45),
+                  //                                         ),
+                  //                                         SizedBox(width: screenWidth(context,dividedBy: 60),),
+                  //                                         Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                  //                                       ],
+                  //                                     ),
+                  //                                   ),
+                  //                                 )
+                  //                             ),
+                  //                             GestureDetector(
+                  //                                 onTap: () {
+                  //                                   controller.swipeDown();
+                  //                                 },
+                  //                                 child: Container(
+                  //                                   key: _key6,
+                  //                                   // height: screenHeight(
+                  //                                   //     context,
+                  //                                   //     dividedBy: 17),
+                  //                                   // width: screenWidth(
+                  //                                   //     context,
+                  //                                   //     dividedBy: 3),
+                  //                                   decoration:  BoxDecoration(
+                  //                                     //border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
+                  //                                     borderRadius: BorderRadius.circular(50),
+                  //                                     gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                  //                                     // image: DecorationImage(
+                  //                                     //     image: AssetImage(
+                  //                                     //         'assets/Images/button1.png'))
+                  //                                   ),
+                  //                                   child: Padding(
+                  //                                     padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:20),vertical: screenHeight(context,dividedBy: 150)),
+                  //                                     child: Row(
+                  //                                       mainAxisAlignment: MainAxisAlignment.center,
+                  //                                       children: [
+                  //                                         Image(
+                  //                                           color: AppColor.white,
+                  //                                           image: AssetImage('assets/Images/button3.png'),
+                  //                                           height: screenHeight(context,dividedBy: 50),
+                  //                                           width: screenHeight(context,dividedBy: 45),
+                  //                                         ),
+                  //                                         SizedBox(width: screenWidth(context,dividedBy: 60),),
+                  //                                         Text('Connect',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                  //                                       ],
+                  //                                     ),
+                  //                                   ),
+                  //                                 )
+                  //                             ),
+                  //                           ],
+                  //                         ),
+                  //                       )
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             // Align(
+                  //             //   alignment: Alignment.topLeft,
+                  //             //   child: Padding(
+                  //             //     padding: EdgeInsets.symmetric(
+                  //             //         horizontal: screenWidth(context,
+                  //             //             dividedBy: 20),
+                  //             //         vertical: screenHeight(context,
+                  //             //             dividedBy: 10)),
+                  //             //     child: Row(
+                  //             //       mainAxisAlignment:
+                  //             //           MainAxisAlignment.spaceBetween,
+                  //             //       children: [
+                  //             //         SizedBox(
+                  //             //           // key: showcase ? _key2 : _key6,
+                  //             //           key: _key2,
+                  //             //           height: screenHeight(context,
+                  //             //               dividedBy: 3),
+                  //             //           width: screenHeight(context,
+                  //             //               dividedBy: 8),
+                  //             //         ),
+                  //             //         SizedBox(
+                  //             //
+                  //             //           height: screenHeight(context,
+                  //             //               dividedBy: 3),
+                  //             //           width: screenHeight(context,
+                  //             //               dividedBy: 8),
+                  //             //         ),
+                  //             //       ],
+                  //             //     ),
+                  //             //   ),
+                  //             // ),
+                  //             Align(
+                  //               alignment: Alignment.topCenter,
+                  //               child: Padding(
+                  //                 padding: EdgeInsets.only(
+                  //                     top: screenHeight(context,
+                  //                         dividedBy: 9)),
+                  //                 child: SizedBox(
+                  //                   //  key: showcase ?_key3 :_key7,
+                  //                   key: _key3,
+                  //                   height:
+                  //                   screenHeight(context, dividedBy: 3),
+                  //                   width:
+                  //                   screenHeight(context, dividedBy: 3),
+                  //                 ),
+                  //               ),
+                  //             )
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       background: buildBackground(),
+                  //       onSlided: () {
+                  //         print('hello');
+                  //         // setState(() {
+                  //         //   item.isFavourite = !item.isFavourite;
+                  //         // });
+                  //         //
+                  //         // Utils.showSnackBar(context,
+                  //         //     'You have ${item.isFavourite ? 'LIKED' : 'UNLIKED'} your chat partner.');
+                  //       },
+                  //     ),
+                  // ),
                   Expanded(
-                      child: appinioSwip(
+                      child:
+                      appinioSwip(
                           maxAngle: 0,
                           controller: controller,
+                          backgroundCardsCount: 2,
                           onSwipe: _swipe,
                           onEnd: _onEnd,
                           cardsSpacing: screenHeight(context),
                           allowUnswipe: true,
                           loop: true,
                           onSwiping: (direction) {
-                            if(direction.name == 'left'){
-                              print('========>'+ 'left '+direction.toString());
-                            }
                             if(direction.name == 'bottom'){
-                              pageViewIndex = 0;
+                             // pageViewIndex = 0;
                               print('========>'+ 'bottom '+direction.toString());
                             }
                             if(direction.name == 'top'){
-                              pageViewIndex = 0;
+                             // pageViewIndex = 0;
                               print('========>'+ 'top '+direction.toString());
                             }
 
                             print('========>'+direction.toString());
                           },
                           swipeOptions: const AppinioSwipeOptions.only(
-                              top: true, bottom: true, left: true),
+                              top: true, bottom: true,),
                           threshold: 100,
                           unswipe: (unswiped) {
                             print(unswiped);
@@ -172,829 +746,578 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                           padding: EdgeInsets.symmetric(
                               horizontal: screenWidth(context, dividedBy: 100)),
                           cardsBuilder: (context, index) {
-                            return Container(
-                              // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
-                              height: screenHeight(context),
-                              width: screenWidth(context),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(users[index]['images']
+                            return SlidableWidget(
+                                child: Container(
+                                  // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
+                                  height: screenHeight(context),
+                                  width: screenWidth(context),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(users[index]['images']
                                           [pageViewIndex]),
-                                      fit: BoxFit.fill,filterQuality: FilterQuality.high),
-                                  borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(23),
-                                      topLeft: Radius.circular(23))),
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: screenHeight(context,
-                                              dividedBy: 35)),
-                                      child: TabPageSelector(
-                                        // key:showcase ? _key1 :_key5,
-                                        key: _key1,
-                                        controller: TabController(
-                                            vsync: this,
-                                            length: 3,
-                                            initialIndex: pageViewIndex),
-                                        color: AppColor.gray,
-                                        borderStyle: BorderStyle.none,
-                                        indicatorSize: 8,
-                                        selectedColor: AppColor.skyBlue,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
+                                          fit: BoxFit.fill,filterQuality: FilterQuality.high),
+                                      borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(23),
+                                          topLeft: Radius.circular(23))),
+                                  child: Stack(
                                     children: [
-                                      Expanded(
-                                        child: InkWell(
-                                          overlayColor:
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: screenHeight(context,
+                                                  dividedBy: 35)),
+                                          child: TabPageSelector(
+                                            // key:showcase ? _key1 :_key5,
+                                            key: _key1,
+                                            controller: TabController(
+                                                vsync: this,
+                                                length: 3,
+                                                initialIndex: pageViewIndex),
+                                            color: AppColor.gray,
+                                            borderStyle: BorderStyle.none,
+                                            indicatorSize: 8,
+                                            selectedColor: AppColor.skyBlue,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              overlayColor:
                                               const MaterialStatePropertyAll(
                                                   Colors.transparent),
-                                          onTap: () {
-                                            setState(() {
-                                              pageViewIndex <= 2 &&
+                                              onTap: () {
+                                                setState(() {
+                                                  pageViewIndex <= 2 &&
                                                       pageViewIndex > 0
-                                                  ? pageViewIndex--
-                                                  : null;
-                                            });
-                                          },
-                                          child: Container(
-                                            height: screenHeight(context),
+                                                      ? pageViewIndex--
+                                                      : null;
+                                                });
+                                              },
+                                              child: Container(
+                                                height: screenHeight(context),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: InkWell(
-                                          overlayColor:
+                                          Expanded(
+                                            child: InkWell(
+                                              overlayColor:
                                               const MaterialStatePropertyAll(
                                                   Colors.transparent),
-                                          onTap: () {
-                                            setState(() {
-                                              pageViewIndex >= 2 &&
+                                              onTap: () {
+                                                setState(() {
+                                                  pageViewIndex >= 2 &&
                                                       pageViewIndex < 6
-                                                  ? null
-                                                  : pageViewIndex++;
-                                            });
-                                          },
-                                          child: Container(
-                                            height: screenHeight(context),
+                                                      ? null
+                                                      : pageViewIndex++;
+                                                });
+                                              },
+                                              child: Container(
+                                                height: screenHeight(context),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      height:
+                                      Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Container(
+                                          height:
                                           screenHeight(context, dividedBy: 3.2),
-                                      width: screenWidth(context),
-                                      decoration: const BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              colors: [
-                                            Colors.black12,
-                                            Colors.white10
-                                          ])),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: screenWidth(context,
-                                                dividedBy: 20)),
-                                        child: Column(
-                                          crossAxisAlignment:
+                                          width: screenWidth(context),
+                                          decoration: const BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Colors.black12,
+                                                    Colors.white10
+                                                  ])),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: screenWidth(context,
+                                                    dividedBy: 20)),
+                                            child: Column(
+                                              crossAxisAlignment:
                                               CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
-                                              children: [
-                                                SizedBox(
-                                                    width: screenWidth(context,
-                                                        dividedBy: 2),
-                                                    child: Row(
-                                                      children: [
-                                                        const Text(
-                                                          'Jane Koblenz',
-                                                          maxLines: 2,
-                                                          style: TextStyle(
-                                                              color:
+                                                  children: [
+                                                    SizedBox(
+                                                        width: screenWidth(context,
+                                                            dividedBy: 2),
+                                                        child: Row(
+                                                          children: [
+                                                            const Text(
+                                                              'Jane Koblenz',
+                                                              maxLines: 2,
+                                                              style: TextStyle(
+                                                                  color:
                                                                   Colors.white,
-                                                              fontFamily:
+                                                                  fontFamily:
                                                                   'Roboto',
-                                                              fontSize: 25,
-                                                              fontWeight:
+                                                                  fontSize: 25,
+                                                                  fontWeight:
                                                                   FontWeight
                                                                       .w600),
-                                                        ),
-                                                        Container(
-                                                          margin: EdgeInsets.symmetric(
-                                                              horizontal:
+                                                            ),
+                                                            Container(
+                                                              margin: EdgeInsets.symmetric(
+                                                                  horizontal:
                                                                   screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          70)),
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 35),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 20),
-                                                          decoration: const BoxDecoration(
-                                                              image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      'assets/Images/verified.png'))),
-                                                        )
-                                                      ],
-                                                    )),
-                                                GestureDetector(
+                                                                      70)),
+                                                              height: screenHeight(
+                                                                  context,
+                                                                  dividedBy: 35),
+                                                              width: screenWidth(
+                                                                  context,
+                                                                  dividedBy: 20),
+                                                              decoration: const BoxDecoration(
+                                                                  image: DecorationImage(
+                                                                      image: AssetImage(
+                                                                          'assets/Images/verified.png'))),
+                                                            )
+                                                          ],
+                                                        )),
+                                                    GestureDetector(
 
-                                                  onTap: () {
-                                                    Navigator.push(context,
-                                                        SwipeablePageRoute(
-                                                      builder: (context) {
-                                                        return ShowUsers(
-                                                          list: users[index]
-                                                              ['images'],
-                                                        );
+                                                      onTap: () {
+                                                        Navigator.push(context,
+                                                            SwipeablePageRoute(
+                                                              builder: (context) {
+                                                                return ShowUsers(
+                                                                  list: users[index]
+                                                                  ['images'],
+                                                                );
+                                                              },
+                                                            ));
                                                       },
-                                                    ));
-                                                  },
-                                                  child: Container(
-                                                    key: _key2,
-                                                    height: screenHeight(
-                                                        context,
-                                                        dividedBy: 25),
-                                                    width: screenWidth(context,
-                                                        dividedBy: 15),
-                                                    decoration: const BoxDecoration(
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                                'assets/Images/side.png'))),
+                                                      child: Container(
+                                                        key: _key2,
+                                                        height: screenHeight(
+                                                            context,
+                                                            dividedBy: 25),
+                                                        width: screenWidth(context,
+                                                            dividedBy: 15),
+                                                        decoration: const BoxDecoration(
+                                                            image: DecorationImage(
+                                                                image: AssetImage(
+                                                                    'assets/Images/side.png'))),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                const Text(
+                                                  'Entrepreneur',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontFamily: 'Roboto',
+                                                      fontWeight: FontWeight.w400,
+                                                      color: Colors.white),
+                                                ),
+                                                const Row(
+                                                  children: [
+                                                    Text(
+                                                      'City/Country: ',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                          color: Colors.white),
+                                                    ),
+                                                    Text(
+                                                      'Yorktown',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                          FontWeight.w400,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Row(
+                                                  children: [
+                                                    Text(
+                                                      'Company: ',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                          color: Colors.white),
+                                                    ),
+                                                    Text(
+                                                      'Infosys',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                          FontWeight.w400,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: screenHeight(context,dividedBy: 90),
+                                                ),
+                                                _skills.length == 1 ?
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ) : _skills.length == 2 ?
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: screenWidth(context,dividedBy: 100),
+                                                    ),
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )  : Row(
+                                                  children: [
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: screenWidth(context,dividedBy: 100),),
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: screenWidth(context,dividedBy: 100),),
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                // Row(
+                                                //   children: [
+                                                //
+                                                //     const Text(
+                                                //       'Investor',
+                                                //       style: TextStyle(
+                                                //           fontSize: 12,
+                                                //           fontFamily: 'Roboto',
+                                                //           fontWeight: FontWeight.w400,
+                                                //           color: Colors.white),
+                                                //     ),
+                                                //     const Text(
+                                                //       'Corporate executive',
+                                                //       style: TextStyle(
+                                                //           fontSize: 12,
+                                                //           fontFamily: 'Roboto',
+                                                //           fontWeight: FontWeight.w400,
+                                                //           color: Colors.white),
+                                                //     ),
+                                                //   ],
+                                                // ),
+                                                //SizedBox(height: screenHeight(context,dividedBy: 50),),
+                                                Spacer(),
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                    // horizontal: screenWidth(
+                                                    //     context,
+                                                    //     dividedBy: 7),
+                                                      bottom: screenHeight(
+                                                          context,
+                                                          dividedBy: 50)
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          controller.swipeUp();
+                                                        },
+                                                        child: Container(
+                                                          key: _key4,
+                                                          // height: screenHeight(
+                                                          //     context,
+                                                          //     dividedBy: 17),
+                                                          // width: screenWidth(
+                                                          //     context,
+                                                          //     dividedBy: 3),
+                                                          decoration:  BoxDecoration(
+                                                              border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
+                                                              borderRadius: BorderRadius.circular(20)
+                                                            // image: DecorationImage(
+                                                            //     image: AssetImage(
+                                                            //         'assets/Images/button1.png'))
+                                                          ),
+                                                          child: Padding(
+                                                            padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 150)),
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              children: [
+                                                                Image(
+                                                                  color: AppColor.skyBlue,
+                                                                  image: AssetImage('assets/Images/button1.png'),
+                                                                  height: screenHeight(context,dividedBy: 50),
+                                                                  width: screenHeight(context,dividedBy: 45),
+                                                                ),
+                                                                SizedBox(width: screenWidth(context,dividedBy: 60),),
+                                                                Text('Reject',style: TextStyle(color: AppColor.skyBlue,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.push(context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) {
+                                                                    return Chatting_Page(
+                                                                      name: 'chatting',
+                                                                    );
+                                                                  },
+                                                                ));
+                                                            // controller.swipeUp();
+                                                          },
+                                                          child: Container(
+                                                            key: _key5,
+                                                            // height: screenHeight(
+                                                            //     context,
+                                                            //     dividedBy: 17),
+                                                            // width: screenWidth(
+                                                            //     context,
+                                                            //     dividedBy: 3),
+                                                            decoration:  BoxDecoration(
+                                                                border: Border.all(color: AppColor.white,style: BorderStyle.solid,width: 1.5),
+                                                                borderRadius: BorderRadius.circular(20)
+                                                              // image: DecorationImage(
+                                                              //     image: AssetImage(
+                                                              //         'assets/Images/button1.png'))
+                                                            ),
+                                                            child: Padding(
+                                                              padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 150)),
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  Image(
+                                                                    color: AppColor.white,
+                                                                    image: AssetImage('assets/Images/button2.png'),
+                                                                    height: screenHeight(context,dividedBy: 50),
+                                                                    width: screenHeight(context,dividedBy: 45),
+                                                                  ),
+                                                                  SizedBox(width: screenWidth(context,dividedBy: 60),),
+                                                                  Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          )
+                                                      ),
+                                                      GestureDetector(
+                                                          onTap: () {
+                                                            controller.swipeDown();
+                                                          },
+                                                          child: Container(
+                                                            key: _key6,
+                                                            // height: screenHeight(
+                                                            //     context,
+                                                            //     dividedBy: 17),
+                                                            // width: screenWidth(
+                                                            //     context,
+                                                            //     dividedBy: 3),
+                                                            decoration:  BoxDecoration(
+                                                              //border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
+                                                              borderRadius: BorderRadius.circular(50),
+                                                              gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                                                              // image: DecorationImage(
+                                                              //     image: AssetImage(
+                                                              //         'assets/Images/button1.png'))
+                                                            ),
+                                                            child: Padding(
+                                                              padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:20),vertical: screenHeight(context,dividedBy: 150)),
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  Image(
+                                                                    color: AppColor.white,
+                                                                    image: AssetImage('assets/Images/button3.png'),
+                                                                    height: screenHeight(context,dividedBy: 50),
+                                                                    width: screenHeight(context,dividedBy: 45),
+                                                                  ),
+                                                                  SizedBox(width: screenWidth(context,dividedBy: 60),),
+                                                                  Text('Connect',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          )
+                                                      ),
+                                                    ],
                                                   ),
                                                 )
                                               ],
                                             ),
-                                            const Text(
-                                              'Entrepreneur',
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontFamily: 'Roboto',
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.white),
-                                            ),
-                                            const Row(
-                                              children: [
-                                                Text(
-                                                  'City/Country: ',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: 'Roboto',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  'Yorktown',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: 'Roboto',
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            ),
-                                            const Row(
-                                              children: [
-                                                Text(
-                                                  'Company: ',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: 'Roboto',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  'Infosys',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: 'Roboto',
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight(context,dividedBy: 90),
-                                            ),
-                                            _skills.length == 1 ?
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: AppColor.white ),
-                                                      borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                    child: Text(
-                                                      'Startup founder',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ) : _skills.length == 2 ?
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: AppColor.white ),
-                                                      borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                    child: Text(
-                                                      'Startup founder',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: screenWidth(context,dividedBy: 100),
-                                                ),
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: AppColor.white ),
-                                                      borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                    child: Text(
-                                                      'Startup founder',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )  : Row(
-                                              children: [
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: AppColor.white ),
-                                                      borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                    child: Text(
-                                                      'Startup founder',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: screenWidth(context,dividedBy: 100),),
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: AppColor.white ),
-                                                      borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                    child: Text(
-                                                      'Startup founder',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: screenWidth(context,dividedBy: 100),),
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: AppColor.white ),
-                                                      borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  child:   Padding(
-                                                    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                    child: Text(
-                                                      'Startup founder',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            // Row(
-                                            //   children: [
-                                            //
-                                            //     const Text(
-                                            //       'Investor',
-                                            //       style: TextStyle(
-                                            //           fontSize: 12,
-                                            //           fontFamily: 'Roboto',
-                                            //           fontWeight: FontWeight.w400,
-                                            //           color: Colors.white),
-                                            //     ),
-                                            //     const Text(
-                                            //       'Corporate executive',
-                                            //       style: TextStyle(
-                                            //           fontSize: 12,
-                                            //           fontFamily: 'Roboto',
-                                            //           fontWeight: FontWeight.w400,
-                                            //           color: Colors.white),
-                                            //     ),
-                                            //   ],
-                                            // ),
-                                            //SizedBox(height: screenHeight(context,dividedBy: 50),),
-                                            Spacer(),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  // horizontal: screenWidth(
-                                                  //     context,
-                                                  //     dividedBy: 7),
-                                                  bottom: screenHeight(
-                                                      context,
-                                                      dividedBy: 50)
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      controller.swipeUp();
-                                                    },
-                                                    child: Container(
-                                                      key: _key4,
-                                                      // height: screenHeight(
-                                                      //     context,
-                                                      //     dividedBy: 17),
-                                                      // width: screenWidth(
-                                                      //     context,
-                                                      //     dividedBy: 3),
-                                                      decoration:  BoxDecoration(
-                                                        border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
-                                                          borderRadius: BorderRadius.circular(20)
-                                                          // image: DecorationImage(
-                                                          //     image: AssetImage(
-                                                          //         'assets/Images/button1.png'))
-                                                      ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 150)),
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          children: [
-                                                            Image(
-                                                              color: AppColor.skyBlue,
-                                                                image: AssetImage('assets/Images/button1.png'),
-                                                              height: screenHeight(context,dividedBy: 50),
-                                                              width: screenHeight(context,dividedBy: 45),
-                                                            ),
-                                                            SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                            Text('Reject',style: TextStyle(color: AppColor.skyBlue,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(
-                                                        builder: (context) {
-                                                          return Chatting_Page(
-                                                            name: 'chatting',
-                                                          );
-                                                        },
-                                                      ));
-                                                      // controller.swipeUp();
-                                                    },
-                                                    child: Container(
-                                                      key: _key5,
-                                                      // height: screenHeight(
-                                                      //     context,
-                                                      //     dividedBy: 17),
-                                                      // width: screenWidth(
-                                                      //     context,
-                                                      //     dividedBy: 3),
-                                                      decoration:  BoxDecoration(
-                                                          border: Border.all(color: AppColor.white,style: BorderStyle.solid,width: 1.5),
-                                                          borderRadius: BorderRadius.circular(20)
-                                                        // image: DecorationImage(
-                                                        //     image: AssetImage(
-                                                        //         'assets/Images/button1.png'))
-                                                      ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 150)),
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          children: [
-                                                            Image(
-                                                              color: AppColor.white,
-                                                              image: AssetImage('assets/Images/button2.png'),
-                                                              height: screenHeight(context,dividedBy: 50),
-                                                              width: screenHeight(context,dividedBy: 45),
-                                                            ),
-                                                            SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                            Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      controller.swipeDown();
-                                                    },
-                                                    child: Container(
-                                                      key: _key6,
-                                                      // height: screenHeight(
-                                                      //     context,
-                                                      //     dividedBy: 17),
-                                                      // width: screenWidth(
-                                                      //     context,
-                                                      //     dividedBy: 3),
-                                                      decoration:  BoxDecoration(
-                                                          //border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
-                                                        borderRadius: BorderRadius.circular(50),
-                                                        gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
-                                                        // image: DecorationImage(
-                                                        //     image: AssetImage(
-                                                        //         'assets/Images/button1.png'))
-                                                      ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:20),vertical: screenHeight(context,dividedBy: 150)),
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          children: [
-                                                            Image(
-                                                              color: AppColor.white,
-                                                              image: AssetImage('assets/Images/button3.png'),
-                                                              height: screenHeight(context,dividedBy: 50),
-                                                              width: screenHeight(context,dividedBy: 45),
-                                                            ),
-                                                            SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                            Text('Connect',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                      // Align(
+                                      //   alignment: Alignment.topLeft,
+                                      //   child: Padding(
+                                      //     padding: EdgeInsets.symmetric(
+                                      //         horizontal: screenWidth(context,
+                                      //             dividedBy: 20),
+                                      //         vertical: screenHeight(context,
+                                      //             dividedBy: 10)),
+                                      //     child: Row(
+                                      //       mainAxisAlignment:
+                                      //           MainAxisAlignment.spaceBetween,
+                                      //       children: [
+                                      //         SizedBox(
+                                      //           // key: showcase ? _key2 : _key6,
+                                      //           key: _key2,
+                                      //           height: screenHeight(context,
+                                      //               dividedBy: 3),
+                                      //           width: screenHeight(context,
+                                      //               dividedBy: 8),
+                                      //         ),
+                                      //         SizedBox(
+                                      //
+                                      //           height: screenHeight(context,
+                                      //               dividedBy: 3),
+                                      //           width: screenHeight(context,
+                                      //               dividedBy: 8),
+                                      //         ),
+                                      //       ],
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: screenHeight(context,
+                                                  dividedBy: 9)),
+                                          child: SizedBox(
+                                            //  key: showcase ?_key3 :_key7,
+                                            key: _key3,
+                                            height:
+                                            screenHeight(context, dividedBy: 3),
+                                            width:
+                                            screenHeight(context, dividedBy: 3),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  // Align(
-                                  //   alignment: Alignment.topLeft,
-                                  //   child: Padding(
-                                  //     padding: EdgeInsets.symmetric(
-                                  //         horizontal: screenWidth(context,
-                                  //             dividedBy: 20),
-                                  //         vertical: screenHeight(context,
-                                  //             dividedBy: 10)),
-                                  //     child: Row(
-                                  //       mainAxisAlignment:
-                                  //           MainAxisAlignment.spaceBetween,
-                                  //       children: [
-                                  //         SizedBox(
-                                  //           // key: showcase ? _key2 : _key6,
-                                  //           key: _key2,
-                                  //           height: screenHeight(context,
-                                  //               dividedBy: 3),
-                                  //           width: screenHeight(context,
-                                  //               dividedBy: 8),
-                                  //         ),
-                                  //         SizedBox(
-                                  //
-                                  //           height: screenHeight(context,
-                                  //               dividedBy: 3),
-                                  //           width: screenHeight(context,
-                                  //               dividedBy: 8),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          top: screenHeight(context,
-                                              dividedBy: 9)),
-                                      child: SizedBox(
-                                        //  key: showcase ?_key3 :_key7,
-                                        key: _key3,
-                                        height:
-                                            screenHeight(context, dividedBy: 3),
-                                        width:
-                                            screenHeight(context, dividedBy: 3),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
+                                ),
+                                onSlided: () {
+                                  Navigator.push(context, SwipeablePageRoute(
+                                    builder: (context) {
+                                      return ShowUsers(
+                                        list: users[index]['images'],
+                                      );
+                                    },
+                                  ));
+                                },);
                           },
                           cardsCount: users.length)
-                      // AppinioSwiper(
-                      //   backgroundCardsCount: 2,
-                      //   onSwipeCancelled: () {
-                      //     print('cancel');
-                      //   },
-                      //   swipeOptions: const AppinioSwipeOptions.only(
-                      //     top: true,
-                      //     left: true,
-                      //     bottom: true,
-                      //   ),
-                      //   padding: EdgeInsets.symmetric(
-                      //       horizontal: screenWidth(context,dividedBy: 100)
-                      //   ),
-                      // //  direction: AppinioSwiperDirection.values.first,
-                      //   duration: Duration.zero,
-                      //   threshold: 1,
-                      //   maxAngle: 0,
-                      //   unlimitedUnswipe: true,
-                      //   controller: controller,
-                      //   unswipe: (unswiped) {
-                      //     print("SUCCESS: card was unswiped");
-                      //   },
-                      //   onSwiping: (AppinioSwiperDirection direction) {
-                      //     debugPrint(direction.toString());
-                      //   },
-                      //   onSwipe: _swipe,
-                      //   onEnd: _onEnd,
-                      //   cardsCount: 10,
-                      //   cardsBuilder: (BuildContext context, int index) {
-                      //     return       Container(
-                      //       // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
-                      //       height: screenHeight(context),
-                      //       width: screenWidth(context),
-                      //       decoration: BoxDecoration(
-                      //           color: _colors[pageViewIndex],
-                      //           borderRadius: BorderRadius.only(topRight: Radius.circular(23),topLeft: Radius.circular(23))
-                      //       ),
-                      //       child: Stack(
-                      //         children: [
-                      //           Align(
-                      //             alignment: Alignment.topCenter,
-                      //             child: Padding(
-                      //               padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 35)),
-                      //               child: TabPageSelector(
-                      //                 controller: TabController(
-                      //                     vsync: this,
-                      //                     length: 6,
-                      //                     initialIndex: pageViewIndex),
-                      //                 color: AppColor.gray,
-                      //                 borderStyle: BorderStyle.none,
-                      //                 indicatorSize: 8,
-                      //                 selectedColor: AppColor.skyBlue,
-                      //               ),
-                      //             ),
-                      //           ),
-                      //           Row(
-                      //             children: [
-                      //               Expanded(
-                      //                 child: InkWell(
-                      //                   overlayColor: MaterialStatePropertyAll(Colors.transparent),
-                      //                   onTap: () {
-                      //                     setState(() {
-                      //                       pageViewIndex <= 5 && pageViewIndex > 0 ?pageViewIndex-- : null;
-                      //                     });
-                      //                   },
-                      //                   child: Container(
-                      //                     height: screenHeight(context),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               Expanded(
-                      //                 child: InkWell(
-                      //                   overlayColor: MaterialStatePropertyAll(Colors.transparent),
-                      //                   onTap: () {
-                      //                     setState(() {
-                      //                       pageViewIndex >= 5 && pageViewIndex < 6 ? null : pageViewIndex++;
-                      //                     });
-                      //                   },
-                      //                   child: Container(
-                      //                     height: screenHeight(context),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //           Align(
-                      //             alignment: Alignment.bottomCenter,
-                      //             child: Container(
-                      //               height: screenHeight(context,dividedBy: 3.5),
-                      //               width: screenWidth(context),
-                      //               decoration: const BoxDecoration(
-                      //                   gradient: LinearGradient(begin: Alignment.topCenter,end: Alignment.bottomCenter
-                      //                       ,colors: [Colors.transparent,Colors.black87])
-                      //               ),
-                      //               child: Padding(
-                      //                 padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20)),
-                      //                 child:  Column(
-                      //                   crossAxisAlignment: CrossAxisAlignment.start,
-                      //                   children: [
-                      //                     Row(
-                      //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //                       children: [
-                      //                         Container(
-                      //                             width: screenWidth(context,dividedBy: 2),
-                      //                             child: Row(
-                      //                               children: [
-                      //                                 Text('Jane Koblenz',maxLines: 2,style: TextStyle(color: Colors.white,fontFamily: 'Roboto',fontSize: 25,fontWeight: FontWeight.w600),),
-                      //                                 Container(
-                      //                                   margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 70)),
-                      //                                   height: screenHeight(context,dividedBy: 35),
-                      //                                   width: screenWidth(context,dividedBy: 20),
-                      //                                   decoration: BoxDecoration(
-                      //                                       image: DecorationImage(image: AssetImage('assets/Images/verified.png'))
-                      //                                   ),
-                      //                                 )
-                      //                               ],
-                      //                             )),
-                      //                         Container(
-                      //                           height: screenHeight(context,dividedBy: 25),
-                      //                           width: screenWidth(context,dividedBy: 15),
-                      //                           decoration: BoxDecoration(
-                      //                               image: DecorationImage(image: AssetImage('assets/Images/side.png'))
-                      //                           ),
-                      //                         )
-                      //                       ],
-                      //                     ),
-                      //                     Text('Entrepreneur',style: TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w400,color: Colors.white),),
-                      //                     Row(
-                      //                       children: [
-                      //                         Text('City/Country: ',style: TextStyle(fontSize: 12,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: Colors.white),),
-                      //                         Text('Yorktown',style: TextStyle(fontSize: 12,fontFamily: 'Roboto',fontWeight: FontWeight.w400,color: Colors.white),),
-                      //                       ],
-                      //                     ),
-                      //                     Row(
-                      //                       children: [
-                      //                         Text('Company: ',style: TextStyle(fontSize: 12,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: Colors.white),),
-                      //                         Text('Infosys',style: TextStyle(fontSize: 12,fontFamily: 'Roboto',fontWeight: FontWeight.w400,color: Colors.white),),
-                      //                       ],
-                      //                     ),
-                      //                     Padding(
-                      //                       padding:  EdgeInsets.symmetric(
-                      //                           horizontal: screenWidth(context,dividedBy: 7),
-                      //                           vertical: screenHeight(context,dividedBy: 25)
-                      //                       ),
-                      //                       child: Row(
-                      //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //                         children: [
-                      //
-                      //                           Container(
-                      //                             height: screenHeight(context,dividedBy: 15),
-                      //                             width: screenWidth(context,dividedBy: 10),
-                      //                             decoration: BoxDecoration(
-                      //                                 image: DecorationImage(image: AssetImage('assets/Images/button1.png'))
-                      //                             ),
-                      //                           ),
-                      //                           Container(
-                      //                             height: screenHeight(context,dividedBy: 15),
-                      //                             width: screenWidth(context,dividedBy: 10),
-                      //                             decoration: BoxDecoration(
-                      //                                 image: DecorationImage(image: AssetImage('assets/Images/button2.png'))
-                      //                             ),
-                      //                           ),
-                      //                           Container(
-                      //                             height: screenHeight(context,dividedBy: 15),
-                      //                             width: screenWidth(context,dividedBy: 10),
-                      //                             decoration: BoxDecoration(
-                      //                                 image: DecorationImage(image: AssetImage('assets/Images/button3.png'))
-                      //                             ),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     )
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //           )
-                      //         ],
-                      //       ),
-                      //     );
-                      //     //   Container(
-                      //     //   decoration: BoxDecoration(
-                      //     //     borderRadius: BorderRadius.circular(10),
-                      //     //     color: AppColor.white,
-                      //     //     boxShadow: [
-                      //     //       BoxShadow(
-                      //     //         color: AppColor.gray,
-                      //     //         spreadRadius: 3,
-                      //     //         blurRadius: 7,
-                      //     //         offset: const Offset(0, 3),
-                      //     //       )
-                      //     //     ],
-                      //     //   ),
-                      //     //   alignment: Alignment.center,
-                      //     //   child: Column(
-                      //     //     children: [
-                      //     //       Flexible(
-                      //     //         child: Container(
-                      //     //           decoration: BoxDecoration(
-                      //     //             gradient: candidates[index].color,
-                      //     //             borderRadius: const BorderRadius.only(
-                      //     //               topLeft: Radius.circular(10),
-                      //     //               topRight: Radius.circular(10),
-                      //     //             ),
-                      //     //           ),
-                      //     //         ),
-                      //     //       ),
-                      //     //       Container(
-                      //     //         padding: const EdgeInsets.all(15),
-                      //     //         decoration: const BoxDecoration(
-                      //     //           color: Colors.white,
-                      //     //           borderRadius: BorderRadius.only(
-                      //     //             bottomLeft: Radius.circular(10),
-                      //     //             bottomRight: Radius.circular(10),
-                      //     //           ),
-                      //     //         ),
-                      //     //         child: Row(
-                      //     //           children: [
-                      //     //             Column(
-                      //     //               mainAxisSize: MainAxisSize.min,
-                      //     //               mainAxisAlignment: MainAxisAlignment.center,
-                      //     //               crossAxisAlignment: CrossAxisAlignment.start,
-                      //     //               children: [
-                      //     //                 Text(
-                      //     //                   candidates[index].name!,
-                      //     //                   style: const TextStyle(
-                      //     //                     color: Colors.black,
-                      //     //                     fontWeight: FontWeight.bold,
-                      //     //                     fontSize: 20,
-                      //     //                   ),
-                      //     //                 ),
-                      //     //                 const SizedBox(
-                      //     //                   height: 5,
-                      //     //                 ),
-                      //     //                 Text(
-                      //     //                   candidates[index].job!,
-                      //     //                   style: const TextStyle(
-                      //     //                     color: Colors.grey,
-                      //     //                     fontSize: 15,
-                      //     //                   ),
-                      //     //                 ),
-                      //     //                 const SizedBox(
-                      //     //                   height: 5,
-                      //     //                 ),
-                      //     //                 Text(
-                      //     //                   candidates[index].city!,
-                      //     //                   style: const TextStyle(
-                      //     //                     color: Colors.grey,
-                      //     //                     fontSize: 15,
-                      //     //                   ),
-                      //     //                 )
-                      //     //               ],
-                      //     //             ),
-                      //     //           ],
-                      //     //         ),
-                      //     //       ),
-                      //     //     ],
-                      //     //   ),
-                      //     // );
-                      //   },
-                      // )
 
                       )
                 ],
@@ -1009,13 +1332,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   void _swipe(int index, AppinioSwiperDirection direction) {
     print("the card was swiped to the: $direction");
     if (direction.name == 'left') {
-      Navigator.push(context, SwipeablePageRoute(
-        builder: (context) {
-          return ShowUsers(
-            list: users[index - 1]['images'],
-          );
-        },
-      ));
+
     }
   }
 

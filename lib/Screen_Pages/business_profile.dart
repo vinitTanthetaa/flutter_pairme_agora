@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:fast_image_resizer/fast_image_resizer.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Screen_Pages/describe_yourself.dart';
@@ -25,6 +26,22 @@ class Business_Profile extends StatefulWidget {
 }
 
 class _Business_ProfileState extends State<Business_Profile> {
+  Uint8List? _highQualityImage;
+
+  Future<void> compressToHighQuality(File imagefile) async {
+    print('imsge ==> ' + imagefile.toString());
+    final File imageFile = imagefile; // Replace with your image file path
+
+    // Compressing the image to high quality (quality: 100)
+    final Uint8List? uint8List = await FlutterImageCompress.compressWithFile(
+      imageFile.absolute.path,
+      quality: 100, // Set the desired image quality (0 to 100)
+    );
+
+    setState(() {
+      _highQualityImage = uint8List;
+    });
+  }
   final TextEditingController _bio = TextEditingController();
   SelectedByte? _selectedimag1;
   SelectedByte? _selectedimag2;
@@ -172,8 +189,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     // spreadRadius: 1.0,
                                   ),
                                 ],
-                                image:
-                                _selectedimag1?.selectedFile != null ?
+                                image: _selectedimag1?.selectedFile != null ?
                                 DecorationImage(
                                     //  image: AssetImage('assets/Images/vincenzo.png'),
                                     image: FileImage(_selectedimag1!.selectedFile),
@@ -304,9 +320,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                       SelectedImagesDetails?
                                                           details =
                                                           await picker.pickBoth(
-                                                        source:
-                                                            ImageSource.gallery,
-
+                                                        source: ImageSource.gallery,
                                                         /// On long tap, it will be available.
                                                         multiSelection: true,
                                                         galleryDisplaySettings:
@@ -321,16 +335,13 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               true,
                                                         ),
                                                       );
-                                                      final rawImage = await details!.selectedFiles[0].selectedFile.readAsBytes();
-                                                      final bytes = await resizeImage(Uint8List.view(rawImage.buffer), height: 1000,width: 1000);
                                                       print('Details ===> ${details}');
-                                                      if(bytes != null) {
-                                                        final testing = Image.memory(Uint8List.view(bytes.buffer),filterQuality: FilterQuality.high,);
-                                                        _selectedimag1 = testing.toString() as SelectedByte;
+                                                      if(details != null) {
+                                                        compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                        _selectedimag1 = details!.selectedFiles[0];
                                                         Navigator.pop(context);
                                                         setState(() { });
                                                         print('selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                        print('selectedByte ==> +  ${testing}');
                                                       }
                                                       // if (details != null) await displayDetails(details);
                                                     },
@@ -2079,32 +2090,41 @@ class _Business_ProfileState extends State<Business_Profile> {
                             DottedBorder(
                               color: AppColor.skyBlue,
                               strokeWidth: 1,
-                              child: SizedBox(
-                                height: screenHeight(context, dividedBy: 13),
-                                width: screenWidth(context, dividedBy: 3),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height:
-                                          screenHeight(context, dividedBy: 25),
-                                      width:
-                                          screenWidth(context, dividedBy: 10),
-                                      decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/Images/upload.png'))),
-                                    ),
-                                    const Text(
-                                      'Browse file to upload',
-                                      style: TextStyle(
-                                          color: AppColor.skyBlue,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 10,
-                                          decoration: TextDecoration.underline,
-                                          fontFamily: 'Roboto'),
-                                    )
-                                  ],
+                              child: GestureDetector(
+                                onTap: () async {
+                                  FilePickerResult? result = await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: ['jpg', 'pdf', 'doc'],
+                                  );
+                                  print("fille ======> " + result!.files.toString());
+                                },
+                                child: SizedBox(
+                                  height: screenHeight(context, dividedBy: 13),
+                                  width: screenWidth(context, dividedBy: 3),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height:
+                                            screenHeight(context, dividedBy: 25),
+                                        width:
+                                            screenWidth(context, dividedBy: 10),
+                                        decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/Images/upload.png'))),
+                                      ),
+                                      const Text(
+                                        'Browse file to upload',
+                                        style: TextStyle(
+                                            color: AppColor.skyBlue,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 10,
+                                            decoration: TextDecoration.underline,
+                                            fontFamily: 'Roboto'),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
