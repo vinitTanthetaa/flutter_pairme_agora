@@ -90,20 +90,19 @@ List list = [
                             },
                             child: Image(
                               image: const AssetImage('assets/Images/back.png'),
-                              height: screenHeight(context,dividedBy: 40),
-                              width: screenHeight(context,dividedBy: 40),
+                              height: screenHeight(context, dividedBy: 45),
+                              width: screenHeight(context, dividedBy: 45),
                             ),
                           ),
-                          SizedBox(width: screenWidth(context,dividedBy: 30),),
-                          Container(
-                            height: screenHeight(context, dividedBy: 30),
-                            width: screenWidth(context, dividedBy: 3.5),
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/Images/pairme.png'
-                                      // 'assets/Images/MicrosoftTeams-image (1).png'
-                                    ))),
+                          SizedBox(
+                            width: screenWidth(context, dividedBy: 25),
+                          ),
+                          const Text(
+                            'User Details',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),

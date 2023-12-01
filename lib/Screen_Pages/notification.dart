@@ -38,7 +38,7 @@ class _Notification_pageState extends State<Notification_page> {
                   SizedBox(height: screenHeight(context,dividedBy: 70),),
                  Expanded(
                      child: ListView.separated(
-                       padding: EdgeInsets.symmetric(vertical:screenHeight(context,dividedBy: 50), ),
+                       padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 50), ),
                      itemBuilder: (context, index) {
                        return  Dismissible(
                          direction: DismissDirection.endToStart,

@@ -69,7 +69,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                             ),
                           ),
                           SizedBox(
-                            width: screenWidth(context, dividedBy: 50),
+                            width: screenWidth(context, dividedBy: 25),
                           ),
                           const Text(
                             'Update Profile',

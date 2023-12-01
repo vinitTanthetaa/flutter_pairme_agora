@@ -142,11 +142,14 @@ class _Language_ScreenState extends State<Language_Screen> {
                              onTap: () {
                                setState(() {
                                  _selected_language = _language[index];
+                                 setState(() {
+                                   _selected_language == 'English' ? context.setLocale(Locale('en')) : _selected_language == 'Spanish' ? context.setLocale(Locale('en')) : _selected_language == 'Hindi' ? context.setLocale(Locale('hi')) : null;
+                                 });
                                  language = !language;
                                  if(language == false){
                                    show_box = !show_box;
-                                   show_box ?
-                                   context.setLocale(Locale('sp')):
+                                   // show_box ?
+                                   // context.setLocale(Locale('sp')):
                                    context.setLocale(Locale('hi'));
                                    Timer(const Duration(milliseconds: 600), () {
                                      setState(() {

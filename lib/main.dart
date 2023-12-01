@@ -10,9 +10,9 @@ Future<void> main() async {
   runApp(EasyLocalization(
       supportedLocales: const [
         Locale('en'),
-     //   Locale('sp'),
+        Locale('sp'),
         Locale('hi')],
-      //  fallbackLocale: const Locale('en'),
+        fallbackLocale: const Locale('en'),
       path: 'assets/Language',
       child: const MyApp()));
 }
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      // locale: Locale('en'),
+       locale: context.locale,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColor.skyBlue),
         useMaterial3: true,

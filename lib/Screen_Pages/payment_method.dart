@@ -52,7 +52,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                             ),
                           ),
                           SizedBox(
-                            width: screenWidth(context, dividedBy: 40),
+                            width: screenWidth(context, dividedBy: 25),
                           ),
                           custom_header(text: 'Card Details')
                           // IconButton(onPressed: () {

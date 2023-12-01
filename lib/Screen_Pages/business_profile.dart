@@ -52,7 +52,7 @@ class _Business_ProfileState extends State<Business_Profile> {
   SelectedByte? _selectedimag6;
   bool _hello = false;
   List filelist = [];
-  addFolderNameDialog() {
+  addFolderNameDialog(String delete) {
     return SimpleDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 60),
       backgroundColor: AppColor.white,
@@ -84,44 +84,56 @@ class _Business_ProfileState extends State<Business_Profile> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                alignment: Alignment.center,
-                height: 35,
-                width: 100,
-                decoration: BoxDecoration(
-                  border: const GradientBoxBorder(
-                    gradient: LinearGradient(
-                        colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                    width: 1.5,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 35,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    border: const GradientBoxBorder(
+                      gradient: LinearGradient(
+                          colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(32),
                   ),
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                child: const Text(
-                  'Cancel',
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.skyBlue),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.skyBlue),
+                  ),
                 ),
               ),
-              Container(
-                // margin: EdgeInsets.symmetric(horizontal:screenWidth(context,dividedBy: 10),vertical: height),
-                alignment: Alignment.center,
-                height: 35,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  gradient: const LinearGradient(
-                      colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                ),
-                child: const Text(
-                  'Remove',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                      fontFamily: 'Roboto',
-                      color: AppColor.white),
+              GestureDetector(
+                onTap:() {
+                  filelist.remove(delete);
+                  setState(() {});
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  // margin: EdgeInsets.symmetric(horizontal:screenWidth(context,dividedBy: 10),vertical: height),
+                  alignment: Alignment.center,
+                  height: 35,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    gradient: const LinearGradient(
+                        colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                  ),
+                  child: const Text(
+                    'Remove',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        fontFamily: 'Roboto',
+                        color: AppColor.white),
+                  ),
                 ),
               )
             ],
@@ -2129,15 +2141,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                               child: GestureDetector(
                                 onTap: () async {
                                   FilePickerResult? result = await FilePicker.platform.pickFiles(
-                                    type: FileType.any,
+                                    type: FileType.custom,
                                    // allowMultiple: true,
-                                   // allowedExtensions: ['jpg', 'pdf', 'doc'],
+                                    allowedExtensions: ['jpg', 'pdf', 'doc'],
                                   );
                                   filelist.length < 3 ?
                                   filelist.add(result!.names.toString()) :
                                   flutterToast('Only 3 items Add', false)
                                   ;
                                   print("fille ======> " + result!.names.toString());
+                                  print("fille ======> " + result!.files.toString());
+                                  print("fille ======> " + result!.paths.toString());
                                   setState(() {});
                                 },
                                 child: SizedBox(
@@ -2304,7 +2318,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               showDialog(
                                                 context: context,
                                                 builder: (context) =>
-                                                    addFolderNameDialog(),
+                                                    addFolderNameDialog(filelist[0]),
                                               );
                                             },
                                             child: const Icon(
@@ -2387,7 +2401,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) =>
-                                                        addFolderNameDialog(),
+                                                        addFolderNameDialog(filelist[0]),
                                                   );
                                                 },
                                                 child: const Icon(
@@ -2469,7 +2483,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) =>
-                                                        addFolderNameDialog(),
+                                                        addFolderNameDialog(filelist[1]),
                                                   );
                                                 },
                                                 child: const Icon(
@@ -2554,7 +2568,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) =>
-                                                        addFolderNameDialog(),
+                                                        addFolderNameDialog(filelist[0]),
                                                   );
                                                 },
                                                 child: const Icon(
@@ -2636,7 +2650,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) =>
-                                                        addFolderNameDialog(),
+                                                        addFolderNameDialog(filelist[1]),
                                                   );
                                                 },
                                                 child: const Icon(
@@ -2718,7 +2732,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) =>
-                                                        addFolderNameDialog(),
+                                                        addFolderNameDialog(filelist[2]),
                                                   );
                                                 },
                                                 child: const Icon(

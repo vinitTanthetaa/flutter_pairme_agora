@@ -61,7 +61,7 @@ class _MessageRequestState extends State<MessageRequest> {
                           width: screenHeight(context,dividedBy: 40),
                         ),
                       ),
-                      SizedBox(width: screenWidth(context,dividedBy: 30),),
+                      SizedBox(width: screenWidth(context,dividedBy: 25),),
                       const Text('Message',style: TextStyle(fontSize: 25,fontFamily: 'Roboto',fontWeight: FontWeight.w600),),
                     ],
                   ),
