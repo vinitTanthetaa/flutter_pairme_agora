@@ -8,6 +8,7 @@ import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class UsersDetails extends StatefulWidget {
   List list;
@@ -29,7 +30,7 @@ class _UsersDetailsState extends State<UsersDetails>
     'Corporate executive',
   ];
 List list = [
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU'
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
   'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80',
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS92eisuWOx3tEjeW14mT9ACVgXDwIRBGtnww&usqp=CAU',
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdX029ohIUSygq9zirl9fSNBwSLqEOaKEYuw&usqp=CAU',
@@ -38,6 +39,32 @@ List list = [
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU',
   'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
 ];
+    getlist(){
+      print("object");
+      List<String> images = [];
+      List<String> videos = [];
+
+      list.forEach((url) {
+        if (url.endsWith('.mp4')) {
+          videos.add(url);
+        } else {
+          images.add(url);
+          // RegExp regExp = RegExp(r'([^?\/\s]+)(\.(jpg|jpeg|png|gif|webp))');
+          // if (regExp.hasMatch(url)) {
+          //
+          // }
+        }
+      });
+      print(videos);
+      print(images);
+    }
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _bio.text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,.Lorem ipsum dolor sit amet, consectetur adipiscing elit,’';
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,39 +80,65 @@ List list = [
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: screenWidth(context, dividedBy: 15)),
-                      height: screenHeight(context,dividedBy: 30),
-                      width: screenWidth(context,dividedBy: 4),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(image: AssetImage('assets/Images/pairme.png'))
+                    Padding(
+                      padding:  EdgeInsets.only(left: screenWidth(context,dividedBy: 30),top: screenHeight(context,dividedBy: 87)),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Image(
+                              image: const AssetImage('assets/Images/back.png'),
+                              height: screenHeight(context,dividedBy: 40),
+                              width: screenHeight(context,dividedBy: 40),
+                            ),
+                          ),
+                          SizedBox(width: screenWidth(context,dividedBy: 30),),
+                          Container(
+                            height: screenHeight(context, dividedBy: 30),
+                            width: screenWidth(context, dividedBy: 3.5),
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/Images/pairme.png'
+                                      // 'assets/Images/MicrosoftTeams-image (1).png'
+                                    ))),
+                          ),
+                        ],
                       ),
                     ),
                     CarouselSlider(
-                        items: widget.list.map((e) => InkWell(
+                        items: list.map((e) => InkWell(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return Image_Screen(image: widget.list[pageViewIndex],);
+                              return Image_Screen(image: list[pageViewIndex],);
                             },));
                           },
-                          child: widget.list[pageViewIndex].toString().endsWith('.mp4')  ?
+                          child: list[pageViewIndex].toString().endsWith('.mp4')  ?
                           Container(
                             margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 65)),
                             height: screenHeight(context,dividedBy:2.5),
                             width: screenWidth(context ),
                             decoration: const BoxDecoration(
-                              color: Colors.green,
                               //  image: DecorationImage(image: NetworkImage(list[pageViewIndex]),fit: BoxFit.fill)
                             ),
                             child: Stack(
                               children: [
-                                VideoPlayer(VideoPlayerController.networkUrl(Uri.parse(widget.list[pageViewIndex]))
+                              Center(
+                                child: VTImageView(
+                                videoUrl:
+                                list[pageViewIndex],
+                                assetPlaceHolder: 'assets/Images/videoThumbnail.png',
+                            ),
+                              ),
+                               // VideoPlayer(VideoPlayerController.networkUrl(Uri.parse(widget.list[pageViewIndex]))
                                   // VideoPlayerController.networkUrl(Uri.parse(list[pageViewIndex]))..initialize().then((_) {
                                   //   // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
                                   //   setState(() {});
                                   // })
-                                ),
-                                const Align(
+                               // ),
+                                 Align(
                                   child: CircleAvatar(
                                     backgroundColor: Colors.white30,
                                     child: Icon(Icons.play_arrow_rounded),
@@ -99,7 +152,7 @@ List list = [
                             width: screenWidth(context ),
                             decoration: BoxDecoration(
                                 color: Colors.green,
-                                image: DecorationImage(image: NetworkImage(widget.list[pageViewIndex]),fit: BoxFit.fill)
+                                image: DecorationImage(image: NetworkImage(list[pageViewIndex]),fit: BoxFit.fill)
                             ),
                           ),
                         )).toList(),
@@ -117,7 +170,7 @@ List list = [
                       child: TabPageSelector(
                         controller: TabController(
                             vsync: this,
-                            length: widget.list.length,
+                            length: list.length,
                             animationDuration: const Duration(milliseconds: 300),
                             initialIndex: pageViewIndex),
                         color: AppColor.gray,
@@ -242,11 +295,6 @@ List list = [
                                   color: AppColor.dropdownfont),
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
-                                  // hintText: 'Enter some words of your Profile',
-                                  // hintStyle: TextStyle(
-                                  //     fontFamily: 'Roboto',
-                                  //     fontWeight: FontWeight.w400,
-                                  //     fontSize: 15)
                               ),
                             ),
                           ),

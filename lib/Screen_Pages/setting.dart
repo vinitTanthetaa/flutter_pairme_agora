@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:pair_me/Screen_Pages/change_password.dart';
 import 'package:pair_me/Screen_Pages/payment.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -130,6 +130,9 @@ class _Setting_pageState extends State<Setting_page> {
                         padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 30)),
                         child:   InkWell(
                           onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return ChangePassword();
+                            },));
                             // setState(() {
                             //   language = !language;
                             //   if(language == false){

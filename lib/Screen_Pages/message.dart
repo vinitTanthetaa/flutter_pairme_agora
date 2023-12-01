@@ -71,7 +71,7 @@ class _Message_pageState extends State<Message_page> {
                            ),
                            child: SizedBox(
                              // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                             height: screenHeight(context,dividedBy: 10),
+                             height: screenHeight(context,dividedBy: 10.4),
                              width: screenHeight(context),
                              child: Padding(
                                padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 90)),
@@ -94,7 +94,7 @@ class _Message_pageState extends State<Message_page> {
                                      children: [
                                        const Text('Jane Koblenz',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
                                        SizedBox(
-                                         width: screenWidth(context,dividedBy: 1.9),
+                                         width: screenWidth(context,dividedBy: 2.2),
                                          child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 10,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
                                        )
                                      ],

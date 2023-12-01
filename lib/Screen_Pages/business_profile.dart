@@ -1,16 +1,17 @@
 import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Screen_Pages/describe_yourself.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/stepper.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -50,6 +51,7 @@ class _Business_ProfileState extends State<Business_Profile> {
   SelectedByte? _selectedimag5;
   SelectedByte? _selectedimag6;
   bool _hello = false;
+  List filelist = [];
   addFolderNameDialog() {
     return SimpleDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 60),
@@ -257,45 +259,79 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         width: screenWidth(
                                                             context,
                                                             dividedBy: 2),
-                                                        child: Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets.only(
-                                                                  right: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40)),
-                                                              height:
-                                                                  screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                              width:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                              decoration: const BoxDecoration(
-                                                                  image: DecorationImage(
-                                                                      image: AssetImage(
-                                                                          'assets/Images/camera.png'))),
-                                                            ),
-                                                            const Text(
-                                                              'Camera',
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: AppColor
-                                                                      .dropdownfont),
-                                                            ),
-                                                          ],
+                                                        child: GestureDetector(
+                                                          onTap: () async {
+                                                            ImagePickerPlus picker =
+                                                            ImagePickerPlus(
+                                                                context);
+                                                            SelectedImagesDetails?
+                                                            details =
+                                                            await picker.pickBoth(
+                                                              source: ImageSource.both,
+                                                              /// On long tap, it will be available.
+                                                              multiSelection: true,
+                                                              galleryDisplaySettings:
+                                                              GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    focusColor:
+                                                                    Colors.white,
+                                                                    primaryColor:
+                                                                    Colors.black),
+                                                                cropImage: true,
+                                                                showImagePreview:
+                                                                true,
+                                                              ),
+                                                            );
+                                                            print('Details ===> ${details}');
+                                                            if(details != null) {
+                                                              compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                              _selectedimag1 = details!.selectedFiles[0];
+                                                              Navigator.pop(context);
+                                                              setState(() { });
+                                                              print('selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                            }
+                                                            // if (details != null) await displayDetails(details);
+                                                          },
+                                                          child: Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                margin: EdgeInsets.only(
+                                                                    right: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            40)),
+                                                                height:
+                                                                    screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            40),
+                                                                width:
+                                                                    screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                decoration: const BoxDecoration(
+                                                                    image: DecorationImage(
+                                                                        image: AssetImage(
+                                                                            'assets/Images/camera.png'))),
+                                                              ),
+                                                              const Text(
+                                                                'Camera',
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        'Roboto',
+                                                                    fontSize: 17,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColor
+                                                                        .dropdownfont),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       )
                                                     ],
@@ -2093,10 +2129,16 @@ class _Business_ProfileState extends State<Business_Profile> {
                               child: GestureDetector(
                                 onTap: () async {
                                   FilePickerResult? result = await FilePicker.platform.pickFiles(
-                                    type: FileType.custom,
-                                    allowedExtensions: ['jpg', 'pdf', 'doc'],
+                                    type: FileType.any,
+                                   // allowMultiple: true,
+                                   // allowedExtensions: ['jpg', 'pdf', 'doc'],
                                   );
-                                  print("fille ======> " + result!.files.toString());
+                                  filelist.length < 3 ?
+                                  filelist.add(result!.names.toString()) :
+                                  flutterToast('Only 3 items Add', false)
+                                  ;
+                                  print("fille ======> " + result!.names.toString());
+                                  setState(() {});
                                 },
                                 child: SizedBox(
                                   height: screenHeight(context, dividedBy: 13),
@@ -2195,6 +2237,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                             //     ),
                             //   ),
                             // ),
+                            filelist.length == 1 ?
                             Container(
                               margin: EdgeInsets.only(
                                   top: screenHeight(context, dividedBy: 100)),
@@ -2206,7 +2249,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
-                                        screenWidth(context, dividedBy: 55)),
+                                    screenWidth(context, dividedBy: 55)),
                                 child: Row(
                                   children: [
                                     Container(
@@ -2214,9 +2257,9 @@ class _Business_ProfileState extends State<Business_Profile> {
                                           right: screenWidth(context,
                                               dividedBy: 90)),
                                       height:
-                                          screenHeight(context, dividedBy: 27),
+                                      screenHeight(context, dividedBy: 27),
                                       width:
-                                          screenWidth(context, dividedBy: 15),
+                                      screenWidth(context, dividedBy: 15),
                                       decoration: const BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
@@ -2224,27 +2267,27 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                     SizedBox(
                                       height:
-                                          screenHeight(context, dividedBy: 23),
+                                      screenHeight(context, dividedBy: 23),
                                       width:
-                                          screenWidth(context, dividedBy: 1.55),
+                                      screenWidth(context, dividedBy: 1.55),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                'image_03.jpg',
+                                                'image_01.jpg',
                                                 style: TextStyle(
                                                     fontFamily: 'Roboto',
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w500,
                                                     color:
-                                                        AppColor.dropdownfont),
+                                                    AppColor.dropdownfont),
                                               ),
                                               Text(
                                                 '96.47 KB',
@@ -2276,7 +2319,423 @@ class _Business_ProfileState extends State<Business_Profile> {
                                   ],
                                 ),
                               ),
-                            ),
+                            ) : filelist.length == 2 ? Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: screenHeight(context, dividedBy: 100)),
+                                  height: screenHeight(context, dividedBy: 15),
+                                  width: screenWidth(context, dividedBy: 1.3),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xffEFF4FF),
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                        screenWidth(context, dividedBy: 55)),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: screenWidth(context,
+                                                  dividedBy: 90)),
+                                          height:
+                                          screenHeight(context, dividedBy: 27),
+                                          width:
+                                          screenWidth(context, dividedBy: 15),
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/file.png'))),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                          screenHeight(context, dividedBy: 23),
+                                          width:
+                                          screenWidth(context, dividedBy: 1.55),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'image_01.jpg',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w500,
+                                                        color:
+                                                        AppColor.dropdownfont),
+                                                  ),
+                                                  Text(
+                                                    '96.47 KB',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Color(0xff838383)),
+                                                  ),
+                                                ],
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        addFolderNameDialog(),
+                                                  );
+                                                },
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: AppColor.skyBlue,
+                                                  size: 15,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: screenHeight(context, dividedBy: 100)),
+                                  height: screenHeight(context, dividedBy: 15),
+                                  width: screenWidth(context, dividedBy: 1.3),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xffEFF4FF),
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                        screenWidth(context, dividedBy: 55)),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: screenWidth(context,
+                                                  dividedBy: 90)),
+                                          height:
+                                          screenHeight(context, dividedBy: 27),
+                                          width:
+                                          screenWidth(context, dividedBy: 15),
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/file.png'))),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                          screenHeight(context, dividedBy: 23),
+                                          width:
+                                          screenWidth(context, dividedBy: 1.55),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'image_02.jpg',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w500,
+                                                        color:
+                                                        AppColor.dropdownfont),
+                                                  ),
+                                                  Text(
+                                                    '96.47 KB',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Color(0xff838383)),
+                                                  ),
+                                                ],
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        addFolderNameDialog(),
+                                                  );
+                                                },
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: AppColor.skyBlue,
+                                                  size: 15,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ) : filelist.length == 3 ? Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: screenHeight(context, dividedBy: 100)),
+                                  height: screenHeight(context, dividedBy: 15),
+                                  width: screenWidth(context, dividedBy: 1.3),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xffEFF4FF),
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                        screenWidth(context, dividedBy: 55)),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: screenWidth(context,
+                                                  dividedBy: 90)),
+                                          height:
+                                          screenHeight(context, dividedBy: 27),
+                                          width:
+                                          screenWidth(context, dividedBy: 15),
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/file.png'))),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                          screenHeight(context, dividedBy: 23),
+                                          width:
+                                          screenWidth(context, dividedBy: 1.55),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'image_01.jpg',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w500,
+                                                        color:
+                                                        AppColor.dropdownfont),
+                                                  ),
+                                                  Text(
+                                                    '96.47 KB',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Color(0xff838383)),
+                                                  ),
+                                                ],
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        addFolderNameDialog(),
+                                                  );
+                                                },
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: AppColor.skyBlue,
+                                                  size: 15,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: screenHeight(context, dividedBy: 100)),
+                                  height: screenHeight(context, dividedBy: 15),
+                                  width: screenWidth(context, dividedBy: 1.3),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xffEFF4FF),
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                        screenWidth(context, dividedBy: 55)),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: screenWidth(context,
+                                                  dividedBy: 90)),
+                                          height:
+                                          screenHeight(context, dividedBy: 27),
+                                          width:
+                                          screenWidth(context, dividedBy: 15),
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/file.png'))),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                          screenHeight(context, dividedBy: 23),
+                                          width:
+                                          screenWidth(context, dividedBy: 1.55),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'image_02.jpg',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w500,
+                                                        color:
+                                                        AppColor.dropdownfont),
+                                                  ),
+                                                  Text(
+                                                    '96.47 KB',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Color(0xff838383)),
+                                                  ),
+                                                ],
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        addFolderNameDialog(),
+                                                  );
+                                                },
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: AppColor.skyBlue,
+                                                  size: 15,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: screenHeight(context, dividedBy: 100)),
+                                  height: screenHeight(context, dividedBy: 15),
+                                  width: screenWidth(context, dividedBy: 1.3),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xffEFF4FF),
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                        screenWidth(context, dividedBy: 55)),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: screenWidth(context,
+                                                  dividedBy: 90)),
+                                          height:
+                                          screenHeight(context, dividedBy: 27),
+                                          width:
+                                          screenWidth(context, dividedBy: 15),
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/file.png'))),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                          screenHeight(context, dividedBy: 23),
+                                          width:
+                                          screenWidth(context, dividedBy: 1.55),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'image_03.jpg',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w500,
+                                                        color:
+                                                        AppColor.dropdownfont),
+                                                  ),
+                                                  Text(
+                                                    '96.47 KB',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Color(0xff838383)),
+                                                  ),
+                                                ],
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        addFolderNameDialog(),
+                                                  );
+                                                },
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: AppColor.skyBlue,
+                                                  size: 15,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ) : SizedBox(),
                           ],
                         ),
                       ),

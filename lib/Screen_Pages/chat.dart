@@ -1,6 +1,6 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_borders/box_borders/gradient_box_border.dart';
-import 'package:pair_me/Screen_Pages/videocall.dart';
+import 'package:flutter/foundation.dart' as foundation;import 'package:pair_me/Screen_Pages/videocall.dart';
 import 'package:pair_me/Screen_Pages/voice_call.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -15,7 +15,9 @@ class Chatting_Page extends StatefulWidget {
 }
 
 class _Chatting_PageState extends State<Chatting_Page> {
-bool showCard = false;
+  TextEditingController messageController = TextEditingController();
+  bool showCard = false;
+bool emojiShowing = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +31,8 @@ bool showCard = false;
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
-              height: screenHeight(context,dividedBy: 15),
-              width: screenWidth(context,dividedBy: 4),
+              height: screenHeight(context,dividedBy: 20),
+              width: screenWidth(context,dividedBy: 3.7),
               decoration: BoxDecoration(
                   color: AppColor.white,
                   borderRadius: BorderRadius.circular(23),
@@ -51,8 +53,8 @@ bool showCard = false;
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
-              height: screenHeight(context,dividedBy: 15),
-              width: screenWidth(context,dividedBy: 4),
+              height: screenHeight(context,dividedBy: 20),
+              width: screenWidth(context,dividedBy: 3.7),
               decoration: BoxDecoration(
                   color: AppColor.white,
                   borderRadius: BorderRadius.circular(23),
@@ -73,8 +75,8 @@ bool showCard = false;
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
-              height: screenHeight(context,dividedBy: 15),
-              width: screenWidth(context,dividedBy: 4),
+              height: screenHeight(context,dividedBy: 20),
+              width: screenWidth(context,dividedBy: 3.7),
               decoration: BoxDecoration(
                   color: AppColor.white,
                   borderRadius: BorderRadius.circular(23),
@@ -463,7 +465,7 @@ bool showCard = false;
                   margin: EdgeInsets.only(
                       right: screenWidth(context, dividedBy: 15),
                       left: screenWidth(context, dividedBy: 15),
-                      bottom: screenHeight(context, dividedBy: 20),
+                      bottom: screenHeight(context, dividedBy: 30),
                       top: screenHeight(context, dividedBy: 55),
                   ),
                   decoration: BoxDecoration(
@@ -481,6 +483,11 @@ bool showCard = false;
                         ),
                       ]),
                   child: TextField(
+                    onTap: () {
+                      emojiShowing = false;
+                      setState(() {});
+                    },
+                    controller: messageController,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Message...',
@@ -507,16 +514,23 @@ bool showCard = false;
                           crossAxisAlignment: WrapCrossAlignment.center,
                           runAlignment: WrapAlignment.center,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  right: screenWidth(context, dividedBy: 40),
-                                  left: screenWidth(context, dividedBy: 300)),
-                              height: screenHeight(context, dividedBy: 30),
-                              width: screenWidth(context, dividedBy: 20),
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/Images/emoji.png'))),
+                            GestureDetector(
+                              onTap: () {
+                                emojiShowing = !emojiShowing;
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                setState(() {});
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    right: screenWidth(context, dividedBy: 40),
+                                    left: screenWidth(context, dividedBy: 300)),
+                                height: screenHeight(context, dividedBy: 30),
+                                width: screenWidth(context, dividedBy: 20),
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/Images/emoji.png'))),
+                              ),
                             ),
                             GestureDetector(
                               onTap: () {
@@ -548,6 +562,45 @@ bool showCard = false;
                         )),
                   ),
                 ),
+                Offstage(
+                    offstage: !emojiShowing,
+                    child: SizedBox(
+                        height: 250,
+                        child: EmojiPicker(
+                          textEditingController: messageController,
+                          config: Config(
+                            columns: 7,
+                            emojiSizeMax: 32 *
+                                (foundation.defaultTargetPlatform ==
+                                    TargetPlatform.android
+                                    ? 1.30
+                                    : 1.0),
+                            verticalSpacing: 0,
+                            horizontalSpacing: 0,
+                            gridPadding: EdgeInsets.zero,
+                            initCategory: Category.RECENT,
+                            bgColor: const Color(0xFFF2F2F2),
+                            indicatorColor: Colors.blue,
+                            iconColor: Colors.grey,
+                            iconColorSelected: Colors.blue,
+                            backspaceColor: Colors.blue,
+                            skinToneDialogBgColor: Colors.white,
+                            skinToneIndicatorColor: Colors.grey,
+                            enableSkinTones: true,
+                            recentsLimit: 28,
+                            replaceEmojiOnLimitExceed: false,
+                            noRecents: const Text(
+                              'No Recents',
+                              style: TextStyle(fontSize: 20, color: Colors.black26),
+                              textAlign: TextAlign.center,
+                            ),
+                            loadingIndicator: const SizedBox.shrink(),
+                            tabIndicatorAnimDuration: kTabScrollDuration,
+                            categoryIcons: const CategoryIcons(),
+                            buttonMode: ButtonMode.MATERIAL,
+                            checkPlatformCompatibility: true,
+                          ),
+                        ))),
               ],
             ),
           ],

@@ -58,7 +58,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                      },)
                    ],
                  ),
-                 custom_discription(text: 'Please select your preferred language to continue'),
+                 custom_discription(text: 'counter'),
                  SizedBox(height: screenHeight(context,dividedBy: 50),),
                  Container(
                    height: screenHeight(context,dividedBy: 17),
@@ -112,7 +112,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                    animate: true,
                    from: 10,
                    child: Container(
-                     height: screenHeight(context,dividedBy: 5.3),
+                     height: screenHeight(context,dividedBy: 6.3),
                      width: screenWidth(context,dividedBy: 1.15),
                      decoration: BoxDecoration(
                          borderRadius: BorderRadius.circular(7),
@@ -132,7 +132,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                      child: Padding(
                        padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
                        child: ListView.builder(
-                         physics: const NeverScrollableScrollPhysics(),
+                         physics: ClampingScrollPhysics(),
                          itemCount: _language.length,
                          padding: EdgeInsets.zero,
                          itemBuilder: (context, index) {

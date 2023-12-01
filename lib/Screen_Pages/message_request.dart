@@ -19,11 +19,11 @@ class _MessageRequestState extends State<MessageRequest> {
       floatingActionButton: Container(
         alignment: Alignment.center,
         margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
-        height: screenHeight(context,dividedBy: 15),
-        width: screenWidth(context,dividedBy: 3),
+        height: screenHeight(context,dividedBy: 20),
+        width: screenWidth(context,dividedBy: 2.5),
         decoration: BoxDecoration(
           color: AppColor.white,
-          borderRadius: BorderRadius.circular(23),
+          borderRadius: BorderRadius.circular(33),
           boxShadow: const [
             BoxShadow(
               color: Colors.grey,
@@ -36,7 +36,7 @@ class _MessageRequestState extends State<MessageRequest> {
             ),
           ]
         ),
-        child: Text('Delete all',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
+        child: Text('Delete all',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
       ),
       body: SizedBox(
         height: screenHeight(context),
@@ -126,7 +126,7 @@ class _MessageRequestState extends State<MessageRequest> {
                                     children: [
                                       const Text('Jane Koblenz',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
                                       SizedBox(
-                                        width: screenWidth(context,dividedBy: 1.9),
+                                        width: screenWidth(context,dividedBy: 2.2),
                                         child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 10,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
                                       )
                                     ],

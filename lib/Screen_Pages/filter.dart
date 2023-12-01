@@ -211,7 +211,7 @@ class _Filter_pageState extends State<Filter_page> {
                               borderRadius: BorderRadius.circular(6),
                               boxShadow: const [
                                 BoxShadow(
-                                  color: Colors.grey,
+                                  color: AppColor.fontgray,
                                   offset: Offset(
                                     1,
                                     1,
@@ -272,7 +272,7 @@ class _Filter_pageState extends State<Filter_page> {
                             color: Colors.white,
                             boxShadow: const [
                               BoxShadow(
-                                color: Colors.grey,
+                                color: AppColor.fontgray,
                                 offset: Offset(
                                   1,
                                   1,
@@ -321,7 +321,7 @@ class _Filter_pageState extends State<Filter_page> {
                                       color: Colors.white,
                                       boxShadow: const [
                                         BoxShadow(
-                                          color: Colors.grey,
+                                          color: AppColor.fontgray,
                                           offset: Offset(
                                             1,
                                             1,
@@ -372,7 +372,7 @@ class _Filter_pageState extends State<Filter_page> {
                                       color: Colors.white,
                                       boxShadow: const [
                                         BoxShadow(
-                                          color: Colors.grey,
+                                          color: AppColor.fontgray,
                                           offset: Offset(
                                             1,
                                             1,

@@ -24,7 +24,7 @@ Widget custom_discription({required String text}) {
         overflow: TextOverflow.ellipsis,
         color: AppColor.fontdarkgray),
     maxLines: 2,
-  );
+  ).tr();
 }
 Widget custom_textfield_header({required String text,bool header = false}) {
   return header ? RichText(

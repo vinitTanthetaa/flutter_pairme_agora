@@ -20,7 +20,7 @@ class _Verification_codeState extends State<Verification_code> {
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
-      width: screenWidth(context, dividedBy: 7),
+      width: screenHeight(context, dividedBy: 13),
       height: screenHeight(context, dividedBy: 13),
       textStyle: const TextStyle(
           fontSize: 25, color: Colors.grey, fontWeight: FontWeight.w400,fontFamily: 'Roboto'),

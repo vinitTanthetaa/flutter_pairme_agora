@@ -719,7 +719,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                       appinioSwip(
                           maxAngle: 0,
                           controller: controller,
-                          backgroundCardsCount: 2,
+                          backgroundCardsCount: 0,
                           onSwipe: _swipe,
                           onEnd: _onEnd,
                           cardsSpacing: screenHeight(context),
@@ -749,8 +749,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                             return SlidableWidget(
                                 child: Container(
                                   // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
-                                  height: screenHeight(context),
-                                  width: screenWidth(context),
+                                   height: screenHeight(context),
+                                   width: screenWidth(context),
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: NetworkImage(users[index]['images']
@@ -824,8 +824,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       Align(
                                         alignment: Alignment.bottomCenter,
                                         child: Container(
-                                          height:
-                                          screenHeight(context, dividedBy: 3.2),
+                                          height: screenHeight(context, dividedBy: 3.9),
                                           width: screenWidth(context),
                                           decoration: const BoxDecoration(
                                               gradient: LinearGradient(
@@ -1257,37 +1256,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           ),
                                         ),
                                       ),
-                                      // Align(
-                                      //   alignment: Alignment.topLeft,
-                                      //   child: Padding(
-                                      //     padding: EdgeInsets.symmetric(
-                                      //         horizontal: screenWidth(context,
-                                      //             dividedBy: 20),
-                                      //         vertical: screenHeight(context,
-                                      //             dividedBy: 10)),
-                                      //     child: Row(
-                                      //       mainAxisAlignment:
-                                      //           MainAxisAlignment.spaceBetween,
-                                      //       children: [
-                                      //         SizedBox(
-                                      //           // key: showcase ? _key2 : _key6,
-                                      //           key: _key2,
-                                      //           height: screenHeight(context,
-                                      //               dividedBy: 3),
-                                      //           width: screenHeight(context,
-                                      //               dividedBy: 8),
-                                      //         ),
-                                      //         SizedBox(
-                                      //
-                                      //           height: screenHeight(context,
-                                      //               dividedBy: 3),
-                                      //           width: screenHeight(context,
-                                      //               dividedBy: 8),
-                                      //         ),
-                                      //       ],
-                                      //     ),
-                                      //   ),
-                                      // ),
                                       Align(
                                         alignment: Alignment.topCenter,
                                         child: Padding(
