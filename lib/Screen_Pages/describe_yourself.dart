@@ -15,15 +15,15 @@ class Describe_Yourself extends StatefulWidget {
 }
 
 class _Describe_YourselfState extends State<Describe_Yourself> {
-  final List _type =[];
+  final List _type = [];
   List lookingFor = [
     'Investor',
-    'Startup founder',
-    'Corporate executive',
+    'Startup Founder',
+    'Corporate Executive',
     'Manufacturer',
     'Distributor',
-    'Channel partner',
-    'Business partner',
+    'Channel Partner',
+    'Business Partner',
     'Translator',
   ];
   @override
@@ -44,52 +44,70 @@ class _Describe_YourselfState extends State<Describe_Yourself> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    custom_stepper(context, positaion: 5),
+                    SizedBox(
+                      height: screenHeight(context, dividedBy: 10),
+                    ),
+
+                    //custom_stepper(context, positaion: 5),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(child: custom_header(text: "How would you best describe yourself? Select up to 3 of the following:")),
+                        Expanded(
+                            child: custom_header(
+                                text:
+                                    "How would you best describe yourself? Select up to 3 of the following:")),
                         skip_button(
                           context,
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return const Looking_for();
-                            },));
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const Looking_for();
+                              },
+                            ));
                           },
                         )
                       ],
                     ),
                     SizedBox(
-                      height: screenHeight(context,dividedBy: 1.75),
+                      height: screenHeight(context, dividedBy: 1.75),
                       width: screenWidth(context),
                       child: ListView.builder(
                         itemCount: lookingFor.length,
                         physics: ClampingScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (context, index) {
-                          return   custom_selection(context,top: screenHeight(context,dividedBy: 50),text: lookingFor[index], list: _type, onTap: () {
-                           if(_type.length < 3){
-                             setState(() {
-                               _type.contains(lookingFor[index]) ? _type.remove(lookingFor[index]) :_type.add(lookingFor[index]);
-                             });
-                           }else{
-                             setState(() {
-                               _type.remove(lookingFor[index]);
-                             });
-                           }
+                          return custom_selection(context,
+                              top: screenHeight(context, dividedBy: 50),
+                              text: lookingFor[index],
+                              list: _type, onTap: () {
+                            if (_type.length < 3) {
+                              setState(() {
+                                _type.contains(lookingFor[index])
+                                    ? _type.remove(lookingFor[index])
+                                    : _type.add(lookingFor[index]);
+                              });
+                            } else {
+                              setState(() {
+                                _type.remove(lookingFor[index]);
+                              });
+                            }
                           });
-                        },),
+                        },
+                      ),
                     ),
                     Custom_botton(context, text: 'Done', onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const Looking_for();
-                      },));
-                    }, height: screenHeight(context,dividedBy: 25))
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const Looking_for();
+                        },
+                      ));
+                    }, height: screenHeight(context, dividedBy: 25))
                   ],
                 ),
               ),
-            )
+            ),
+            Positioned(top: 0.0, child: custom_stepper(context, positaion: 5)),
           ],
         ),
       ),

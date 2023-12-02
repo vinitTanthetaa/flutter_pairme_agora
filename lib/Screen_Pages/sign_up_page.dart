@@ -129,7 +129,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                       ),
                     ),
                   ) : const SizedBox(),
-                  custom_textfield_header(text: 'Date of birth'),
+                  custom_textfield_header(text: 'Date of Birth'),
                   Custom_textfield(context, show_icon: true,onTap:  () {
                     setState(() {
                       calendar = !calendar;

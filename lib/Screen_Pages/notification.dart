@@ -25,6 +25,7 @@ class _Notification_pageState extends State<Notification_page> {
             SafeArea(
               child: Column(
                 children: [
+                  SizedBox(height: screenHeight(context,dividedBy: 150),),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
                     child: Row(

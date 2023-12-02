@@ -18,12 +18,12 @@ class _Looking_forState extends State<Looking_for> {
   List _type =[];
   List lookingFor = [
     'Investor',
-    'Startup founder',
-    'Corporate executive',
+    'Startup Founder',
+    'Corporate Executive',
     'Manufacturer',
     'Distributor',
-    'Channel partner',
-    'Business partner',
+    'Channel Partner',
+    'Business Partner',
     'Translator',
   ];
   @override
@@ -44,12 +44,13 @@ class _Looking_forState extends State<Looking_for> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    custom_stepper(context, positaion: 6),
+                    SizedBox(height: screenHeight(context,dividedBy: 10),),
+                   // custom_stepper(context, positaion: 6),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(child: custom_header(text: "How would you best describe yourself? Select up to 3 of the following:")),
+                        Expanded(child: custom_header(text: "Who are you looking to connect with? Select up to 3 of the following:")),
                         skip_button(
                           context,
                           onTap: () {
@@ -89,7 +90,8 @@ class _Looking_forState extends State<Looking_for> {
                   ],
                 ),
               ),
-            )
+            ),
+            Positioned(top: 0.0, child: custom_stepper(context, positaion: 6)),
           ],
         ),
       ),

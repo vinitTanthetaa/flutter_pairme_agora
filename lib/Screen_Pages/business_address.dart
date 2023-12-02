@@ -51,7 +51,8 @@ class _Business_AddressState extends State<Business_Address> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    widget.Name == 'Edit' ? SizedBox(height: screenHeight(context,dividedBy: 15),) :custom_stepper(context, positaion: 3),
+                    SizedBox(height: screenHeight(context,dividedBy:widget.Name == 'Edit' ? 15 :10),),
+                  //  widget.Name == 'Edit' ? SizedBox(height: screenHeight(context,dividedBy: 15),) :custom_stepper(context, positaion: 3),
                     widget.Name == 'Edit' ? custom_header(text: "Business or Professional Address"): Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -223,7 +224,7 @@ class _Business_AddressState extends State<Business_Address> {
                     Custom_textfield(context, show_icon: false, readOnly: false, onPress: () {
 
                     }, hint: "Post code / Zip code",number: true, hidetext: false, controller: _Zipcode),
-                    custom_textfield_header(text: 'Strat Date'),
+                    custom_textfield_header(text: 'Start Date'),
                     Custom_textfield(context,onTap: () {
                       setState(() {
                         calendar = !calendar;
@@ -307,7 +308,10 @@ class _Business_AddressState extends State<Business_Address> {
                   ],
                 ),
               ),
-            )
+            ),
+            Positioned(
+                top: 0.0,
+                child: custom_stepper(context, positaion: 3)),
           ],
         ),
       ),

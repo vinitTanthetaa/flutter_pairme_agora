@@ -83,7 +83,7 @@ class _Professional_DetailsState extends State<Professional_Details> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    widget.Name == 'Edit' ?    SizedBox(height: screenHeight(context,dividedBy: 15),) : custom_stepper(context, positaion: 2),
+                    SizedBox(height: screenHeight(context,dividedBy:widget.Name == 'Edit' ? 15 : 10),),
                     widget.Name == 'Edit' ? custom_header(text: "Professional Details") :Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -548,6 +548,10 @@ class _Professional_DetailsState extends State<Professional_Details> {
                 ),
               ),
             ),
+            widget.Name == 'Edit' ?    SizedBox(height: screenHeight(context,dividedBy: 15),) :
+            Positioned(
+               top: 0.0,
+                child: custom_stepper(context, positaion: 2)),
           ],
         ),
       ),

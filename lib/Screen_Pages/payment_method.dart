@@ -39,6 +39,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: screenHeight(context,dividedBy: 150),),
                       Row(
                         children: [
                           GestureDetector(

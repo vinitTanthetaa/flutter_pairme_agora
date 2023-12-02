@@ -42,6 +42,7 @@ class _Profile_pageState extends State<Profile_page> {
                   child:  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: screenHeight(context,dividedBy: 150),),
                       custom_header(text: 'Profile'),
                       SizedBox(height: screenHeight(context,dividedBy: 60),),
                       SizedBox(

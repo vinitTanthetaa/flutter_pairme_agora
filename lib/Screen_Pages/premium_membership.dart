@@ -37,6 +37,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: screenHeight(context,dividedBy: 150),),
                       Row(
                         children: [
                           InkWell(

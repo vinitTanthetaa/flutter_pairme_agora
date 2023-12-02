@@ -14,11 +14,11 @@ Widget custom_selection (BuildContext context,{required String text,required Lis
             color:  const Color(0xffD4E2FF),
             child: Center(
               child: list.contains(text) ? Container(
-                height: screenHeight(context,dividedBy: 65),
-                width: screenHeight(context,dividedBy: 65),
+                height: screenHeight(context,dividedBy: 75),
+                width: screenHeight(context,dividedBy: 75),
                 decoration:  BoxDecoration(
                   borderRadius: BorderRadius.circular(3),
-                    image: const DecorationImage(image: AssetImage('assets/Images/check.png'),fit: BoxFit.fill)
+                    image: const DecorationImage(image: AssetImage('assets/Images/check.png'),fit: BoxFit.contain)
                 ),
               ) : const SizedBox(),
             ),

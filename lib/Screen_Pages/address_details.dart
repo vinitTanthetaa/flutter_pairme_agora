@@ -69,7 +69,8 @@ class _Address_DetailsState extends State<Address_Details> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   widget.Name == 'Edit' ?    SizedBox(height: screenHeight(context,dividedBy: 15),) : custom_stepper(context, positaion: 1),
+                    SizedBox(height: screenHeight(context,dividedBy:widget.Name == 'Edit' ? 15 :10),),
+                   // widget.Name == 'Edit' ?    SizedBox(height: screenHeight(context,dividedBy: 15),) : custom_stepper(context, positaion: 1),
                     widget.Name == 'Edit' ? custom_header(text: "Address Details") :Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -255,6 +256,9 @@ class _Address_DetailsState extends State<Address_Details> {
                 ),
               ),
             ),
+            Positioned(
+                top: 0.0,
+                child: custom_stepper(context, positaion: 1)),
           ],
         ),
       )

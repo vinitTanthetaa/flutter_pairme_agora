@@ -161,7 +161,9 @@ class _Business_ProfileState extends State<Business_Profile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   widget.Name == 'Edit' ?  SizedBox(height: screenHeight(context,dividedBy: 15),): custom_stepper(context, positaion: 4),
+                    SizedBox(height: screenHeight(context,dividedBy:widget.Name == 'Edit' ? 15 :10),),
+
+                    //  widget.Name == 'Edit' ?  SizedBox(height: screenHeight(context,dividedBy: 15),): custom_stepper(context, positaion: 4),
                    widget.Name == 'Edit' ? custom_header(text: "Profile") : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -2102,7 +2104,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                       height: screenHeight(context, dividedBy: 80),
                     ),
                     const Text(
-                      'Pitch deck',
+                      'Pitch Deck',
                       style: TextStyle(
                           fontFamily: 'Roboto',
                           fontSize: 15,
@@ -2177,6 +2179,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                             fontWeight: FontWeight.w400,
                                             fontSize: 10,
                                             decoration: TextDecoration.underline,
+                                            decorationColor: AppColor.skyBlue,
                                             fontFamily: 'Roboto'),
                                       )
                                     ],
@@ -2333,7 +2336,8 @@ class _Business_ProfileState extends State<Business_Profile> {
                                   ],
                                 ),
                               ),
-                            ) : filelist.length == 2 ? Column(
+                            ) : filelist.length == 2 ?
+                            Column(
                               children: [
                                 Container(
                                   margin: EdgeInsets.only(
@@ -2500,7 +2504,8 @@ class _Business_ProfileState extends State<Business_Profile> {
                                   ),
                                 ),
                               ],
-                            ) : filelist.length == 3 ? Column(
+                            ) : filelist.length == 3 ?
+                            Column(
                               children: [
                                 Container(
                                   margin: EdgeInsets.only(
@@ -2824,7 +2829,10 @@ class _Business_ProfileState extends State<Business_Profile> {
                   ],
                 ),
               ),
-            )
+            ),
+            Positioned(
+                top: 0.0,
+                child: custom_stepper(context, positaion: 4)),
           ],
         ),
       ),

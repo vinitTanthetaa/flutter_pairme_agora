@@ -81,7 +81,7 @@ class appinioSwip extends StatefulWidget {
     this.maxAngle = 30,
     this.cardsSpacing = 40,
     this.threshold = 50,
-    this.backgroundCardsCount = 1,
+    this.backgroundCardsCount = 2,
     this.isDisabled = false,
     this.loop = false,
     this.swipeOptions = const AppinioSwipeOptions.all(),

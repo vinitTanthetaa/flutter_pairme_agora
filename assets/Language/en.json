@@ -1,4 +1,6 @@
 {
   "Language": "Language",
-  "counter": "Please select your preferred language to continue"
+  "counter": "Please select your preferred language to continue",
+  "Login" : "Login",
+  "counter1": "Please enter the details below to continue"
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/message_request.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -24,12 +25,13 @@ class _Message_pageState extends State<Message_page> {
             Background_Img(context),
              SafeArea(child: Column(
                children: [
+                 SizedBox(height: screenHeight(context,dividedBy: 150),),
                  Padding(
                    padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
                    child:  Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       Text('Message',style: TextStyle(fontSize: 25,fontFamily: 'Roboto',fontWeight: FontWeight.w600),),
+                       custom_header(text: 'Message'),
                        GestureDetector(
                          onTap: () {
                            Navigator.push(context, MaterialPageRoute(builder:(context) {
@@ -40,7 +42,7 @@ class _Message_pageState extends State<Message_page> {
                      ],
                    ),
                  ),
-                 SizedBox(height: screenHeight(context,dividedBy: 70),),
+                 SizedBox(height: screenHeight(context,dividedBy: 100),),
                  Expanded(child:
                  ListView.separated(
                    shrinkWrap: true,

@@ -9,8 +9,10 @@ import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
+
 String countryCodeSelect = '1';
 String countryCodeflagsvg = '🇺🇸';
+
 class Login_page extends StatefulWidget {
   const Login_page({super.key});
 
@@ -41,7 +43,7 @@ class _Login_pageState extends State<Login_page> {
                   children: [
                     SizedBox(height: screenHeight(context,dividedBy: 10),),
                     custom_header(text: "Login"),
-                    custom_discription(text: "Please enter the details below to continue"),
+                    custom_discription(text: "counter1"),
                     SizedBox(height: screenHeight(context,dividedBy: 50),),
                     custom_textfield_header(text: 'E-mail'),
                     Custom_textfield(context, show_icon: false, onPress: () {

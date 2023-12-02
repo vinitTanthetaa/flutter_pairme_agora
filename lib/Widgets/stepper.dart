@@ -5,14 +5,14 @@ import 'package:steps_indicator/steps_indicator.dart';
 
 Widget custom_stepper ( BuildContext context,{required int positaion}){
   return Padding(
-    padding:  EdgeInsets.only(top: screenHeight(context,dividedBy: 20),bottom: screenHeight(context,dividedBy: 30)),
+    padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 20),horizontal: screenWidth(context,dividedBy: 15)),
     child: StepsIndicator(
       selectedStep: positaion,
       nbSteps: 6,
       doneLineColor: AppColor.skyBlue,
       doneStepColor: AppColor.skyBlue,
       undoneLineColor: AppColor.gray,
-      lineLength: screenWidth(context,dividedBy: 9.5),
+      lineLength: screenWidth(context,dividedBy: 8.85),
       doneLineThickness: 7,
       undoneLineThickness: 7,
       unselectedStepWidget:const CircleAvatar(
@@ -32,6 +32,7 @@ Widget custom_stepper ( BuildContext context,{required int positaion}){
       // ],
       enableLineAnimation: true,
       enableStepAnimation: true,
+      isHorizontal: true,
     ),
   );
 }

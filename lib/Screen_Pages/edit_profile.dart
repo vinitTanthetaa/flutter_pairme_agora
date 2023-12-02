@@ -56,6 +56,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: screenHeight(context,dividedBy: 150),),
                       Row(
                         children: [
                           GestureDetector(

@@ -97,24 +97,18 @@ List list = [
                           SizedBox(
                             width: screenWidth(context, dividedBy: 25),
                           ),
-                          const Text(
-                            'User Details',
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w600),
-                          ),
+                          custom_header(text: 'User Details')
                         ],
                       ),
                     ),
                     CarouselSlider(
-                        items: list.map((e) => InkWell(
+                        items: widget.list.map((e) => InkWell(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return Image_Screen(image: list[pageViewIndex],);
+                              return Image_Screen(image: widget.list[pageViewIndex],);
                             },));
                           },
-                          child: list[pageViewIndex].toString().endsWith('.mp4')  ?
+                          child: widget.list[pageViewIndex].toString().endsWith('.mp4')  ?
                           Container(
                             margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 65)),
                             height: screenHeight(context,dividedBy:2.5),
@@ -127,7 +121,7 @@ List list = [
                               Center(
                                 child: VTImageView(
                                 videoUrl:
-                                list[pageViewIndex],
+                                widget.list[pageViewIndex],
                                 assetPlaceHolder: 'assets/Images/videoThumbnail.png',
                             ),
                               ),
@@ -151,7 +145,7 @@ List list = [
                             width: screenWidth(context ),
                             decoration: BoxDecoration(
                                 color: Colors.green,
-                                image: DecorationImage(image: NetworkImage(list[pageViewIndex]),fit: BoxFit.fill)
+                                image: DecorationImage(image: NetworkImage(widget.list[pageViewIndex]),fit: BoxFit.fill)
                             ),
                           ),
                         )).toList(),
@@ -169,7 +163,7 @@ List list = [
                       child: TabPageSelector(
                         controller: TabController(
                             vsync: this,
-                            length: list.length,
+                            length: widget.list.length,
                             animationDuration: const Duration(milliseconds: 300),
                             initialIndex: pageViewIndex),
                         color: AppColor.gray,

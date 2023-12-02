@@ -1,6 +1,7 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' as foundation;import 'package:pair_me/Screen_Pages/videocall.dart';
+import 'package:flutter/foundation.dart' as foundation;
+import 'package:pair_me/Screen_Pages/videocall.dart';
 import 'package:pair_me/Screen_Pages/voice_call.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -142,14 +143,14 @@ bool emojiShowing = false;
                           width: screenWidth(context, dividedBy: 25),
                         ),
                         SizedBox(
-                          height: screenHeight(context, dividedBy: 15),
-                          width: screenHeight(context, dividedBy: 15),
+                          height: screenHeight(context, dividedBy: 17),
+                          width: screenHeight(context, dividedBy: 17),
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
                               Container(
-                                height: screenHeight(context, dividedBy: 15),
-                                width: screenHeight(context, dividedBy: 15),
+                                height: screenHeight(context, dividedBy: 20),
+                                width: screenHeight(context, dividedBy: 20),
                                 decoration: BoxDecoration(
                                     image: const DecorationImage(
                                         image: NetworkImage(
@@ -164,8 +165,8 @@ bool emojiShowing = false;
                                   left: 3.0,
                                   child: Container(
                                     height:
-                                        screenHeight(context, dividedBy: 70),
-                                    width: screenHeight(context, dividedBy: 70),
+                                        screenHeight(context, dividedBy: 80),
+                                    width: screenHeight(context, dividedBy: 80),
                                     decoration: BoxDecoration(
                                         color: const Color(0xff04D364),
                                         border: Border.all(
@@ -186,7 +187,7 @@ bool emojiShowing = false;
                               'Jane Koblenz',
                               style: TextStyle(
                                   color: AppColor.white,
-                                  fontSize: 14,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Roboto'),
                             ),
@@ -194,14 +195,14 @@ bool emojiShowing = false;
                               'Just Joined',
                               style: TextStyle(
                                   color: AppColor.white,
-                                  fontSize: 10,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Roboto'),
                             ) : Text(
                               'online',
                               style: TextStyle(
                                   color: AppColor.white,
-                                  fontSize: 10,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Roboto'),
                             ),

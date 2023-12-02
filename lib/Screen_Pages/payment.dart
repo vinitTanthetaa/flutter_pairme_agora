@@ -28,6 +28,7 @@ class _PaymentPageState extends State<PaymentPage> {
               child: SafeArea(
                 child: Column(
                   children: [
+                    SizedBox(height: screenHeight(context,dividedBy: 150),),
                     Row(
                       children: [
                         GestureDetector(

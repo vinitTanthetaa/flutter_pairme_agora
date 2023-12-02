@@ -106,6 +106,7 @@ class _Setting_pageState extends State<Setting_page> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: screenHeight(context,dividedBy: 150),),
                     custom_header(text: 'Settings'),
                     SizedBox(height: screenHeight(context,dividedBy: 30),),
                     Container(
@@ -382,7 +383,7 @@ class _Setting_pageState extends State<Setting_page> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               //_selected_language == '' ?  const
-                              const Text("Privacy Police",style: TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                              const Text("Privacy Policy",style: TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                               //:
                               // Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
                               icon ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)

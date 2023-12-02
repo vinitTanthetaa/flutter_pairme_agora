@@ -46,6 +46,7 @@ class _MessageRequestState extends State<MessageRequest> {
             Background_Img(context),
             SafeArea(child: Column(
               children: [
+                SizedBox(height: screenHeight(context,dividedBy: 150),),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
                   child:  Row(
@@ -66,7 +67,7 @@ class _MessageRequestState extends State<MessageRequest> {
                     ],
                   ),
                 ),
-                SizedBox(height: screenHeight(context,dividedBy: 50),),
+                SizedBox(height: screenHeight(context,dividedBy: 150),),
                 Expanded(child:
                 ListView.separated(
                     physics: const ClampingScrollPhysics(),
