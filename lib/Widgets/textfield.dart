@@ -1,4 +1,5 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -74,7 +75,7 @@ Widget Custom_textfield(BuildContext context,
                 //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
                 //     //semanticsLabel: 'A red up arrow'
                 // ),
-                hintText: hint,
+                hintText: hint.tr(),
                 hintStyle: const TextStyle(
                     color: Color(0xffB3B3B3),
                     fontFamily: 'Roboto',
@@ -83,7 +84,7 @@ Widget Custom_textfield(BuildContext context,
             : InputDecoration(
                 // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                 border: InputBorder.none,
-                hintText: hint,
+                hintText: hint.tr(),
                 hintStyle: const TextStyle(
                     color: Color(0xffB3B3B3),
                     fontFamily: 'Roboto',

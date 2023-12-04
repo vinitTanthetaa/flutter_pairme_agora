@@ -57,7 +57,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                 children: [
                   SizedBox(height: screenHeight(context,dividedBy: 10),),
                   custom_header(text: "Sign Up"),
-                  custom_discription(text: "Please enter the details below to continue"),
+                  custom_discription(text: "counter1"),
                   SizedBox(height: screenHeight(context,dividedBy: 50),),
                   custom_textfield_header(text: 'First Name'),
                   Custom_textfield(context, show_icon: false, onPress: () {},  hint: 'Enter your first name', controller: _firstName, hidetext: false, readOnly: false),

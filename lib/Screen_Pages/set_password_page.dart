@@ -35,7 +35,7 @@ class _Set_PasswordState extends State<Set_Password> {
                 children: [
                   SizedBox(height: screenHeight(context,dividedBy: 10),),
                   custom_header(text: "Set your password"),
-                  custom_discription(text: "Please enter the details below to continue"),
+                  custom_discription(text: "counter1"),
                   SizedBox(height: screenHeight(context,dividedBy: 50),),
                   custom_textfield_header(text: 'Password'),
                   Custom_textfield(context, show_icon: true, onPress: () {

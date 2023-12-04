@@ -93,7 +93,7 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
   - shared_preferences_foundation (0.0.1):
-    - Flutter
+    - Flutter   
     - FlutterMacOS
   - smart_auth (0.0.1):
     - Flutter

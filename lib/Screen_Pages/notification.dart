@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -25,7 +26,7 @@ class _Notification_pageState extends State<Notification_page> {
             SafeArea(
               child: Column(
                 children: [
-                  SizedBox(height: screenHeight(context,dividedBy: 150),),
+                  Header_Space(context),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
                     child: Row(

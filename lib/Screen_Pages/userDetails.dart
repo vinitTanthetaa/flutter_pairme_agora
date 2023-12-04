@@ -86,7 +86,7 @@ List list = [
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                             // Navigator.pop(context);
                             },
                             child: Image(
                               image: const AssetImage('assets/Images/back.png'),

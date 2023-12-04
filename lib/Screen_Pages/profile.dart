@@ -6,6 +6,7 @@ import 'package:pair_me/Screen_Pages/premium_membership.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -42,7 +43,7 @@ class _Profile_pageState extends State<Profile_page> {
                   child:  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: screenHeight(context,dividedBy: 150),),
+                      Header_Space(context),
                       custom_header(text: 'Profile'),
                       SizedBox(height: screenHeight(context,dividedBy: 60),),
                       SizedBox(

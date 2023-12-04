@@ -5,13 +5,13 @@ import 'package:pair_me/helper/App_Colors.dart';
 
 Widget custom_header({required String text}) {
   return Text(
-    text,
+    text.tr(),
     style: const TextStyle(
         fontSize: 25,
         color: AppColor.blackHeader,
         fontFamily: "Roboto",
         fontWeight: FontWeight.w600),
-  ).tr();
+  );
 }
 
 Widget custom_discription({required String text}) {
@@ -33,7 +33,7 @@ Widget custom_textfield_header({required String text,bool header = false}) {
       text:  TextSpan(
         children: [
           TextSpan(
-            text: text,
+            text: text.tr(),
             style: const TextStyle(
                 fontSize: 15,
                 fontFamily: 'Roboto',
@@ -47,7 +47,7 @@ Widget custom_textfield_header({required String text,bool header = false}) {
         ],
 
       )) :  Text(
-    text,
+    text.tr(),
     style: const TextStyle(
         fontSize: 15,
         fontFamily: 'Roboto',
@@ -60,7 +60,7 @@ Widget custom_textfield_header({required String text,bool header = false}) {
 
 Widget custom_text({required String text, required Color color}) {
   return Text(
-    text,
+    text.tr(),
     style: TextStyle(
         fontSize: 12,
         fontFamily: 'Roboto',

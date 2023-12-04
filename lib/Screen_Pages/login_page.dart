@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/forgot_password.dart';
@@ -70,7 +71,7 @@ class _Login_pageState extends State<Login_page> {
                                     return const Forget_Password();
                                   },));
                                 },
-                                child: const Text('Forgot Password?',style: TextStyle(fontFamily: 'Roboto',fontSize: 13,fontWeight: FontWeight.w500,color: Color(0xff437DFF)) ,),
+                                child: Text('Forgot Password?'.tr(),style: TextStyle(fontFamily: 'Roboto',fontSize: 13,fontWeight: FontWeight.w500,color: Color(0xff437DFF)) ,),
                               ),
                             ]),
                       ),

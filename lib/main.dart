@@ -13,7 +13,10 @@ Future<void> main() async {
         supportedLocales: const [
           Locale('en'),
           Locale('sp'),
-          Locale('hi')],
+          Locale('hi'),
+          Locale('can'),
+          Locale('man'),
+        ],
         fallbackLocale: const Locale('en'),
         path: 'assets/Language',
         child: const MyApp()));

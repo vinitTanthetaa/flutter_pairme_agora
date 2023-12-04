@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -37,7 +38,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: screenHeight(context,dividedBy: 150),),
+                      Header_Space(context),
                       Row(
                         children: [
                           InkWell(

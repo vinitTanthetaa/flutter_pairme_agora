@@ -1,10 +1,15 @@
 import 'dart:ui';
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
+import 'package:pair_me/Screen_Pages/image_page.dart';
+import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/Widgets/slidable_widget.dart';
 import 'package:pair_me/Widgets/swiper.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -12,6 +17,7 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
@@ -21,6 +27,7 @@ class Home_Page extends StatefulWidget {
 }
 
 class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
+  TabController? tabController;
   late TutorialCoachMark tutorialCoachMark;
   SharedPrefsService prefsService = SharedPrefsService();
   final GlobalKey _key = GlobalKey();
@@ -32,6 +39,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final GlobalKey _key6 = GlobalKey();
   int pageViewIndex = 0;
   final AppinioSwiperController controller = AppinioSwiperController();
+  final TextEditingController _bio = TextEditingController();
   List users = [
     {
       'Name': 'Jane Koblenz',
@@ -66,6 +74,24 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
       ]
     },
   ];
+  List lookingFor = [
+    'Investor',
+    'Startup founder',
+    'Corporate executive',
+  ];
+  List list = [
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
+    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS92eisuWOx3tEjeW14mT9ACVgXDwIRBGtnww&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdX029ohIUSygq9zirl9fSNBwSLqEOaKEYuw&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU',
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+  ];
   bool exchang = false;
  List _skills = [
    '',
@@ -76,633 +102,528 @@ int ind =0;
   @override
   void initState() {
     createTutorial();
+    tabController = TabController(length: 2, vsync: this,initialIndex: 0);
     Future.delayed(Duration.zero, showTutorial);
     FocusManager.instance.primaryFocus?.unfocus();
     super.initState();
   }
-
+  // Navigator.push(context, SwipeablePageRoute(
+  // builder: (context) {
+  // return ShowUsers(
+  // list: users[ind]['images'],
+  // );
+  // },
+  // ));
   Widget build(BuildContext context) {
-    return SlidableWidget(
-      onSlided: () {
-        Navigator.push(context, SwipeablePageRoute(
-          builder: (context) {
-            return ShowUsers(
-              list: users[ind]['images'],
-            );
-          },
-        ));
-      },
-      child: Scaffold(
-        body: SizedBox(
-          height: screenHeight(context),
-          width: screenWidth(context),
-          child: Stack(
-            children: [
-              Background_Img(context),
-              SafeArea(
-                child: Column(
-                  children: [
-                    SizedBox(height: screenHeight(context,dividedBy: 150),),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth(context, dividedBy: 20)),
-                      child: SizedBox(
-                        height: screenHeight(context, dividedBy: 20),
-                        width: screenWidth(context),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: screenHeight(context, dividedBy: 30),
-                              width: screenWidth(context, dividedBy: 3.5),
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/Images/pairme.png'
-                                         // 'assets/Images/MicrosoftTeams-image (1).png'
-                                      ))),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                // setState(() {
-                                //   exchang = !exchang;
-                                // });
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return Filter_page();
-                                  },
-                                ));
-                              },
-                              child: Container(
-                                //key: showcase ?_key : _key4,
-                                key: _key,
-                                height: screenHeight(context, dividedBy: 40),
-                                width: screenHeight(context, dividedBy: 40),
+    return Scaffold(
+      body: SizedBox(
+        height: screenHeight(context),
+        width: screenWidth(context),
+        child: Stack(
+          children: [
+            Background_Img(context),
+            PageView(
+              children: [
+                SafeArea(
+                  child: Column(
+                    children: [
+                      Header_Space(context),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth(context, dividedBy: 20)),
+                        child: SizedBox(
+                          height: screenHeight(context, dividedBy: 20),
+                          width: screenWidth(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: screenHeight(context, dividedBy: 30),
+                                width: screenWidth(context, dividedBy: 3.5),
                                 decoration: const BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
-                                            'assets/Images/filter.png'))),
+                                            'assets/Images/pairme.png'
+                                          // 'assets/Images/MicrosoftTeams-image (1).png'
+                                        ))),
                               ),
-                            )
-                          ],
+                              InkWell(
+                                onTap: () {
+                                  // Navigator.push(context, MaterialPageRoute(
+                                  //   builder: (context) {
+                                  //     return Filter_page();
+                                  //   },
+                                  // ));
+                                },
+                                child: Container(
+                                  //key: showcase ?_key : _key4,
+                                  key: _key,
+                                  height: screenHeight(context, dividedBy: 40),
+                                  width: screenHeight(context, dividedBy: 40),
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/Images/filter.png'))),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: screenHeight(context, dividedBy: 100),
-                    ),
-                    Flexible(
-                        child:
-                        AppinioSwiper(
-                            controller: controller,
-                            swipeOptions: const AppinioSwipeOptions.only(
+                      SizedBox(
+                        height: screenHeight(context, dividedBy: 100),
+                      ),
+                      Flexible(
+                          child:
+                          AppinioSwiper(
+                              controller: controller,
+                              swipeOptions: const AppinioSwipeOptions.only(
                                 top: true, bottom: true,),
-                            padding: EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: screenWidth(context, dividedBy: 100),
-                            ),
-                            cardsBuilder: (context, index) {
-                              return Container(
-                                // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
-                                 height: screenHeight(context),
-                                 width: screenWidth(context),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(users[index]['images']
-                                        [pageViewIndex]),
-                                        fit: BoxFit.fill,filterQuality: FilterQuality.high),
-                                    borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(23),
-                                        topLeft: Radius.circular(23))),
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: screenHeight(context,
-                                                dividedBy: 35)),
-                                        child: TabPageSelector(
-                                          // key:showcase ? _key1 :_key5,
-                                          key: _key1,
-                                          controller: TabController(
-                                              vsync: this,
-                                              length: 3,
-                                              initialIndex: pageViewIndex),
-                                          color: AppColor.gray,
-                                          borderStyle: BorderStyle.none,
-                                          indicatorSize: 8,
-                                          selectedColor: AppColor.skyBlue,
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: InkWell(
-                                            overlayColor:
-                                            const MaterialStatePropertyAll(
-                                                Colors.transparent),
-                                            onTap: () {
-                                              setState(() {
-                                                pageViewIndex <= 2 &&
-                                                    pageViewIndex > 0
-                                                    ? pageViewIndex--
-                                                    : null;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: screenHeight(context),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: InkWell(
-                                            overlayColor:
-                                            const MaterialStatePropertyAll(
-                                                Colors.transparent),
-                                            onTap: () {
-                                              setState(() {
-                                                pageViewIndex >= 2 &&
-                                                    pageViewIndex < 6
-                                                    ? null
-                                                    : pageViewIndex++;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: screenHeight(context),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        height: screenHeight(context, dividedBy: 3.7),
-                                        width: screenWidth(context),
-                                        decoration: const BoxDecoration(
-                                            gradient: LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                colors: [
-                                                  Colors.transparent,
-                                                  Colors.black
-                                                ])),
+                              ),
+                              cardsBuilder: (context, index) {
+                                return Container(
+                                  // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
+                                  height: screenHeight(context),
+                                  width: screenWidth(context),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(users[ind]['images']
+                                          [pageViewIndex]),
+                                          fit: BoxFit.fill,filterQuality: FilterQuality.high),
+                                      borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(23),
+                                          topLeft: Radius.circular(23))),
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.topCenter,
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
-                                              horizontal: screenWidth(context,
-                                                  dividedBy: 20)),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height: screenHeight(context,dividedBy: 100),),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  SizedBox(
-                                                    width: screenWidth(context,dividedBy: 2),
-                                                    child: Row(
-                                                      children: [
-                                                        Text('Jane Koblenz',style: TextStyle(color: AppColor.white,fontFamily: 'Roboto',fontSize: 25,fontWeight: FontWeight.w600),),
-                                                        SizedBox(width: screenWidth(context,dividedBy: 100),),
-                                                        Image(image: AssetImage("assets/Images/verified.png"),height: screenHeight(context,dividedBy: 45),width: screenHeight(context,dividedBy: 45),)
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  GestureDetector(
-                                                         onTap: () {
-                                                           Navigator.push(context,
-                                                               SwipeablePageRoute(
-                                                                 builder: (context) {
-                                                                   return ShowUsers(
-                                                                     list: users[index]
-                                                                     ['images'],
-                                                                   );
-                                                                 },
-                                                               ));
-                                                         },
-                                                      child: Image(image: AssetImage('assets/Images/side.png'),height: screenHeight(context,dividedBy: 25),width: screenHeight(context,dividedBy: 25),))
-                                                ],
+                                              vertical: screenHeight(context,
+                                                  dividedBy: 35)),
+                                          child: TabPageSelector(
+                                            // key:showcase ? _key1 :_key5,
+                                            key: _key1,
+                                            controller: TabController(
+                                                vsync: this,
+                                                length: 3,
+                                                initialIndex: pageViewIndex),
+                                            color: AppColor.gray,
+                                            borderStyle: BorderStyle.none,
+                                            indicatorSize: 8,
+                                            selectedColor: AppColor.skyBlue,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              overlayColor:
+                                              const MaterialStatePropertyAll(
+                                                  Colors.transparent),
+                                              onTap: () {
+                                                setState(() {
+                                                  pageViewIndex <= 2 &&
+                                                      pageViewIndex > 0
+                                                      ? pageViewIndex--
+                                                      : null;
+                                                });
+                                              },
+                                              child: Container(
+                                                height: screenHeight(context),
                                               ),
-                                              Text(
-                                                'Entrepreneur',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontFamily: 'Roboto',
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.white),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: InkWell(
+                                              overlayColor:
+                                              const MaterialStatePropertyAll(
+                                                  Colors.transparent),
+                                              onTap: () {
+                                                setState(() {
+                                                  pageViewIndex >= 2 &&
+                                                      pageViewIndex < 6
+                                                      ? null
+                                                      : pageViewIndex++;
+                                                });
+                                              },
+                                              child: Container(
+                                                height: screenHeight(context),
                                               ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'City/Country: ',
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                        color: Colors.white),
-                                                  ),
-                                                  Text(
-                                                    'Yorktown',
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                        FontWeight.w400,
-                                                        color: Colors.white),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Company: ',
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                        color: Colors.white),
-                                                  ),
-                                                  Text(
-                                                    'Infosys',
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                        FontWeight.w400,
-                                                        color: Colors.white),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: screenHeight(context,dividedBy: 100),
-                                              ),
-                                              _skills.length == 1 ?
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: AppColor.white ),
-                                                        borderRadius: BorderRadius.circular(5)
-                                                    ),
-                                                    child:   Padding(
-                                                      padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                      child: Text(
-                                                        'Startup founder',
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: 'Roboto',
-                                                            fontWeight: FontWeight.w400,
-                                                            color: Colors.white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ) : _skills.length == 2 ?
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: AppColor.white ),
-                                                        borderRadius: BorderRadius.circular(5)
-                                                    ),
-                                                    child:   Padding(
-                                                      padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                      child: Text(
-                                                        'Startup founder',
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: 'Roboto',
-                                                            fontWeight: FontWeight.w400,
-                                                            color: Colors.white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: screenWidth(context,dividedBy: 100),
-                                                  ),
-                                                  Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: AppColor.white ),
-                                                        borderRadius: BorderRadius.circular(5)
-                                                    ),
-                                                    child:   Padding(
-                                                      padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                      child: Text(
-                                                        'Startup founder',
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: 'Roboto',
-                                                            fontWeight: FontWeight.w400,
-                                                            color: Colors.white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              )  : Row(
-                                                children: [
-                                                  Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: AppColor.white ),
-                                                        borderRadius: BorderRadius.circular(5)
-                                                    ),
-                                                    child:   Padding(
-                                                      padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                      child: Text(
-                                                        'Startup founder',
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: 'Roboto',
-                                                            fontWeight: FontWeight.w400,
-                                                            color: Colors.white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: screenWidth(context,dividedBy: 100),),
-                                                  Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: AppColor.white ),
-                                                        borderRadius: BorderRadius.circular(5)
-                                                    ),
-                                                    child:   Padding(
-                                                      padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                      child: Text(
-                                                        'Startup founder',
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: 'Roboto',
-                                                            fontWeight: FontWeight.w400,
-                                                            color: Colors.white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: screenWidth(context,dividedBy: 100),),
-                                                  Container(
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: AppColor.white ),
-                                                        borderRadius: BorderRadius.circular(5)
-                                                    ),
-                                                    child:   Padding(
-                                                      padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                      child: Text(
-                                                        'Startup founder',
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: 'Roboto',
-                                                            fontWeight: FontWeight.w400,
-                                                            color: Colors.white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Spacer(),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 35)),
-                                                child: Row(
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Container(
+                                          height: screenHeight(context, dividedBy: 3.7),
+                                          width: screenWidth(context),
+                                          decoration: const BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Colors.transparent,
+                                                    Colors.black
+                                                  ])),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: screenWidth(context,
+                                                    dividedBy: 20)),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(height: screenHeight(context,dividedBy: 100),),
+                                                Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-                                                    Container(
-                                                      key: _key4,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(20),
-                                                        gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                                                    SizedBox(
+                                                      width: screenWidth(context,dividedBy: 2),
+                                                      child: Row(
+                                                        children: [
+                                                          Text('Jane Koblenz',style: TextStyle(color: AppColor.white,fontFamily: 'Roboto',fontSize: 25,fontWeight: FontWeight.w600),),
+                                                          SizedBox(width: screenWidth(context,dividedBy: 100),),
+                                                          Image(image: AssetImage("assets/Images/verified.png"),height: screenHeight(context,dividedBy: 45),width: screenHeight(context,dividedBy: 45),)
+                                                        ],
                                                       ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
-                                                        child: InkWell(
-                                                          onTap: () {
-                                                            controller.swipeUp();
-                                                          },
-                                                          child: Row(
-                                                            children: [
-                                                              Image(
-                                                                color: AppColor.white,
-                                                                image: AssetImage('assets/Images/button1.png'),
-                                                                height: screenHeight(context,dividedBy: 50),
-                                                                width: screenHeight(context,dividedBy: 45),
-                                                              ),
-                                                              SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                              Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                            ],
-                                                          ),
+                                                    ),
+                                                    GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(context,
+                                                              SwipeablePageRoute(
+                                                                builder: (context) {
+                                                                  return ShowUsers(
+                                                                    list: users[ind]
+                                                                    ['images'],
+                                                                  );
+                                                                },
+                                                              ));
+                                                        },
+                                                        child: Image(image: AssetImage('assets/Images/side.png'),height: screenHeight(context,dividedBy: 25),width: screenHeight(context,dividedBy: 25),))
+                                                  ],
+                                                ),
+                                                Text(
+                                                  'Entrepreneur',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontFamily: 'Roboto',
+                                                      fontWeight: FontWeight.w400,
+                                                      color: Colors.white),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'City/Country: ',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                          color: Colors.white),
+                                                    ),
+                                                    Text(
+                                                      'Yorktown',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                          FontWeight.w400,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Company: ',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                          color: Colors.white),
+                                                    ),
+                                                    Text(
+                                                      'Infosys',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                          FontWeight.w400,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: screenHeight(context,dividedBy: 100),
+                                                ),
+                                                _skills.length == 1 ?
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
                                                         ),
                                                       ),
                                                     ),
+                                                  ],
+                                                ) : _skills.length == 2 ?
+                                                Row(
+                                                  children: [
                                                     Container(
-                                                      key: _key5,
+                                                      alignment: Alignment.center,
                                                       decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(20),
-                                                        gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
                                                       ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
-                                                        child: InkWell(
-                                                          onTap: () {
-                                                            Navigator.push(context,
-                                                                MaterialPageRoute(
-                                                                  builder: (context) {
-                                                                    return Chatting_Page(
-                                                                      name: 'chatting',
-                                                                    );
-                                                                  },
-                                                                ));
-                                                            // controller.swipeUp();
-                                                          },
-                                                          child: Row(
-                                                            children: [
-                                                              Image(
-                                                                color: AppColor.white,
-                                                                image: AssetImage('assets/Images/button2.png'),
-                                                                height: screenHeight(context,dividedBy: 50),
-                                                                width: screenHeight(context,dividedBy: 45),
-                                                              ),
-                                                              SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                              Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                            ],
-                                                          ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
                                                         ),
                                                       ),
                                                     ),
+                                                    SizedBox(
+                                                      width: screenWidth(context,dividedBy: 100),
+                                                    ),
                                                     Container(
-                                                      key: _key6,
+                                                      alignment: Alignment.center,
                                                       decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(20),
-                                                        gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
                                                       ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
-                                                        child: InkWell(
-                                                          onTap: () {
-                                                            controller.swipeDown();
-                                                          },
-                                                          child: Row(
-                                                            children: [
-                                                              Image(
-                                                                color: AppColor.white,
-                                                                image: AssetImage('assets/Images/button3.png'),
-                                                                height: screenHeight(context,dividedBy: 50),
-                                                                width: screenHeight(context,dividedBy: 45),
-                                                              ),
-                                                              SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                              Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                            ],
-                                                          ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )  : Row(
+                                                  children: [
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: screenWidth(context,dividedBy: 100),),
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: screenWidth(context,dividedBy: 100),),
+                                                    Container(
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.white ),
+                                                          borderRadius: BorderRadius.circular(5)
+                                                      ),
+                                                      child:   Padding(
+                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
+                                                        child: Text(
+                                                          'Startup founder',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.white),
                                                         ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              )
-                                            ],
-
-
-
-
-
-                                            //   Padding(
-                                            //     padding: EdgeInsets.only(
-                                            //       // horizontal: screenWidth(
-                                            //       //     context,
-                                            //       //     dividedBy: 7),
-                                            //         bottom: screenHeight(
-                                            //             context,
-                                            //             dividedBy: 50)
-                                            //     ),
-                                            //     child: Row(
-                                            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            //       children: [
-
-                                            //         GestureDetector(
-                                            //             onTap: () {
-                                            //               Navigator.push(context,
-                                            //                   MaterialPageRoute(
-                                            //                     builder: (context) {
-                                            //                       return Chatting_Page(
-                                            //                         name: 'chatting',
-                                            //                       );
-                                            //                     },
-                                            //                   ));
-                                            //               // controller.swipeUp();
-                                            //             },
-                                            //             child: Container(
-                                            //               key: _key5,
-                                            //               // height: screenHeight(
-                                            //               //     context,
-                                            //               //     dividedBy: 17),
-                                            //               // width: screenWidth(
-                                            //               //     context,
-                                            //               //     dividedBy: 3),
-                                            //               decoration:  BoxDecoration(
-                                            //                 //border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
-                                            //                 borderRadius: BorderRadius.circular(50),
-                                            //                 gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
-                                            //                 // image: DecorationImage(
-                                            //                 //     image: AssetImage(
-                                            //                 //         'assets/Images/button1.png'))
-                                            //               ),
-                                            //               child: Padding(
-                                            //                 padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:20),vertical: screenHeight(context,dividedBy: 150)),
-                                            //                 child: Row(
-                                            //                   mainAxisAlignment: MainAxisAlignment.center,
-                                            //                   children: [
-                                            //                     Image(
-                                            //                       color: AppColor.white,
-                                            //                       image: AssetImage('assets/Images/button2.png'),
-                                            //                       height: screenHeight(context,dividedBy: 50),
-                                            //                       width: screenHeight(context,dividedBy: 45),
-                                            //                     ),
-                                            //                     SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                            //                     Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                            //                   ],
-                                            //                 ),
-                                            //               ),
-                                            //             )
-                                            //         ),
-                                            //         GestureDetector(
-                                            //             onTap: () {
-                                            //               controller.swipeDown();
-                                            //             },
-                                            //             child: Container(
-                                            //               key: _key6,
-                                            //               // height: screenHeight(
-                                            //               //     context,
-                                            //               //     dividedBy: 17),
-                                            //               // width: screenWidth(
-                                            //               //     context,
-                                            //               //     dividedBy: 3),
-                                            //               decoration:  BoxDecoration(
-                                            //                 //border: Border.all(color: AppColor.skyBlue,style: BorderStyle.solid,width: 1.5),
-                                            //                 borderRadius: BorderRadius.circular(50),
-                                            //                 gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
-                                            //                 // image: DecorationImage(
-                                            //                 //     image: AssetImage(
-                                            //                 //         'assets/Images/button1.png'))
-                                            //               ),
-                                            //               child: Padding(
-                                            //                 padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:20),vertical: screenHeight(context,dividedBy: 150)),
-                                            //                 child: Row(
-                                            //                   mainAxisAlignment: MainAxisAlignment.center,
-                                            //                   children: [
-                                            //                     Image(
-                                            //                       color: AppColor.white,
-                                            //                       image: AssetImage('assets/Images/button3.png'),
-                                            //                       height: screenHeight(context,dividedBy: 50),
-                                            //                       width: screenHeight(context,dividedBy: 45),
-                                            //                     ),
-                                            //                     SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                            //                     Text('Connect',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                            //                   ],
-                                            //                 ),
-                                            //               ),
-                                            //             )
-                                            //         ),
-                                            //       ],
-                                            //     ),
-                                            //   )
-                                            // ],
+                                                Spacer(),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 35)),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        key: _key4,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                ind++;
+                                                              });
+                                                              controller.swipeUp();
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                Image(
+                                                                  color: AppColor.white,
+                                                                  image: AssetImage('assets/Images/button1.png'),
+                                                                  height: screenHeight(context,dividedBy: 50),
+                                                                  width: screenHeight(context,dividedBy: 45),
+                                                                ),
+                                                                SizedBox(width: screenWidth(context,dividedBy: 60),),
+                                                                Text('Reject',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        key: _key5,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              Navigator.push(context,
+                                                                  MaterialPageRoute(
+                                                                    builder: (context) {
+                                                                      return Chatting_Page(
+                                                                        name: 'chatting',
+                                                                      );
+                                                                    },
+                                                                  ));
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                Image(
+                                                                  color: AppColor.white,
+                                                                  image: AssetImage('assets/Images/button2.png'),
+                                                                  height: screenHeight(context,dividedBy: 50),
+                                                                  width: screenHeight(context,dividedBy: 45),
+                                                                ),
+                                                                SizedBox(width: screenWidth(context,dividedBy: 60),),
+                                                                Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        key: _key6,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                ind++;
+                                                              });
+                                                              controller.swipeDown();
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                Image(
+                                                                  color: AppColor.white,
+                                                                  image: AssetImage('assets/Images/button3.png'),
+                                                                  height: screenHeight(context,dividedBy: 50),
+                                                                  width: screenHeight(context,dividedBy: 45),
+                                                                ),
+                                                                SizedBox(width: screenWidth(context,dividedBy: 60),),
+                                                                Text('Connect',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: screenHeight(context,
-                                                dividedBy: 9)),
-                                        child: SizedBox(
-                                          //  key: showcase ?_key3 :_key7,
-                                          key: _key3,
-                                          height:
-                                          screenHeight(context, dividedBy: 3),
-                                          width:
-                                          screenHeight(context, dividedBy: 3),
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: screenHeight(context,
+                                                  dividedBy: 9)),
+                                          child: SizedBox(
+                                            key: _key3,
+                                            height:
+                                            screenHeight(context, dividedBy: 3),
+                                            width:
+                                            screenHeight(context, dividedBy: 3),
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
-                            cardsCount: users.length)
-
-                        )
-                  ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                              cardsCount: users.length)
+                      )
+                    ],
+                  ),
                 ),
-              )
-            ],
-          ),
-        ),
+                UsersDetails(list: users[ind]['images'])
+              ],
+            )
+          ],
+        )
       ),
     );
   }

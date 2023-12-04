@@ -1,4 +1,5 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -28,7 +29,7 @@ Widget Custom_botton (BuildContext context ,{required String text,required Funct
           //   ),
           // ]
         ),
-        child: Text(text,style:  const TextStyle(fontWeight: FontWeight.w600,fontSize: 17,fontFamily: 'Roboto',color: AppColor.white),),
+        child: Text(text.tr(),style:  const TextStyle(fontWeight: FontWeight.w600,fontSize: 17,fontFamily: 'Roboto',color: AppColor.white),),
       ),
     ),
   );
@@ -39,27 +40,7 @@ Widget skip_button (BuildContext context,{required Function() onTap}){
     onTap: onTap,
     child: ShaderMask(blendMode: BlendMode.srcIn,shaderCallback: (bounds) {
       return const LinearGradient(colors: [AppColor.skyBlue, AppColor.whiteskyBlue]).createShader(bounds);
-    },child: const Text("Skip"),),
+    },child: Text("Skip".tr()),),
   );
 }
 
-Widget swipeUp (BuildContext context,AppinioSwiperController controller,String img){
-  return GestureDetector(
-    onTap: () {
-      controller.swipeUp(
-
-      );
-    },
-    child: Container(
-      height: screenHeight(
-          context,
-          dividedBy: 15),
-      width: screenWidth(context,
-          dividedBy: 10),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                  img))),
-    ),
-  );
-}
