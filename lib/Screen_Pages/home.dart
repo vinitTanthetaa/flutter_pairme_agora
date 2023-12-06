@@ -269,7 +269,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           alignment: Alignment.bottomCenter,
                                           child: Container(
                                             height: screenHeight(context,
-                                                dividedBy: 3.7),
+                                                dividedBy: 4),
                                             width: screenWidth(context),
                                             decoration: const BoxDecoration(
                                                 gradient: LinearGradient(
@@ -693,7 +693,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 screenHeight(
                                                                     context,
                                                                     dividedBy:
-                                                                        35)),
+                                                                        65)),
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
