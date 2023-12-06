@@ -7,7 +7,7 @@ Widget custom_header({required String text}) {
   return Text(
     text.tr(),
     style: const TextStyle(
-        fontSize: 25,
+        fontSize: 23,
         color: AppColor.blackHeader,
         fontFamily: "Roboto",
         fontWeight: FontWeight.w600),

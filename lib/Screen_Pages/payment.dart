@@ -45,7 +45,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         SizedBox(
                           width: screenWidth(context, dividedBy: 25),
                         ),
-                        custom_header(text: 'Payment')
+                        custom_header(text: 'Payment'),
                         // IconButton(onPressed: () {
                         //
                         // }, icon: Icon(Icons.close))

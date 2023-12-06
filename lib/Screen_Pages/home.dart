@@ -93,20 +93,22 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
   ];
   bool exchang = false;
- List _skills = [
-   '',
-   '',
-   '',
- ];
-int ind =0;
+  List _skills = [
+    '',
+    '',
+    '',
+  ];
+  int ind = 0;
+
   @override
   void initState() {
     createTutorial();
-    tabController = TabController(length: 2, vsync: this,initialIndex: 0);
+    tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     Future.delayed(Duration.zero, showTutorial);
     FocusManager.instance.primaryFocus?.unfocus();
     super.initState();
   }
+
   // Navigator.push(context, SwipeablePageRoute(
   // builder: (context) {
   // return ShowUsers(
@@ -117,522 +119,865 @@ int ind =0;
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        height: screenHeight(context),
-        width: screenWidth(context),
-        child: Stack(
-          children: [
-            Background_Img(context),
-            PageView(
-              children: [
-                SafeArea(
-                  child: Column(
-                    children: [
-                      Header_Space(context),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth(context, dividedBy: 20)),
-                        child: SizedBox(
-                          height: screenHeight(context, dividedBy: 20),
-                          width: screenWidth(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: screenHeight(context, dividedBy: 30),
-                                width: screenWidth(context, dividedBy: 3.5),
-                                decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/Images/pairme.png'
-                                          // 'assets/Images/MicrosoftTeams-image (1).png'
-                                        ))),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  // Navigator.push(context, MaterialPageRoute(
-                                  //   builder: (context) {
-                                  //     return Filter_page();
-                                  //   },
-                                  // ));
-                                },
-                                child: Container(
-                                  //key: showcase ?_key : _key4,
-                                  key: _key,
-                                  height: screenHeight(context, dividedBy: 40),
-                                  width: screenHeight(context, dividedBy: 40),
+          height: screenHeight(context),
+          width: screenWidth(context),
+          child: Stack(
+            children: [
+              Background_Img(context),
+              PageView(
+                children: [
+                  SafeArea(
+                    child: Column(
+                      children: [
+                        Header_Space(context),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth(context, dividedBy: 20)),
+                          child: SizedBox(
+                            height: screenHeight(context, dividedBy: 20),
+                            width: screenWidth(context),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  height: screenHeight(context, dividedBy: 30),
+                                  width: screenWidth(context, dividedBy: 3.5),
                                   decoration: const BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
-                                              'assets/Images/filter.png'))),
+                                              'assets/Images/pairme.png'
+                                              // 'assets/Images/MicrosoftTeams-image (1).png'
+                                              ))),
                                 ),
-                              )
-                            ],
+                                InkWell(
+                                  onTap: () {
+                                    // Navigator.push(context, MaterialPageRoute(
+                                    //   builder: (context) {
+                                    //     return Filter_page();
+                                    //   },
+                                    // ));
+                                  },
+                                  child: Container(
+                                    //key: showcase ?_key : _key4,
+                                    key: _key,
+                                    height:
+                                        screenHeight(context, dividedBy: 40),
+                                    width: screenHeight(context, dividedBy: 40),
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/Images/filter.png'))),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 100),
-                      ),
-                      Flexible(
-                          child:
-                          AppinioSwiper(
-                              controller: controller,
-                              swipeOptions: const AppinioSwipeOptions.only(
-                                top: true, bottom: true,),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth(context, dividedBy: 100),
-                              ),
-                              cardsBuilder: (context, index) {
-                                return Container(
-                                  // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
-                                  height: screenHeight(context),
-                                  width: screenWidth(context),
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(users[ind]['images']
-                                          [pageViewIndex]),
-                                          fit: BoxFit.fill,filterQuality: FilterQuality.high),
-                                      borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(23),
-                                          topLeft: Radius.circular(23))),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: screenHeight(context,
-                                                  dividedBy: 35)),
-                                          child: TabPageSelector(
-                                            // key:showcase ? _key1 :_key5,
-                                            key: _key1,
-                                            controller: TabController(
-                                                vsync: this,
-                                                length: 3,
-                                                initialIndex: pageViewIndex),
-                                            color: AppColor.gray,
-                                            borderStyle: BorderStyle.none,
-                                            indicatorSize: 8,
-                                            selectedColor: AppColor.skyBlue,
-                                          ),
+                        SizedBox(
+                          height: screenHeight(context, dividedBy: 100),
+                        ),
+                        Flexible(
+                            child: AppinioSwiper(
+                                controller: controller,
+                                swipeOptions: const AppinioSwipeOptions.only(
+                                  top: true,
+                                  bottom: true,
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      screenWidth(context, dividedBy: 100),
+                                ),
+                                cardsBuilder: (context, index) {
+                                  ind = index;
+                                  return Container(
+                                    // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
+                                    height: screenHeight(context),
+                                    width: screenWidth(context),
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(users[index]
+                                              ['images'][pageViewIndex]),
+                                          fit: BoxFit.cover,
+                                          filterQuality: FilterQuality.high,
                                         ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              overlayColor:
-                                              const MaterialStatePropertyAll(
-                                                  Colors.transparent),
-                                              onTap: () {
-                                                setState(() {
-                                                  pageViewIndex <= 2 &&
-                                                      pageViewIndex > 0
-                                                      ? pageViewIndex--
-                                                      : null;
-                                                });
-                                              },
-                                              child: Container(
-                                                height: screenHeight(context),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: InkWell(
-                                              overlayColor:
-                                              const MaterialStatePropertyAll(
-                                                  Colors.transparent),
-                                              onTap: () {
-                                                setState(() {
-                                                  pageViewIndex >= 2 &&
-                                                      pageViewIndex < 6
-                                                      ? null
-                                                      : pageViewIndex++;
-                                                });
-                                              },
-                                              child: Container(
-                                                height: screenHeight(context),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: Container(
-                                          height: screenHeight(context, dividedBy: 3.7),
-                                          width: screenWidth(context),
-                                          decoration: const BoxDecoration(
-                                              gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    Colors.transparent,
-                                                    Colors.black
-                                                  ])),
+                                        borderRadius: const BorderRadius.only(
+                                            topRight: Radius.circular(23),
+                                            topLeft: Radius.circular(23))),
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topCenter,
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: screenWidth(context,
-                                                    dividedBy: 20)),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(height: screenHeight(context,dividedBy: 100),),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: screenWidth(context,dividedBy: 2),
-                                                      child: Row(
-                                                        children: [
-                                                          Text('Jane Koblenz',style: TextStyle(color: AppColor.white,fontFamily: 'Roboto',fontSize: 25,fontWeight: FontWeight.w600),),
-                                                          SizedBox(width: screenWidth(context,dividedBy: 100),),
-                                                          Image(image: AssetImage("assets/Images/verified.png"),height: screenHeight(context,dividedBy: 45),width: screenHeight(context,dividedBy: 45),)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                          Navigator.push(context,
-                                                              SwipeablePageRoute(
-                                                                builder: (context) {
-                                                                  return ShowUsers(
-                                                                    list: users[ind]
-                                                                    ['images'],
-                                                                  );
-                                                                },
-                                                              ));
-                                                        },
-                                                        child: Image(image: AssetImage('assets/Images/side.png'),height: screenHeight(context,dividedBy: 25),width: screenHeight(context,dividedBy: 25),))
-                                                  ],
+                                                vertical: screenHeight(context,
+                                                    dividedBy: 35)),
+                                            child: TabPageSelector(
+                                              // key:showcase ? _key1 :_key5,
+                                              key: _key1,
+                                              controller: TabController(
+                                                  vsync: this,
+                                                  length: 3,
+                                                  initialIndex: pageViewIndex),
+                                              color: AppColor.gray,
+                                              borderStyle: BorderStyle.none,
+                                              indicatorSize: 8,
+                                              selectedColor: AppColor.skyBlue,
+                                            ),
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: InkWell(
+                                                overlayColor:
+                                                    const MaterialStatePropertyAll(
+                                                        Colors.transparent),
+                                                onTap: () {
+                                                  setState(() {
+                                                    pageViewIndex <= 2 &&
+                                                            pageViewIndex > 0
+                                                        ? pageViewIndex--
+                                                        : null;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  height: screenHeight(context),
                                                 ),
-                                                Text(
-                                                  'Entrepreneur',
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontFamily: 'Roboto',
-                                                      fontWeight: FontWeight.w400,
-                                                      color: Colors.white),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: InkWell(
+                                                overlayColor:
+                                                    const MaterialStatePropertyAll(
+                                                        Colors.transparent),
+                                                onTap: () {
+                                                  setState(() {
+                                                    pageViewIndex >= 2 &&
+                                                            pageViewIndex < 6
+                                                        ? null
+                                                        : pageViewIndex++;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  height: screenHeight(context),
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      'City/Country: ',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                          FontWeight.w500,
-                                                          color: Colors.white),
-                                                    ),
-                                                    Text(
-                                                      'Yorktown',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                          FontWeight.w400,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      'Company: ',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                          FontWeight.w500,
-                                                          color: Colors.white),
-                                                    ),
-                                                    Text(
-                                                      'Infosys',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                          FontWeight.w400,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: screenHeight(context,dividedBy: 100),
-                                                ),
-                                                _skills.length == 1 ?
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      alignment: Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: AppColor.white ),
-                                                          borderRadius: BorderRadius.circular(5)
-                                                      ),
-                                                      child:   Padding(
-                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                        child: Text(
-                                                          'Startup founder',
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily: 'Roboto',
-                                                              fontWeight: FontWeight.w400,
-                                                              color: Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ) : _skills.length == 2 ?
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      alignment: Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: AppColor.white ),
-                                                          borderRadius: BorderRadius.circular(5)
-                                                      ),
-                                                      child:   Padding(
-                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                        child: Text(
-                                                          'Startup founder',
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily: 'Roboto',
-                                                              fontWeight: FontWeight.w400,
-                                                              color: Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: screenWidth(context,dividedBy: 100),
-                                                    ),
-                                                    Container(
-                                                      alignment: Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: AppColor.white ),
-                                                          borderRadius: BorderRadius.circular(5)
-                                                      ),
-                                                      child:   Padding(
-                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 150),horizontal: screenWidth(context,dividedBy: 60)),
-                                                        child: Text(
-                                                          'Startup founder',
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily: 'Roboto',
-                                                              fontWeight: FontWeight.w400,
-                                                              color: Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )  : Row(
-                                                  children: [
-                                                    Container(
-                                                      alignment: Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: AppColor.white ),
-                                                          borderRadius: BorderRadius.circular(5)
-                                                      ),
-                                                      child:   Padding(
-                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                        child: Text(
-                                                          'Startup founder',
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily: 'Roboto',
-                                                              fontWeight: FontWeight.w400,
-                                                              color: Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: screenWidth(context,dividedBy: 100),),
-                                                    Container(
-                                                      alignment: Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: AppColor.white ),
-                                                          borderRadius: BorderRadius.circular(5)
-                                                      ),
-                                                      child:   Padding(
-                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                        child: Text(
-                                                          'Startup founder',
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily: 'Roboto',
-                                                              fontWeight: FontWeight.w400,
-                                                              color: Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: screenWidth(context,dividedBy: 100),),
-                                                    Container(
-                                                      alignment: Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: AppColor.white ),
-                                                          borderRadius: BorderRadius.circular(5)
-                                                      ),
-                                                      child:   Padding(
-                                                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 200),horizontal: screenWidth(context,dividedBy: 60)),
-                                                        child: Text(
-                                                          'Startup founder',
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily: 'Roboto',
-                                                              fontWeight: FontWeight.w400,
-                                                              color: Colors.white),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Spacer(),
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 35)),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Container(
+                                            height: screenHeight(context,
+                                                dividedBy: 3.7),
+                                            width: screenWidth(context),
+                                            decoration: const BoxDecoration(
+                                                gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [
+                                                  Colors.transparent,
+                                                  Colors.black
+                                                ])),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: screenWidth(
+                                                      context,
+                                                      dividedBy: 20)),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 100),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
-                                                      Container(
-                                                        key: _key4,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(20),
-                                                          gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
-                                                        ),
-                                                        child: Padding(
-                                                          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                ind++;
-                                                              });
-                                                              controller.swipeUp();
-                                                            },
-                                                            child: Row(
-                                                              children: [
-                                                                Image(
-                                                                  color: AppColor.white,
-                                                                  image: AssetImage('assets/Images/button1.png'),
-                                                                  height: screenHeight(context,dividedBy: 50),
-                                                                  width: screenHeight(context,dividedBy: 45),
-                                                                ),
-                                                                SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                                Text('Reject',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                              ],
+                                                      SizedBox(
+                                                        width: screenWidth(
+                                                            context,
+                                                            dividedBy: 2),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                              'Jane Koblenz',
+                                                              style: TextStyle(
+                                                                  color: AppColor
+                                                                      .white,
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  fontSize: 25,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
                                                             ),
-                                                          ),
+                                                            SizedBox(
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          100),
+                                                            ),
+                                                            Image(
+                                                              image: AssetImage(
+                                                                  "assets/Images/verified.png"),
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          45),
+                                                              width:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          45),
+                                                            )
+                                                          ],
                                                         ),
                                                       ),
-                                                      Container(
-                                                        key: _key5,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(20),
-                                                          gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
-                                                        ),
-                                                        child: Padding(
-                                                          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              Navigator.push(context,
-                                                                  MaterialPageRoute(
-                                                                    builder: (context) {
-                                                                      return Chatting_Page(
-                                                                        name: 'chatting',
-                                                                      );
-                                                                    },
-                                                                  ));
-                                                            },
-                                                            child: Row(
-                                                              children: [
-                                                                Image(
-                                                                  color: AppColor.white,
-                                                                  image: AssetImage('assets/Images/button2.png'),
-                                                                  height: screenHeight(context,dividedBy: 50),
-                                                                  width: screenHeight(context,dividedBy: 45),
-                                                                ),
-                                                                SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                                Text('Chat',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
+                                                      GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.push(
+                                                                context,
+                                                                SwipeablePageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                                return ShowUsers(
+                                                                  list: users[
+                                                                          index]
+                                                                      [
+                                                                      'images'],
+                                                                );
+                                                              },
+                                                            ));
+                                                          },
+                                                          child: Image(
+                                                            image: AssetImage(
+                                                                'assets/Images/side.png'),
+                                                            height:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        25),
+                                                            width: screenHeight(
+                                                                context,
+                                                                dividedBy: 25),
+                                                          ))
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    'Entrepreneur',
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontFamily: 'Roboto',
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Colors.white),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'City/Country: ',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Colors.white),
                                                       ),
-                                                      Container(
-                                                        key: _key6,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(20),
-                                                          gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
-                                                        ),
-                                                        child: Padding(
-                                                          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:15),vertical: screenHeight(context,dividedBy: 100)),
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                ind++;
-                                                              });
-                                                              controller.swipeDown();
-                                                            },
-                                                            child: Row(
-                                                              children: [
-                                                                Image(
-                                                                  color: AppColor.white,
-                                                                  image: AssetImage('assets/Images/button3.png'),
-                                                                  height: screenHeight(context,dividedBy: 50),
-                                                                  width: screenHeight(context,dividedBy: 45),
-                                                                ),
-                                                                SizedBox(width: screenWidth(context,dividedBy: 60),),
-                                                                Text('Connect',style: TextStyle(color: AppColor.white,fontSize: 13,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),)
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
+                                                      Text(
+                                                        'Yorktown',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color:
+                                                                Colors.white),
                                                       ),
                                                     ],
                                                   ),
-                                                )
-                                              ],
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'Company: ',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                      Text(
+                                                        'Infosys',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 100),
+                                                  ),
+                                                  _skills.length == 1
+                                                      ? Row(
+                                                          children: [
+                                                            Container(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              decoration: BoxDecoration(
+                                                                  border: Border.all(
+                                                                      color: AppColor
+                                                                          .white),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5)),
+                                                              child: Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            150),
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            60)),
+                                                                child: Text(
+                                                                  'Startup founder',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      : _skills.length == 2
+                                                          ? Row(
+                                                              children: [
+                                                                Container(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  decoration: BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: AppColor
+                                                                              .white),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              5)),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                        vertical: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                150),
+                                                                        horizontal: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                60)),
+                                                                    child: Text(
+                                                                      'Startup founder',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          50),
+                                                                ),
+                                                                Container(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  decoration: BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: AppColor
+                                                                              .white),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              5)),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                        vertical: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                150),
+                                                                        horizontal: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                60)),
+                                                                    child: Text(
+                                                                      'Startup founder',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            )
+                                                          : Row(
+                                                              children: [
+                                                                Container(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  decoration: BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: AppColor
+                                                                              .white),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              5)),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                        vertical: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                200),
+                                                                        horizontal: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                60)),
+                                                                    child: Text(
+                                                                      'Startup founder',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          50),
+                                                                ),
+                                                                Container(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  decoration: BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: AppColor
+                                                                              .white),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              5)),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                        vertical: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                200),
+                                                                        horizontal: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                60)),
+                                                                    child: Text(
+                                                                      'Startup founder',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          50),
+                                                                ),
+                                                                Container(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  decoration: BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: AppColor
+                                                                              .white),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              5)),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                        vertical: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                200),
+                                                                        horizontal: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                60)),
+                                                                    child: Text(
+                                                                      'Startup founder',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                  Spacer(),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        35)),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          key: _key4,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            gradient:
+                                                                const LinearGradient(
+                                                                    colors: [
+                                                                  AppColor
+                                                                      .skyBlue,
+                                                                  AppColor
+                                                                      .whiteskyBlue
+                                                                ]),
+                                                          ),
+                                                          child: Padding(
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            20),
+                                                                vertical:
+                                                                    screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            150)),
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  ind++;
+                                                                });
+                                                                controller
+                                                                    .swipeUp();
+                                                              },
+                                                              child: Row(
+                                                                children: [
+                                                                  Image(
+                                                                    color: AppColor
+                                                                        .white,
+                                                                    image: AssetImage(
+                                                                        'assets/Images/button1.png'),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            80),
+                                                                    width: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            80),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100),
+                                                                  ),
+                                                                  Text(
+                                                                    'Reject',
+                                                                    style: TextStyle(
+                                                                        color: AppColor
+                                                                            .white,
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        fontFamily:
+                                                                            'Roboto'),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          key: _key5,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            gradient:
+                                                                const LinearGradient(
+                                                                    colors: [
+                                                                  AppColor
+                                                                      .skyBlue,
+                                                                  AppColor
+                                                                      .whiteskyBlue
+                                                                ]),
+                                                          ),
+                                                          child: Padding(
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                vertical:
+                                                                    screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            150)),
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) {
+                                                                    return Chatting_Page(
+                                                                      name:
+                                                                          'chatting',
+                                                                    );
+                                                                  },
+                                                                ));
+                                                              },
+                                                              child: Row(
+                                                                children: [
+                                                                  Image(
+                                                                    color: AppColor
+                                                                        .white,
+                                                                    image: AssetImage(
+                                                                        'assets/Images/button2.png'),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70),
+                                                                    width: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100),
+                                                                  ),
+                                                                  Text(
+                                                                    'Chat',
+                                                                    style: TextStyle(
+                                                                        color: AppColor
+                                                                            .white,
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        fontFamily:
+                                                                            'Roboto'),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          key: _key6,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            gradient:
+                                                                const LinearGradient(
+                                                                    colors: [
+                                                                  AppColor
+                                                                      .skyBlue,
+                                                                  AppColor
+                                                                      .whiteskyBlue
+                                                                ]),
+                                                          ),
+                                                          child: Padding(
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            20),
+                                                                vertical:
+                                                                    screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            150)),
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  ind++;
+                                                                });
+                                                                controller
+                                                                    .swipeDown();
+                                                              },
+                                                              child: Row(
+                                                                children: [
+                                                                  Image(
+                                                                    color: AppColor
+                                                                        .white,
+                                                                    image: AssetImage(
+                                                                        'assets/Images/button3.png'),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70),
+                                                                    width: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100),
+                                                                  ),
+                                                                  Text(
+                                                                    'Connect',
+                                                                    style: TextStyle(
+                                                                        color: AppColor
+                                                                            .white,
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        fontFamily:
+                                                                            'Roboto'),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: screenHeight(context,
-                                                  dividedBy: 9)),
-                                          child: SizedBox(
-                                            key: _key3,
-                                            height:
-                                            screenHeight(context, dividedBy: 3),
-                                            width:
-                                            screenHeight(context, dividedBy: 3),
+                                        Align(
+                                          alignment: Alignment.topCenter,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: screenHeight(context,
+                                                    dividedBy: 9)),
+                                            child: SizedBox(
+                                              key: _key3,
+                                              height: screenHeight(context,
+                                                  dividedBy: 3),
+                                              width: screenHeight(context,
+                                                  dividedBy: 3),
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                              cardsCount: users.length)
-                      )
-                    ],
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                                cardsCount: users.length))
+                      ],
+                    ),
                   ),
-                ),
-                UsersDetails(list: users[ind]['images'])
-              ],
-            )
-          ],
-        )
-      ),
+                  UsersDetails(list: users[ind]['images'])
+                ],
+              )
+            ],
+          )),
     );
   }
 
   void _swipe(int index, AppinioSwiperDirection direction) {
     print("the card was swiped to the: $direction");
-    if (direction.name == 'left') {
-
-    }
+    if (direction.name == 'left') {}
   }
 
   void _onEnd() {
@@ -648,49 +993,49 @@ int ind =0;
     if (showcase == false) {
       setState(() {});
     } else {
-       tutorialCoachMark = TutorialCoachMark(
-      targets: _createTargets(),
-      colorShadow: Colors.black12,
-      textSkip: "SKIP",
-      textStyleSkip: const TextStyle(
-        fontFamily: 'Roboto',
-        color: AppColor.white,
-        fontWeight: FontWeight.w600,
-        fontSize: 17,
-      ),
-      paddingFocus: 10,
-      opacityShadow: 0.5,
-      imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-      onFinish: () {
-        print("finish");
-        showcase = false;
-        prefsService.setBoolData('showcase', showcase);
-      },
-      onClickTarget: (target) {
-        print('onClickTarget: $target');
-      },
-      onClickTargetWithTapPosition: (target, tapDetails) {
-        print("target: $target");
-        print(
-            "clicked at position local: ${tapDetails
-                .localPosition} - global: ${tapDetails.globalPosition}");
-      },
-      onClickOverlay: (target) {
-        print('onClickOverlay: $target');
-      },
-      onSkip: () {
-        print("skip");
-        showcase = false;
-        prefsService.setBoolData('showcase', showcase);
-        return true;
-      },
-    );
+      tutorialCoachMark = TutorialCoachMark(
+        targets: _createTargets(),
+        colorShadow: Colors.black12,
+        textSkip: "SKIP",
+        textStyleSkip: const TextStyle(
+          fontFamily: 'Roboto',
+          color: AppColor.white,
+          fontWeight: FontWeight.w600,
+          fontSize: 17,
+        ),
+        paddingFocus: 10,
+        opacityShadow: 0.5,
+        imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+        onFinish: () {
+          print("finish");
+          showcase = false;
+          prefsService.setBoolData('showcase', showcase);
+        },
+        onClickTarget: (target) {
+          print('onClickTarget: $target');
+        },
+        onClickTargetWithTapPosition: (target, tapDetails) {
+          print("target: $target");
+          print(
+              "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
+        },
+        onClickOverlay: (target) {
+          print('onClickOverlay: $target');
+        },
+        onSkip: () {
+          print("skip");
+          showcase = false;
+          prefsService.setBoolData('showcase', showcase);
+          return true;
+        },
+      );
     }
   }
 
   List<TargetFocus> _createTargets() {
     List<TargetFocus> targets = [];
-    targets.add(TargetFocus(
+    targets.add(
+      TargetFocus(
         identify: "keyBottomNavigation",
         keyTarget: _key,
         alignSkip: Alignment.topLeft,
@@ -717,8 +1062,10 @@ int ind =0;
             },
           ),
         ],
-      ),);
-    targets.add(TargetFocus(
+      ),
+    );
+    targets.add(
+      TargetFocus(
         identify: "keyBottomNavigation1",
         keyTarget: _key1,
         alignSkip: Alignment.topRight,
@@ -765,8 +1112,10 @@ int ind =0;
             },
           ),
         ],
-      ),);
-    targets.add(TargetFocus(
+      ),
+    );
+    targets.add(
+      TargetFocus(
         identify: "swipe",
         keyTarget: _key3,
         alignSkip: Alignment.topRight,
@@ -779,10 +1128,11 @@ int ind =0;
               return Column(
                 children: [
                   Image(
-                    image: const AssetImage('assets/Images/SwipeUp-unscreen.gif'),
+                    image:
+                        const AssetImage('assets/Images/SwipeUp-unscreen.gif'),
                     fit: BoxFit.cover,
-                    height: screenHeight(context,dividedBy: 5),
-                    width: screenHeight(context,dividedBy: 10),
+                    height: screenHeight(context, dividedBy: 5),
+                    width: screenHeight(context, dividedBy: 10),
                   ),
                   const Card(
                     child: Padding(
@@ -804,8 +1154,10 @@ int ind =0;
             },
           ),
         ],
-      ),);
-    targets.add(TargetFocus(
+      ),
+    );
+    targets.add(
+      TargetFocus(
         identify: "swipe",
         keyTarget: _key3,
         alignSkip: Alignment.topRight,
@@ -815,13 +1167,13 @@ int ind =0;
           TargetContent(
             align: ContentAlign.bottom,
             builder: (context, controller) {
-              return    Column(
+              return Column(
                 children: [
                   Image(
                     image: const AssetImage('assets/Images/Swipe-unscreen.gif'),
                     fit: BoxFit.cover,
-                    height: screenHeight(context,dividedBy: 5),
-                    width: screenHeight(context,dividedBy: 10),
+                    height: screenHeight(context, dividedBy: 5),
+                    width: screenHeight(context, dividedBy: 10),
                   ),
                   Card(
                     child: Padding(
@@ -843,8 +1195,10 @@ int ind =0;
             },
           ),
         ],
-      ),);
-    targets.add(TargetFocus(
+      ),
+    );
+    targets.add(
+      TargetFocus(
         identify: "swipe",
         keyTarget: _key3,
         alignSkip: Alignment.topRight,
@@ -857,10 +1211,11 @@ int ind =0;
               return Column(
                 children: [
                   Image(
-                    image: const AssetImage('assets/Images/SwipeLeft-unscreen.gif'),
+                    image: const AssetImage(
+                        'assets/Images/SwipeLeft-unscreen.gif'),
                     fit: BoxFit.cover,
-                    height: screenHeight(context,dividedBy: 5),
-                    width: screenHeight(context,dividedBy: 10),
+                    height: screenHeight(context, dividedBy: 5),
+                    width: screenHeight(context, dividedBy: 10),
                   ),
                   const Card(
                     child: Padding(
@@ -882,8 +1237,10 @@ int ind =0;
             },
           ),
         ],
-      ),);
-    targets.add(TargetFocus(
+      ),
+    );
+    targets.add(
+      TargetFocus(
         identify: "UsersDetails",
         keyTarget: _key2,
         alignSkip: Alignment.topRight,
@@ -911,8 +1268,10 @@ int ind =0;
             },
           ),
         ],
-      ),);
-    targets.add(TargetFocus(
+      ),
+    );
+    targets.add(
+      TargetFocus(
         identify: "Buttons",
         keyTarget: _key4,
         alignSkip: Alignment.topRight,
@@ -940,8 +1299,10 @@ int ind =0;
             },
           ),
         ],
-      ),);
-    targets.add(TargetFocus(
+      ),
+    );
+    targets.add(
+      TargetFocus(
         identify: "Buttons",
         keyTarget: _key5,
         alignSkip: Alignment.topRight,
@@ -969,8 +1330,10 @@ int ind =0;
             },
           ),
         ],
-      ),);
-    targets.add(TargetFocus(
+      ),
+    );
+    targets.add(
+      TargetFocus(
         identify: "Buttons",
         keyTarget: _key6,
         alignSkip: Alignment.topRight,
@@ -998,7 +1361,8 @@ int ind =0;
             },
           ),
         ],
-      ),);
+      ),
+    );
     // targets.add(
     //   TargetFocus(
     //     identify: "Target 0",

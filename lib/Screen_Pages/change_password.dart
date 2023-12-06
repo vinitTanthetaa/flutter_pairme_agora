@@ -82,18 +82,18 @@ class _ChangePasswordState extends State<ChangePassword> {
                       hideoldPassword = !hideoldPassword;
                     });
                   }, image: hideoldPassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png', hint: 'Enter your old password', controller: _oldPassword, hidetext: hideoldPassword, readOnly: false),
-                  custom_textfield_header(text: 'Password'),
+                  custom_textfield_header(text: 'New Password'),
                   Custom_textfield(context, show_icon: true, onPress: () {
                     setState(() {
                       hidePassword = !hidePassword;
                     });
-                  }, image: hidePassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png', hint: 'Enter your password', controller: _Password, hidetext: hidePassword, readOnly: false),
-                  custom_textfield_header(text: 'Confirm Password'),
+                  }, image: hidePassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png', hint: 'Enter your new password', controller: _Password, hidetext: hidePassword, readOnly: false),
+                  custom_textfield_header(text: 'Confirm New Password'),
                   Custom_textfield(context, show_icon: true, onPress: () {
                     setState(() {
                       hideconfirmPassword = !hideconfirmPassword;
                     });
-                  },  hint: 'Enter your Confirm password', image: hideconfirmPassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
+                  },  hint: 'Enter your Confirm new password', image: hideconfirmPassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
                   Spacer(),
                   Custom_botton(context, text: 'Update Password', onTap: () {
                     Navigator.pop(context);
