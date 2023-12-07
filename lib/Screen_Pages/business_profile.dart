@@ -2798,7 +2798,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                           style: const TextStyle(
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w400,
-                              fontSize: 15,
+                              fontSize: 14,
                               color: AppColor.dropdownfont),
                           decoration: const InputDecoration(
                               border: InputBorder.none,
