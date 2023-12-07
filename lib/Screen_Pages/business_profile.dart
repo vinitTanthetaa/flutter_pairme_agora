@@ -2107,7 +2107,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                       'Pitch Deck',
                       style: TextStyle(
                           fontFamily: 'Roboto',
-                          fontSize: 15,
+                          fontSize: 14,
                           color: AppColor.black,
                           fontWeight: FontWeight.w500),
                     ),
@@ -2763,7 +2763,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                       'Bio',
                       style: TextStyle(
                           fontFamily: 'Roboto',
-                          fontSize: 15,
+                          fontSize: 14,
                           color: AppColor.black,
                           fontWeight: FontWeight.w500),
                     ),

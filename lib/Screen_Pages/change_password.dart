@@ -48,17 +48,18 @@ class _ChangePasswordState extends State<ChangePassword> {
                           },
                           child: Image(
                             image: const AssetImage('assets/Images/back.png'),
-                            height: screenHeight(context,dividedBy: 60),
-                            width: screenHeight(context,dividedBy: 60),
+                            height: screenHeight(context,dividedBy: 50),
+                            width: screenHeight(context,dividedBy: 50),
                           ),
                         ),
-                        SizedBox(width: screenWidth(context,dividedBy: 60),),
-                        Text('Back')
+                        SizedBox(width: screenWidth(context,dividedBy: 25),),
+                       custom_header(text: "Change Password"),
+                        // Text('Back')
                       ],
                     ),
                   ),
                   SizedBox(height: screenHeight(context,dividedBy: 55),),
-                  custom_header(text: 'Change Password'),
+                  // custom_header(text: 'Change Password'),
                   custom_discription(text: "Your new password cannot be the same as a previous password"),
                   SizedBox(height: screenHeight(context,dividedBy: 50),),
                   // custom_textfield_header(text: 'User ID'),

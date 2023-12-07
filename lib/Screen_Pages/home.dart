@@ -304,7 +304,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             dividedBy: 2),
                                                         child: Row(
                                                           children: [
-                                                            Text(
+                                                            const Text(
                                                               'Jane Koblenz',
                                                               style: TextStyle(
                                                                   color: AppColor
@@ -324,7 +324,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           100),
                                                             ),
                                                             Image(
-                                                              image: AssetImage(
+                                                              image: const AssetImage(
                                                                   "assets/Images/verified.png"),
                                                               height:
                                                                   screenHeight(
@@ -357,7 +357,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             ));
                                                           },
                                                           child: Image(
-                                                            image: AssetImage(
+                                                            image: const AssetImage(
                                                                 'assets/Images/side.png'),
                                                             height:
                                                                 screenHeight(
@@ -370,7 +370,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           ))
                                                     ],
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                     'Entrepreneur',
                                                     style: TextStyle(
                                                         fontSize: 15,
@@ -379,7 +379,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             FontWeight.w400,
                                                         color: Colors.white),
                                                   ),
-                                                  Row(
+                                                  const Row(
                                                     children: [
                                                       Text(
                                                         'City/Country: ',
@@ -405,7 +405,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       ),
                                                     ],
                                                   ),
-                                                  Row(
+                                                  const Row(
                                                     children: [
                                                       Text(
                                                         'Company: ',
@@ -461,7 +461,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         context,
                                                                         dividedBy:
                                                                             60)),
-                                                                child: Text(
+                                                                child: const Text(
                                                                   'Startup founder',
                                                                   style: TextStyle(
                                                                       fontSize:
@@ -503,7 +503,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: Text(
+                                                                    child: const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -545,7 +545,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: Text(
+                                                                    child: const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -585,7 +585,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: Text(
+                                                                    child: const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -627,7 +627,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: Text(
+                                                                    child: const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -669,7 +669,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: Text(
+                                                                    child: const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -685,7 +685,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 ),
                                                               ],
                                                             ),
-                                                  Spacer(),
+                                                  const Spacer(),
                                                   Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
@@ -693,7 +693,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 screenHeight(
                                                                     context,
                                                                     dividedBy:
-                                                                        65)),
+                                                                        40)),
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -741,7 +741,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   Image(
                                                                     color: AppColor
                                                                         .white,
-                                                                    image: AssetImage(
+                                                                    image: const AssetImage(
                                                                         'assets/Images/button1.png'),
                                                                     height: screenHeight(
                                                                         context,
@@ -758,7 +758,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         dividedBy:
                                                                             100),
                                                                   ),
-                                                                  Text(
+                                                                  const Text(
                                                                     'Reject',
                                                                     style: TextStyle(
                                                                         color: AppColor
@@ -824,7 +824,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   Image(
                                                                     color: AppColor
                                                                         .white,
-                                                                    image: AssetImage(
+                                                                    image: const AssetImage(
                                                                         'assets/Images/button2.png'),
                                                                     height: screenHeight(
                                                                         context,
@@ -841,7 +841,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         dividedBy:
                                                                             100),
                                                                   ),
-                                                                  Text(
+                                                                  const Text(
                                                                     'Chat',
                                                                     style: TextStyle(
                                                                         color: AppColor
@@ -901,7 +901,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   Image(
                                                                     color: AppColor
                                                                         .white,
-                                                                    image: AssetImage(
+                                                                    image: const AssetImage(
                                                                         'assets/Images/button3.png'),
                                                                     height: screenHeight(
                                                                         context,
@@ -918,7 +918,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         dividedBy:
                                                                             100),
                                                                   ),
-                                                                  Text(
+                                                                  const Text(
                                                                     'Connect',
                                                                     style: TextStyle(
                                                                         color: AppColor
@@ -1175,7 +1175,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                     height: screenHeight(context, dividedBy: 5),
                     width: screenHeight(context, dividedBy: 10),
                   ),
-                  Card(
+                  const Card(
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(

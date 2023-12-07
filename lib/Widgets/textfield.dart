@@ -19,7 +19,7 @@ Widget Custom_textfield(BuildContext context,
   return Container(
     margin:
         EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 75)),
-    // height: screenHeight(context,dividedBy: 15),
+     height: screenHeight(context,dividedBy: 20),
     // width: screenWidth(context,dividedBy: 1),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
@@ -38,6 +38,7 @@ Widget Custom_textfield(BuildContext context,
     child: Padding(
       padding: EdgeInsets.only(
           left: screenWidth(context, dividedBy: 25),
+          bottom: screenHeight(context,dividedBy: 150),
           right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
       child: TextField(
         onTap: onTap,

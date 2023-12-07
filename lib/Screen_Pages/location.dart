@@ -200,17 +200,13 @@ class _Location_pageState extends State<Location_page> {
               ),
             ),
             Positioned(
-              left: screenWidth(context,dividedBy: 20),
+              left: screenWidth(context,dividedBy: 30),
               top: screenHeight(context,dividedBy: 15),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Container(
-                    height: screenHeight(context,dividedBy: 20),
-                    width: screenHeight(context,dividedBy: 20),
-                    child: Icon(Icons.arrow_back_ios_rounded,size: 25,),
-                  ),
+                  child: Icon(Icons.arrow_back_ios_rounded,size: 25,),
                 ))
           ],
         ),

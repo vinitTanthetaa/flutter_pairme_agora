@@ -28,7 +28,7 @@ class _SignUp_pageState extends State<SignUp_page> {
   final TextEditingController _eMail = TextEditingController();
     final TextEditingController _gender = TextEditingController();
   final TextEditingController _date = TextEditingController();
-  String gender = 'Female';
+  String gender = '';
   bool popup = false;
   bool popup1 = false;
   bool calendar = false;
@@ -38,7 +38,6 @@ class _SignUp_pageState extends State<SignUp_page> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _gender.text =gender;
     _selectedDate = _focusedDay;
   }
   Widget build(BuildContext context) {

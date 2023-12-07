@@ -97,8 +97,8 @@ class _UsersDetailsState extends State<UsersDetails>
                             },
                             child: Image(
                               image: const AssetImage('assets/Images/back.png'),
-                              height: screenHeight(context, dividedBy: 45),
-                              width: screenHeight(context, dividedBy: 45),
+                              height: screenHeight(context, dividedBy: 50),
+                              width: screenHeight(context, dividedBy: 50),
                             ),
                           ),
                           SizedBox(

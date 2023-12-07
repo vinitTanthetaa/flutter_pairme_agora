@@ -48,7 +48,7 @@ class _Set_PasswordState extends State<Set_Password> {
                     setState(() {
                       hideconfirmPassword = !hideconfirmPassword;
                     });
-                  },  hint: 'Enter your Confirm password', image: hideconfirmPassword == false ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
+                  },  hint: 'Enter your confirm password', image: hideconfirmPassword == false ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
                   const Spacer(),
                   Custom_botton(context, text: 'Save', onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) {

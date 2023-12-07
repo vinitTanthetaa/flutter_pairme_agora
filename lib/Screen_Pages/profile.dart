@@ -53,39 +53,19 @@ class _Profile_pageState extends State<Profile_page> {
                         height: screenHeight(context, dividedBy: 60),
                       ),
                       SizedBox(
-                        height: screenHeight(context, dividedBy: 10.5),
+                        height: screenHeight(context, dividedBy: 12.5),
                         width: screenWidth(context),
                         child: Row(
                           children: [
-                            SizedBox(
-                              height: screenHeight(context, dividedBy: 10.5),
-                              width: screenHeight(context, dividedBy: 10.5),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    height:
-                                        screenHeight(context, dividedBy: 10.5),
-                                    width:
-                                        screenHeight(context, dividedBy: 10.5),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMVP7dBLbLgjKD8lHdaMcQz7XBf2E22eParQ&usqp=CAU'),
-                                            fit: BoxFit.cover),
-                                        shape: BoxShape.circle),
-                                  ),
-                                  Positioned(
-                                    bottom:
-                                        screenHeight(context, dividedBy: 400),
-                                    left: screenWidth(context, dividedBy: 150),
-                                    child: CircleAvatar(
-                                      radius: 7,
-                                      backgroundColor: Color(0xff45E05E),
-                                    ),
-                                  )
-                                ],
-                              ),
+                            Container(
+                              height: screenHeight(context, dividedBy: 11.5),
+                              width: screenHeight(context, dividedBy: 11.5),
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMVP7dBLbLgjKD8lHdaMcQz7XBf2E22eParQ&usqp=CAU'),
+                                      fit: BoxFit.cover),
+                                  shape: BoxShape.circle),
                             ),
                             SizedBox(
                               width: screenWidth(context, dividedBy: 40),
@@ -178,44 +158,47 @@ class _Profile_pageState extends State<Profile_page> {
                                     ));
                                   },
                                   child: Container(
-                                    alignment: Alignment.center,
-                                    height:
-                                        screenHeight(context, dividedBy: 35),
-                                    width: screenWidth(context, dividedBy: 5),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      gradient: const LinearGradient(colors: [
-                                        AppColor.skyBlue,
-                                        AppColor.whiteskyBlue
-                                      ]),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: screenHeight(context,
-                                              dividedBy: 55),
-                                          width: screenHeight(context,
-                                              dividedBy: 70),
-                                          decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/Images/location.png'))),
-                                        ),
-                                        const Text(
-                                          'Location',
-                                          style: TextStyle(
+                                      alignment: Alignment.center,
+                                      height:
+                                          screenHeight(context, dividedBy: 35),
+                                      // width: screenWidth(context, dividedBy: 5),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        gradient: const LinearGradient(colors: [
+                                          AppColor.skyBlue,
+                                          AppColor.whiteskyBlue
+                                        ]),
+                                      ),
+                                      child: Padding(
+                                        padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image(
                                               color: AppColor.white,
-                                              fontFamily: 'Roboto',
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                              image: const AssetImage(
+                                                  'assets/Images/location.png'),
+                                              height: screenHeight(context,
+                                                  dividedBy: 70),
+                                              width: screenHeight(context,
+                                                  dividedBy: 70),
+                                            ),
+                                            SizedBox(
+                                              width: screenWidth(context,
+                                                  dividedBy: 150),
+                                            ),
+                                            const Text(
+                                              'Location',
+                                              style: TextStyle(
+                                                  color: AppColor.white,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Roboto'),
+                                            )
+                                          ],
+                                        ),
+                                      )),
                                 )
                               ],
                             )
@@ -231,13 +214,16 @@ class _Profile_pageState extends State<Profile_page> {
                         padding: EdgeInsets.symmetric(
                             vertical: screenHeight(context, dividedBy: 70)),
                         child: LinearPercentIndicator(
-                          width: screenWidth(context, dividedBy: 1.16),
-                          lineHeight: 7.0,
-                          percent: 0.5,
-                          barRadius: const Radius.circular(20),
-                          backgroundColor: Colors.grey,
-                          progressColor: Colors.blue,
-                        ),
+                            width: screenWidth(context, dividedBy: 1.16),
+                            lineHeight: 7.0,
+                            percent: 0.5,
+                            barRadius: const Radius.circular(20),
+                            backgroundColor: Colors.grey,
+                            // progressColor: Colors.blue,
+                            linearGradient: const LinearGradient(colors: [
+                              AppColor.skyBlue,
+                              AppColor.whiteskyBlue
+                            ])),
                       ),
                       SizedBox(
                         height: 10,
@@ -276,8 +262,8 @@ class _Profile_pageState extends State<Profile_page> {
                             style: const TextStyle(
                                 fontFamily: 'Roboto',
                                 fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: AppColor.dropdownfont),
+                                fontSize: 12,
+                                color: Color(0xff434343)),
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               // hintText: 'Enter some words of your Profile',
@@ -403,7 +389,7 @@ class _Profile_pageState extends State<Profile_page> {
                             "Ground Floor, BL-91, Plot No. 13/24, Udhana - Magdalla Rd, near Dharti Namkin Udhna, Chandramani Society, Surat, Gujarat 395007",
                             style: TextStyle(
                                 color: Color(0xff434343),
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: "Roboto"),
                           ),
@@ -414,7 +400,7 @@ class _Profile_pageState extends State<Profile_page> {
                         margin: EdgeInsets.symmetric(
                             vertical: screenHeight(context, dividedBy: 90)),
                         alignment: Alignment.centerLeft,
-                        height: screenHeight(context, dividedBy: 17),
+                        height: screenHeight(context, dividedBy: 20),
                         width: screenWidth(context, dividedBy: 1.15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
@@ -438,7 +424,7 @@ class _Profile_pageState extends State<Profile_page> {
                             "1 years",
                             style: TextStyle(
                                 color: Color(0xff434343),
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: "Roboto"),
                           ),
@@ -449,7 +435,7 @@ class _Profile_pageState extends State<Profile_page> {
                         margin: EdgeInsets.symmetric(
                             vertical: screenHeight(context, dividedBy: 90)),
                         alignment: Alignment.centerLeft,
-                        height: screenHeight(context, dividedBy: 17),
+                        height: screenHeight(context, dividedBy: 20),
                         width: screenWidth(context, dividedBy: 1.15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
@@ -473,7 +459,7 @@ class _Profile_pageState extends State<Profile_page> {
                             "Graphic Design",
                             style: TextStyle(
                                 color: Color(0xff434343),
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: "Roboto"),
                           ),
