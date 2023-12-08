@@ -229,7 +229,7 @@ class _UsersDetailsState extends State<UsersDetails>
                                 fontFamily: 'Roboto'),
                           ),
                           SizedBox(
-                            height: screenHeight(context, dividedBy: 400),
+                            height: screenHeight(context, dividedBy: 160),
                           ),
                           const Row(
                             children: [
@@ -298,7 +298,7 @@ class _UsersDetailsState extends State<UsersDetails>
                             ],
                           ),
                           SizedBox(
-                            height: screenHeight(context, dividedBy: 70),
+                            height: screenHeight(context, dividedBy: 50),
                           ),
                           custom_textfield_header(text: 'Looking for'),
                           SizedBox(
@@ -307,16 +307,16 @@ class _UsersDetailsState extends State<UsersDetails>
                           Row(
                             children: [
                               Container(
-                                height: screenHeight(context,dividedBy: 130),
-                                width: screenHeight(context,dividedBy: 130),
+                                height: screenHeight(context, dividedBy: 130),
+                                width: screenHeight(context, dividedBy: 130),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    border: Border.all(color: AppColor.dropdownfont,width: 1.5)
-                                ),
+                                    border: Border.all(
+                                        color: AppColor.dropdownfont,
+                                        width: 1.5)),
                               ),
                               SizedBox(
-                                width:
-                                screenWidth(context, dividedBy: 50),
+                                width: screenWidth(context, dividedBy: 50),
                               ),
                               Text(
                                 lookingFor[0],
@@ -331,16 +331,16 @@ class _UsersDetailsState extends State<UsersDetails>
                           Row(
                             children: [
                               Container(
-                                height: screenHeight(context,dividedBy: 130),
-                                width: screenHeight(context,dividedBy: 130),
+                                height: screenHeight(context, dividedBy: 130),
+                                width: screenHeight(context, dividedBy: 130),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    border: Border.all(color: AppColor.dropdownfont,width: 1.5)
-                                ),
+                                    border: Border.all(
+                                        color: AppColor.dropdownfont,
+                                        width: 1.5)),
                               ),
                               SizedBox(
-                                width:
-                                screenWidth(context, dividedBy: 50),
+                                width: screenWidth(context, dividedBy: 50),
                               ),
                               Text(
                                 lookingFor[1],
@@ -355,16 +355,16 @@ class _UsersDetailsState extends State<UsersDetails>
                           Row(
                             children: [
                               Container(
-                                height: screenHeight(context,dividedBy: 130),
-                                width: screenHeight(context,dividedBy: 130),
+                                height: screenHeight(context, dividedBy: 130),
+                                width: screenHeight(context, dividedBy: 130),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    border: Border.all(color: AppColor.dropdownfont,width: 1.5)
-                                ),
+                                    border: Border.all(
+                                        color: AppColor.dropdownfont,
+                                        width: 1.5)),
                               ),
                               SizedBox(
-                                width:
-                                screenWidth(context, dividedBy: 50),
+                                width: screenWidth(context, dividedBy: 50),
                               ),
                               Text(
                                 lookingFor[2],
@@ -377,12 +377,12 @@ class _UsersDetailsState extends State<UsersDetails>
                             ],
                           ),
                           SizedBox(
-                            height: screenHeight(context, dividedBy: 200),
+                            height: screenHeight(context, dividedBy: 50),
                           ),
                           custom_textfield_header(text: 'Bio'),
                           Container(
                             margin: EdgeInsets.only(
-                                top: screenHeight(context, dividedBy: 90),
+                                top: screenHeight(context, dividedBy: 65),
                                 bottom: screenHeight(context, dividedBy: 100)),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7),
@@ -422,6 +422,9 @@ class _UsersDetailsState extends State<UsersDetails>
                                 ),
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: screenHeight(context, dividedBy: 50),
                           ),
                           custom_textfield_header(text: 'Documents'),
                           Container(

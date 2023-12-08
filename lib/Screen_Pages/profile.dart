@@ -170,7 +170,9 @@ class _Profile_pageState extends State<Profile_page> {
                                         ]),
                                       ),
                                       child: Padding(
-                                        padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: screenWidth(context,
+                                                dividedBy: 25)),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -210,23 +212,32 @@ class _Profile_pageState extends State<Profile_page> {
                         color: Color(0xffF5F5F5),
                       ),
                       custom_textfield_header(text: 'Intermediate'),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: screenHeight(context, dividedBy: 70)),
-                        child: LinearPercentIndicator(
-                            width: screenWidth(context, dividedBy: 1.16),
-                            lineHeight: 7.0,
-                            percent: 0.5,
-                            barRadius: const Radius.circular(20),
-                            backgroundColor: Colors.grey,
-                            // progressColor: Colors.blue,
-                            linearGradient: const LinearGradient(colors: [
-                              AppColor.skyBlue,
-                              AppColor.whiteskyBlue
-                            ])),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: screenHeight(context, dividedBy: 70)),
+                            child: LinearPercentIndicator(
+                                width: screenWidth(context, dividedBy: 1.17),
+                                lineHeight: 7.0,
+                                percent: 0.5,
+                                barRadius: const Radius.circular(20),
+                                backgroundColor: Colors.grey,
+                                // progressColor: Colors.blue,
+                                linearGradient: const LinearGradient(colors: [
+                                  AppColor.skyBlue,
+                                  AppColor.whiteskyBlue
+                                ])),
+                          ),
+                          Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 40)),
+                            child: Text("2/5"),
+                          )
+                        ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: screenHeight(context, dividedBy: 50),
                       ),
                       custom_textfield_header(text: 'Bio'),
                       Container(
@@ -274,6 +285,9 @@ class _Profile_pageState extends State<Profile_page> {
                             ),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: screenHeight(context, dividedBy: 50),
                       ),
                       custom_textfield_header(text: 'My Documents'),
                       SizedBox(
@@ -358,12 +372,13 @@ class _Profile_pageState extends State<Profile_page> {
                         ),
                       ),
                       SizedBox(
-                        height: screenHeight(context, dividedBy: 150),
+                        height: screenHeight(context, dividedBy: 100),
                       ),
                       custom_textfield_header(text: 'Address'),
                       Container(
                         margin: EdgeInsets.symmetric(
-                            vertical: screenHeight(context, dividedBy: 90)),
+                          vertical: screenHeight(context, dividedBy: 90),
+                        ),
                         alignment: Alignment.centerLeft,
                         // height: screenHeight(context,dividedBy: 17),
                         width: screenWidth(context, dividedBy: 1.15),
@@ -395,6 +410,9 @@ class _Profile_pageState extends State<Profile_page> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: screenHeight(context, dividedBy: 100),
+                      ),
                       custom_textfield_header(text: 'Business Experience '),
                       Container(
                         margin: EdgeInsets.symmetric(
@@ -418,7 +436,7 @@ class _Profile_pageState extends State<Profile_page> {
                             ]),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth(context, dividedBy: 30),
+                              horizontal: screenWidth(context, dividedBy: 20),
                               vertical: screenHeight(context, dividedBy: 100)),
                           child: const Text(
                             "1 years",
@@ -429,6 +447,9 @@ class _Profile_pageState extends State<Profile_page> {
                                 fontFamily: "Roboto"),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: screenHeight(context, dividedBy: 100),
                       ),
                       custom_textfield_header(text: 'Skills'),
                       Container(
@@ -464,6 +485,9 @@ class _Profile_pageState extends State<Profile_page> {
                                 fontFamily: "Roboto"),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: screenHeight(context, dividedBy: 100),
                       ),
                       custom_textfield_header(text: 'Education'),
                       Container(

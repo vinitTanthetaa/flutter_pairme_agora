@@ -38,8 +38,8 @@ class _PaymentPageState extends State<PaymentPage> {
                           },
                           child: Image(
                             image: const AssetImage('assets/Images/back.png'),
-                            height: screenHeight(context,dividedBy: 40),
-                            width: screenHeight(context,dividedBy: 40),
+                            height: screenHeight(context,dividedBy: 50),
+                            width: screenHeight(context,dividedBy: 50),
                           ),
                         ),
                         SizedBox(
