@@ -75,96 +75,87 @@ class _UsersDetailsState extends State<UsersDetails>
         child: Stack(
           children: [
             Background_Img(context),
-            SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: SafeArea(
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                surfaceTintColor: Colors.transparent,
+                leading: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Icon(Icons.arrow_back_ios_rounded),
+                    )),
+                title: custom_header(text: "User Details"),
+              ),
+              body: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: screenWidth(context, dividedBy: 30),
-                          top: screenHeight(context, dividedBy: 87)),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              // Navigator.pop(context);
-                            },
-                            child: Image(
-                              image: const AssetImage('assets/Images/back.png'),
-                              height: screenHeight(context, dividedBy: 50),
-                              width: screenHeight(context, dividedBy: 50),
-                            ),
-                          ),
-                          SizedBox(
-                            width: screenWidth(context, dividedBy: 25),
-                          ),
-                          custom_header(text: 'User Details')
-                        ],
-                      ),
-                    ),
                     CarouselSlider(
                         items: widget.list
                             .map((e) => InkWell(
-                                  onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return Image_Screen(
-                                          image: widget.list[pageViewIndex],
-                                        );
-                                      },
-                                    ));
-                                  },
-                                  child: widget.list[pageViewIndex]
-                                          .toString()
-                                          .endsWith('.mp4')
-                                      ? Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: screenHeight(context,
-                                                  dividedBy: 65)),
-                                          height: screenHeight(context,
-                                              dividedBy: 2.5),
-                                          width: screenWidth(context),
-                                          decoration: const BoxDecoration(
-                                              //  image: DecorationImage(image: NetworkImage(list[pageViewIndex]),fit: BoxFit.fill)
-                                              ),
-                                          child: Stack(
-                                            children: [
-                                              Center(
-                                                child: VTImageView(
-                                                  videoUrl: widget
-                                                      .list[pageViewIndex],
-                                                  assetPlaceHolder:
-                                                      'assets/Images/videoThumbnail.png',
-                                                ),
-                                              ),
-                                              const Align(
-                                                child: CircleAvatar(
-                                                  backgroundColor:
-                                                      Colors.white30,
-                                                  child: Icon(
-                                                      Icons.play_arrow_rounded),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      : Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: screenHeight(context,
-                                                  dividedBy: 65)),
-                                          height: screenHeight(context,
-                                              dividedBy: 2.5),
-                                          width: screenWidth(context),
-                                          decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              image: DecorationImage(
-                                                  image: NetworkImage(widget
-                                                      .list[pageViewIndex]),
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                ))
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return Image_Screen(
+                                  image: widget.list[pageViewIndex],
+                                );
+                              },
+                            ));
+                          },
+                          child: widget.list[pageViewIndex]
+                              .toString()
+                              .endsWith('.mp4')
+                              ? Container(
+                            // margin: EdgeInsets.symmetric(
+                            //     vertical: screenHeight(context,
+                            //         dividedBy: 65)),
+                            height: screenHeight(context,
+                                dividedBy: 2.5),
+                            width: screenWidth(context),
+                            decoration: const BoxDecoration(
+                              //  image: DecorationImage(image: NetworkImage(list[pageViewIndex]),fit: BoxFit.fill)
+                            ),
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: VTImageView(
+                                    videoUrl: widget
+                                        .list[pageViewIndex],
+                                    assetPlaceHolder:
+                                    'assets/Images/videoThumbnail.png',
+                                  ),
+                                ),
+                                const Align(
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                    Colors.white30,
+                                    child: Icon(
+                                        Icons.play_arrow_rounded),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                              : Container(
+                            // margin: EdgeInsets.symmetric(
+                            //     vertical: screenHeight(context,
+                            //         dividedBy: 65)),
+                            height: screenHeight(context,
+                                dividedBy: 2.5),
+                            width: screenWidth(context),
+                            decoration: BoxDecoration(
+                                color: Colors.green,
+                                image: DecorationImage(
+                                    image: NetworkImage(widget
+                                        .list[pageViewIndex]),
+                                    fit: BoxFit.cover)),
+                          ),
+                        ))
                             .toList(),
                         options: CarouselOptions(
                           height: screenHeight(context, dividedBy: 2),
@@ -182,7 +173,7 @@ class _UsersDetailsState extends State<UsersDetails>
                             vsync: this,
                             length: widget.list.length,
                             animationDuration:
-                                const Duration(milliseconds: 300),
+                            const Duration(milliseconds: 300),
                             initialIndex: pageViewIndex),
                         color: AppColor.gray,
                         borderStyle: BorderStyle.none,
@@ -217,7 +208,7 @@ class _UsersDetailsState extends State<UsersDetails>
                                   width: screenHeight(context, dividedBy: 60),
                                   height: screenHeight(context, dividedBy: 60),
                                   image:
-                                      AssetImage('assets/Images/verified.png'))
+                                  AssetImage('assets/Images/verified.png'))
                             ],
                           ),
                           const Text(
@@ -402,9 +393,9 @@ class _UsersDetailsState extends State<UsersDetails>
                             child: Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal:
-                                      screenWidth(context, dividedBy: 25),
+                                  screenWidth(context, dividedBy: 25),
                                   vertical:
-                                      screenHeight(context, dividedBy: 150)),
+                                  screenHeight(context, dividedBy: 150)),
                               child: TextField(
                                 maxLength: 250,
                                 readOnly: true,
@@ -430,7 +421,7 @@ class _UsersDetailsState extends State<UsersDetails>
                           Container(
                             margin: EdgeInsets.symmetric(
                                 vertical:
-                                    screenHeight(context, dividedBy: 150)),
+                                screenHeight(context, dividedBy: 150)),
                             height: screenHeight(context, dividedBy: 4.3),
                             width: screenWidth(context),
                             child: ListView.builder(
@@ -481,9 +472,9 @@ class _UsersDetailsState extends State<UsersDetails>
                                         ),
                                         const Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'image_03.PDF ',

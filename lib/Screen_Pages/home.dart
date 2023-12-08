@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
@@ -36,35 +37,67 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final TextEditingController _bio = TextEditingController();
   List users = [
     {
-      'Name': 'Jane Koblenz',
+      'Name': 'Virat Kohli',
       'images': [
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D',
-        'https://images.unsplash.com/photo-1653505425983-a5c89ae5986a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8&w=1000&q=80',
-        'https://images.unsplash.com/photo-1661635577898-4bd9049fe8f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&w=1000&q=80'
+        'https://wallpapers.com/images/hd/virat-kohli-hd-black-tuxedo-fibgrtdlqvatdblj.jpg',
+        'https://i.pinimg.com/originals/e1/3e/c7/e13ec7f56eb99e1e1226137c8fd3c198.jpg',
+        'https://files.oyebesmartest.com/uploads/large/virat-kohli-wallpaper-fulr32sd.jpg',
       ]
     },
     {
-      'Name': 'Larry Ellison',
+      'Name': 'Hardik Pande',
       'images': [
-        'https://images.unsplash.com/photo-1594745561149-2211ca8c5d98?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHx8&w=1000&q=80',
-        'https://images.unsplash.com/photo-1594744803086-b902dd06f88a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&w=1000&q=80',
-        'https://images.unsplash.com/photo-1653762384105-e0c693636509?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80'
+        'https://i.pinimg.com/originals/2e/31/a4/2e31a4fce6c52a98d518053d269d7eba.jpg',
+        'https://w0.peakpx.com/wallpaper/380/775/HD-wallpaper-cricket-player-hardik-pandya-indian-cricketer.jpg',
+        'https://m.timesofindia.com/photo/98910356/98910356.jpg',
       ]
     },
     {
-      'Name': 'James Smith',
+      'Name': 'Amitabh Bachchan',
       'images': [
-        'https://louellareese.com/wp-content/uploads/2018/09/Louella-Reese-Fall-Weekend-Casual-2.jpg',
-        'https://images.squarespace-cdn.com/content/v1/5bf4e70b5cfd79de099a3f2b/1559507245723-2Y26J95GALHDEOX37DIK/coffee-shop-senior-portraits_0002.jpg',
-        'https://i.pinimg.com/1200x/ae/18/50/ae185049c32fc24c3a02f465b41e488a.jpg'
+        'https://e1.pxfuel.com/desktop-wallpaper/85/759/desktop-wallpaper-%E2%9C%85-8-amitabh-bachchan-amitabh-bachchan-thumbnail.jpg',
+        'https://c4.wallpaperflare.com/wallpaper/439/757/292/5bd141c33ba4a-wallpaper-preview.jpg',
+        'https://c4.wallpaperflare.com/wallpaper/170/960/966/amitabh-bachchan-dashing-photoshoot-wallpaper-preview.jpg',
       ]
     },
     {
-      'Name': 'Michael Bloomberg',
+      'Name': 'Vincenzo Cassano',
       'images': [
-        'https://i.pinimg.com/1200x/9a/00/8e/9a008e0ae4b10ecab9c2d583e452a879.jpg',
-        'https://images.unsplash.com/photo-1538576048537-3e17ed5b1792?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&w=1000&q=80',
-        'https://images.unsplash.com/photo-1507019403270-cca502add9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8&w=1000&q=80'
+        'https://e0.pxfuel.com/wallpapers/251/76/desktop-wallpaper-vincenzo-cassano-thumbnail.jpg',
+        'https://i.pinimg.com/originals/9f/f8/fa/9ff8fa7d57de8a836f634716a85e56af.jpg',
+        'https://assets.vogue.in/photos/62751a3c8cd4b91f5309d0d4/master/pass/Song%20Joong-ki.jpeg',
+      ]
+    },
+    {
+      'Name': 'Shahrukh khan',
+      'images': [
+        'https://e0.pxfuel.com/wallpapers/531/653/desktop-wallpaper-shah-rukh-khan-actor-king-gentleman-shahrukhkhan-attitude.jpg',
+        'https://w0.peakpx.com/wallpaper/518/289/HD-wallpaper-shahrukh-khan-srk-smile-srk-smile-thumbnail.jpg',
+        'https://www.filmibeat.com/wimgm/500x70/mobi/2019/08/shahrukh-khan_9.jpg',
+      ]
+    },
+    {
+      'Name': 'Robert Downey jr',
+      'images': [
+        'https://static.wikia.nocookie.net/ironman/images/7/79/Photo%28906%29.jpg/revision/latest?cb=20141019122536',
+        'https://static.wikia.nocookie.net/bakerstreet/images/7/78/Robert_Downey_Jr._%282022%29.jpg/revision/latest?cb=20220526032213',
+        'https://upnrm.in/wp-content/uploads/2022/08/ironman.webp',
+      ]
+    },
+    {
+      'Name': 'Johnny Depp',
+      'images': [
+        'https://images.saymedia-content.com/.image/t_share/MTc0NDI1MDExOTk2NTk5OTQy/top-10-greatest-johnny-depp-movies-of-all-time.jpg',
+        'https://m.economictimes.com/thumb/msid-92536857,width-1200,height-900,resizemode-4,imgsize-62856/johnny-depp.jpg',
+        'https://www.cultjer.com/img/ug_photo/2017_02/4061620170221075428.jpg',
+      ]
+    },
+    {
+      'Name': 'úrsula corberó',
+      'images': [
+        'https://www.bollywoodhungama.com/wp-content/uploads/2021/09/WhatsApp-Image-2021-09-23-at-10.45.54-AM.jpeg',
+        'https://cdn.7days.ru/upload/images/55d/bb61c45240d3f7d28c2a08a452b7a.jpg',
+        'https://i.ytimg.com/vi/pIUiApJEAIg/oar2.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLC71MqhrXj47zXDwMaIc2K4G7_HxQ',
       ]
     },
   ];
@@ -84,12 +117,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
   ];
   bool exchang = false;
-  List _skills = [
-    '',
-    ''
-  ];
+  List _skills = ['', ''];
   int ind = 0;
-
+  bool swipeUp = false;
+  bool swipeDown = false;
   @override
   void initState() {
     createTutorial();
@@ -98,6 +129,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     FocusManager.instance.primaryFocus?.unfocus();
     super.initState();
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
@@ -135,7 +167,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                   onTap: () {
                                     Navigator.push(context, MaterialPageRoute(
                                       builder: (context) {
-                                        return Filter_page();
+                                        return const Filter_page();
                                       },
                                     ));
                                   },
@@ -161,6 +193,29 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                         Flexible(
                             child: AppinioSwiper(
                                 controller: controller,
+                                onSwiping: (direction) {
+                                  if (direction == AppinioSwiperDirection.top) {
+                                    swipeUp = true;
+                                    swipeDown = false;
+                                  } else {
+                                    swipeUp = false;
+                                  }
+                                  if (direction ==
+                                      AppinioSwiperDirection.bottom) {
+                                    swipeDown = true;
+                                    swipeUp = false;
+                                  } else {
+                                    swipeDown = false;
+                                  }
+                                },
+                                onSwipeCancelled: () {
+                                  swipeUp = false;
+                                  swipeDown = false;
+                                },
+                                onSwipe: (index, direction) {
+                                  swipeUp = false;
+                                  swipeDown = false;
+                                },
                                 swipeOptions: const AppinioSwipeOptions.only(
                                   top: true,
                                   bottom: true,
@@ -189,23 +244,30 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       children: [
                                         Align(
                                           alignment: Alignment.topCenter,
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: screenHeight(context,
-                                                    dividedBy: 35)),
-                                            child: TabPageSelector(
-                                              // key:showcase ? _key1 :_key5,
-                                              key: _key1,
-                                              controller: TabController(
-                                                  vsync: this,
-                                                  length: 3,
-                                                  initialIndex: pageViewIndex),
-                                              color: AppColor.gray,
-                                              borderStyle: BorderStyle.none,
-                                              indicatorSize: 8,
-                                              selectedColor: AppColor.skyBlue,
-                                            ),
-                                          ),
+                                          child: swipeUp == false ||
+                                                  swipeDown == false
+                                              ? Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: screenHeight(
+                                                          context,
+                                                          dividedBy: 35)),
+                                                  child: TabPageSelector(
+                                                    // key:showcase ? _key1 :_key5,
+                                                    key: _key1,
+                                                    controller: TabController(
+                                                        vsync: this,
+                                                        length: 3,
+                                                        initialIndex:
+                                                            pageViewIndex),
+                                                    color: AppColor.gray,
+                                                    borderStyle:
+                                                        BorderStyle.none,
+                                                    indicatorSize: 8,
+                                                    selectedColor:
+                                                        AppColor.skyBlue,
+                                                  ),
+                                                )
+                                              : const SizedBox(),
                                         ),
                                         Row(
                                           children: [
@@ -283,11 +345,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       SizedBox(
                                                         width: screenWidth(
                                                             context,
-                                                            dividedBy: 2),
+                                                            dividedBy: 1.3),
                                                         child: Row(
                                                           children: [
-                                                            const Text(
-                                                              'Jane Koblenz',
+                                                            Text(
+                                                              users[index]
+                                                                  ['Name'],
                                                               style: TextStyle(
                                                                   color: AppColor
                                                                       .white,
@@ -443,7 +506,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         context,
                                                                         dividedBy:
                                                                             60)),
-                                                                child: const Text(
+                                                                child:
+                                                                    const Text(
                                                                   'Startup founder',
                                                                   style: TextStyle(
                                                                       fontSize:
@@ -485,7 +549,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: const Text(
+                                                                    child:
+                                                                        const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -527,7 +592,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: const Text(
+                                                                    child:
+                                                                        const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -567,7 +633,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: const Text(
+                                                                    child:
+                                                                        const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -609,7 +676,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: const Text(
+                                                                    child:
+                                                                        const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -651,7 +719,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             context,
                                                                             dividedBy:
                                                                                 60)),
-                                                                    child: const Text(
+                                                                    child:
+                                                                        const Text(
                                                                       'Startup founder',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -925,6 +994,50 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             ),
                                           ),
                                         ),
+                                        Align(
+                                          alignment: swipeDown
+                                              ? Alignment.bottomCenter
+                                              : Alignment.topCenter,
+                                          child: swipeUp || swipeDown
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: screenHeight(context, dividedBy: 10),
+                                                      bottom: screenHeight(context, dividedBy: 5),
+                                                  ),
+                                                  child: DottedBorder(
+                                                      color: swipeUp
+                                                          ? Colors.red
+                                                          : AppColor.white,
+                                                      strokeWidth: 3,
+                                                      borderType:
+                                                          BorderType.RRect,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        10),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        50)),
+                                                        child: Text(
+                                                          swipeUp
+                                                              ? "Reject"
+                                                              : "Connect",
+                                                          style: TextStyle(
+                                                              fontSize: 25,
+                                                              color: swipeUp
+                                                                  ? Colors.red
+                                                                  : AppColor
+                                                                      .white),
+                                                        ),
+                                                      )),
+                                                )
+                                              : SizedBox(),
+                                        )
                                       ],
                                     ),
                                   );

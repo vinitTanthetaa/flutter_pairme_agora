@@ -59,8 +59,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
                       child: Icon(Icons.arrow_back_ios_rounded),
                     )),
                 title: custom_header(text: "Update Profile"),

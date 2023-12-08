@@ -38,8 +38,18 @@ class _Profile_pageState extends State<Profile_page> {
         child: Stack(
           children: [
             Background_Img(context),
-            SafeArea(
-              child: SingleChildScrollView(
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.transparent,
+                surfaceTintColor: Colors.transparent,
+                title: Padding(
+                  padding: EdgeInsets.only(left: screenWidth(context,dividedBy: 30)),
+                  child: custom_header(text: "Profile"),
+                ),
+              ),
+              body: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
@@ -47,11 +57,6 @@ class _Profile_pageState extends State<Profile_page> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Header_Space(context),
-                      custom_header(text: 'Profile'),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 60),
-                      ),
                       SizedBox(
                         height: screenHeight(context, dividedBy: 12.5),
                         width: screenWidth(context),
@@ -138,7 +143,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   },
                                   child: Container(
                                     height:
-                                        screenHeight(context, dividedBy: 60),
+                                    screenHeight(context, dividedBy: 60),
                                     width: screenHeight(context, dividedBy: 60),
                                     decoration: const BoxDecoration(
                                         image: DecorationImage(
@@ -160,7 +165,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   child: Container(
                                       alignment: Alignment.center,
                                       height:
-                                          screenHeight(context, dividedBy: 35),
+                                      screenHeight(context, dividedBy: 35),
                                       // width: screenWidth(context, dividedBy: 5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
@@ -170,12 +175,10 @@ class _Profile_pageState extends State<Profile_page> {
                                         ]),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: screenWidth(context,
-                                                dividedBy: 25)),
+                                        padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           children: [
                                             Image(
                                               color: AppColor.white,
@@ -212,34 +215,24 @@ class _Profile_pageState extends State<Profile_page> {
                         color: Color(0xffF5F5F5),
                       ),
                       custom_textfield_header(text: 'Intermediate'),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: screenHeight(context, dividedBy: 70)),
-                            child: LinearPercentIndicator(
-                                width: screenWidth(context, dividedBy: 1.17),
-                                lineHeight: 7.0,
-                                percent: 0.5,
-                                barRadius: const Radius.circular(20),
-                                backgroundColor: Colors.white,
-                                // progressColor: Colors.blue,
-                                linearGradient: const LinearGradient(colors: [
-                                  AppColor.skyBlue,
-                                  AppColor.whiteskyBlue
-                                ])),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal:
-                                    screenWidth(context, dividedBy: 40)),
-                            child: Text("2/5"),
-                          )
-                        ],
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: screenHeight(context, dividedBy: 70)),
+                        child: LinearPercentIndicator(
+                            width: screenWidth(context, dividedBy: 1.16),
+                            lineHeight: 7.0,
+                            percent: 0.5,
+                            barRadius: const Radius.circular(20),
+                            backgroundColor: Colors.lightBlue.shade50,
+
+                            // progressColor: Colors.blue,
+                            linearGradient: const LinearGradient(colors: [
+                              AppColor.skyBlue,
+                              AppColor.whiteskyBlue
+                            ])),
                       ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 50),
+                      const SizedBox(
+                        height: 10,
                       ),
                       custom_textfield_header(text: 'Bio'),
                       Container(
@@ -288,9 +281,6 @@ class _Profile_pageState extends State<Profile_page> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 50),
-                      ),
                       custom_textfield_header(text: 'My Documents'),
                       SizedBox(
                         height: screenHeight(context, dividedBy: 150),
@@ -306,7 +296,7 @@ class _Profile_pageState extends State<Profile_page> {
                             return Container(
                               margin: EdgeInsets.symmetric(
                                   vertical:
-                                      screenHeight(context, dividedBy: 190)),
+                                  screenHeight(context, dividedBy: 190)),
                               height: screenHeight(context, dividedBy: 15),
                               width: screenWidth(context),
                               decoration: BoxDecoration(
@@ -327,14 +317,14 @@ class _Profile_pageState extends State<Profile_page> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical:
-                                        screenHeight(context, dividedBy: 150),
+                                    screenHeight(context, dividedBy: 150),
                                     horizontal:
-                                        screenWidth(context, dividedBy: 70)),
+                                    screenWidth(context, dividedBy: 70)),
                                 child: Row(
                                   children: [
                                     Container(
                                       width:
-                                          screenWidth(context, dividedBy: 13),
+                                      screenWidth(context, dividedBy: 13),
                                       decoration: const BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
@@ -342,13 +332,13 @@ class _Profile_pageState extends State<Profile_page> {
                                     ),
                                     SizedBox(
                                       width:
-                                          screenWidth(context, dividedBy: 50),
+                                      screenWidth(context, dividedBy: 50),
                                     ),
                                     const Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'image_03.PDF ',
@@ -374,13 +364,12 @@ class _Profile_pageState extends State<Profile_page> {
                         ),
                       ),
                       SizedBox(
-                        height: screenHeight(context, dividedBy: 100),
+                        height: screenHeight(context, dividedBy: 150),
                       ),
                       custom_textfield_header(text: 'Address'),
                       Container(
                         margin: EdgeInsets.symmetric(
-                          vertical: screenHeight(context, dividedBy: 90),
-                        ),
+                            vertical: screenHeight(context, dividedBy: 90)),
                         alignment: Alignment.centerLeft,
                         // height: screenHeight(context,dividedBy: 17),
                         width: screenWidth(context, dividedBy: 1.15),
@@ -412,9 +401,6 @@ class _Profile_pageState extends State<Profile_page> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 100),
-                      ),
                       custom_textfield_header(text: 'Business Experience '),
                       Container(
                         margin: EdgeInsets.symmetric(
@@ -438,7 +424,7 @@ class _Profile_pageState extends State<Profile_page> {
                             ]),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth(context, dividedBy: 20),
+                              horizontal: screenWidth(context, dividedBy: 30),
                               vertical: screenHeight(context, dividedBy: 100)),
                           child: const Text(
                             "1 years",
@@ -449,9 +435,6 @@ class _Profile_pageState extends State<Profile_page> {
                                 fontFamily: "Roboto"),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 100),
                       ),
                       custom_textfield_header(text: 'Skills'),
                       Container(
@@ -487,9 +470,6 @@ class _Profile_pageState extends State<Profile_page> {
                                 fontFamily: "Roboto"),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 100),
                       ),
                       custom_textfield_header(text: 'Education'),
                       Container(

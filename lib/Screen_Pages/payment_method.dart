@@ -32,37 +32,29 @@ class _PaymentMethodState extends State<PaymentMethod> {
         child: Stack(
           children: [
             Background_Img(context),
-            SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                child: SafeArea(
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                surfaceTintColor: Colors.transparent,
+                leading: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 10.0),
+                      child: Icon(Icons.arrow_back_ios_rounded),
+                    )),
+                titleSpacing: 0,
+                title: custom_header(text: "Card Details"),
+              ),
+              body: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Header_Space(context),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Image(
-                              image: const AssetImage('assets/Images/back.png'),
-                              height: screenHeight(context,dividedBy: 40),
-                              width: screenHeight(context,dividedBy: 40),
-                            ),
-                          ),
-                          SizedBox(
-                            width: screenWidth(context, dividedBy: 25),
-                          ),
-                          custom_header(text: 'Card Details')
-                          // IconButton(onPressed: () {
-                          //
-                          // }, icon: Icon(Icons.close))
-                        ],
-                      ),
-                      SizedBox(height: screenHeight(context,dividedBy: 50),),
                       custom_textfield_header(text: 'Card Number'),
                       Custom_textfield(context, number: true,show_icon: false, onPress: () {},  hint: 'Card Number', controller: _cardNumber, hidetext: false, readOnly: false),
                       custom_textfield_header(text: 'Cardholder Name'),
@@ -111,7 +103,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                                   height: screenHeight(context,dividedBy: 65),
                                   width: screenHeight(context,dividedBy: 65),
                                   decoration:  BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3),
+                                      borderRadius: BorderRadius.circular(3),
                                       image: const DecorationImage(image: AssetImage('assets/Images/check.png'),fit: BoxFit.fill)
                                   ),
                                 ) : const SizedBox(),
@@ -205,17 +197,17 @@ class _PaymentMethodState extends State<PaymentMethod> {
                         ),
                       ),
                       RichText(
-                        textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
                           text: const TextSpan(
-                        children: [
-                          TextSpan(text: 'By tapping Buy Now, we will charge your card, your subscription will automatically renew for the same package length at the same price until you cancel in Account Settings, and you agree to our ',style:
+                            children: [
+                              TextSpan(text: 'By tapping Buy Now, we will charge your card, your subscription will automatically renew for the same package length at the same price until you cancel in Account Settings, and you agree to our ',style:
                               TextStyle(fontSize: 10,color:Color(0xff8A8A8A) ,fontWeight: FontWeight.w400,fontFamily: 'Roboto')
-                          ),
-                          TextSpan(text:'Terms.',style: TextStyle(decoration: TextDecoration.underline,fontSize: 10,color:AppColor.black ,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),
-                          ),
-                        ],
-                  
-                      )),
+                              ),
+                              TextSpan(text:'Terms.',style: TextStyle(decoration: TextDecoration.underline,fontSize: 10,color:AppColor.black ,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),
+                              ),
+                            ],
+
+                          )),
                       Custom_botton(context, text: 'Buy Now', onTap: () {
 
                       }, height: screenHeight(context,dividedBy: 20))
