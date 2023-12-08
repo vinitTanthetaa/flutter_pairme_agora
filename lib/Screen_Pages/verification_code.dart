@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pair_me/Screen_Pages/Step_Screens.dart';
 import 'package:pair_me/Screen_Pages/address_details.dart';
 import 'package:pair_me/Screen_Pages/creat_new_password.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
@@ -67,7 +68,8 @@ class _Verification_codeState extends State<Verification_code> {
                 const Spacer(),
                 Custom_botton(context, text: 'Verify', onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return widget.Forggot ? Create_New_Password() : Address_Details(Name: '',);
+                    return widget.Forggot ? Create_New_Password() : StepScreen();
+                    //Address_Details(Name: '',);
                   },));
                 }, height: screenHeight(context,dividedBy: 20),)
               ],

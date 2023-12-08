@@ -32,6 +32,7 @@ Widget custom_stepper ( BuildContext context,{required int positaion}){
       // ],
       enableLineAnimation: true,
       enableStepAnimation: true,
+
       isHorizontal: true,
     ),
   );

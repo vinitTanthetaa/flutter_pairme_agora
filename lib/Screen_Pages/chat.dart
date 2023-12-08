@@ -23,7 +23,7 @@ bool emojiShowing = false;
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:widget.name == 'chatting' ? SizedBox() :  Padding(
+      floatingActionButton:widget.name == 'chatting' ? const SizedBox() :  Padding(
         padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,7 +183,7 @@ bool emojiShowing = false;
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Jane Koblenz',
                               style: TextStyle(
                                   color: AppColor.white,
@@ -191,14 +191,14 @@ bool emojiShowing = false;
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Roboto'),
                             ),
-                            widget.name == 'Request' ? Text(
+                            widget.name == 'Request' ? const Text(
                               'Just Joined',
                               style: TextStyle(
                                   color: AppColor.white,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Roboto'),
-                            ) : Text(
+                            ) : const Text(
                               'online',
                               style: TextStyle(
                                   color: AppColor.white,

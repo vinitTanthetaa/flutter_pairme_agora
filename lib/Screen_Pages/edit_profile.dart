@@ -50,8 +50,22 @@ class _Edit_ProfileState extends State<Edit_Profile> {
         child: Stack(
           children: [
             Background_Img(context),
-            SafeArea(
-              child: SingleChildScrollView(
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                surfaceTintColor: Colors.transparent,
+                leading: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Icon(Icons.arrow_back_ios_rounded),
+                    )),
+                title: custom_header(text: "Update Profile"),
+              ),
+              body: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
@@ -59,32 +73,10 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Header_Space(context),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Image(
-                              image: const AssetImage('assets/Images/back.png'),
-                              height: screenHeight(context, dividedBy: 50),
-                              width: screenHeight(context, dividedBy: 50),
-                            ),
-                          ),
-                          SizedBox(
-                            width: screenWidth(context, dividedBy: 25),
-                          ),
-                          custom_header(text: "Update Profile"),
-                        ],
-                      ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 30),
-                      ),
                       Center(
                         child: Container(
-                          height: screenHeight(context, dividedBy: 7),
-                          width: screenHeight(context, dividedBy: 7),
+                          height: screenHeight(context, dividedBy: 7.5),
+                          width: screenHeight(context, dividedBy: 7.5),
                           decoration: const BoxDecoration(
                               image: DecorationImage(
                                   image: NetworkImage(
@@ -108,9 +100,9 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                       image: const AssetImage(
                                           'assets/Images/camera.png'),
                                       height:
-                                          screenHeight(context, dividedBy: 50),
+                                      screenHeight(context, dividedBy: 50),
                                       width:
-                                          screenHeight(context, dividedBy: 50),
+                                      screenHeight(context, dividedBy: 50),
                                       color: AppColor.skyBlue,
                                     ),
                                   ),
@@ -158,92 +150,92 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                           readOnly: true),
                       popup
                           ? FadeInDown(
-                              animate: true,
-                              from: 7,
-                              child: Container(
-                                height: screenHeight(context, dividedBy: 10),
-                                width: screenWidth(context),
-                                margin: EdgeInsets.only(bottom: 10),
-                                decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                    borderRadius: BorderRadius.circular(6),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        offset: Offset(
-                                          1,
-                                          1,
-                                        ),
-                                        blurRadius: 4,
-                                        spreadRadius: 0.0,
-                                      ),
-                                    ]),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          height: screenHeight(context,
-                                              dividedBy: 25),
-                                          child: Radio(
-                                            value: "Female",
-                                            groupValue: gender,
-                                            activeColor: AppColor.skyBlue,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                gender = value!;
-                                                _gender.text = gender;
-                                                popup = !popup;
-                                                print("value :$value");
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        const Text(
-                                          "Female",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xff303030),
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: 'Roboto'),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          height: screenHeight(context,
-                                              dividedBy: 25),
-                                          child: Radio(
-                                            value: "Male",
-                                            groupValue: gender,
-                                            activeColor: AppColor.skyBlue,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                gender = value!;
-                                                _gender.text = gender;
-                                                popup = !popup;
-                                                print("value :$value");
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        const Text(
-                                          "Male",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xff303030),
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: 'Roboto'),
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                        animate: true,
+                        from: 7,
+                        child: Container(
+                          height: screenHeight(context, dividedBy: 10),
+                          width: screenWidth(context),
+                          margin: EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                              color: AppColor.white,
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  ),
+                                  blurRadius: 4,
+                                  spreadRadius: 0.0,
                                 ),
+                              ]),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    height: screenHeight(context,
+                                        dividedBy: 25),
+                                    child: Radio(
+                                      value: "Female",
+                                      groupValue: gender,
+                                      activeColor: AppColor.skyBlue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          gender = value!;
+                                          _gender.text = gender;
+                                          popup = !popup;
+                                          print("value :$value");
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Female",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff303030),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Roboto'),
+                                  )
+                                ],
                               ),
-                            )
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    height: screenHeight(context,
+                                        dividedBy: 25),
+                                    child: Radio(
+                                      value: "Male",
+                                      groupValue: gender,
+                                      activeColor: AppColor.skyBlue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          gender = value!;
+                                          _gender.text = gender;
+                                          popup = !popup;
+                                          print("value :$value");
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Male",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff303030),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Roboto'),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                           : const SizedBox(),
                       custom_textfield_header(text: 'Date of birth'),
                       Custom_textfield(context,
@@ -265,80 +257,80 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                           readOnly: true),
                       calendar
                           ? FadeInDown(
-                              animate: true,
-                              from: 10,
-                              child: Container(
-                                margin: const EdgeInsets.only(bottom: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: AppColor.white,
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        offset: Offset(
-                                          1,
-                                          1,
-                                        ),
-                                        blurRadius: 4,
-                                        spreadRadius: 0.0,
-                                      ),
-                                    ]),
-                                child: TableCalendar(
-                                  firstDay: DateTime.utc(2010, 10, 16),
-                                  lastDay: DateTime.utc(2030, 3, 14),
-                                  headerStyle: const HeaderStyle(
-                                    titleTextStyle: TextStyle(
-                                        color: AppColor.skyBlue,
-                                        fontFamily: "Roboto",
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20),
-                                    formatButtonVisible: false,
-                                    titleCentered: true,
-                                    leftChevronIcon: Icon(
-                                      Icons.arrow_back_ios_rounded,
-                                      size: 20,
-                                      color: AppColor.black,
-                                    ),
-                                    rightChevronIcon: Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      size: 20,
-                                      color: AppColor.black,
-                                    ),
+                        animate: true,
+                        from: 10,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: AppColor.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(
+                                    1,
+                                    1,
                                   ),
-                                  calendarStyle: const CalendarStyle(
-                                    defaultTextStyle: TextStyle(
-                                        fontFamily: 'Roboto',
-                                        color: AppColor.black),
-                                    disabledTextStyle: TextStyle(
-                                        fontFamily: 'Roboto',
-                                        color: AppColor.skyBlue),
-                                  ),
-                                  focusedDay: _focusedDay,
-                                  onPageChanged: (focusedDay) {
-                                    _focusedDay = focusedDay;
-                                  },
-                                  selectedDayPredicate: (day) =>
-                                      isSameDay(_selectedDate, day),
-                                  onDaySelected: (selectedDay, focusedDay) {
-                                    if (!isSameDay(
-                                        _selectedDate, selectedDay)) {
-                                      print(
-                                          'selectedDay${DateFormat('dd MMM yy').format(selectedDay)}');
-                                      _date.text = DateFormat('dd MMM yy')
-                                          .format(selectedDay);
-                                      setState(() {
-                                        _selectedDate = selectedDay;
-                                        _focusedDay = focusedDay;
-                                        // update `_focusedDay` here as well
-                                      });
-                                    }
-                                    // setState(() {
-                                    //   calendar = !calendar;
-                                    // });
-                                  },
+                                  blurRadius: 4,
+                                  spreadRadius: 0.0,
                                 ),
+                              ]),
+                          child: TableCalendar(
+                            firstDay: DateTime.utc(2010, 10, 16),
+                            lastDay: DateTime.utc(2030, 3, 14),
+                            headerStyle: const HeaderStyle(
+                              titleTextStyle: TextStyle(
+                                  color: AppColor.skyBlue,
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20),
+                              formatButtonVisible: false,
+                              titleCentered: true,
+                              leftChevronIcon: Icon(
+                                Icons.arrow_back_ios_rounded,
+                                size: 20,
+                                color: AppColor.black,
                               ),
-                            )
+                              rightChevronIcon: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 20,
+                                color: AppColor.black,
+                              ),
+                            ),
+                            calendarStyle: const CalendarStyle(
+                              defaultTextStyle: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  color: AppColor.black),
+                              disabledTextStyle: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  color: AppColor.skyBlue),
+                            ),
+                            focusedDay: _focusedDay,
+                            onPageChanged: (focusedDay) {
+                              _focusedDay = focusedDay;
+                            },
+                            selectedDayPredicate: (day) =>
+                                isSameDay(_selectedDate, day),
+                            onDaySelected: (selectedDay, focusedDay) {
+                              if (!isSameDay(
+                                  _selectedDate, selectedDay)) {
+                                print(
+                                    'selectedDay${DateFormat('dd MMM yy').format(selectedDay)}');
+                                _date.text = DateFormat('dd MMM yy')
+                                    .format(selectedDay);
+                                setState(() {
+                                  _selectedDate = selectedDay;
+                                  _focusedDay = focusedDay;
+                                  // update `_focusedDay` here as well
+                                });
+                              }
+                              // setState(() {
+                              //   calendar = !calendar;
+                              // });
+                            },
+                          ),
+                        ),
+                      )
                           : const SizedBox(),
                       custom_textfield_header(text: 'Phone Number'),
                       Container(
@@ -367,7 +359,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                           style: const TextStyle(fontSize: 13),
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                              // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
+                            // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                               border: InputBorder.none,
                               //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
                               prefixIcon: GestureDetector(
@@ -388,7 +380,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                 child: Container(
                                   margin: EdgeInsets.only(
                                       right:
-                                          screenWidth(context, dividedBy: 25)),
+                                      screenWidth(context, dividedBy: 25)),
                                   alignment: Alignment.center,
                                   width: screenWidth(context, dividedBy: 5),
                                   decoration: BoxDecoration(
@@ -403,7 +395,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                       ]),
                                   child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                       children: [
                                         SizedBox(
                                             width: screenWidth(context,

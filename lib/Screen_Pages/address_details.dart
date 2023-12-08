@@ -256,9 +256,9 @@ class _Address_DetailsState extends State<Address_Details> {
                 ),
               ),
             ),
-            Positioned(
-                top: 0.0,
-                child: custom_stepper(context, positaion: 1)),
+            // Positioned(
+            //     top: 0.0,
+            //     child: custom_stepper(context, positaion: 1)),
           ],
         ),
       )

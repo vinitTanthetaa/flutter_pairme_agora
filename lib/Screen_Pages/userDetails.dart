@@ -51,10 +51,6 @@ class _UsersDetailsState extends State<UsersDetails>
         videos.add(url);
       } else {
         images.add(url);
-        // RegExp regExp = RegExp(r'([^?\/\s]+)(\.(jpg|jpeg|png|gif|webp))');
-        // if (regExp.hasMatch(url)) {
-        //
-        // }
       }
     });
     print(videos);
@@ -143,13 +139,7 @@ class _UsersDetailsState extends State<UsersDetails>
                                                       'assets/Images/videoThumbnail.png',
                                                 ),
                                               ),
-                                              // VideoPlayer(VideoPlayerController.networkUrl(Uri.parse(widget.list[pageViewIndex]))
-                                              // VideoPlayerController.networkUrl(Uri.parse(list[pageViewIndex]))..initialize().then((_) {
-                                              //   // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-                                              //   setState(() {});
-                                              // })
-                                              // ),
-                                              Align(
+                                              const Align(
                                                 child: CircleAvatar(
                                                   backgroundColor:
                                                       Colors.white30,
@@ -312,62 +302,79 @@ class _UsersDetailsState extends State<UsersDetails>
                           ),
                           custom_textfield_header(text: 'Looking for'),
                           SizedBox(
-                            // margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 100)),
-                            height: screenHeight(context, dividedBy: 11),
-                            width: screenWidth(context),
-                            child: ListView.builder(
-                              itemCount: lookingFor.length,
-                              padding: EdgeInsets.symmetric(
-                                  vertical:
-                                      screenHeight(context, dividedBy: 300),
-                                  horizontal:
-                                      screenWidth(context, dividedBy: 100)),
-                              physics: const ClampingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom:
-                                          screenHeight(context, dividedBy: 300),
-                                      top: 5),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: screenHeight(context,
-                                            dividedBy: 50),
-                                        width: screenHeight(context,
-                                            dividedBy: 50),
-                                        color: const Color(0xffD4E2FF),
-                                        child: Center(
-                                          child: Container(
-                                            height: screenHeight(context,
-                                                dividedBy: 70),
-                                            width: screenHeight(context,
-                                                dividedBy: 70),
-                                            decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/Images/check.png'),
-                                                    fit: BoxFit.fill)),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            screenWidth(context, dividedBy: 50),
-                                      ),
-                                      Text(
-                                        lookingFor[index],
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14,
-                                            fontFamily: 'Roboto',
-                                            color: AppColor.dropdownfont),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
+                            height: screenHeight(context, dividedBy: 200),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: screenHeight(context,dividedBy: 130),
+                                width: screenHeight(context,dividedBy: 130),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: AppColor.dropdownfont,width: 1.5)
+                                ),
+                              ),
+                              SizedBox(
+                                width:
+                                screenWidth(context, dividedBy: 50),
+                              ),
+                              Text(
+                                lookingFor[0],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    fontFamily: 'Roboto',
+                                    color: AppColor.dropdownfont),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: screenHeight(context,dividedBy: 130),
+                                width: screenHeight(context,dividedBy: 130),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: AppColor.dropdownfont,width: 1.5)
+                                ),
+                              ),
+                              SizedBox(
+                                width:
+                                screenWidth(context, dividedBy: 50),
+                              ),
+                              Text(
+                                lookingFor[1],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    fontFamily: 'Roboto',
+                                    color: AppColor.dropdownfont),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: screenHeight(context,dividedBy: 130),
+                                width: screenHeight(context,dividedBy: 130),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: AppColor.dropdownfont,width: 1.5)
+                                ),
+                              ),
+                              SizedBox(
+                                width:
+                                screenWidth(context, dividedBy: 50),
+                              ),
+                              Text(
+                                lookingFor[2],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    fontFamily: 'Roboto',
+                                    color: AppColor.dropdownfont),
+                              )
+                            ],
                           ),
                           SizedBox(
                             height: screenHeight(context, dividedBy: 200),
@@ -460,7 +467,7 @@ class _UsersDetailsState extends State<UsersDetails>
                                         Container(
                                           width: screenWidth(context,
                                               dividedBy: 14),
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               image: DecorationImage(
                                                   image: AssetImage(
                                                       'assets/Images/uploadedfile.png'))),

@@ -1,23 +1,17 @@
 import 'dart:ui';
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
-import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
-import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
-import 'package:pair_me/Widgets/slidable_widget.dart';
-import 'package:pair_me/Widgets/swiper.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
-import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
@@ -38,7 +32,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final GlobalKey _key5 = GlobalKey();
   final GlobalKey _key6 = GlobalKey();
   int pageViewIndex = 0;
-  final AppinioSwiperController controller = AppinioSwiperController();
+  late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController _bio = TextEditingController();
   List users = [
     {
@@ -88,15 +82,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU',
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
   ];
   bool exchang = false;
   List _skills = [
     '',
-    '',
-    '',
+    ''
   ];
   int ind = 0;
 
@@ -108,14 +98,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     FocusManager.instance.primaryFocus?.unfocus();
     super.initState();
   }
-
-  // Navigator.push(context, SwipeablePageRoute(
-  // builder: (context) {
-  // return ShowUsers(
-  // list: users[ind]['images'],
-  // );
-  // },
-  // ));
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
@@ -151,11 +133,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    // Navigator.push(context, MaterialPageRoute(
-                                    //   builder: (context) {
-                                    //     return Filter_page();
-                                    //   },
-                                    // ));
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return Filter_page();
+                                      },
+                                    ));
                                   },
                                   child: Container(
                                     //key: showcase ?_key : _key4,
@@ -603,7 +585,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          50),
+                                                                          60),
                                                                 ),
                                                                 Container(
                                                                   alignment:
@@ -645,7 +627,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          50),
+                                                                          60),
                                                                 ),
                                                                 Container(
                                                                   alignment:
@@ -685,7 +667,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 ),
                                                               ],
                                                             ),
-                                                  const Spacer(),
                                                   Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
@@ -693,7 +674,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 screenHeight(
                                                                     context,
                                                                     dividedBy:
-                                                                        40)),
+                                                                        70)),
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -944,21 +925,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             ),
                                           ),
                                         ),
-                                        Align(
-                                          alignment: Alignment.topCenter,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                top: screenHeight(context,
-                                                    dividedBy: 9)),
-                                            child: SizedBox(
-                                              key: _key3,
-                                              height: screenHeight(context,
-                                                  dividedBy: 3),
-                                              width: screenHeight(context,
-                                                  dividedBy: 3),
-                                            ),
-                                          ),
-                                        )
                                       ],
                                     ),
                                   );
