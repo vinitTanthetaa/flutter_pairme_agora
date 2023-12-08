@@ -223,7 +223,7 @@ class _Profile_pageState extends State<Profile_page> {
                                 lineHeight: 7.0,
                                 percent: 0.5,
                                 barRadius: const Radius.circular(20),
-                                backgroundColor: Colors.grey,
+                                backgroundColor: Colors.white,
                                 // progressColor: Colors.blue,
                                 linearGradient: const LinearGradient(colors: [
                                   AppColor.skyBlue,
@@ -231,7 +231,9 @@ class _Profile_pageState extends State<Profile_page> {
                                 ])),
                           ),
                           Padding(
-                            padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 40)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    screenWidth(context, dividedBy: 40)),
                             child: Text("2/5"),
                           )
                         ],
