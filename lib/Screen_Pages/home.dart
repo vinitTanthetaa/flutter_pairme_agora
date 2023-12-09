@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:dotted_border/dotted_border.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
@@ -13,6 +14,7 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:video_player/video_player.dart';
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
@@ -41,6 +43,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
       'images': [
         'https://wallpapers.com/images/hd/virat-kohli-hd-black-tuxedo-fibgrtdlqvatdblj.jpg',
         'https://i.pinimg.com/originals/e1/3e/c7/e13ec7f56eb99e1e1226137c8fd3c198.jpg',
+        //'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         'https://files.oyebesmartest.com/uploads/large/virat-kohli-wallpaper-fulr32sd.jpg',
       ]
     },
@@ -121,6 +124,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   int ind = 0;
   bool swipeUp = false;
   bool swipeDown = false;
+  late VideoPlayerController _controller;
+
   @override
   void initState() {
     createTutorial();
@@ -227,21 +232,64 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 cardsBuilder: (context, index) {
                                   ind = index;
                                   return Container(
-                                    // margin:EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 100)) ,
                                     height: screenHeight(context),
                                     width: screenWidth(context),
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
-                                          image: NetworkImage(users[index]
-                                              ['images'][pageViewIndex]),
+                                          image: NetworkImage(users[index]['images'][pageViewIndex]),
                                           fit: BoxFit.cover,
                                           filterQuality: FilterQuality.high,
                                         ),
                                         borderRadius: const BorderRadius.only(
-                                            topRight: Radius.circular(23),
-                                            topLeft: Radius.circular(23))),
+                                            topRight: Radius.circular(20),
+                                            topLeft: Radius.circular(20))),
                                     child: Stack(
                                       children: [
+                                        // users[index]['images'][pageViewIndex].toString().endsWith(".mp4")? Container(
+                                        //   decoration: BoxDecoration(
+                                        //       borderRadius: const BorderRadius.only(
+                                        //           topRight: Radius.circular(20),
+                                        //           topLeft: Radius.circular(20))
+                                        //   ),
+                                        //   child: Stack(
+                                        //     children: [
+                                        //       VideoPlayer(VideoPlayerController.networkUrl(Uri.parse(users[index]['images'][pageViewIndex]))
+                                        //         ..initialize().then((_) {
+                                        //           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+                                        //           setState(() {});
+                                        //         })
+                                        //       ),
+                                        //       Align(
+                                        //           alignment: Alignment.center,
+                                        //           child: CircleAvatar(
+                                        //             backgroundColor: Colors.white30,
+                                        //             child: GestureDetector(onTap: () {
+                                        //               setState(() {
+                                        //                 _controller.value.isPlaying
+                                        //                     ? _controller.pause()
+                                        //                     : _controller.play();
+                                        //               });
+                                        //             },child: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow,size: 30,)),
+                                        //           ))
+                                        //     ],
+                                        //   ),
+                                        // ) :  CachedNetworkImage(
+                                        //   imageUrl: users[index]['images'][pageViewIndex],
+                                        //   imageBuilder: (context, imageProvider) => Container(
+                                        //     decoration: BoxDecoration(
+                                        //       image: DecorationImage(
+                                        //           image: imageProvider,
+                                        //           fit: BoxFit.cover,
+                                        //         filterQuality: FilterQuality.high
+                                        //        ),
+                                        //         borderRadius: const BorderRadius.only(
+                                        //             topRight: Radius.circular(20),
+                                        //             topLeft: Radius.circular(20))
+                                        //     ),
+                                        //   ),
+                                        //   placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                        //   errorWidget: (context, url, error) => Icon(Icons.error),
+                                        // ),
                                         Align(
                                           alignment: Alignment.topCenter,
                                           child: swipeUp == false ||
@@ -252,7 +300,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           context,
                                                           dividedBy: 35)),
                                                   child: TabPageSelector(
-                                                    // key:showcase ? _key1 :_key5,
                                                     key: _key1,
                                                     controller: TabController(
                                                         vsync: this,
@@ -332,11 +379,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  SizedBox(
-                                                    height: screenHeight(
-                                                        context,
-                                                        dividedBy: 100),
-                                                  ),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -351,7 +393,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             Text(
                                                               users[index]
                                                                   ['Name'],
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   color: AppColor
                                                                       .white,
                                                                   fontFamily:
@@ -736,6 +778,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 ),
                                                               ],
                                                             ),
+                                                  const Spacer(),
                                                   Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
@@ -780,9 +823,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             150)),
                                                             child: InkWell(
                                                               onTap: () {
-                                                                setState(() {
-                                                                  ind++;
-                                                                });
+                                                                // setState(() {
+                                                                //   ind++;
+                                                                // });
                                                                 controller
                                                                     .swipeUp();
                                                               },
@@ -806,7 +849,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     width: screenWidth(
                                                                         context,
                                                                         dividedBy:
-                                                                            100),
+                                                                            90),
                                                                   ),
                                                                   const Text(
                                                                     'Reject',
@@ -940,9 +983,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             150)),
                                                             child: InkWell(
                                                               onTap: () {
-                                                                setState(() {
-                                                                  ind++;
-                                                                });
+                                                                // setState(() {
+                                                                //   ind++;
+                                                                // });
                                                                 controller
                                                                     .swipeDown();
                                                               },
@@ -1001,16 +1044,20 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           child: swipeUp || swipeDown
                                               ? Padding(
                                                   padding: EdgeInsets.only(
-                                                      top: screenHeight(context, dividedBy: 10),
-                                                      bottom: screenHeight(context, dividedBy: 5),
+                                                    top: screenHeight(context,
+                                                        dividedBy: 10),
+                                                    bottom: screenHeight(
+                                                        context,
+                                                        dividedBy: 5),
                                                   ),
-                                                  child: DottedBorder(
-                                                      color: swipeUp
-                                                          ? Colors.red
-                                                          : AppColor.white,
-                                                      strokeWidth: 3,
-                                                      borderType:
-                                                          BorderType.RRect,
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                        width: 5,
+                                                        color: swipeUp
+                                                            ? Colors.red
+                                                            : Colors.green,
+                                                      )),
                                                       child: Padding(
                                                         padding: EdgeInsets.symmetric(
                                                             horizontal:
@@ -1022,21 +1069,26 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 screenHeight(
                                                                     context,
                                                                     dividedBy:
-                                                                        50)),
+                                                                        70)),
                                                         child: Text(
                                                           swipeUp
                                                               ? "Reject"
                                                               : "Connect",
                                                           style: TextStyle(
                                                               fontSize: 25,
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
                                                               color: swipeUp
                                                                   ? Colors.red
-                                                                  : AppColor
-                                                                      .white),
+                                                                  : Colors
+                                                                      .green),
                                                         ),
                                                       )),
                                                 )
-                                              : SizedBox(),
+                                              : const SizedBox(),
                                         )
                                       ],
                                     ),

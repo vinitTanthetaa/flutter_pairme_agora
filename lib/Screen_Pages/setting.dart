@@ -217,8 +217,8 @@ class _Setting_pageState extends State<Setting_page> {
                       from: 10,
                       child: Container(
                         margin: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 60)),
-                        height: screenHeight(context,dividedBy: 5.3),
-                        width: screenWidth(context,dividedBy: 1.15),
+                        height: screenHeight(context,dividedBy: 7),
+                        width: screenWidth(context),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
                             color: Colors.white,
@@ -235,30 +235,27 @@ class _Setting_pageState extends State<Setting_page> {
                             ]
                         ),
                         child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: _language.length,
-                              padding: EdgeInsets.zero,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 95)),
-                                  child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                        });
-                                      },
-                                      child: custom_text(text: _language[index], color: AppColor.dropdownfont)),
-                                );
-                              },)
+                            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 13),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                custom_text(text: "English", color: AppColor.fontdarkgray),
+                                custom_text(text: "Spanish", color: AppColor.fontdarkgray),
+                                custom_text(text: "Hindi", color: AppColor.fontdarkgray),
+                                custom_text(text: "Cantonese", color: AppColor.fontdarkgray),
+                                custom_text(text: "Mandarin", color: AppColor.fontdarkgray),
+                              ],
+                            )
                         ),
                       ),
                     ) : show_box ? FadeOutUp(
                       animate: true,
                       from: 10,
                       child: Container(
-                        height: screenHeight(context,dividedBy: 5.5),
-                        width: screenWidth(context,dividedBy: 1.15),
+                        margin: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 60)),
+                        height: screenHeight(context,dividedBy: 7),
+                        width: screenWidth(context),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
                             color: Colors.white,
@@ -275,21 +272,18 @@ class _Setting_pageState extends State<Setting_page> {
                             ]
                         ),
                         child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-                            child: ListView.builder(
-                              itemCount: _language.length,
-                              padding: EdgeInsets.zero,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 95)),
-                                  child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                        });
-                                      },
-                                      child: custom_text(text: _language[index], color: AppColor.dropdownfont)),
-                                );
-                              },)
+                            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 13),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                custom_text(text: "English", color: AppColor.fontdarkgray),
+                                custom_text(text: "Spanish", color: AppColor.fontdarkgray),
+                                custom_text(text: "Hindi", color: AppColor.fontdarkgray),
+                                custom_text(text: "Cantonese", color: AppColor.fontdarkgray),
+                                custom_text(text: "Mandarin", color: AppColor.fontdarkgray),
+                              ],
+                            )
                         ),
                       ),
                     ) : const SizedBox(),
@@ -318,26 +312,11 @@ class _Setting_pageState extends State<Setting_page> {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
                               return PaymentPage();
                             },));
-                            // setState(() {
-                            //   language = !language;
-                            //   if(language == false){
-                            //     show_box = !show_box;
-                            //     Timer(Duration(milliseconds: 600), () {
-                            //       setState(() {
-                            //         show_box = !show_box;
-                            //       });
-                            //     });
-                            //   }
-                            //
-                            // });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              //_selected_language == '' ?  const
                               const Text("Payment",style: TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
-                              //:
-                              // Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
                               icon ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)
                             ],
                           ),

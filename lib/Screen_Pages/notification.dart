@@ -40,7 +40,7 @@ class _Notification_pageState extends State<Notification_page> {
                   SizedBox(height: screenHeight(context,dividedBy: 70),),
                  Expanded(
                      child: ListView.separated(
-                       padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 50), ),
+                       padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100), ),
                      itemBuilder: (context, index) {
                        return  Dismissible(
                          direction: DismissDirection.endToStart,
@@ -67,60 +67,59 @@ class _Notification_pageState extends State<Notification_page> {
                          ),
                          child: SizedBox(
                            // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                           height: screenHeight(context,dividedBy: 10),
+                           height: screenHeight(context,dividedBy: 11.2),
                            width: screenHeight(context),
                            child: Padding(
-                             padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15),vertical: screenHeight(context,dividedBy: 90)),
+                             padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 17),vertical: screenHeight(context,dividedBy: 95)),
                              child: Row(
-                               mainAxisAlignment: MainAxisAlignment.start,
-                               crossAxisAlignment: CrossAxisAlignment.start,
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               crossAxisAlignment: CrossAxisAlignment.center,
                                children: [
-                                 SizedBox(
+                                 Container(
                                    height: screenHeight(context,dividedBy: 15),
                                    width: screenHeight(context,dividedBy: 15),
-                                   child:  Stack(
-                                     alignment: Alignment.center,
-                                     children: [
-                                       Positioned(
-                                         bottom: 0.0,
-                                         child: Container(
-                                           height: screenHeight(context,dividedBy: 15),
-                                           width: screenHeight(context,dividedBy: 15),
-                                           decoration: const BoxDecoration(
-                                               shape: BoxShape.circle,
-                                               image: DecorationImage(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU'))
-                                           ),
-                                         ),
-                                       ),
-                                       const Positioned(
-                                         bottom: 2,
-                                         left: 5,
-                                         child: CircleAvatar(
-                                           radius: 4,
-                                           backgroundColor: Color(0xff0FC62C),
-                                         ),
-                                       )
-                                     ],
+                                   decoration: const BoxDecoration(
+                                       shape: BoxShape.circle,
+                                       image: DecorationImage(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU'),fit: BoxFit.fill)
                                    ),
                                  ),
-                                 SizedBox(width: screenWidth(context,dividedBy: 50),),
+                                 SizedBox(width: screenWidth(context,dividedBy: 40),),
                                  Column(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                    crossAxisAlignment: CrossAxisAlignment.start,
                                    children: [
                                      const Text('Jane Koblenz',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
                                      SizedBox(
-                                       width: screenWidth(context,dividedBy: 1.9),
+                                       width: screenWidth(context,dividedBy: 2.2),
                                        child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 10,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
                                      )
                                    ],
                                  ),
                                  const Spacer(),
-                                 const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10,color: Color(0xffAAAAAA)),)
+                                 Column(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10,color: Color(0xffAAAAAA)),),
+                                     Container(
+                                       alignment: Alignment.center,
+                                       height: screenHeight(context,dividedBy: 50),
+                                       width: screenHeight(context,dividedBy: 50),
+                                       decoration: BoxDecoration(
+                                           borderRadius: BorderRadius.circular(3),
+                                           gradient:LinearGradient(
+                                               begin: Alignment.topLeft,
+                                               end: Alignment.bottomCenter,
+                                               colors: [AppColor.skyBlue,AppColor.whiteskyBlue]
+                                           )
+                                       ),
+                                       child: Text('2',style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w600,fontFamily: 'Roboto',fontSize: 7)),
+                                     )
+                                   ],
+                                 )
                                ],
                              ),
                            ),
-                         ),
+                         )
                        );
                      },
                      separatorBuilder: (context, index) {

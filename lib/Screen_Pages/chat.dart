@@ -71,7 +71,7 @@ bool emojiShowing = false;
                     ),
                   ]
               ),
-              child: Text('Delete',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
+              child: const Text('Delete',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
             ),
             Container(
               alignment: Alignment.center,
@@ -241,14 +241,15 @@ bool emojiShowing = false;
                     ),
                   ),
                 ),
-               Expanded(child: Container(
-                 child:SingleChildScrollView(
+               Expanded(child: SingleChildScrollView(
+                 child: Padding(
+                   padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Container(
                          margin: EdgeInsets.only(
-                             left: screenWidth(context, dividedBy: 15),top: screenHeight(context,dividedBy: 100)),
+                             top: screenHeight(context,dividedBy: 100)),
                          width: screenWidth(context, dividedBy: 1.5),
                          decoration: const BoxDecoration(
                              borderRadius: BorderRadius.only(
@@ -265,7 +266,7 @@ bool emojiShowing = false;
                                Text(
                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore',
                                  style: TextStyle(
-                                     fontSize: 12,
+                                     fontSize: 15,
                                      fontWeight: FontWeight.w500,
                                      fontFamily: 'Roboto',
                                      color: Color(0xff606164)),
@@ -275,7 +276,7 @@ bool emojiShowing = false;
                                  style: TextStyle(
                                      fontFamily: 'Roboto',
                                      fontWeight: FontWeight.w500,
-                                     fontSize: 7,
+                                     fontSize: 10,
                                      color: Color(0xff4A4A4A)),
                                )
                              ],
@@ -284,9 +285,9 @@ bool emojiShowing = false;
                        ),
                        Container(
                          margin: EdgeInsets.only(
-                             left: screenWidth(context, dividedBy: 1.7),
+                           left: screenWidth(context,dividedBy: 2.1),
                              top: screenHeight(context,dividedBy: 100)),
-                         width: screenWidth(context, dividedBy: 3),
+                        // width: screenWidth(context, dividedBy: 2),
                          decoration: const BoxDecoration(
                              borderRadius: BorderRadius.only(
                                  bottomLeft: Radius.circular(16),
@@ -302,7 +303,7 @@ bool emojiShowing = false;
                                Text(
                                  'Hey, how are you?',
                                  style: TextStyle(
-                                     fontSize: 12,
+                                     fontSize: 15,
                                      fontWeight: FontWeight.w500,
                                      fontFamily: 'Roboto',
                                      color: AppColor.white),
@@ -312,7 +313,7 @@ bool emojiShowing = false;
                                  style: TextStyle(
                                      fontFamily: 'Roboto',
                                      fontWeight: FontWeight.w500,
-                                     fontSize: 7,
+                                     fontSize: 10,
                                      color: AppColor.white),
                                )
                              ],
@@ -321,7 +322,7 @@ bool emojiShowing = false;
                        ),
                        Container(
                          margin: EdgeInsets.only(
-                             left: screenWidth(context, dividedBy: 15),top: screenHeight(context,dividedBy: 100)),
+                             top: screenHeight(context,dividedBy: 100)),
                          width: screenWidth(context, dividedBy: 1.5),
                          decoration: const BoxDecoration(
                              borderRadius: BorderRadius.only(
@@ -338,7 +339,7 @@ bool emojiShowing = false;
                                Text(
                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore',
                                  style: TextStyle(
-                                     fontSize: 12,
+                                     fontSize: 15,
                                      fontWeight: FontWeight.w500,
                                      fontFamily: 'Roboto',
                                      color: Color(0xff606164)),
@@ -349,7 +350,7 @@ bool emojiShowing = false;
                                  style: TextStyle(
                                      fontFamily: 'Roboto',
                                      fontWeight: FontWeight.w500,
-                                     fontSize: 7,
+                                     fontSize: 10,
                                      color: Color(0xff4A4A4A)),
                                )
                              ],

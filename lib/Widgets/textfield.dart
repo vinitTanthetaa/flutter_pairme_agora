@@ -17,8 +17,7 @@ Widget Custom_textfield(BuildContext context,
     required bool hidetext,
     required TextEditingController controller}) {
   return Container(
-    margin:
-        EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 75)),
+    margin: EdgeInsets.only(bottom: screenHeight(context, dividedBy: 70),top: screenHeight(context, dividedBy: 100)),
      height: screenHeight(context,dividedBy: 20),
     // width: screenWidth(context,dividedBy: 1),
     decoration: BoxDecoration(
@@ -38,7 +37,7 @@ Widget Custom_textfield(BuildContext context,
     child: Padding(
       padding: EdgeInsets.only(
           left: screenWidth(context, dividedBy: 25),
-          bottom: screenHeight(context,dividedBy: 150),
+          bottom: screenHeight(context,dividedBy: 200),
           right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
       child: TextField(
         onTap: onTap,
@@ -64,12 +63,10 @@ Widget Custom_textfield(BuildContext context,
                   onPressed: () {
                     onPress!();
                   },
-                  icon: Container(
-                    height: screenHeight(context, dividedBy: 30),
-                    width: screenWidth(context, dividedBy: 20),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(image: AssetImage(image!))),
-                  ),
+                  icon: Image(image: AssetImage(image!),
+                  height: screenHeight(context,dividedBy: 40),
+                  width: screenHeight(context,dividedBy: 40),
+                )
                 ),
                 // SvgPicture.asset(
                 //     'assets/Images/hide.svg',height: 10,width: 10,

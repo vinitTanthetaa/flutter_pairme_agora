@@ -96,7 +96,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                         image: popup
                             ? 'assets/Images/Vector.png'
                             : 'assets/Images/right_arrow.png',
-                        hint: 'Select your Gender',
+                        hint: 'Select Gender',
                         controller: _gender,
                         hidetext: false,
                         readOnly: true),

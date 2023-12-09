@@ -45,8 +45,7 @@ class _Profile_pageState extends State<Profile_page> {
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 title: Padding(
-                  padding: EdgeInsets.only(
-                      left: screenWidth(context, dividedBy: 30)),
+                  padding: EdgeInsets.only(left: screenWidth(context,dividedBy: 30)),
                   child: custom_header(text: "Profile"),
                 ),
               ),
@@ -74,7 +73,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   shape: BoxShape.circle),
                             ),
                             SizedBox(
-                              width: screenWidth(context, dividedBy: 50),
+                              width: screenWidth(context, dividedBy: 40),
                             ),
                             const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +143,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   },
                                   child: Container(
                                     height:
-                                        screenHeight(context, dividedBy: 60),
+                                    screenHeight(context, dividedBy: 60),
                                     width: screenHeight(context, dividedBy: 60),
                                     decoration: const BoxDecoration(
                                         image: DecorationImage(
@@ -166,7 +165,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   child: Container(
                                       alignment: Alignment.center,
                                       height:
-                                          screenHeight(context, dividedBy: 35),
+                                      screenHeight(context, dividedBy: 35),
                                       // width: screenWidth(context, dividedBy: 5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
@@ -176,12 +175,10 @@ class _Profile_pageState extends State<Profile_page> {
                                         ]),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: screenWidth(context,
-                                                dividedBy: 25)),
+                                        padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           children: [
                                             Image(
                                               color: AppColor.white,
@@ -218,42 +215,30 @@ class _Profile_pageState extends State<Profile_page> {
                         color: Color(0xffF5F5F5),
                       ),
                       custom_textfield_header(text: 'Intermediate'),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical:
-                                    screenHeight(context, dividedBy: 100)),
-                            child: LinearPercentIndicator(
-                                width: screenWidth(context, dividedBy: 1.16),
-                                lineHeight: 8,
-                                percent: 0.5,
-                                barRadius: const Radius.circular(20),
-                                backgroundColor: Colors.lightBlue.shade50,
-
-                                // progressColor: Colors.blue,
-                                linearGradient: const LinearGradient(colors: [
-                                  AppColor.skyBlue,
-                                  AppColor.whiteskyBlue
-                                ])),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth(context, dividedBy: 30),
-                            ),
-                            child: Text("2/5"),
-                          )
-                        ],
+                      Padding(
+                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 70)),
+                        child: LinearPercentIndicator(
+                            width: screenWidth(context, dividedBy: 1.25),
+                            lineHeight: 7.0,
+                            percent: 0.5,
+                            barRadius: const Radius.circular(20),
+                            backgroundColor: Colors.lightBlue.shade50,
+                            trailing:custom_text(text: "2/5", color: Color(0xff434343)),
+                            // progressColor: Colors.blue,
+                            linearGradient: const LinearGradient(colors: [
+                              AppColor.skyBlue,
+                              AppColor.whiteskyBlue
+                            ])),
                       ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 80),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 330.0),
+                      //   child: custom_text(text: "2/5", color: Color(0xff434343)),
+                      // ),
                       custom_textfield_header(text: 'Bio'),
                       Container(
                         margin: EdgeInsets.only(
-                            top: screenHeight(context, dividedBy: 50),
-                            bottom: screenHeight(context, dividedBy: 100)),
+                            top: screenHeight(context, dividedBy: 100),
+                            bottom: screenHeight(context, dividedBy: 70)),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
                           color: AppColor.white,
@@ -271,7 +256,7 @@ class _Profile_pageState extends State<Profile_page> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth(context, dividedBy: 40),
+                              horizontal: screenWidth(context, dividedBy: 25),
                               vertical: screenHeight(context, dividedBy: 150)),
                           child: TextField(
                             controller: _bio,
@@ -296,12 +281,9 @@ class _Profile_pageState extends State<Profile_page> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 50),
-                      ),
                       custom_textfield_header(text: 'My Documents'),
                       SizedBox(
-                        height: screenHeight(context, dividedBy: 100),
+                        height: screenHeight(context, dividedBy: 150),
                       ),
                       SizedBox(
                         height: screenHeight(context, dividedBy: 4.3),
@@ -314,7 +296,7 @@ class _Profile_pageState extends State<Profile_page> {
                             return Container(
                               margin: EdgeInsets.symmetric(
                                   vertical:
-                                      screenHeight(context, dividedBy: 190)),
+                                  screenHeight(context, dividedBy: 190)),
                               height: screenHeight(context, dividedBy: 15),
                               width: screenWidth(context),
                               decoration: BoxDecoration(
@@ -335,14 +317,14 @@ class _Profile_pageState extends State<Profile_page> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical:
-                                        screenHeight(context, dividedBy: 150),
+                                    screenHeight(context, dividedBy: 150),
                                     horizontal:
-                                        screenWidth(context, dividedBy: 70)),
+                                    screenWidth(context, dividedBy: 70)),
                                 child: Row(
                                   children: [
                                     Container(
                                       width:
-                                          screenWidth(context, dividedBy: 13),
+                                      screenWidth(context, dividedBy: 13),
                                       decoration: const BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
@@ -350,13 +332,13 @@ class _Profile_pageState extends State<Profile_page> {
                                     ),
                                     SizedBox(
                                       width:
-                                          screenWidth(context, dividedBy: 50),
+                                      screenWidth(context, dividedBy: 50),
                                     ),
                                     const Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'image_03.PDF ',
@@ -386,8 +368,9 @@ class _Profile_pageState extends State<Profile_page> {
                       ),
                       custom_textfield_header(text: 'Address'),
                       Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: screenHeight(context, dividedBy: 100)),
+                        margin: EdgeInsets.only(
+                            top: screenHeight(context, dividedBy: 100),
+                            bottom: screenHeight(context, dividedBy: 70)),
                         alignment: Alignment.centerLeft,
                         // height: screenHeight(context,dividedBy: 17),
                         width: screenWidth(context, dividedBy: 1.15),
@@ -419,13 +402,11 @@ class _Profile_pageState extends State<Profile_page> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 200),
-                      ),
                       custom_textfield_header(text: 'Business Experience '),
                       Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: screenHeight(context, dividedBy: 100)),
+                        margin: EdgeInsets.only(
+                            top: screenHeight(context, dividedBy: 100),
+                            bottom: screenHeight(context, dividedBy: 70)),
                         alignment: Alignment.centerLeft,
                         height: screenHeight(context, dividedBy: 20),
                         width: screenWidth(context, dividedBy: 1.15),
@@ -457,13 +438,11 @@ class _Profile_pageState extends State<Profile_page> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 200),
-                      ),
                       custom_textfield_header(text: 'Skills'),
                       Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: screenHeight(context, dividedBy: 100)),
+                        margin: EdgeInsets.only(
+                            top: screenHeight(context, dividedBy: 100),
+                            bottom: screenHeight(context, dividedBy: 70)),
                         alignment: Alignment.centerLeft,
                         height: screenHeight(context, dividedBy: 20),
                         width: screenWidth(context, dividedBy: 1.15),
@@ -495,13 +474,11 @@ class _Profile_pageState extends State<Profile_page> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 200),
-                      ),
                       custom_textfield_header(text: 'Education'),
                       Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: screenHeight(context, dividedBy: 100)),
+                        margin: EdgeInsets.only(
+                            top: screenHeight(context, dividedBy: 100),
+                            bottom: screenHeight(context, dividedBy: 70)),
                         height: screenHeight(context, dividedBy: 15),
                         width: screenWidth(context, dividedBy: 1.15),
                         decoration: BoxDecoration(

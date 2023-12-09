@@ -128,111 +128,67 @@ class _MessageRequestState extends State<MessageRequest> {
                               ),
                               child: SizedBox(
                                 // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                                height: screenHeight(context, dividedBy: 10),
+                                height: screenHeight(context,dividedBy: 11.2),
                                 width: screenHeight(context),
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          screenWidth(context, dividedBy: 15),
-                                      vertical:
-                                          screenHeight(context, dividedBy: 90)),
+                                  padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 17),vertical: screenHeight(context,dividedBy: 95)),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Container(
-                                        height: screenHeight(context,
-                                            dividedBy: 15),
-                                        width: screenHeight(context,
-                                            dividedBy: 15),
+                                        height: screenHeight(context,dividedBy: 15),
+                                        width: screenHeight(context,dividedBy: 15),
                                         decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU'),
-                                                fit: BoxFit.fill)),
+                                            image: DecorationImage(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU'),fit: BoxFit.fill)
+                                        ),
                                       ),
-                                      SizedBox(
-                                        width:
-                                            screenWidth(context, dividedBy: 50),
-                                      ),
+                                      SizedBox(width: screenWidth(context,dividedBy: 40),),
                                       Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          const Text(
-                                            'Jane Koblenz',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily: 'Roboto'),
-                                          ),
+                                          const Text('Jane Koblenz',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
                                           SizedBox(
-                                            width: screenWidth(context,
-                                                dividedBy: 2.2),
-                                            child: const Text(
-                                                'Duis protium gravida denim, vei maximus ligula......',
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                    color: Color(0xffAAAAAA),
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: 'Roboto')),
+                                            width: screenWidth(context,dividedBy: 2.2),
+                                            child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 10,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
                                           )
                                         ],
                                       ),
                                       const Spacer(),
                                       Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const Text(
-                                            '2 min',
-                                            style: TextStyle(
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 10,
-                                                color: Color(0xffAAAAAA)),
-                                          ),
+                                          const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10,color: Color(0xffAAAAAA)),),
                                           Container(
                                             alignment: Alignment.center,
-                                            height: screenHeight(context,
-                                                dividedBy: 50),
-                                            width: screenHeight(context,
-                                                dividedBy: 50),
+                                            height: screenHeight(context,dividedBy: 50),
+                                            width: screenHeight(context,dividedBy: 50),
                                             decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
-                                                gradient: LinearGradient(
+                                                borderRadius: BorderRadius.circular(3),
+                                                gradient:LinearGradient(
                                                     begin: Alignment.topLeft,
                                                     end: Alignment.bottomCenter,
-                                                    colors: [
-                                                      AppColor.skyBlue,
-                                                      AppColor.whiteskyBlue
-                                                    ])),
-                                            child: Text('2',
-                                                style: TextStyle(
-                                                    color: AppColor.white,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontFamily: 'Roboto',
-                                                    fontSize: 7)),
+                                                    colors: [AppColor.skyBlue,AppColor.whiteskyBlue]
+                                                )
+                                            ),
+                                            child: Text('2',style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w600,fontFamily: 'Roboto',fontSize: 7)),
                                           )
                                         ],
                                       )
                                     ],
                                   ),
                                 ),
-                              ),
+                              )
                             ),
                           );
                         },
                         separatorBuilder: (context, index) {
-                          return const Divider(
+                          return  const Divider(
                             height: 0,
-                            color: Color(0xffF5F5F5),
+                            thickness: 2,
+                            color: Colors.black26,
                           );
                         },
                         itemCount: 10))

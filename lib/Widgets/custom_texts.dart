@@ -35,7 +35,7 @@ Widget custom_textfield_header({required String text,bool header = false}) {
           TextSpan(
             text: text.tr(),
             style: const TextStyle(
-                fontSize: 14,
+                fontSize: 15,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis,

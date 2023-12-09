@@ -33,7 +33,7 @@ class _Image_ScreenState extends State<Image_Screen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: widget.image.endsWith('.mp4')?
-          Container(
+          SizedBox(
             height: screenHeight(context),
             width: screenWidth(context),
             child: Stack(
@@ -41,7 +41,7 @@ class _Image_ScreenState extends State<Image_Screen> {
                 VideoPlayer(_controller),
                 IconButton(onPressed: () {
                   Navigator.pop(context);
-                }, icon: Icon(Icons.arrow_back_ios_new,color: AppColor.white,)),
+                }, icon: const Icon(Icons.arrow_back_ios_new,color: AppColor.white,)),
                 Align(
                   alignment: Alignment.center,
                     child: CircleAvatar(

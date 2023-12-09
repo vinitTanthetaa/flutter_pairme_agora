@@ -48,7 +48,7 @@ class _Message_pageState extends State<Message_page> {
                  ListView.separated(
                    shrinkWrap: true,
                    physics: const ClampingScrollPhysics(),
-                     padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 50) ),
+                     padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100) ),
                      itemBuilder: (context, index) {
                        return  GestureDetector(
                          onTap: () {
@@ -75,10 +75,10 @@ class _Message_pageState extends State<Message_page> {
                            ),
                            child: SizedBox(
                              // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                             height: screenHeight(context,dividedBy: 10.4),
+                             height: screenHeight(context,dividedBy: 11.2),
                              width: screenHeight(context),
                              child: Padding(
-                               padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20),vertical: screenHeight(context,dividedBy: 90)),
+                               padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 17),vertical: screenHeight(context,dividedBy: 95)),
                                child: Row(
                                  mainAxisAlignment: MainAxisAlignment.center,
                                  crossAxisAlignment: CrossAxisAlignment.center,
