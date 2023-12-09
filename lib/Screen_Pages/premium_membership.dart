@@ -67,10 +67,10 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                               },
                               child: const Icon(
                                 Icons.close,
-                                size: 23,
+                                size: 25,
                               )),
                           SizedBox(
-                            width: screenWidth(context, dividedBy: 30),
+                            width: screenWidth(context, dividedBy: 25),
                           ),
                           custom_header(text: 'Premium membership')
                           // IconButton(onPressed: () {
@@ -84,7 +84,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                       SizedBox(
                         height: screenHeight(context, dividedBy: 60),
                       ),
-                      custom_textfield_header(text: 'Select  a plan'),
+                      custom_textfield_header(text: 'Select a plan'),
                       SizedBox(
                         height: screenHeight(context, dividedBy: 70),
                       ),

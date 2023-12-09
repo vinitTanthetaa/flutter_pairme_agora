@@ -15,6 +15,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   bool select = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +26,8 @@ class _PaymentPageState extends State<PaymentPage> {
           children: [
             Background_Img(context),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth(context, dividedBy: 15)),
               child: SafeArea(
                 child: Column(
                   children: [
@@ -38,8 +40,8 @@ class _PaymentPageState extends State<PaymentPage> {
                           },
                           child: Image(
                             image: const AssetImage('assets/Images/back.png'),
-                            height: screenHeight(context,dividedBy: 50),
-                            width: screenHeight(context,dividedBy: 50),
+                            height: screenHeight(context, dividedBy: 50),
+                            width: screenHeight(context, dividedBy: 50),
                           ),
                         ),
                         SizedBox(
@@ -51,45 +53,80 @@ class _PaymentPageState extends State<PaymentPage> {
                         // }, icon: Icon(Icons.close))
                       ],
                     ),
-                    SizedBox(height: screenHeight(context,dividedBy: 50),),
-                    paymentCard(context, name: 'Paypal', img: 'assets/Images/paypal.png', onTap: () {  }),
+                    SizedBox(
+                      height: screenHeight(context, dividedBy: 50),
+                    ),
+                    paymentCard(context,
+                        name: 'Paypal',
+                        img: 'assets/Images/paypal.png',
+                        onTap: () {}),
                     space(context),
-                    paymentCard(context, name: 'Google Pay', img: 'assets/Images/google.png', onTap: () {  }),
+                    paymentCard(context,
+                        name: 'Google Pay',
+                        img: 'assets/Images/google.png',
+                        onTap: () {}),
                     space(context),
-                    paymentCard(context, name: 'Apple Pay', img: 'assets/Images/apple.png', onTap: () {  }),
+                    paymentCard(context,
+                        name: 'Apple Pay',
+                        img: 'assets/Images/apple.png',
+                        onTap: () {}),
                     space(context),
-                    paymentCard(context, name: 'Credit or Debit Card', img: 'assets/Images/card.png', onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return PaymentMethod();
-                      },));
+                    paymentCard(context,
+                        name: 'Credit or Debit Card',
+                        img: 'assets/Images/card.png', onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return PaymentMethod();
+                        },
+                      ));
                     }),
-                    SizedBox(height: screenHeight(context,dividedBy: 60),),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              select = !select;
-                            });
-                          },
-                          child: Container(
-                            height: screenHeight(context,dividedBy: 45),
-                            width: screenHeight(context,dividedBy: 45),
+                    SizedBox(
+                      height: screenHeight(context, dividedBy: 60),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      onTap: () {
+                        setState(() {
+                          select = !select;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Container(
+                            height: screenHeight(context, dividedBy: 45),
+                            width: screenHeight(context, dividedBy: 45),
                             color: const Color(0xffD4E2FF),
                             child: Center(
-                              child: select ? Container(
-                                height: screenHeight(context,dividedBy: 65),
-                                width: screenHeight(context,dividedBy: 65),
-                                decoration: const BoxDecoration(
-                                    image: DecorationImage(image: AssetImage('assets/Images/check.png'),fit: BoxFit.fill)
-                                ),
-                              ) : const SizedBox(),
+                              child: select
+                                  ? Container(
+                                      height:
+                                          screenHeight(context, dividedBy: 65),
+                                      width:
+                                          screenHeight(context, dividedBy: 65),
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/check.png'),
+                                              fit: BoxFit.fill)),
+                                    )
+                                  : const SizedBox(),
                             ),
                           ),
-                        ),
-                        SizedBox(width: screenWidth(context,dividedBy: 50),),
-                        Text('Save Card details for future Payments',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15,fontFamily: 'Roboto',color: select ? Color(0xff303030) : Color(0xffB3B3B3)),)
-                      ],
+                          SizedBox(
+                            width: screenWidth(context, dividedBy: 50),
+                          ),
+                          Text(
+                            'Save Card details for future Payments',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                fontFamily: 'Roboto',
+                                color: select
+                                    ? Color(0xff303030)
+                                    : Color(0xffB3B3B3)),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -101,11 +138,13 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 }
-Widget paymentCard (BuildContext context,{required Function() onTap,required String name,required String img}){
+
+Widget paymentCard(BuildContext context,
+    {required Function() onTap, required String name, required String img}) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
-      height: screenHeight(context,dividedBy: 17),
+      height: screenHeight(context, dividedBy: 17),
       width: screenWidth(context),
       decoration: BoxDecoration(
           color: AppColor.white,
@@ -120,26 +159,37 @@ Widget paymentCard (BuildContext context,{required Function() onTap,required Str
               blurRadius: 4,
               spreadRadius: 0.0,
             ),
-          ]
-
-      ),
+          ]),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy:35)),
+        padding: EdgeInsets.symmetric(
+            horizontal: screenWidth(context, dividedBy: 35)),
         child: Row(
           children: [
             Image(
-              image:  AssetImage(img),
-              height: screenHeight(context,dividedBy: 35),
-              width: screenHeight(context,dividedBy: 37),
+              image: AssetImage(img),
+              height: screenHeight(context, dividedBy: 35),
+              width: screenHeight(context, dividedBy: 37),
             ),
-            SizedBox(width: screenWidth(context,dividedBy: 40),),
-            Text(name,style: TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w500,fontSize: 12),)
+            SizedBox(
+              width: screenWidth(context, dividedBy: 40),
+            ),
+            Text(
+              name,
+              style: TextStyle(
+                  color: AppColor.black,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12),
+            )
           ],
         ),
       ),
     ),
   );
 }
-Widget space (BuildContext context){
-  return SizedBox(height: screenHeight(context,dividedBy: 70),);
+
+Widget space(BuildContext context) {
+  return SizedBox(
+    height: screenHeight(context, dividedBy: 70),
+  );
 }

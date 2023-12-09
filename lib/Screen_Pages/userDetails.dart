@@ -293,7 +293,7 @@ class _UsersDetailsState extends State<UsersDetails>
                           ),
                           custom_textfield_header(text: 'Looking for'),
                           SizedBox(
-                            height: screenHeight(context, dividedBy: 200),
+                            height: screenHeight(context, dividedBy: 100),
                           ),
                           Row(
                             children: [

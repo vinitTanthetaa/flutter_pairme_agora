@@ -392,6 +392,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                         hidetext: false,
                         readOnly: false),
                     InkWell(
+                      splashColor: Colors.transparent,
                       onTap: () {
                         setState(() {
                           select = !select;
