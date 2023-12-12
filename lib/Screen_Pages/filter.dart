@@ -137,18 +137,18 @@ class _Filter_pageState extends State<Filter_page> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
+                              margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                               height: screenHeight(context,dividedBy: 30),
                               width: screenWidth(context),
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        _switch = !_switch;
-                                      });
-                                    },
-                                    child: Container(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _switch = !_switch;
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Container(
                                       height: screenHeight(context,dividedBy: 45),
                                       width: screenHeight(context,dividedBy: 45),
                                       color: Color(0xffD4E2FF),
@@ -162,27 +162,27 @@ class _Filter_pageState extends State<Filter_page> {
                                         ) : const SizedBox(),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(width: screenWidth(context,dividedBy: 70),),
-                                  const Text('only show people in this range',textAlign: TextAlign.center,maxLines: 1,style: TextStyle(
-                                    fontWeight: FontWeight.w400,fontFamily: 'Roboto',fontSize: 13,color: AppColor.fontdarkgray
-                                  ),),
-                                  // Switch(
-                                  //   value: _switch,
-                                  //   activeTrackColor: AppColor.gray,
-                                  //   thumbColor: const MaterialStatePropertyAll(AppColor.skyBlue),
-                                  //   splashRadius: 1,
-                                  //   autofocus: true,
-                                  //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                  //   dragStartBehavior: DragStartBehavior. down,
-                                  //   trackOutlineColor: const MaterialStatePropertyAll(AppColor.skyBlue),
-                                  //   onChanged: (value) {
-                                  //     setState(() {
-                                  //       _switch = value;
-                                  //     });
-                                  //   },),
+                                    SizedBox(width: screenWidth(context,dividedBy: 70),),
+                                    const Text('only show people in this range',textAlign: TextAlign.center,maxLines: 1,style: TextStyle(
+                                      fontWeight: FontWeight.w400,fontFamily: 'Roboto',fontSize: 13,color: AppColor.fontdarkgray
+                                    ),),
+                                    // Switch(
+                                    //   value: _switch,
+                                    //   activeTrackColor: AppColor.gray,
+                                    //   thumbColor: const MaterialStatePropertyAll(AppColor.skyBlue),
+                                    //   splashRadius: 1,
+                                    //   autofocus: true,
+                                    //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    //   dragStartBehavior: DragStartBehavior. down,
+                                    //   trackOutlineColor: const MaterialStatePropertyAll(AppColor.skyBlue),
+                                    //   onChanged: (value) {
+                                    //     setState(() {
+                                    //       _switch = value;
+                                    //     });
+                                    //   },),
 
-                                ],
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -403,7 +403,7 @@ class _Filter_pageState extends State<Filter_page> {
                       custom_textfield_header(text: 'Looking for'),
                       Container(
                         margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 70)),
-                        height: screenHeight(context,dividedBy: 3.5),
+                        height: screenHeight(context,dividedBy: 3.6),
                         width: screenWidth(context),
                         decoration: BoxDecoration(
                           color: AppColor.white,
@@ -425,7 +425,7 @@ class _Filter_pageState extends State<Filter_page> {
                           itemCount: lookingFor.length,
                           physics: const ClampingScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return         custom_selection(context,bottom: screenHeight(context,dividedBy: 100) ,text: lookingFor[index], list: _type, onTap: () {
+                            return         custom_selection(context,bottom: 5 ,text: lookingFor[index], list: _type, onTap: () {
                               setState(() {
                                 _type.contains(lookingFor[index]) ? _type.remove(lookingFor[index]) :_type.add(lookingFor[index]);
                               });

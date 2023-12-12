@@ -1171,6 +1171,9 @@ class _StepScreenState extends State<StepScreen> {
                         skip_button(
                           context,
                           onTap: () {
+                            setState(() {
+                              ind++;
+                            });
                             // Navigator.push(context, MaterialPageRoute(
                             //   builder: (context) {
                             //     return const Describe_Yourself();
@@ -3787,6 +3790,9 @@ class _StepScreenState extends State<StepScreen> {
                         skip_button(
                           context,
                           onTap: () {
+                            setState(() {
+                              ind++;
+                            });
                             // Navigator.push(context, MaterialPageRoute(
                             //   builder: (context) {
                             //     return const Looking_for();

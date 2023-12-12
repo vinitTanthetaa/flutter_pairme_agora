@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
 import 'package:pair_me/helper/App_Colors.dart';
-import 'package:pair_me/helper/App_Language.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +35,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColor.skyBlue),
         useMaterial3: true,
       ),
-      supportedLocales: context.supportedLocales,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('sp'),
+        Locale('hi'),
+        Locale('can'),
+        Locale('man'),
+      ],
       localizationsDelegates: context.localizationDelegates,
       home: const SpleshScreen(),
     );

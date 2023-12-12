@@ -1,4 +1,19 @@
 {
-  "Language": "Language",
-  "counter": "Please select your preferred language to continue"
+  "Language": "Idioma",
+  "counter": "Por favor seleccione su idioma preferido para continuar",
+  "Hindi": "hindi",
+  "Spanish": "Spanish",
+  "English": "English",
+  "Cantonese": "Cantonese",
+  "Mandarin" : "Mandarin",
+  "counter1": "Por favor ingrese los detalles a continuación para continuar",
+  "Login" : "Acceso",
+  "E-mail": "Correo electrónico",
+  "Enter your email": "Introduce tu correo electrónico",
+  "Password": "Contraseña",
+  "Enter your password": "Ingresa tu contraseña",
+  "Forgot Password?": "Has olvidado tu contraseña",
+  "Skip": "Saltar",
+  "Next": "Próxima",
+  "Sign Up": "Inscribirse"
 }

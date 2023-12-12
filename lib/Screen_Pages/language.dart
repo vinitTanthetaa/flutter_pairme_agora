@@ -149,7 +149,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                                    // show_box ?
                                    // context.setLocale(Locale('sp')):
                                    //context.setLocale(Locale('hi'));
-                                   _selected_language == 'English' ? context.setLocale(Locale('en')) :_selected_language == 'Spanish' ? context.setLocale(Locale('sp')) : context.setLocale(Locale('hi'));
+                                   _selected_language == 'English' ? context.setLocale(const Locale('en')) :_selected_language == 'Spanish' ? context.setLocale(Locale('can')) : context.setLocale(Locale('man'));
                                    Timer(const Duration(milliseconds: 600), () {
                                      setState(() {
                                        show_box = !show_box;

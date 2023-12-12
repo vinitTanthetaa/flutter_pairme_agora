@@ -16,7 +16,7 @@ Widget custom_header({required String text}) {
 
 Widget custom_discription({required String text}) {
   return Text(
-    text,
+    text.tr(),
     style: const TextStyle(
         fontSize: 15,
         fontFamily: 'Roboto',
@@ -24,7 +24,7 @@ Widget custom_discription({required String text}) {
         overflow: TextOverflow.ellipsis,
         color: AppColor.fontdarkgray),
     maxLines: 2,
-  ).tr();
+  );
 }
 Widget custom_textfield_header({required String text,bool header = false}) {
   return header ? RichText(
