@@ -53,6 +53,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
             Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
+                titleSpacing: 0,
+                centerTitle: false,
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 leading: GestureDetector(

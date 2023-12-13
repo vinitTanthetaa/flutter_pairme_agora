@@ -253,7 +253,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             FontWeight.w600),
                                                   ),
                                                 ),
-                                                Divider(
+                                                const Divider(
                                                   height: 0,
                                                 ),
                                                 Padding(
@@ -2187,73 +2187,6 @@ class _Business_ProfileState extends State<Business_Profile> {
                                 ),
                               ),
                             ),
-                            // Container(
-                            //   height: screenHeight(context, dividedBy: 15),
-                            //   width: screenWidth(context, dividedBy: 1.3),
-                            //   decoration: BoxDecoration(
-                            //       color: const Color(0xffEFF4FF),
-                            //       borderRadius: BorderRadius.circular(6)),
-                            //   child: Padding(
-                            //     padding: EdgeInsets.symmetric(
-                            //         horizontal:
-                            //             screenWidth(context, dividedBy: 55)),
-                            //     child: Row(
-                            //       children: [
-                            //         Container(
-                            //           margin: EdgeInsets.only(
-                            //               right: screenWidth(context,
-                            //                   dividedBy: 90)),
-                            //           height:
-                            //               screenHeight(context, dividedBy: 27),
-                            //           width:
-                            //               screenWidth(context, dividedBy: 15),
-                            //           decoration: const BoxDecoration(
-                            //               image: DecorationImage(
-                            //                   image: AssetImage(
-                            //                       'assets/Images/file.png'))),
-                            //         ),
-                            //         SizedBox(
-                            //           height:
-                            //               screenHeight(context, dividedBy: 23),
-                            //           width:
-                            //               screenWidth(context, dividedBy: 1.55),
-                            //           child: Padding(
-                            //             padding: EdgeInsets.symmetric(
-                            //                 vertical: screenHeight(context,
-                            //                     dividedBy: 900)),
-                            //             child: Column(
-                            //               mainAxisAlignment:
-                            //                   MainAxisAlignment.spaceBetween,
-                            //               children: [
-                            //                 Text(
-                            //                   'image_03.jpg',
-                            //                   style: TextStyle(
-                            //                       fontFamily: 'Roboto',
-                            //                       fontSize: 12,
-                            //                       fontWeight:
-                            //                           FontWeight.w500,
-                            //                       color: AppColor
-                            //                           .dropdownfont),
-                            //                 ),
-                            //                 Padding(
-                            //                   padding:  EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 700)),
-                            //                   child: LinearPercentIndicator(
-                            //                     width: screenWidth(context,dividedBy: 1.55),
-                            //                     lineHeight: 7.0,
-                            //                     percent: 0.5,
-                            //                     barRadius: Radius.circular(20),
-                            //                     backgroundColor: Colors.grey,
-                            //                     progressColor: Colors.blue,
-                            //                   ),
-                            //                 ),
-                            //               ],
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
                             filelist.length == 1 ?
                             Container(
                               margin: EdgeInsets.only(
@@ -2830,7 +2763,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                 ),
               ),
             ),
-            Positioned(
+            widget.Name == 'Edit' ? SizedBox(): Positioned(
                 top: 0.0,
                 child: custom_stepper(context, positaion: 4)),
           ],

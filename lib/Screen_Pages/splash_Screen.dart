@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/language.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:pair_me/helper/pref_Service.dart';
 
 class SpleshScreen extends StatefulWidget {
   const SpleshScreen({super.key});
@@ -12,6 +13,8 @@ class SpleshScreen extends StatefulWidget {
 }
 
 class _SpleshScreenState extends State<SpleshScreen> {
+  SharedPrefsService prefsService = SharedPrefsService();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -19,7 +22,10 @@ class _SpleshScreenState extends State<SpleshScreen> {
     Splash_Timer();
   }
   Splash_Timer(){
-    Timer(Duration(seconds: 1), () {
+    Timer(Duration(seconds: 1), () async {
+      // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
+      // showcasetime++;
+      // prefsService.setIntData("showcasetime", showcasetime);
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Language_Screen(),), (route) => false);
     });
   }

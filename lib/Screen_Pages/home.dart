@@ -1,9 +1,7 @@
 import 'dart:ui';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
@@ -30,11 +28,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   SharedPrefsService prefsService = SharedPrefsService();
   final GlobalKey _key = GlobalKey();
   final GlobalKey _key1 = GlobalKey();
-  final GlobalKey _key2 = GlobalKey();
   final GlobalKey _key3 = GlobalKey();
   final GlobalKey _key4 = GlobalKey();
   final GlobalKey _key5 = GlobalKey();
   final GlobalKey _key6 = GlobalKey();
+  final GlobalKey _key23 = GlobalKey();
   int pageViewIndex = 0;
   late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController _bio = TextEditingController();
@@ -129,11 +127,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   double hight = 100;
   @override
   void initState() {
-   // createTutorial();
+    createTutorial();
     controller = AppinioSwiperController();
-
     // tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-   // Future.delayed(Duration.zero, showTutorial);
+    Future.delayed(Duration.zero, showTutorial);
     FocusManager.instance.primaryFocus?.unfocus();
     super.initState();
   }
@@ -358,7 +355,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 alignment: Alignment.bottomCenter,
                                                 child: Container(
                                                   height: screenHeight(context,
-                                                      dividedBy: 4),
+                                                      dividedBy: 3.9),
                                                   width: screenWidth(context),
                                                   decoration: const BoxDecoration(
                                                       gradient: LinearGradient(
@@ -425,34 +422,37 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 ],
                                                               ),
                                                             ),
-                                                            GestureDetector(
-                                                                onTap: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      SwipeablePageRoute(
-                                                                        builder:
-                                                                            (context) {
-                                                                          return ShowUsers(
-                                                                            list: users[
-                                                                            index]
-                                                                            [
-                                                                            'images'],
-                                                                          );
-                                                                        },
-                                                                      ));
-                                                                },
-                                                                child: Image(
-                                                                  image: const AssetImage(
-                                                                      'assets/Images/side.png'),
-                                                                  height:
-                                                                  screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                      25),
-                                                                  width: screenHeight(
-                                                                      context,
-                                                                      dividedBy: 25),
-                                                                ))
+                                                            // GestureDetector(
+                                                            //     onTap: () {
+                                                            //       Navigator.push(
+                                                            //           context,
+                                                            //           SwipeablePageRoute(
+                                                            //             builder:
+                                                            //                 (context) {
+                                                            //               return ShowUsers(
+                                                            //                 list: users[
+                                                            //                 index]
+                                                            //                 [
+                                                            //                 'images'],
+                                                            //               );
+                                                            //             },
+                                                            //           ));
+                                                            //     },
+                                                            //     child: SizedBox(
+                                                            //       key: _key23,
+                                                            //       child: Image(
+                                                            //         image: const AssetImage(
+                                                            //             'assets/Images/side.png'),
+                                                            //         height:
+                                                            //         screenHeight(
+                                                            //             context,
+                                                            //             dividedBy:
+                                                            //             25),
+                                                            //         width: screenHeight(
+                                                            //             context,
+                                                            //             dividedBy: 25),
+                                                            //       ),
+                                                            //     ))
                                                           ],
                                                         ),
                                                         const Text(
@@ -905,7 +905,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 (context) {
                                                                               return Chatting_Page(
                                                                                 name:
-                                                                                'chatting',
+                                                                                'chatting', Username: users[index]
+                                                                              ['Name'], image: users[index]['images'][pageViewIndex],
                                                                               );
                                                                             },
                                                                           ));
@@ -1085,6 +1086,16 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       )),
                                                 )
                                                     : const SizedBox(),
+                                              ),
+                                              Align(
+                                                alignment: Alignment.topCenter,
+                                                child: Container(
+                                                  key: _key3,
+                                                  margin: EdgeInsets.only(top: screenHeight(context,dividedBy: 10)),
+                                                  height: screenHeight(context,dividedBy: 9),
+                                                  width: screenHeight(context,dividedBy: 9),
+
+                                                ),
                                               )
                                             ],
                                           ),
@@ -1131,45 +1142,48 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
 
   Future<void> createTutorial() async {
     showcase = await prefsService.getBoolData('showcase') ?? true;
-    if (showcase == false) {
-      setState(() {});
-    } else {
-      tutorialCoachMark = TutorialCoachMark(
-        targets: _createTargets(),
-        colorShadow: Colors.black12,
-        textSkip: "SKIP",
-        textStyleSkip: const TextStyle(
-          fontFamily: 'Roboto',
-          color: AppColor.white,
-          fontWeight: FontWeight.w600,
-          fontSize: 17,
-        ),
-        paddingFocus: 10,
-        opacityShadow: 0.5,
-        imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-        onFinish: () {
-          print("finish");
-          showcase = false;
-          prefsService.setBoolData('showcase', showcase);
-        },
-        onClickTarget: (target) {
-          print('onClickTarget: $target');
-        },
-        onClickTargetWithTapPosition: (target, tapDetails) {
-          print("target: $target");
-          print(
-              "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
-        },
-        onClickOverlay: (target) {
-          print('onClickOverlay: $target');
-        },
-        onSkip: () {
-          print("skip");
-          showcase = false;
-          prefsService.setBoolData('showcase', showcase);
-          return true;
-        },
-      );
+    showcasetime = await prefsService.getIntData("showcasetime") ?? 1;
+    if (showcase) {
+      if (showcasetime >= 3){
+
+      } else {
+        tutorialCoachMark = TutorialCoachMark(
+          targets: _createTargets(),
+          colorShadow: Colors.black12,
+          textSkip: "SKIP",
+          textStyleSkip: const TextStyle(
+            fontFamily: 'Roboto',
+            color: AppColor.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 17,
+          ),
+          paddingFocus: 10,
+          opacityShadow: 0.5,
+          imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+          onFinish: () {
+            print("finish");
+            showcase = false;
+            prefsService.setBoolData('showcase', showcase);
+          },
+          onClickTarget: (target) {
+            print('onClickTarget: $target');
+          },
+          onClickTargetWithTapPosition: (target, tapDetails) {
+            print("target: $target");
+            print(
+                "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
+          },
+          onClickOverlay: (target) {
+            print('onClickOverlay: $target');
+          },
+          onSkip: () {
+            print("skip");
+            showcase = false;
+            prefsService.setBoolData('showcase', showcase);
+            return true;
+          },
+        );
+      }
     }
   }
 
@@ -1380,37 +1394,37 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         ],
       ),
     );
-    targets.add(
-      TargetFocus(
-        identify: "UsersDetails",
-        keyTarget: _key2,
-        alignSkip: Alignment.topRight,
-        enableOverlayTab: true,
-        shape: ShapeLightFocus.RRect,
-        contents: [
-          TargetContent(
-            align: ContentAlign.bottom,
-            builder: (context, controller) {
-              return const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Tap to Show User`s full information",
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Roboto',
-                      fontSize: 17,
-                      color: AppColor.black,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
+    // targets.add(
+    //   TargetFocus(
+    //     identify: "UsersDetails",
+    //     keyTarget: _key23,
+    //     alignSkip: Alignment.topRight,
+    //     enableOverlayTab: true,
+    //     shape: ShapeLightFocus.Circle,
+    //     contents: [
+    //       TargetContent(
+    //         align: ContentAlign.left,
+    //         builder: (context, controller) {
+    //           return const Card(
+    //             child: Padding(
+    //               padding: EdgeInsets.all(8.0),
+    //               child: Text(
+    //                 "Tap to Show User`s full information",
+    //                 maxLines: 2,
+    //                 style: TextStyle(
+    //                   fontWeight: FontWeight.w600,
+    //                   fontFamily: 'Roboto',
+    //                   fontSize: 17,
+    //                   color: AppColor.black,
+    //                 ),
+    //               ),
+    //             ),
+    //           );
+    //         },
+    //       ),
+    //     ],
+    //   ),
+    // );
     targets.add(
       TargetFocus(
         identify: "Buttons",

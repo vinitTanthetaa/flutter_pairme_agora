@@ -309,9 +309,9 @@ class _Business_AddressState extends State<Business_Address> {
                 ),
               ),
             ),
-            Positioned(
+            widget.Name == 'Edit' ? SizedBox(): Positioned(
                 top: 0.0,
-                child: custom_stepper(context, positaion: 3)),
+                child: custom_stepper(context, positaion: 3)) ,
           ],
         ),
       ),

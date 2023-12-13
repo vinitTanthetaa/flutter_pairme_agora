@@ -8,8 +8,8 @@ import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class Chatting_Page extends StatefulWidget {
-  String name;
-   Chatting_Page({super.key,required this.name});
+  String name,Username,image;
+   Chatting_Page({super.key,required this.name,required this.Username,required this.image});
 
   @override
   State<Chatting_Page> createState() => _Chatting_PageState();
@@ -152,10 +152,9 @@ bool emojiShowing = false;
                                 height: screenHeight(context, dividedBy: 20),
                                 width: screenHeight(context, dividedBy: 20),
                                 decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                        image: NetworkImage(
-                                            'https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg'),
-                                        fit: BoxFit.fill),
+                                    image: DecorationImage(
+                                        image: NetworkImage(widget.image),
+                                        fit: BoxFit.fitWidth,filterQuality: FilterQuality.high),
                                     border: Border.all(
                                         color: AppColor.white, width: 1),
                                     shape: BoxShape.circle),
@@ -183,8 +182,8 @@ bool emojiShowing = false;
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              'Jane Koblenz',
+                             Text(
+                              widget.Username,
                               style: TextStyle(
                                   color: AppColor.white,
                                   fontSize: 16,

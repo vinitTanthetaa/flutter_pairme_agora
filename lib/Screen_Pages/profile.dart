@@ -44,6 +44,7 @@ class _Profile_pageState extends State<Profile_page> {
                 automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
+                centerTitle: false,
                 title: Padding(
                   padding: EdgeInsets.only(left: screenWidth(context,dividedBy: 30)),
                   child: custom_header(text: "Profile"),
@@ -80,7 +81,7 @@ class _Profile_pageState extends State<Profile_page> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Jane Koblenz',
+                                  'Vincenzo cassano',
                                   style: TextStyle(
                                       fontFamily: 'Roboto',
                                       fontSize: 16,
@@ -222,8 +223,8 @@ class _Profile_pageState extends State<Profile_page> {
                             lineHeight: 7.0,
                             percent: 0.5,
                             barRadius: const Radius.circular(20),
-                            backgroundColor: Colors.lightBlue.shade50,
-                            trailing:custom_text(text: "2/5", color: Color(0xff434343)),
+                            backgroundColor: Colors.grey.shade200,
+                            trailing:custom_text(text: "2/5", color: const Color(0xff434343)),
                             // progressColor: Colors.blue,
                             linearGradient: const LinearGradient(colors: [
                               AppColor.skyBlue,

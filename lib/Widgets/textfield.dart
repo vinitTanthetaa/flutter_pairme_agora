@@ -47,7 +47,7 @@ Widget Custom_textfield(BuildContext context,
         keyboardType: number ? TextInputType.number : TextInputType.text,
         controller: controller,
         cursorColor: const Color(0xffB3B3B3),
-        style: const TextStyle(fontSize: 13),
+        style: const TextStyle(fontSize: 14),
         textInputAction: TextInputAction.next,
         obscureText: show_icon ? hidetext : false,
         decoration: show_icon
@@ -77,7 +77,7 @@ Widget Custom_textfield(BuildContext context,
                 hintStyle: const TextStyle(
                     color: Color(0xffB3B3B3),
                     fontFamily: 'Roboto',
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w400))
             : InputDecoration(
                 // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
@@ -86,7 +86,7 @@ Widget Custom_textfield(BuildContext context,
                 hintStyle: const TextStyle(
                     color: Color(0xffB3B3B3),
                     fontFamily: 'Roboto',
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w400)),
       ),
     ),

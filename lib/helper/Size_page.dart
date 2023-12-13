@@ -14,5 +14,5 @@ double screenWidth(BuildContext context, {double dividedBy = 1.0}) {
 }
 
 int selectedStep = 0;
-int nbSteps = 7;
 bool showcase = true;
+int showcasetime = 0;

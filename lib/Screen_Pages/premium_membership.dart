@@ -49,245 +49,245 @@ class _PremiumMembershipState extends State<PremiumMembership> {
         child: Stack(
           children: [
             Background_Img(context),
-            SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth(context, dividedBy: 15)),
-                child: SafeArea(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Header_Space(context),
-                      Row(
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(
-                                Icons.close,
-                                size: 25,
-                              )),
-                          SizedBox(
-                            width: screenWidth(context, dividedBy: 25),
-                          ),
-                          custom_header(text: 'Premium membership')
-                          // IconButton(onPressed: () {
-                          //
-                          // }, icon: Icon(Icons.close))
-                        ],
-                      ),
-                      custom_discription(
-                          text:
-                              'Unlimited likes send as many likes as you want.'),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 60),
-                      ),
-                      custom_textfield_header(text: 'Select a plan'),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 70),
-                      ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 5.1),
-                        width: screenWidth(context),
-                        child: ListView.builder(
-                          itemCount: data.length,
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.zero,
-                          physics: const ClampingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Center(
-                              child: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      right:
-                                          screenWidth(context, dividedBy: 50)),
-                                  height:
-                                      screenHeight(context, dividedBy: 5.28),
-                                  width: screenWidth(context, dividedBy: 1.17),
-                                  decoration: BoxDecoration(
-                                      color: AppColor.white,
-                                      borderRadius: BorderRadius.circular(23),
-                                      gradient: data[index] == 0
-                                          ? LinearGradient(
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                titleSpacing: screenWidth(context, dividedBy: 55),
+                backgroundColor: Colors.transparent,
+                surfaceTintColor: Colors.transparent,
+                bottom: PreferredSize(preferredSize:const Size.fromHeight(0.0),child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 7.0),
+
+                  child: custom_discription(
+                      text:
+                      'Unlimited likes send as many likes as you want.'),
+                ),),
+                leading: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(left: screenWidth(context, dividedBy: 17)),
+                      child: Icon(Icons.close),
+                    )),
+                centerTitle: false,
+                title: custom_header(text: "Premium membership"),
+              ),
+              body: SingleChildScrollView(
+                physics: ClampingScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth(context, dividedBy: 15)),
+                  child: SafeArea(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // SizedBox(
+                        //   height: screenHeight(context, dividedBy: 60),
+                        // ),
+                        custom_textfield_header(text: 'Select a plan'),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: screenHeight(context, dividedBy: 50),top: screenHeight(context, dividedBy: 100)),
+                          child: SizedBox(
+                            height: screenHeight(context, dividedBy: 5),
+                            width: screenWidth(context),
+                            child: PageView.builder(
+                              itemCount: data.length,
+                              scrollDirection: Axis.horizontal,
+                              physics: const ClampingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Center(
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      // margin: EdgeInsets.only(
+                                      //     right: screenWidth(context, dividedBy: 100)),
+                                       height:
+                                       screenHeight(context, dividedBy: 5.28),
+                                      width: screenWidth(context, dividedBy: 1.2),
+                                      decoration: BoxDecoration(
+                                          color: AppColor.white,
+                                          borderRadius: BorderRadius.circular(23),
+                                          gradient: data[index] == 0
+                                              ? const LinearGradient(
                                               colors: [
-                                                  AppColor.skyBlue,
-                                                  Color(0xff6D9AFF)
-                                                ],
+                                                AppColor.skyBlue,
+                                                Color(0xff6D9AFF)
+                                              ],
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight)
-                                          : LinearGradient(
+                                              : const LinearGradient(
                                               colors: [
-                                                  Color(0xff2468FF),
-                                                  Color(0xff5BC8FF)
-                                                ],
+                                                Color(0xff2468FF),
+                                                Color(0xff5BC8FF)
+                                              ],
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.grey,
-                                          offset: Offset(
-                                            1,
-                                            1,
-                                          ),
-                                          blurRadius: 4,
-                                          spreadRadius: 0.0,
-                                        ),
-                                      ]),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors.grey,
+                                              offset: Offset(
+                                                1,
+                                                1,
+                                              ),
+                                              blurRadius: 4,
+                                              spreadRadius: 0.0,
+                                            ),
+                                          ]),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
                                             screenWidth(context, dividedBy: 30),
-                                        vertical: screenWidth(context,
-                                            dividedBy: 30)),
-                                    child: Column(
-                                      children: [
-                                        // data[index]['name'] != null ? Text(
-                                        //   data[index]['name'].toString(),
-                                        //   style: TextStyle(
-                                        //       color: AppColor.skyBlue,
-                                        //       fontFamily: 'Roboto',
-                                        //       fontWeight: FontWeight.w500,
-                                        //       fontSize: 9),
-                                        // ) : const SizedBox() ,
-                                        Text(
-                                          data[index]['month'],
-                                          style: const TextStyle(
-                                              color: AppColor.white,
-                                              fontFamily: 'Roboto',
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 20),
-                                        ),
-                                        Text(
-                                          'Unlock all of our features to be in complete control of your experience',
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              color: AppColor.white,
-                                              fontFamily: 'Roboto',
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 15),
-                                        ),
-                                        SizedBox(
-                                          height: data[index]['save'] != null
-                                              ? screenHeight(context,
+                                            vertical: screenWidth(context,
+                                                dividedBy: 30)),
+                                        child: Column(
+                                          children: [
+                                            // data[index]['name'] != null ? Text(
+                                            //   data[index]['name'].toString(),
+                                            //   style: TextStyle(
+                                            //       color: AppColor.skyBlue,
+                                            //       fontFamily: 'Roboto',
+                                            //       fontWeight: FontWeight.w500,
+                                            //       fontSize: 9),
+                                            // ) : const SizedBox() ,
+                                            Text(
+                                              data[index]['month'],
+                                              style: const TextStyle(
+                                                  color: AppColor.white,
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 20),
+                                            ),
+                                            const Text(
+                                              'Unlock all of our features to be in complete control of your experience',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: AppColor.white,
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 15),
+                                            ),
+                                            SizedBox(
+                                              height: data[index]['save'] != null
+                                                  ? screenHeight(context,
                                                   dividedBy: 200)
-                                              : 0,
-                                        ),
-                                        data[index]['save'] != null
-                                            ? Text('Save 40%',
+                                                  : 0,
+                                            ),
+                                            data[index]['save'] != null
+                                                ? const Text('Save 40%',
                                                 style: TextStyle(
                                                     fontSize: 10,
                                                     fontWeight: FontWeight.w500,
                                                     fontFamily: 'roboto',
                                                     color: AppColor.white))
-                                            : const SizedBox(),
-                                        data[index]['ruppy'] != null
-                                            ? Container(
-                                                margin: EdgeInsets.only(
-                                                    top: screenHeight(context,
-                                                        dividedBy: 100)),
-                                                alignment: Alignment.center,
-                                                height: screenHeight(context,
-                                                    dividedBy: 30),
-                                                width: screenWidth(context,
-                                                    dividedBy: 3.5),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    color: AppColor.white),
-                                                child: Text(
-                                                    data[index]['ruppy'],
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily: 'roboto',
-                                                        color: AppColor.black)),
-                                              )
-                                            : const SizedBox(),
-                                      ],
+                                                : const SizedBox(),
+                                            data[index]['ruppy'] != null
+                                                ? Container(
+                                              margin: EdgeInsets.only(
+                                                  top: screenHeight(context,
+                                                      dividedBy: 100)),
+                                              alignment: Alignment.center,
+                                              height: screenHeight(context,
+                                                  dividedBy: 30),
+                                              width: screenWidth(context,
+                                                  dividedBy: 3.5),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      20),
+                                                  color: AppColor.white),
+                                              child: Text(
+                                                  data[index]['ruppy'],
+                                                  style: const TextStyle(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontFamily: 'roboto',
+                                                      color: AppColor.black)),
+                                            )
+                                                : const SizedBox(),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: screenWidth(context, dividedBy: 25),
+                              right: screenWidth(context, dividedBy: 15)),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'What you get:',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17),
                               ),
-                            );
-                          },
+                              Text(
+                                '1 Month',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: screenHeight(context, dividedBy: 70),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: screenWidth(context, dividedBy: 25),
-                            right: screenWidth(context, dividedBy: 15)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'What you get:',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 17),
-                            ),
-                            Text(
-                              '1 Month',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 17),
-                            ),
-                          ],
+                        SizedBox(
+                          height: screenHeight(context,dividedBy: 150),
                         ),
-                      ),
-                      Newtext(text: 'Unlimited Likes'),
-                      Newtext(text: 'Beeline'),
-                      Newtext(text: 'Advanced filters'),
-                      Newtext(text: 'Incognito mode'),
-                      Newtext(text: 'Travel mode'),
-                      Newtext(text: '5 SuperSwipes a Week'),
-                      Newtext(text: 'Unlimited Locations'),
-                      Newtext(text: 'Hide Ads'),
-                      // Container(
-                      //   margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 70)),
-                      //   width: screenWidth(context),
-                      //   decoration: BoxDecoration(
-                      //       color: AppColor.white,
-                      //       borderRadius: BorderRadius.circular(7),
-                      //       boxShadow: const [
-                      //         BoxShadow(
-                      //           color: Colors.grey,
-                      //           offset: Offset(
-                      //             1,
-                      //             1,
-                      //           ),
-                      //           blurRadius: 4,
-                      //           spreadRadius: 0.0,
-                      //         ),
-                      //       ]
-                      //   ),
-                      //   child: Column(
-                      //     children: [
-                      //       SizedBox(height: screenHeight(context,dividedBy: 200),),
-                      //       textAndCheck(text: 'Unlimited Likes'),
-                      //       textAndCheck(text: 'Unlimited Rewinds'),
-                      //       textAndCheckANDDES(text: 'Unlimited Locations', desp: 'Match and chat with people any where in the world.'),
-                      //       textAndCheck(text: 'Control who sees you manage who you’re seen by.'),
-                      //       textAndCheck(text: 'Hide Ads'),
-                      //     ],
-                      //   ),
-                      // ),
-                      Custom_botton(context,
-                          text: 'Continue',
-                          onTap: () {},
-                          height: screenHeight(context, dividedBy: 25))
-                    ],
+                        Newtext(text: 'Unlimited Likes'),
+                        Newtext(text: 'Beeline'),
+                        Newtext(text: 'Advanced filters'),
+                        Newtext(text: 'Incognito mode'),
+                        Newtext(text: 'Travel mode'),
+                        Newtext(text: '5 SuperSwipes a Week'),
+                        Newtext(text: 'Unlimited Locations'),
+                        Newtext(text: 'Hide Ads'),
+                        // Container(
+                        //   margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 70)),
+                        //   width: screenWidth(context),
+                        //   decoration: BoxDecoration(
+                        //       color: AppColor.white,
+                        //       borderRadius: BorderRadius.circular(7),
+                        //       boxShadow: const [
+                        //         BoxShadow(
+                        //           color: Colors.grey,
+                        //           offset: Offset(
+                        //             1,
+                        //             1,
+                        //           ),
+                        //           blurRadius: 4,
+                        //           spreadRadius: 0.0,
+                        //         ),
+                        //       ]
+                        //   ),
+                        //   child: Column(
+                        //     children: [
+                        //       SizedBox(height: screenHeight(context,dividedBy: 200),),
+                        //       textAndCheck(text: 'Unlimited Likes'),
+                        //       textAndCheck(text: 'Unlimited Rewinds'),
+                        //       textAndCheckANDDES(text: 'Unlimited Locations', desp: 'Match and chat with people any where in the world.'),
+                        //       textAndCheck(text: 'Control who sees you manage who you’re seen by.'),
+                        //       textAndCheck(text: 'Hide Ads'),
+                        //     ],
+                        //   ),
+                        // ),
+                        Custom_botton(context,
+                            text: 'Continue',
+                            onTap: () {},
+                            height: screenHeight(context, dividedBy: 20))
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -378,7 +378,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: screenWidth(context, dividedBy: 20)),
+                horizontal: screenWidth(context, dividedBy: 25)),
             child: Row(
               children: [
                 SizedBox(
@@ -391,11 +391,11 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                           fontSize: 15,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w400,
-                          color: AppColor.dropdownfont),
+                          color: AppColor.black),
                     )),
                 Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: screenWidth(context, dividedBy: 50)),
+                      horizontal: screenWidth(context, dividedBy: 45)),
                   height: screenHeight(context, dividedBy: 70),
                   width: screenHeight(context, dividedBy: 70),
                   decoration: const BoxDecoration(

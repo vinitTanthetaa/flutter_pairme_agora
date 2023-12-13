@@ -15,6 +15,7 @@ import 'package:pair_me/Widgets/stepper.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:pair_me/helper/pref_Service.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../Widgets/custom_button.dart';
@@ -38,6 +39,7 @@ class _StepScreenState extends State<StepScreen> {
   bool calendar = false;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDate;
+  SharedPrefsService prefsService = SharedPrefsService();
   final TextEditingController _Address = TextEditingController();
   final TextEditingController _Address1 = TextEditingController();
   final TextEditingController _Address2 = TextEditingController();
@@ -3890,7 +3892,12 @@ class _StepScreenState extends State<StepScreen> {
                           });
                         },),
                     ),
-                    Custom_botton(context, text: 'Done', onTap: () {
+                    Custom_botton(context, text: 'Done', onTap: () async {
+                      showcase = true;
+                      prefsService.setBoolData('showcase', showcase);
+                      showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
+                      showcasetime++;
+                      prefsService.setIntData("showcasetime", showcasetime);
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return const Home_screen();
                       },));

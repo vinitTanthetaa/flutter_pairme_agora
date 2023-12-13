@@ -46,6 +46,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                       child: Icon(Icons.arrow_back_ios_rounded),
                     )),
                 titleSpacing: 0,
+                centerTitle: false,
                 title: custom_header(text: "Card Details"),
               ),
               body: SingleChildScrollView(

@@ -61,6 +61,7 @@ class _UsersDetailsState extends State<UsersDetails>
   void initState() {
     // TODO: implement initState
     super.initState();
+    widget.list;
     _bio.text =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,.Lorem ipsum dolor sit amet, consectetur adipiscing elit,’';
     setState(() {});
@@ -78,17 +79,22 @@ class _UsersDetailsState extends State<UsersDetails>
             Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
+                centerTitle: false,
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
-                leading: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Icon(Icons.arrow_back_ios_rounded),
-                    )),
-                title: custom_header(text: "User Details"),
+                automaticallyImplyLeading: false,
+                // leading: GestureDetector(
+                //     onTap: () {
+                //       Navigator.pop(context);
+                //     },
+                //     child: const Padding(
+                //       padding: EdgeInsets.only(left: 8.0),
+                //       child: Icon(Icons.arrow_back_ios_rounded),
+                //     )),
+                title: Padding(
+                  padding: EdgeInsets.only(left: screenWidth(context,dividedBy: 150)),
+                  child: custom_header(text: "User Details"),
+                ),
               ),
               body: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
@@ -115,8 +121,8 @@ class _UsersDetailsState extends State<UsersDetails>
                             //     vertical: screenHeight(context,
                             //         dividedBy: 65)),
                             height: screenHeight(context,
-                                dividedBy: 2.5),
-                            width: screenWidth(context),
+                                dividedBy: 2.6),
+                            width: screenWidth(context,dividedBy: 1.015),
                             decoration: const BoxDecoration(
                               //  image: DecorationImage(image: NetworkImage(list[pageViewIndex]),fit: BoxFit.fill)
                             ),
@@ -128,6 +134,7 @@ class _UsersDetailsState extends State<UsersDetails>
                                         .list[pageViewIndex],
                                     assetPlaceHolder:
                                     'assets/Images/videoThumbnail.png',
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                                 const Align(
@@ -146,43 +153,45 @@ class _UsersDetailsState extends State<UsersDetails>
                             //     vertical: screenHeight(context,
                             //         dividedBy: 65)),
                             height: screenHeight(context,
-                                dividedBy: 2.5),
-                            width: screenWidth(context),
+                                dividedBy: 3),
+                            width: screenWidth(context,dividedBy: 1.015),
                             decoration: BoxDecoration(
-                                color: Colors.green,
                                 image: DecorationImage(
                                     image: NetworkImage(widget
                                         .list[pageViewIndex]),
-                                    fit: BoxFit.cover)),
+                                  fit:BoxFit.fill
+                                    )),
                           ),
                         ))
                             .toList(),
                         options: CarouselOptions(
-                          height: screenHeight(context, dividedBy: 2),
+                          height: screenHeight(context, dividedBy: 2.5),
                           aspectRatio: 16 / 9,
-                          viewportFraction: 1.0,
+                          viewportFraction: 1,
                           autoPlayCurve: Curves.linear,
+                         animateToClosest: true,
+                         // autoPlay: true,
                           onPageChanged: (index, re) {
                             pageViewIndex = index;
                             setState(() {});
                           },
                         )),
-                    Center(
-                      child: TabPageSelector(
-                        controller: TabController(
-                            vsync: this,
-                            length: widget.list.length,
-                            animationDuration:
-                            const Duration(milliseconds: 300),
-                            initialIndex: pageViewIndex),
-                        color: AppColor.gray,
-                        borderStyle: BorderStyle.none,
-                        indicatorSize: 5,
-                        selectedColor: AppColor.skyBlue,
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 65)),
+                      child: Center(
+                        child: TabPageSelector(
+                          controller: TabController(
+                              vsync: this,
+                              length: widget.list.length,
+                              animationDuration:
+                              const Duration(milliseconds: 300),
+                              initialIndex: pageViewIndex),
+                          color: AppColor.gray,
+                          borderStyle: BorderStyle.none,
+                          indicatorSize: 5,
+                          selectedColor: AppColor.skyBlue,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: screenHeight(context, dividedBy: 65),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -208,7 +217,7 @@ class _UsersDetailsState extends State<UsersDetails>
                                   width: screenHeight(context, dividedBy: 60),
                                   height: screenHeight(context, dividedBy: 60),
                                   image:
-                                  AssetImage('assets/Images/verified.png'))
+                                  const AssetImage('assets/Images/verified.png'))
                             ],
                           ),
                           const Text(
