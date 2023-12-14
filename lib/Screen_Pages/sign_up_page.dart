@@ -287,7 +287,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                     Container(
                       margin: EdgeInsets.symmetric(
                           vertical: screenHeight(context, dividedBy: 75)),
-                      // height: screenHeight(context,dividedBy: 15),
+                       height: screenHeight(context,dividedBy: 20),
                       // width: screenWidth(context,dividedBy: 1),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
@@ -307,7 +307,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                         controller: _phoneNumber,
                         keyboardType: TextInputType.number,
                         cursorColor: const Color(0xffB3B3B3),
-                        style: const TextStyle(fontSize: 13),
+                        style: const TextStyle(fontSize: 14),
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                             // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
@@ -353,7 +353,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                                       Text(
                                         "$countryCodeflagsvg +$countryCodeSelect",
                                         style: const TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 14,
                                             fontFamily: 'Roboto',
                                             fontWeight: FontWeight.w400,
                                             color: AppColor.dropdownfont),
@@ -379,7 +379,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                             hintStyle: const TextStyle(
                                 color: Color(0xffB3B3B3),
                                 fontFamily: 'Roboto',
-                                fontSize: 12,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w400)),
                       ),
                     ),

@@ -338,7 +338,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                       Container(
                         margin: EdgeInsets.symmetric(
                             vertical: screenHeight(context, dividedBy: 75)),
-                        // height: screenHeight(context,dividedBy: 15),
+                         height: screenHeight(context,dividedBy: 20),
                         // width: screenWidth(context,dividedBy: 1),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
@@ -422,16 +422,11 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                       ]),
                                 ),
                               ),
-                              // SvgPicture.asset(
-                              //     'assets/Images/hide.svg',height: 10,width: 10,
-                              //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
-                              //     //semanticsLabel: 'A red up arrow'
-                              // ),
                               hintText: 'Phone Number',
                               hintStyle: const TextStyle(
                                   color: Color(0xffB3B3B3),
                                   fontFamily: 'Roboto',
-                                  fontSize: 12,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w400)),
                         ),
                       ),
@@ -451,9 +446,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Address_Details(
-                                Name: 'Edit',
-                              );
+                              return Address_Details();
                             },
                           ));
                         },
@@ -464,9 +457,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Professional_Details(
-                                Name: 'Edit',
-                              );
+                              return Professional_Details();
                             },
                           ));
                         },
@@ -477,7 +468,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Business_Address(Name: 'Edit');
+                              return Business_Address();
                             },
                           ));
                         },
@@ -489,7 +480,6 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return Business_Profile(
-                                Name: 'Edit',
                               );
                             },
                           ));

@@ -686,96 +686,97 @@ class _StepScreenState extends State<StepScreen> {
                     )
                         : const SizedBox(),
                     custom_textfield_header(text: 'Education'),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 75)),
-                      height: screenHeight(context,dividedBy: 17),
-                      width: screenWidth(context,dividedBy: 1.15),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: AppColor.fontgray,
-                              offset: Offset(
-                                1,
-                                1,
-                              ),
-                              blurRadius: 4,
-                              // spreadRadius: 1.0,
-                            ),
-                          ]
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 30)),
-                        child:   InkWell(
-                          onTap: () {
-                            setState(() {
-                              _education = !_education;
-                              // if(language == false){
-                              //   show_box = !show_box;
-                              //   Timer(Duration(milliseconds: 600), () {
-                              //     setState(() {
-                              //       show_box = !show_box;
-                              //     });
-                              //   });
-                              // }
+                    // Container(
+                    //   margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 75)),
+                    //   height: screenHeight(context,dividedBy: 17),
+                    //   width: screenWidth(context,dividedBy: 1.15),
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(7),
+                    //       color: Colors.white,
+                    //       boxShadow: const [
+                    //         BoxShadow(
+                    //           color: AppColor.fontgray,
+                    //           offset: Offset(
+                    //             1,
+                    //             1,
+                    //           ),
+                    //           blurRadius: 4,
+                    //           // spreadRadius: 1.0,
+                    //         ),
+                    //       ]
+                    //   ),
+                    //   child: Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 30)),
+                    //     child:   InkWell(
+                    //       onTap: () {
+                    //         setState(() {
+                    //           _education = !_education;
+                    //           // if(language == false){
+                    //           //   show_box = !show_box;
+                    //           //   Timer(Duration(milliseconds: 600), () {
+                    //           //     setState(() {
+                    //           //       show_box = !show_box;
+                    //           //     });
+                    //           //   });
+                    //           // }
+                    //
+                    //         });
+                    //       },
+                    //       child:img == '' ||  Uname == ''? Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           //  _selected_language == '' ?
+                    //           const Text("Select",style: TextStyle(color: AppColor.fontgray,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
+                    //           //  :
+                    //           // Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
+                    //           _education ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.fontgray,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.fontgray,)
+                    //         ],
+                    //       ) :Row(
+                    //         children: [
+                    //           Container(
+                    //             height: screenHeight(context,dividedBy: 25),
+                    //             width: screenWidth(context,dividedBy: 13),
+                    //             decoration: BoxDecoration(
+                    //                 image: DecorationImage(image: AssetImage(img))
+                    //             ),
+                    //           ),
+                    //           SizedBox(width: screenWidth(context,dividedBy: 40),),
+                    //           Column(
+                    //             mainAxisAlignment: MainAxisAlignment.center,
+                    //             crossAxisAlignment: CrossAxisAlignment.start,
+                    //             children: [
+                    //               Text(Uname,style: const TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 15),),
+                    //               const Text('Portland, OR ‧ Private, non-profit ‧ 4-year',style: TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10),),
+                    //             ],
+                    //           ),
+                    //           const Spacer(),
+                    //           _education ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.fontgray,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.fontgray,)
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(height: screenHeight(context,dividedBy: 60),),
+                    Custom_textfield(context,
 
-                            });
-                          },
-                          child:img == '' ||  Uname == ''? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //  _selected_language == '' ?
-                              const Text("Select",style: TextStyle(color: AppColor.fontgray,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
-                              //  :
-                              // Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
-                              _education ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.fontgray,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.fontgray,)
-                            ],
-                          ) :Row(
-                            children: [
-                              Container(
-                                height: screenHeight(context,dividedBy: 25),
-                                width: screenWidth(context,dividedBy: 13),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(image: AssetImage(img))
-                                ),
-                              ),
-                              SizedBox(width: screenWidth(context,dividedBy: 40),),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(Uname,style: const TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 15),),
-                                  const Text('Portland, OR ‧ Private, non-profit ‧ 4-year',style: TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10),),
-                                ],
-                              ),
-                              const Spacer(),
-                              _education ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.fontgray,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.fontgray,)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: screenHeight(context,dividedBy: 60),),
-                    // Custom_textfield(context,
-                    //     show_icon: true,
-                    //     image: _education ?'assets/Images/Vector.png' : 'assets/Images/right_arrow.png',
-                    //     onTap: () {
-                    //       setState(() {
-                    //         _education = !_education;
-                    //       });
-                    //     },
-                    //     readOnly: true, onPress: () {
-                    //   setState(() {
-                    //     _education = !_education;
-                    //   });
-                    // },
-                    //     hint: "Select",
-                    //     hidetext: false,
-                    //     controller: _educationcontroller),
+                        show_icon: true,
+                        image: _education ?'assets/Images/Vector.png' : 'assets/Images/right_arrow.png',
+                        onTap: () {
+                          setState(() {
+                            _education = !_education;
+                          });
+                        },
+                        readOnly: true, onPress: () {
+                      setState(() {
+                        _education = !_education;
+                      });
+                    },
+                        hint: "Select",
+                        hidetext: false,
+                        controller: _educationcontroller),
                     _education
                         ? Container(
-                      height: screenHeight(context, dividedBy: 6),
+                      height: screenHeight(context, dividedBy: 10),
                       width: screenWidth(context),
                       margin: const EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(
@@ -794,7 +795,7 @@ class _StepScreenState extends State<StepScreen> {
                           ]),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 10),
+                            vertical: 10, horizontal: 15),
                         child: Column(
                           mainAxisAlignment:
                           MainAxisAlignment.spaceBetween,
@@ -803,63 +804,13 @@ class _StepScreenState extends State<StepScreen> {
                             InkWell(
                               onTap: () {
                                 setState(() {
-                                  img = 'assets/Images/University.png';
-                                  Uname = 'University of Portland';
+                                  _educationcontroller.text = "Veer Narmad South Gujarat University";
                                   _education = !_education;
                                 });
                               },
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: screenHeight(context,dividedBy: 25),
-                                    width: screenWidth(context,dividedBy: 13),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(image: AssetImage('assets/Images/University.png'))
-                                    ),
-                                  ),
-                                  SizedBox(width: screenWidth(context,dividedBy: 40),),
-                                  const Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('University of Portland',style: TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 15),),
-                                      Text('Portland, OR ‧ Private, non-profit ‧ 4-year',style: TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10),),
-                                    ],
-                                  )
-                                ],
-                              ),
+                              child: Text('Veer Narmad South Gujarat University')
                             ),
-                            SizedBox(height: screenHeight(context,dividedBy: 205),),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  img = 'assets/Images/University1.png';
-                                  Uname = 'University of Portland';
-                                });
-                              },
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: screenHeight(context,dividedBy: 25),
-                                    width: screenWidth(context,dividedBy: 13),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(image: AssetImage('assets/Images/University1.png'))
-                                    ),
-                                  ),
-                                  SizedBox(width: screenWidth(context,dividedBy: 40),),
-                                  const Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('University of Portland',style: TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 15),),
-                                      Text('Portland, OR ‧ Private, non-profit ‧ 4-year',style: TextStyle(color: AppColor.black,fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10),),
-
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: screenHeight(context,dividedBy: 85),),
+                           // SizedBox(height: screenHeight(context,dividedBy: 205),),
                             const Divider(
                               height: 0,
                             ),
@@ -1216,7 +1167,7 @@ class _StepScreenState extends State<StepScreen> {
                                     image: FileImage(_selectedimag1!.selectedFile),
                                     fit: BoxFit.fill) :
                                 const DecorationImage(
-                                    image: AssetImage('assets/Images/placeHolderImage.png'), fit: BoxFit.fill)),
+                                    image: AssetImage('assets/Images/placeHolderImage.jpg'), fit: BoxFit.fill)),
                             child: Stack(
                               children: [
                                 Positioned(
@@ -1565,7 +1516,7 @@ class _StepScreenState extends State<StepScreen> {
                                     image: FileImage(_selectedimag2!.selectedFile),
                                     fit: BoxFit.fill) :
                                 const DecorationImage(
-                                    image: AssetImage('assets/Images/placeHolderImage.png'),
+                                    image: AssetImage('assets/Images/placeHolderImage.jpg'),
                                     fit: BoxFit.fill)),
                             child: Stack(
                               children: [
@@ -1880,7 +1831,7 @@ class _StepScreenState extends State<StepScreen> {
                                     image: FileImage(_selectedimag3!.selectedFile),
                                     fit: BoxFit.fill) :
                                 DecorationImage(
-                                    image: AssetImage('assets/Images/placeHolderImage.png'),
+                                    image: AssetImage('assets/Images/placeHolderImage.jpg'),
                                     fit: BoxFit.fill)),
                             child: Stack(
                               children: [
@@ -2197,7 +2148,7 @@ class _StepScreenState extends State<StepScreen> {
                                 ],
                                 image: const DecorationImage(
                                     image: AssetImage(
-                                        'assets/Images/placeHolderImage.png'),
+                                        'assets/Images/placeHolderImage.jpg'),
                                     fit: BoxFit.fill)),
                             child: Stack(
                               children: [
@@ -2505,7 +2456,7 @@ class _StepScreenState extends State<StepScreen> {
                                 ],
                                 image: const DecorationImage(
                                     image: AssetImage(
-                                        'assets/Images/placeHolderImage.png'),
+                                        'assets/Images/placeHolderImage.jpg'),
                                     fit: BoxFit.fill)),
                             child: Stack(
                               children: [
@@ -2813,7 +2764,7 @@ class _StepScreenState extends State<StepScreen> {
                                 ],
                                 image: const DecorationImage(
                                     image: AssetImage(
-                                        'assets/Images/placeHolderImage.png'),
+                                        'assets/Images/placeHolderImage.jpg'),
                                     fit: BoxFit.fill)),
                             child: Stack(
                               children: [
@@ -3779,8 +3730,6 @@ class _StepScreenState extends State<StepScreen> {
                     SizedBox(
                       height: screenHeight(context, dividedBy: 10),
                     ),
-
-                    //custom_stepper(context, positaion: 5),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -3795,11 +3744,6 @@ class _StepScreenState extends State<StepScreen> {
                             setState(() {
                               ind++;
                             });
-                            // Navigator.push(context, MaterialPageRoute(
-                            //   builder: (context) {
-                            //     return const Looking_for();
-                            //   },
-                            // ));
                           },
                         )
                       ],
@@ -3809,7 +3753,7 @@ class _StepScreenState extends State<StepScreen> {
                       width: screenWidth(context),
                       child: ListView.builder(
                         itemCount: lookingFor.length,
-                        physics: ClampingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (context, index) {
                           return custom_selection(context,
@@ -3835,11 +3779,6 @@ class _StepScreenState extends State<StepScreen> {
                       setState(() {
                         ind++;
                       });
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) {
-                      //     return const Looking_for();
-                      //   },
-                      // ));
                     }, height: screenHeight(context, dividedBy: 25))
                   ],
                 ),
@@ -3907,8 +3846,23 @@ class _StepScreenState extends State<StepScreen> {
               ),
             ),
             Positioned(
-                top: 0.0,
-                child: custom_stepper(context, positaion: ind)),
+                top: screenHeight(context,dividedBy: 200),
+                left: screenWidth(context, dividedBy: 15),
+                right: screenWidth(context, dividedBy: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                         ind < 1 ? ind=ind : ind-- ;
+                         print(ind);
+                        });
+                      },
+                        child: const Icon(Icons.arrow_back_ios_sharp)),
+                    custom_stepper(context, positaion: ind)
+                  ],
+                )),
           ],
         ),
       ),

@@ -37,7 +37,7 @@ Widget Custom_textfield(BuildContext context,
     child: Padding(
       padding: EdgeInsets.only(
           left: screenWidth(context, dividedBy: 25),
-          bottom: screenHeight(context,dividedBy: 200),
+        //  bottom: screenHeight(context,dividedBy: 200),
           right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
       child: TextField(
         onTap: onTap,

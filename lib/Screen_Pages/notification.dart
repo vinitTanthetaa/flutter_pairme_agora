@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -97,7 +98,7 @@ List list = [
                   SizedBox(height: screenHeight(context,dividedBy: 70),),
                  Expanded(
                      child: ListView.separated(
-                       physics: ClampingScrollPhysics(),
+                       physics: const ClampingScrollPhysics(),
                        padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100), ),
                      itemBuilder: (context, index) {
                        return  Dismissible(
@@ -112,7 +113,7 @@ List list = [
                            child: Container(
                              height: screenHeight(context,dividedBy: 35),
                              width: screenWidth(context,dividedBy: 15),
-                             decoration:  BoxDecoration(
+                             decoration:  const BoxDecoration(
                                image: DecorationImage(image: AssetImage('assets/Images/delete.png'))
                              ),
                            ) ,
@@ -127,14 +128,34 @@ List list = [
                                mainAxisAlignment: MainAxisAlignment.start,
                                crossAxisAlignment: CrossAxisAlignment.center,
                                children: [
-                                 Container(
-                                   height: screenHeight(context,dividedBy: 15),
-                                   width: screenHeight(context,dividedBy: 15),
-                                   decoration: BoxDecoration(
+                                 CachedNetworkImage(
+                                   imageUrl: list[index]["image"],
+                                   imageBuilder: (context, imageProvider) => Container(
+                                     height: screenHeight(context,dividedBy: 15),
+                                     width: screenHeight(context,dividedBy: 15),
+                                     decoration: BoxDecoration(
+                                       image: DecorationImage(
+                                         image: imageProvider,
+                                         fit: BoxFit.cover,
+
+                                         // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                       ),
                                        shape: BoxShape.circle,
-                                       image: DecorationImage(image: NetworkImage("${list[index]["image"]}"),fit: BoxFit.cover)
+                                     ),
                                    ),
+                                   placeholder: (context, url) => CircularProgressIndicator(),
+                                   errorWidget: (context, url, error) => CircleAvatar(
+                                       radius: screenHeight(context,dividedBy:30),
+                                       child: Icon(Icons.person)),
                                  ),
+                                 // Container(
+                                 //   height: screenHeight(context,dividedBy: 15),
+                                 //   width: screenHeight(context,dividedBy: 15),
+                                 //   decoration: BoxDecoration(
+                                 //       shape: BoxShape.circle,
+                                 //       image: DecorationImage(image: NetworkImage("${list[index]["image"]}"),fit: BoxFit.cover)
+                                 //   ),
+                                 // ),
                                  SizedBox(width: screenWidth(context,dividedBy: 30),),
                                  Padding(
                                    padding: EdgeInsets.symmetric(vertical: screenWidth(context,dividedBy: 40)),
@@ -147,12 +168,12 @@ List list = [
                                          child: Row(
                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                            children: [
-                                             Text("${list[index]["Name"]}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
+                                             Text("${list[index]["Name"]}",style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
                                              const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10,color: Color(0xffAAAAAA)),),
                                            ],
                                          ),
                                        ),
-                                       SizedBox(height: screenHeight(context,dividedBy: 200),),
+                                       SizedBox(height: screenHeight(context,dividedBy: 300),),
                                        SizedBox(
                                          width: screenWidth(context,dividedBy: 2.2),
                                          child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 10,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),

@@ -170,10 +170,11 @@ class _Profile_pageState extends State<Profile_page> {
                                       // width: screenWidth(context, dividedBy: 5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        gradient: const LinearGradient(colors: [
-                                          AppColor.skyBlue,
-                                          AppColor.whiteskyBlue
-                                        ]),
+                                        color: Color(0xff6D9AFF)
+                                        // gradient: const LinearGradient(colors: [
+                                        //   AppColor.skyBlue,
+                                        //   AppColor.whiteskyBlue
+                                        // ]),
                                       ),
                                       child: Padding(
                                         padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
@@ -544,7 +545,7 @@ class _Profile_pageState extends State<Profile_page> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return const primium();
+                              return const PremiumMembership();
                             },
                           ));
                         },

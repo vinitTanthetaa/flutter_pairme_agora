@@ -83,14 +83,15 @@ class _UsersDetailsState extends State<UsersDetails>
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 automaticallyImplyLeading: false,
-                // leading: GestureDetector(
-                //     onTap: () {
-                //       Navigator.pop(context);
-                //     },
-                //     child: const Padding(
-                //       padding: EdgeInsets.only(left: 8.0),
-                //       child: Icon(Icons.arrow_back_ios_rounded),
-                //     )),
+                titleSpacing: -5,
+                leading: GestureDetector(
+                    onTap: () {
+                     // Navigator.pop(context);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Icon(Icons.arrow_back_ios_rounded),
+                    )),
                 title: Padding(
                   padding: EdgeInsets.only(left: screenWidth(context,dividedBy: 150)),
                   child: custom_header(text: "User Details"),
@@ -159,7 +160,7 @@ class _UsersDetailsState extends State<UsersDetails>
                                 image: DecorationImage(
                                     image: NetworkImage(widget
                                         .list[pageViewIndex]),
-                                  fit:BoxFit.fill
+                                  //fit:BoxFit.cover
                                     )),
                           ),
                         ))
@@ -176,6 +177,9 @@ class _UsersDetailsState extends State<UsersDetails>
                             setState(() {});
                           },
                         )),
+                    SizedBox(
+                      height: screenHeight(context,dividedBy: 200),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 65)),
                       child: Center(
@@ -304,6 +308,27 @@ class _UsersDetailsState extends State<UsersDetails>
                           SizedBox(
                             height: screenHeight(context, dividedBy: 100),
                           ),
+                          // Container(
+                          //
+                          //   decoration: BoxDecoration(
+                          //     border: Border.all(width: 2,color: AppColor.whiteskyBlue),
+                          //     borderRadius: BorderRadius.circular(20)
+                          //   ),
+                          //   child: Padding(
+                          //     padding: EdgeInsets.symmetric(
+                          //       horizontal: screenWidth(context,dividedBy: 17),
+                          //       vertical: screenHeight(context,dividedBy: 100)
+                          //     ),
+                          //     child: Text(
+                          //       lookingFor[0],
+                          //       style: const TextStyle(
+                          //           fontWeight: FontWeight.w400,
+                          //           fontSize: 14,
+                          //           fontFamily: 'Roboto',
+                          //           color: AppColor.dropdownfont),
+                          //     ),
+                          //   ),
+                          // ),
                           Row(
                             children: [
                               Container(

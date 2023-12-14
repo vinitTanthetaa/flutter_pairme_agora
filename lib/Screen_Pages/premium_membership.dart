@@ -39,7 +39,16 @@ class _PremiumMembershipState extends State<PremiumMembership> {
           'Unlock all of our features to be in completecontrol of your experience'
     }
   ];
-
+  List month1 = ["Unlimited Likes", "Travel mode", "5 SuperSwipes a Week"];
+  List month6 = [
+    "Unlimited Likes",
+    "Travel mode",
+    "5 SuperSwipes a Week",
+    "Advanced filters",
+    "Unlimited Locations",
+    "Hide Ads"
+  ];
+  int ind = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,23 +64,17 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                 titleSpacing: screenWidth(context, dividedBy: 55),
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
-                bottom: PreferredSize(preferredSize:const Size.fromHeight(0.0),child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 7.0),
-
-                  child: custom_discription(
-                      text:
-                      'Unlimited likes send as many likes as you want.'),
-                ),),
                 leading: GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: screenWidth(context, dividedBy: 17)),
+                      padding: EdgeInsets.only(
+                          left: screenWidth(context, dividedBy: 17)),
                       child: Icon(Icons.close),
                     )),
                 centerTitle: false,
-                title: custom_header(text: "Premium membership"),
+                title: custom_header(text: "Premium Membership"),
               ),
               body: SingleChildScrollView(
                 physics: ClampingScrollPhysics(),
@@ -82,16 +85,32 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // SizedBox(
-                        //   height: screenHeight(context, dividedBy: 60),
-                        // ),
-                        custom_textfield_header(text: 'Select a plan'),
+                        custom_discription(
+                            text:
+                                'Unlimited likes send as many likes as you want.'),
+                        SizedBox(
+                          height: screenHeight(context, dividedBy: 60),
+                        ),
+                        Text("Select a plan", style: const TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w700,
+                            overflow: TextOverflow.ellipsis,
+                            color: AppColor.black),),
                         Padding(
-                          padding: EdgeInsets.only(bottom: screenHeight(context, dividedBy: 50),top: screenHeight(context, dividedBy: 100)),
+                          padding: EdgeInsets.only(
+                              bottom: screenHeight(context, dividedBy: 40),
+                              top: screenHeight(context, dividedBy: 100)),
                           child: SizedBox(
                             height: screenHeight(context, dividedBy: 5),
                             width: screenWidth(context),
                             child: PageView.builder(
+                              onPageChanged: (value) {
+                                print("hello" + value.toString());
+                                setState(() {
+                                  ind = value;
+                                });
+                              },
                               itemCount: data.length,
                               scrollDirection: Axis.horizontal,
                               physics: const ClampingScrollPhysics(),
@@ -102,27 +121,29 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                                     child: Container(
                                       // margin: EdgeInsets.only(
                                       //     right: screenWidth(context, dividedBy: 100)),
-                                       height:
-                                       screenHeight(context, dividedBy: 5.28),
-                                      width: screenWidth(context, dividedBy: 1.2),
+                                      height: screenHeight(context,
+                                          dividedBy: 5.28),
+                                      width:
+                                          screenWidth(context, dividedBy: 1.2),
                                       decoration: BoxDecoration(
                                           color: AppColor.white,
-                                          borderRadius: BorderRadius.circular(23),
+                                          borderRadius:
+                                              BorderRadius.circular(23),
                                           gradient: data[index] == 0
                                               ? const LinearGradient(
-                                              colors: [
-                                                AppColor.skyBlue,
-                                                Color(0xff6D9AFF)
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight)
+                                                  colors: [
+                                                      AppColor.skyBlue,
+                                                      Color(0xff6D9AFF)
+                                                    ],
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight)
                                               : const LinearGradient(
-                                              colors: [
-                                                Color(0xff2468FF),
-                                                Color(0xff5BC8FF)
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight),
+                                                  colors: [
+                                                      Color(0xff2468FF),
+                                                      Color(0xff5BC8FF)
+                                                    ],
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight),
                                           boxShadow: const [
                                             BoxShadow(
                                               color: Colors.grey,
@@ -136,8 +157,8 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                                           ]),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                            screenWidth(context, dividedBy: 30),
+                                            horizontal: screenWidth(context,
+                                                dividedBy: 30),
                                             vertical: screenWidth(context,
                                                 dividedBy: 30)),
                                         child: Column(
@@ -168,43 +189,49 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                                                   fontSize: 15),
                                             ),
                                             SizedBox(
-                                              height: data[index]['save'] != null
-                                                  ? screenHeight(context,
-                                                  dividedBy: 200)
-                                                  : 0,
+                                              height:
+                                                  data[index]['save'] != null
+                                                      ? screenHeight(context,
+                                                          dividedBy: 200)
+                                                      : 0,
                                             ),
                                             data[index]['save'] != null
                                                 ? const Text('Save 40%',
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'roboto',
-                                                    color: AppColor.white))
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontFamily: 'roboto',
+                                                        color: AppColor.white))
                                                 : const SizedBox(),
                                             data[index]['ruppy'] != null
                                                 ? Container(
-                                              margin: EdgeInsets.only(
-                                                  top: screenHeight(context,
-                                                      dividedBy: 100)),
-                                              alignment: Alignment.center,
-                                              height: screenHeight(context,
-                                                  dividedBy: 30),
-                                              width: screenWidth(context,
-                                                  dividedBy: 3.5),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      20),
-                                                  color: AppColor.white),
-                                              child: Text(
-                                                  data[index]['ruppy'],
-                                                  style: const TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      fontFamily: 'roboto',
-                                                      color: AppColor.black)),
-                                            )
+                                                    margin: EdgeInsets.only(
+                                                        top: screenHeight(
+                                                            context,
+                                                            dividedBy: 100)),
+                                                    alignment: Alignment.center,
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenWidth(context,
+                                                        dividedBy: 3.5),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        color: AppColor.white),
+                                                    child: Text(
+                                                        data[index]['ruppy'],
+                                                        style: const TextStyle(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontFamily:
+                                                                'roboto',
+                                                            color: AppColor
+                                                                .black)),
+                                                  )
                                                 : const SizedBox(),
                                           ],
                                         ),
@@ -243,7 +270,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                           ),
                         ),
                         SizedBox(
-                          height: screenHeight(context,dividedBy: 150),
+                          height: screenHeight(context, dividedBy: 90),
                         ),
                         Newtext(text: 'Unlimited Likes'),
                         Newtext(text: 'Beeline'),
@@ -253,38 +280,11 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                         Newtext(text: '5 SuperSwipes a Week'),
                         Newtext(text: 'Unlimited Locations'),
                         Newtext(text: 'Hide Ads'),
-                        // Container(
-                        //   margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 70)),
-                        //   width: screenWidth(context),
-                        //   decoration: BoxDecoration(
-                        //       color: AppColor.white,
-                        //       borderRadius: BorderRadius.circular(7),
-                        //       boxShadow: const [
-                        //         BoxShadow(
-                        //           color: Colors.grey,
-                        //           offset: Offset(
-                        //             1,
-                        //             1,
-                        //           ),
-                        //           blurRadius: 4,
-                        //           spreadRadius: 0.0,
-                        //         ),
-                        //       ]
-                        //   ),
-                        //   child: Column(
-                        //     children: [
-                        //       SizedBox(height: screenHeight(context,dividedBy: 200),),
-                        //       textAndCheck(text: 'Unlimited Likes'),
-                        //       textAndCheck(text: 'Unlimited Rewinds'),
-                        //       textAndCheckANDDES(text: 'Unlimited Locations', desp: 'Match and chat with people any where in the world.'),
-                        //       textAndCheck(text: 'Control who sees you manage who you’re seen by.'),
-                        //       textAndCheck(text: 'Hide Ads'),
-                        //     ],
-                        //   ),
-                        // ),
                         Custom_botton(context,
                             text: 'Continue',
-                            onTap: () {},
+                            onTap: () {
+                                Navigator.pop(context);
+                            },
                             height: screenHeight(context, dividedBy: 20))
                       ],
                     ),
@@ -294,79 +294,6 @@ class _PremiumMembershipState extends State<PremiumMembership> {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  Widget textAndCheck({required String text}) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 100)),
-      child: Row(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: screenWidth(context, dividedBy: 50)),
-            height: screenHeight(context, dividedBy: 70),
-            width: screenHeight(context, dividedBy: 70),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/Images/check.png'))),
-          ),
-          SizedBox(
-              width: screenWidth(context, dividedBy: 1.5),
-              child: Text(
-                text,
-                maxLines: 2,
-                softWrap: true,
-                style: const TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.dropdownfont),
-              ))
-        ],
-      ),
-    );
-  }
-
-  Widget textAndCheckANDDES({required String text, required String desp}) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 100)),
-      child: Row(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: screenWidth(context, dividedBy: 50)),
-            height: screenHeight(context, dividedBy: 70),
-            width: screenHeight(context, dividedBy: 70),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/Images/check.png'))),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                text,
-                style: const TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.dropdownfont),
-              ),
-              Text(
-                desp,
-                style: const TextStyle(
-                    fontSize: 8,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.dropdownfont),
-              ),
-            ],
-          )
-        ],
       ),
     );
   }
@@ -393,14 +320,16 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                           fontWeight: FontWeight.w400,
                           color: AppColor.black),
                     )),
-                Container(
-                  margin: EdgeInsets.symmetric(
+                Padding(
+                  padding: EdgeInsets.symmetric(
                       horizontal: screenWidth(context, dividedBy: 45)),
-                  height: screenHeight(context, dividedBy: 70),
-                  width: screenHeight(context, dividedBy: 70),
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/Images/check.png'))),
+                  child: Image(
+                    fit: BoxFit.fill,
+                      image: const AssetImage("assets/Images/check.png"),
+                    color: ind == 2 ?  AppColor.skyBlue : ind == 1 ? month6.contains(text) ? AppColor.skyBlue :AppColor.fontgray :month1.contains(text) ?AppColor.skyBlue :AppColor.fontgray ,
+                    height: screenHeight(context, dividedBy: 70),
+                    width: screenHeight(context, dividedBy: 50),
+                  ),
                 ),
               ],
             ),
@@ -408,13 +337,13 @@ class _PremiumMembershipState extends State<PremiumMembership> {
           SizedBox(
             height: screenHeight(context, dividedBy: 90),
           ),
-          DottedLine(
+          const DottedLine(
             direction: Axis.horizontal,
             alignment: WrapAlignment.center,
             lineLength: double.infinity,
             lineThickness: 1.0,
             dashLength: 4.0,
-            dashColor: Colors.grey,
+            dashColor: Color(0xffCFCFCF),
             dashRadius: 0.0,
             dashGapLength: 4.0,
             dashGapColor: Colors.transparent,

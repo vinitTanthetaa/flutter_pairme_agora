@@ -23,6 +23,7 @@ class _SpleshScreenState extends State<SpleshScreen> {
   }
   Splash_Timer(){
     Timer(Duration(seconds: 1), () async {
+      prefsService.removeData('showcase');
       // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
       // showcasetime++;
       // prefsService.setIntData("showcasetime", showcasetime);

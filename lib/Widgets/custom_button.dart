@@ -16,7 +16,8 @@ Widget Custom_botton (BuildContext context ,{required String text,required Funct
         width: text.length <=12 ? screenWidth(context,dividedBy: 2.5) : screenWidth(context,dividedBy: 1.5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+          color: Color(0xff6D9Aff)
+          // gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
           // boxShadow: const [
           //   BoxShadow(
           //     color: Color(0xff7A7A7A),

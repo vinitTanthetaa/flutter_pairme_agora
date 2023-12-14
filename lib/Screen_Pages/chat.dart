@@ -131,16 +131,17 @@ bool emojiShowing = false;
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Image(
-                            image: const AssetImage('assets/Images/back.png'),
-                            height: screenHeight(context, dividedBy: 40),
-                            width: screenHeight(context, dividedBy: 70),
-                            color: AppColor.white,
-                            alignment: Alignment.centerLeft,
-                          ),
+                          child: const Icon(Icons.arrow_back_ios_new,color: AppColor.white,)
+                          // Image(
+                          //   image: const AssetImage('assets/Images/back.png'),
+                          //   height: screenHeight(context, dividedBy: 40),
+                          //   width: screenHeight(context, dividedBy: 70),
+                          //   color: AppColor.white,
+                          //   alignment: Alignment.centerLeft,
+                          // ),
                         ),
                         SizedBox(
-                          width: screenWidth(context, dividedBy: 25),
+                          width: screenWidth(context, dividedBy: 35),
                         ),
                         SizedBox(
                           height: screenHeight(context, dividedBy: 17),
@@ -154,7 +155,7 @@ bool emojiShowing = false;
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: NetworkImage(widget.image),
-                                        fit: BoxFit.fitWidth,filterQuality: FilterQuality.high),
+                                        fit: BoxFit.cover,filterQuality: FilterQuality.high),
                                     border: Border.all(
                                         color: AppColor.white, width: 1),
                                     shape: BoxShape.circle),
@@ -292,7 +293,7 @@ bool emojiShowing = false;
                                  bottomLeft: Radius.circular(16),
                                  topRight: Radius.circular(16),
                                  topLeft: Radius.circular(16)),
-                             color: AppColor.skyBlue),
+                             color: Color(0xff437DFF)),
                          child: Padding(
                            padding:
                            EdgeInsets.all(screenWidth(context, dividedBy: 30)),
