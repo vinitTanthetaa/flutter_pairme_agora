@@ -10,6 +10,7 @@ import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:pair_me/helper/pref_Service.dart';
 
 String countryCodeSelect = '1';
 String countryCodeflagsvg = '🇺🇸';
@@ -25,6 +26,8 @@ class _Login_pageState extends State<Login_page> {
   bool showpassword = false;
   final TextEditingController _Email = TextEditingController();
   final TextEditingController _Password = TextEditingController();
+  SharedPrefsService prefsService = SharedPrefsService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,12 +79,17 @@ class _Login_pageState extends State<Login_page> {
                             ]),
                       ),
                     Center(
-                      child: Custom_botton(context, text: 'Login', onTap: () {
+                      child: Custom_botton(context, text: 'Login', onTap: () async {
                         if(_Email.text.isEmpty){
                           flutterToast('Please Enter Email', false);
                         } else if(_Password.text.isEmpty) {
                           flutterToast('Please Enter Password', false);
                         } else {
+                          showcase = true;
+                          prefsService.setBoolData('showcase', showcase);
+                          showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
+                          showcasetime++;
+                          prefsService.setIntData("showcasetime", showcasetime);
                           Navigator.push(context,MaterialPageRoute(builder:(context) {
                             return const Home_screen();
                           }, ));

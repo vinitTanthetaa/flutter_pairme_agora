@@ -226,7 +226,7 @@ class _MessageRequestState extends State<MessageRequest> {
                                               SizedBox(height: screenHeight(context,dividedBy: 300),),
                                               SizedBox(
                                                 width: screenWidth(context,dividedBy: 2.2),
-                                                child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 10,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
+                                                child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
                                               )
                                             ],
                                           ),
@@ -237,7 +237,7 @@ class _MessageRequestState extends State<MessageRequest> {
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
-                                              const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 10,color: Color(0xffAAAAAA)),),
+                                              const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 12,color: Color(0xffAAAAAA)),),
                                               Container(
                                                 alignment: Alignment.center,
                                                 height: screenHeight(context,dividedBy: 70),

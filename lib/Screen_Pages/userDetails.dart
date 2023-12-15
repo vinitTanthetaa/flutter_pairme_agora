@@ -12,8 +12,8 @@ import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class UsersDetails extends StatefulWidget {
   List list;
-
-  UsersDetails({super.key, required this.list});
+  Function() onTap;
+  UsersDetails({super.key, required this.list,required this.onTap,});
 
   @override
   State<UsersDetails> createState() => _UsersDetailsState();
@@ -82,12 +82,10 @@ class _UsersDetailsState extends State<UsersDetails>
                 centerTitle: false,
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
-                automaticallyImplyLeading: false,
+               // automaticallyImplyLeading: false,
                 titleSpacing: -5,
-                leading: GestureDetector(
-                    onTap: () {
-                     // Navigator.pop(context);
-                    },
+                leading: InkWell(
+                    onTap: widget.onTap,
                     child: const Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Icon(Icons.arrow_back_ios_rounded),
@@ -306,101 +304,107 @@ class _UsersDetailsState extends State<UsersDetails>
                           ),
                           custom_textfield_header(text: 'Looking for'),
                           SizedBox(
-                            height: screenHeight(context, dividedBy: 100),
+                            height: screenHeight(context, dividedBy: 150),
                           ),
-                          // Container(
-                          //
-                          //   decoration: BoxDecoration(
-                          //     border: Border.all(width: 2,color: AppColor.whiteskyBlue),
-                          //     borderRadius: BorderRadius.circular(20)
-                          //   ),
-                          //   child: Padding(
-                          //     padding: EdgeInsets.symmetric(
-                          //       horizontal: screenWidth(context,dividedBy: 17),
-                          //       vertical: screenHeight(context,dividedBy: 100)
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: lookingFor
+                                .map((e) => InkWell(
+                              overlayColor: MaterialStatePropertyAll(Colors.white),
+                              onTap: () {
+                                setState(() {
+                                 // selectedlookingFor.contains(e) ? selectedlookingFor.remove(e) : selectedlookingFor.add(e);
+                                });
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: const Color(0xff6D9Aff), width: 2.5),
+                                      borderRadius: BorderRadius.circular(20)
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth(context,dividedBy: 27),
+                                      vertical: screenHeight(context,dividedBy: 150),
+                                    ),
+                                    child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 15,fontFamily: 'Roboto',color: AppColor.black),),
+                                  )),
+                            ))
+                                .toList() ??
+                                [],
+                          ),
+                          // Row(
+                          //   children: [
+                          //     Container(
+                          //       height: screenHeight(context, dividedBy: 130),
+                          //       width: screenHeight(context, dividedBy: 130),
+                          //       decoration: BoxDecoration(
+                          //           shape: BoxShape.circle,
+                          //           border: Border.all(
+                          //               color: AppColor.dropdownfont,
+                          //               width: 1.5)),
                           //     ),
-                          //     child: Text(
+                          //     SizedBox(
+                          //       width: screenWidth(context, dividedBy: 50),
+                          //     ),
+                          //     Text(
                           //       lookingFor[0],
                           //       style: const TextStyle(
                           //           fontWeight: FontWeight.w400,
                           //           fontSize: 14,
                           //           fontFamily: 'Roboto',
                           //           color: AppColor.dropdownfont),
-                          //     ),
-                          //   ),
+                          //     )
+                          //   ],
                           // ),
-                          Row(
-                            children: [
-                              Container(
-                                height: screenHeight(context, dividedBy: 130),
-                                width: screenHeight(context, dividedBy: 130),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: AppColor.dropdownfont,
-                                        width: 1.5)),
-                              ),
-                              SizedBox(
-                                width: screenWidth(context, dividedBy: 50),
-                              ),
-                              Text(
-                                lookingFor[0],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    fontFamily: 'Roboto',
-                                    color: AppColor.dropdownfont),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                height: screenHeight(context, dividedBy: 130),
-                                width: screenHeight(context, dividedBy: 130),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: AppColor.dropdownfont,
-                                        width: 1.5)),
-                              ),
-                              SizedBox(
-                                width: screenWidth(context, dividedBy: 50),
-                              ),
-                              Text(
-                                lookingFor[1],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    fontFamily: 'Roboto',
-                                    color: AppColor.dropdownfont),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                height: screenHeight(context, dividedBy: 130),
-                                width: screenHeight(context, dividedBy: 130),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: AppColor.dropdownfont,
-                                        width: 1.5)),
-                              ),
-                              SizedBox(
-                                width: screenWidth(context, dividedBy: 50),
-                              ),
-                              Text(
-                                lookingFor[2],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    fontFamily: 'Roboto',
-                                    color: AppColor.dropdownfont),
-                              )
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     Container(
+                          //       height: screenHeight(context, dividedBy: 130),
+                          //       width: screenHeight(context, dividedBy: 130),
+                          //       decoration: BoxDecoration(
+                          //           shape: BoxShape.circle,
+                          //           border: Border.all(
+                          //               color: AppColor.dropdownfont,
+                          //               width: 1.5)),
+                          //     ),
+                          //     SizedBox(
+                          //       width: screenWidth(context, dividedBy: 50),
+                          //     ),
+                          //     Text(
+                          //       lookingFor[1],
+                          //       style: const TextStyle(
+                          //           fontWeight: FontWeight.w400,
+                          //           fontSize: 14,
+                          //           fontFamily: 'Roboto',
+                          //           color: AppColor.dropdownfont),
+                          //     )
+                          //   ],
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     Container(
+                          //       height: screenHeight(context, dividedBy: 130),
+                          //       width: screenHeight(context, dividedBy: 130),
+                          //       decoration: BoxDecoration(
+                          //           shape: BoxShape.circle,
+                          //           border: Border.all(
+                          //               color: AppColor.dropdownfont,
+                          //               width: 1.5)),
+                          //     ),
+                          //     SizedBox(
+                          //       width: screenWidth(context, dividedBy: 50),
+                          //     ),
+                          //     Text(
+                          //       lookingFor[2],
+                          //       style: const TextStyle(
+                          //           fontWeight: FontWeight.w400,
+                          //           fontSize: 14,
+                          //           fontFamily: 'Roboto',
+                          //           color: AppColor.dropdownfont),
+                          //     )
+                          //   ],
+                          // ),
                           SizedBox(
                             height: screenHeight(context, dividedBy: 50),
                           ),

@@ -2,12 +2,15 @@ import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
+import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -15,6 +18,7 @@ import 'package:pair_me/helper/pref_Service.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
@@ -125,6 +129,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   bool swipeUp = false;
   bool swipeDown = false;
   late VideoPlayerController _controller;
+  late PageController _pageController = PageController();
   @override
   void initState() {
     createTutorial();
@@ -144,6 +149,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             children: [
               Background_Img(context),
               PageView(
+                controller: _pageController,
                 scrollBehavior: MaterialScrollBehavior(),
                 allowImplicitScrolling: true,
                 onPageChanged: (value) {
@@ -1059,7 +1065,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                       ],
                     ),
                   ),
-                  UsersDetails(list: users[ind]['images'])
+                   UsersDetails(list: users[ind]['images'], onTap: () {
+                     _pageController.animateToPage(
+                       0,
+                       duration: Duration(milliseconds: 500),
+                       curve: Curves.ease,
+                     );
+                   },)
                 ],
               )
             ],

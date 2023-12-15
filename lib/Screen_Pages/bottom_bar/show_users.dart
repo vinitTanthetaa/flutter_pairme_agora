@@ -33,7 +33,9 @@ class _ShowUsersState extends State<ShowUsers> {
       body: BottomNavBar(
           selectedIndex: selectedIndex,
           screenList: [
-            UsersDetails(list: widget.list,),
+            UsersDetails(list: widget.list, onTap: () {
+              print("nice");
+            },),
             Message_page(),
             Profile_page(),
             Setting_page(),

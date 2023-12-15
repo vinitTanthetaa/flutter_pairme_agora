@@ -59,7 +59,7 @@ class _Profile_pageState extends State<Profile_page> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: screenHeight(context, dividedBy: 12.5),
+                       // height: screenHeight(context, dividedBy: 12),
                         width: screenWidth(context),
                         child: Row(
                           children: [
@@ -74,7 +74,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   shape: BoxShape.circle),
                             ),
                             SizedBox(
-                              width: screenWidth(context, dividedBy: 40),
+                              width: screenWidth(context, dividedBy: 35),
                             ),
                             const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,9 +187,9 @@ class _Profile_pageState extends State<Profile_page> {
                                               image: const AssetImage(
                                                   'assets/Images/location.png'),
                                               height: screenHeight(context,
-                                                  dividedBy: 70),
+                                                  dividedBy: 60),
                                               width: screenHeight(context,
-                                                  dividedBy: 70),
+                                                  dividedBy: 60),
                                             ),
                                             SizedBox(
                                               width: screenWidth(context,
@@ -218,7 +218,7 @@ class _Profile_pageState extends State<Profile_page> {
                       ),
                       custom_textfield_header(text: 'Intermediate'),
                       Padding(
-                        padding:  EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 70)),
+                        padding:  EdgeInsets.only(bottom: screenHeight(context, dividedBy: 70),top: screenHeight(context, dividedBy: 100)),
                         child: LinearPercentIndicator(
                             width: screenWidth(context, dividedBy: 1.25),
                             lineHeight: 7.0,

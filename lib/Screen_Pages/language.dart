@@ -112,7 +112,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                    animate: true,
                    from: 10,
                    child: Container(
-                     height: screenHeight(context,dividedBy: 6.3),
+                     height: screenHeight(context,dividedBy: 6.7),
                      width: screenWidth(context,dividedBy: 1.15),
                      decoration: BoxDecoration(
                          borderRadius: BorderRadius.circular(7),
@@ -132,12 +132,12 @@ class _Language_ScreenState extends State<Language_Screen> {
                      child: Padding(
                        padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
                        child: ListView.builder(
-                         physics: ClampingScrollPhysics(),
+                         physics: const ClampingScrollPhysics(),
                          itemCount: _language.length,
                          padding: EdgeInsets.zero,
                          itemBuilder: (context, index) {
                          return Padding(
-                           padding: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 95)),
+                           padding: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 200)),
                            child: InkWell(
                              onTap: () {
                                setState(() {
@@ -163,11 +163,12 @@ class _Language_ScreenState extends State<Language_Screen> {
                        },)
                      ),
                    ),
-                 ) : show_box ? FadeOutUp(
+                 ) : show_box ?
+                 FadeOutUp(
                    animate: true,
                    from: 10,
                    child: Container(
-                     height: screenHeight(context,dividedBy: 6),
+                     height: screenHeight(context,dividedBy: 6.7),
                      width: screenWidth(context,dividedBy: 1.15),
                      decoration: BoxDecoration(
                          borderRadius: BorderRadius.circular(7),
@@ -191,7 +192,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                            padding: EdgeInsets.zero,
                            itemBuilder: (context, index) {
                              return Padding(
-                               padding: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 95)),
+                               padding: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 200)),
                                child: custom_text(text: _language[index], color: AppColor.dropdownfont),
                              );
                            },)

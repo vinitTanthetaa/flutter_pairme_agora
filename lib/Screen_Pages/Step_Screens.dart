@@ -100,15 +100,21 @@ class _StepScreenState extends State<StepScreen> {
   List lookingFor = [
     'Investor',
     'Startup Founder',
+    'Sauna',
+    'Director',
     'Corporate Executive',
     'Manufacturer',
     'Distributor',
     'Channel Partner',
     'Business Partner',
     'Translator',
+    'Software tester',
+    'Data architect',
+
   ];
-  final List _type = [];
+  List selectedlookingFor = [];
   final List _type1 = [];
+  final List _type = [];
   List filelist = [];
   bool _category = false;
   bool _experience = false;
@@ -3748,33 +3754,64 @@ class _StepScreenState extends State<StepScreen> {
                         )
                       ],
                     ),
+                    SizedBox(height: screenHeight(context,dividedBy: 50),),
                     SizedBox(
-                      height: screenHeight(context, dividedBy: 1.75),
-                      width: screenWidth(context),
-                      child: ListView.builder(
-                        itemCount: lookingFor.length,
-                        physics: const ClampingScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          return custom_selection(context,
-                              top: screenHeight(context, dividedBy: 50),
-                              text: lookingFor[index],
-                              list: _type, onTap: () {
-                                if (_type.length < 3) {
-                                  setState(() {
-                                    _type.contains(lookingFor[index])
-                                        ? _type.remove(lookingFor[index])
-                                        : _type.add(lookingFor[index]);
-                                  });
-                                } else {
-                                  setState(() {
-                                    _type.remove(lookingFor[index]);
-                                  });
-                                }
-                              });
-                        },
+                      height: screenHeight(context,dividedBy: 1.7),
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: lookingFor
+                            .map((e) => InkWell(
+                          overlayColor: MaterialStatePropertyAll(Colors.white),
+                          onTap: () {
+                            setState(() {
+                              selectedlookingFor.contains(e) ? selectedlookingFor.remove(e) : selectedlookingFor.add(e);
+                            });
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: selectedlookingFor.contains(e)? const Color(0xff6D9Aff) : AppColor.fontgray,width: 2.5),
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth(context,dividedBy: 27),
+                                  vertical: screenHeight(context,dividedBy: 150),
+                                ),
+                                child: Text(e,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15,fontFamily: 'Roboto',color: selectedlookingFor.contains(e)? AppColor.black : AppColor.fontgray),),
+                              )),
+                        ))
+                            .toList() ??
+                            [],
                       ),
                     ),
+                    // SizedBox(
+                    //   height: screenHeight(context, dividedBy: 1.75),
+                    //   width: screenWidth(context),
+                    //   child: ListView.builder(
+                    //     itemCount: lookingFor.length,
+                    //     physics: const ClampingScrollPhysics(),
+                    //     padding: EdgeInsets.zero,
+                    //     itemBuilder: (context, index) {
+                    //       return custom_selection(context,
+                    //           top: screenHeight(context, dividedBy: 50),
+                    //           text: lookingFor[index],
+                    //           list: _type, onTap: () {
+                    //             if (_type.length < 3) {
+                    //               setState(() {
+                    //                 _type.contains(lookingFor[index])
+                    //                     ? _type.remove(lookingFor[index])
+                    //                     : _type.add(lookingFor[index]);
+                    //               });
+                    //             } else {
+                    //               setState(() {
+                    //                 _type.remove(lookingFor[index]);
+                    //               });
+                    //             }
+                    //           });
+                    //     },
+                    //   ),
+                    // ),
                     Custom_botton(context, text: 'Done', onTap: () {
                       setState(() {
                         ind++;
@@ -3810,33 +3847,59 @@ class _StepScreenState extends State<StepScreen> {
                         )
                       ],
                     ),
+                    SizedBox(height: screenHeight(context,dividedBy: 50),),
                     SizedBox(
-                      height: screenHeight(context,dividedBy: 1.75),
-                      width: screenWidth(context),
-                      child: ListView.builder(
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: lookingFor.length,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          return   custom_selection(context,top: screenHeight(context,dividedBy: 50),text: lookingFor[index], list: _type1, onTap: () {
-                            if(_type1.length < 3){
-                              setState(() {
-                                _type1.contains(lookingFor[index]) ? _type1.remove(lookingFor[index]) :_type1.add(lookingFor[index]);
-                              });
-                            }else{
-                              setState(() {
-                                _type1.remove(lookingFor[index]);
-                              });
-                            }
-                          });
-                        },),
+                      height: screenHeight(context,dividedBy: 1.7),
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: lookingFor
+                            .map((e) => InkWell(
+                          overlayColor: MaterialStatePropertyAll(Colors.white),
+                          onTap: () {
+                            setState(() {
+                              selectedlookingFor.contains(e) ? selectedlookingFor.remove(e) : selectedlookingFor.add(e);
+                            });
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: selectedlookingFor.contains(e)? const Color(0xff6D9Aff) : AppColor.fontgray,width: 2.5),
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth(context,dividedBy: 27),
+                                  vertical: screenHeight(context,dividedBy: 150),
+                                ),
+                                child: Text(e,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15,fontFamily: 'Roboto',color: selectedlookingFor.contains(e)? AppColor.black : AppColor.fontgray),),
+                              )),
+                        ))
+                            .toList() ??
+                            [],
+                      ),
                     ),
+                    // SizedBox(
+                    //   height: screenHeight(context,dividedBy: 1.75),
+                    //   width: screenWidth(context),
+                    //   child: ListView.builder(
+                    //     physics: const ClampingScrollPhysics(),
+                    //     itemCount: lookingFor.length,
+                    //     padding: EdgeInsets.zero,
+                    //     itemBuilder: (context, index) {
+                    //       return   custom_selection(context,top: screenHeight(context,dividedBy: 50),text: lookingFor[index], list: _type1, onTap: () {
+                    //         if(_type1.length < 3){
+                    //           setState(() {
+                    //             _type1.contains(lookingFor[index]) ? _type1.remove(lookingFor[index]) :_type1.add(lookingFor[index]);
+                    //           });
+                    //         }else{
+                    //           setState(() {
+                    //             _type1.remove(lookingFor[index]);
+                    //           });
+                    //         }
+                    //       });
+                    //     },),
+                    // ),
                     Custom_botton(context, text: 'Done', onTap: () async {
-                      showcase = true;
-                      prefsService.setBoolData('showcase', showcase);
-                      showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
-                      showcasetime++;
-                      prefsService.setIntData("showcasetime", showcasetime);
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return const Home_screen();
                       },));
