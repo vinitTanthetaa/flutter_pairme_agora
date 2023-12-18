@@ -118,7 +118,7 @@ class _Login_pageState extends State<Login_page> {
                     Center(
                         child: Container(
                           margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 60)),
-                          height: screenHeight(context,dividedBy: 17),
+                          height: screenHeight(context,dividedBy: 20),
                           width: screenWidth(context),
                           decoration: BoxDecoration(
                               color: AppColor.white,
@@ -156,7 +156,7 @@ class _Login_pageState extends State<Login_page> {
                       ),
                     Center(
                         child: Container(
-                          height: screenHeight(context,dividedBy: 17),
+                          height: screenHeight(context,dividedBy: 20),
                           width: screenWidth(context),
                           decoration: BoxDecoration(
                             color: AppColor.white,

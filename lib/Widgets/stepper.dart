@@ -4,35 +4,29 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:steps_indicator/steps_indicator.dart';
 
 Widget custom_stepper(BuildContext context, {required int positaion}) {
-  return Padding(
-    padding: EdgeInsets.only(
-        top: screenHeight(context, dividedBy: 20),
-        bottom: screenHeight(context, dividedBy: 20),
+  return StepsIndicator(
+    selectedStep: positaion,
+    nbSteps: 6,
+    doneLineColor: AppColor.skyBlue,
+    doneStepColor: AppColor.skyBlue,
+    undoneLineColor: AppColor.gray,
+    lineLength: screenWidth(context, dividedBy: 8.7),
+    doneLineThickness: 7,
+    undoneLineThickness: 7,
+    unselectedStepWidget: const CircleAvatar(
+      radius: 10,
+      backgroundImage: AssetImage('assets/Images/stepper.png'),
     ),
-    child: StepsIndicator(
-      selectedStep: positaion,
-      nbSteps: 6,
-      doneLineColor: AppColor.skyBlue,
-      doneStepColor: AppColor.skyBlue,
-      undoneLineColor: AppColor.gray,
-      lineLength: screenWidth(context, dividedBy: 10.3),
-      doneLineThickness: 7,
-      undoneLineThickness: 7,
-      unselectedStepWidget: const CircleAvatar(
-        radius: 10,
-        backgroundImage: AssetImage('assets/Images/stepper.png'),
-      ),
-      doneStepWidget: const CircleAvatar(
-        radius: 10,
-        backgroundImage: AssetImage('assets/Images/stepper.png'),
-      ),
-      selectedStepWidget: const CircleAvatar(
-        radius: 10,
-        backgroundImage: AssetImage('assets/Images/stepper.png'),
-      ),
-      enableLineAnimation: true,
-      enableStepAnimation: true,
-      isHorizontal: true,
+    doneStepWidget: const CircleAvatar(
+      radius: 10,
+      backgroundImage: AssetImage('assets/Images/stepper.png'),
     ),
+    selectedStepWidget: const CircleAvatar(
+      radius: 10,
+      backgroundImage: AssetImage('assets/Images/stepper.png'),
+    ),
+    enableLineAnimation: true,
+    enableStepAnimation: true,
+    isHorizontal: true,
   );
 }

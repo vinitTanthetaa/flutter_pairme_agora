@@ -111,7 +111,7 @@ class _Setting_pageState extends State<Setting_page> {
                     custom_header(text: 'Settings'),
                     SizedBox(height: screenHeight(context,dividedBy: 30),),
                     Container(
-                      height: screenHeight(context,dividedBy: 17),
+                      height: screenHeight(context,dividedBy: 20),
                       width: screenWidth(context,dividedBy: 1.15),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
@@ -163,7 +163,7 @@ class _Setting_pageState extends State<Setting_page> {
                     ),
                     SizedBox(height: screenHeight(context,dividedBy: 60),),
                     Container(
-                      height: screenHeight(context,dividedBy: 17),
+                      height: screenHeight(context,dividedBy: 20),
                       width: screenWidth(context,dividedBy: 1.15),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
@@ -288,7 +288,7 @@ class _Setting_pageState extends State<Setting_page> {
                       ),
                     ) : const SizedBox(),
                     Container(
-                      height: screenHeight(context,dividedBy: 17),
+                      height: screenHeight(context,dividedBy: 20),
                       width: screenWidth(context,dividedBy: 1.15),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
@@ -325,7 +325,7 @@ class _Setting_pageState extends State<Setting_page> {
                     ),
                     SizedBox(height: screenHeight(context,dividedBy: 60),),
                     Container(
-                      height: screenHeight(context,dividedBy: 17),
+                      height: screenHeight(context,dividedBy: 20),
                       width: screenWidth(context,dividedBy: 1.15),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
@@ -374,7 +374,7 @@ class _Setting_pageState extends State<Setting_page> {
                     ),
                     SizedBox(height: screenHeight(context,dividedBy: 60),),
                     Container(
-                      height: screenHeight(context,dividedBy: 17),
+                      height: screenHeight(context,dividedBy: 20),
                       width: screenWidth(context,dividedBy: 1.15),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
@@ -430,7 +430,7 @@ class _Setting_pageState extends State<Setting_page> {
                       },
                       child: Container(
                         alignment: Alignment.centerLeft,
-                        height: screenHeight(context,dividedBy: 17),
+                        height: screenHeight(context,dividedBy: 20),
                         width: screenWidth(context,dividedBy: 1.15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
@@ -462,7 +462,7 @@ class _Setting_pageState extends State<Setting_page> {
                       },
                       child: Container(
                         alignment: Alignment.centerLeft,
-                        height: screenHeight(context,dividedBy: 17),
+                        height: screenHeight(context,dividedBy: 20),
                         width: screenWidth(context,dividedBy: 1.15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),

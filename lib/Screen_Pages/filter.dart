@@ -39,7 +39,7 @@ class _Filter_pageState extends State<Filter_page> {
   bool _contry = false;
   bool _state = false;
   bool _city = false;
-  double _slider = 0;
+  double _slider = 10;
   bool _switch = false;
   String gender = 'Female';
   bool popup = false;
@@ -115,10 +115,11 @@ class _Filter_pageState extends State<Filter_page> {
                               SizedBox(
                                 height: screenHeight(context,dividedBy: 30),
                                 width: screenWidth(context),
-                                child: GradientSlider(
-                                  thumbHeight: 20,
-                                  thumbWidth: 20,
-                                  trackHeight: 6,
+                                child:
+                                GradientSlider(
+                                  thumbHeight: 30,
+                                  thumbWidth: 30,
+                                  trackHeight: 5,
                                   activeTrackGradient: const LinearGradient(colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
                                   inactiveTrackGradient:
                                   const LinearGradient(colors: [AppColor.gray, AppColor.gray]),
@@ -130,11 +131,11 @@ class _Filter_pageState extends State<Filter_page> {
                                           _slider=value;
                                         });
                                       }
-                                  ), thumbAsset: 'assets/Images/stepper.png',
+                                  ), thumbAsset: '',
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
+                                margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20)),
                                 height: screenHeight(context,dividedBy: 30),
                                 width: screenWidth(context),
                                 child: InkWell(
@@ -384,8 +385,8 @@ class _Filter_pageState extends State<Filter_page> {
                           ],),
                         custom_textfield_header(text: 'Looking for'),
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 70)),
-                          height: screenHeight(context,dividedBy: 3.5),
+                         margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 70)),
+                        // height: screenHeight(context,dividedBy: 3.5),
                           width: screenWidth(context),
                           decoration: BoxDecoration(
                               color: AppColor.white,
@@ -402,17 +403,48 @@ class _Filter_pageState extends State<Filter_page> {
                                 ),
                               ]
                           ),
-                          child: ListView.builder(
-                            padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 40),vertical: screenHeight(context,dividedBy: 100)),
-                            itemCount: lookingFor.length,
-                            physics: const ClampingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return         custom_selection(context,bottom: 5 ,text: lookingFor[index], list: _type, onTap: () {
-                                setState(() {
-                                  _type.contains(lookingFor[index]) ? _type.remove(lookingFor[index]) :_type.add(lookingFor[index]);
-                                });
-                              });
-                            },),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              spacing: 10,
+                              runSpacing: 10,
+                              direction: Axis.vertical,
+                              children: lookingFor
+                                  .map((e) => InkWell(
+                                overlayColor: MaterialStatePropertyAll(Colors.white),
+                                onTap: () {
+                                  setState(() {
+                                    _type.contains(e) ? _type.remove(e) :_type.add(e);
+                                  });
+                                },
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: _type.contains(e)? const Color(0xff6D9Aff) : AppColor.fontgray,width: 2.5),
+                                        borderRadius: BorderRadius.circular(20)
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: screenWidth(context,dividedBy: 27),
+                                        vertical: screenHeight(context,dividedBy: 150),
+                                      ),
+                                      child: Text(e,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15,fontFamily: 'Roboto',color: _type.contains(e)? AppColor.black : AppColor.fontgray),),
+                                    )),
+                              ))
+                                  .toList() ??
+                                  [],
+                            ),
+                          ),
+                          // ListView.builder(
+                          //   padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 40),vertical: screenHeight(context,dividedBy: 100)),
+                          //   itemCount: lookingFor.length,
+                          //   physics: const ClampingScrollPhysics(),
+                          //   itemBuilder: (context, index) {
+                          //     return         custom_selection(context,bottom: 5 ,text: lookingFor[index], list: _type, onTap: () {
+                          //       setState(() {
+                          //         _type.contains(lookingFor[index]) ? _type.remove(lookingFor[index]) :_type.add(lookingFor[index]);
+                          //       });
+                          //     });
+                          //   },),
                         )
                       ],
                     ) ,

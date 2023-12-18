@@ -28,7 +28,7 @@ class _UsersDetailsState extends State<UsersDetails>
   List lookingFor = [
     'Investor',
     'Startup founder',
-    'Corporate executive',
+    'Distributor',
   ];
   List list = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
@@ -307,7 +307,7 @@ class _UsersDetailsState extends State<UsersDetails>
                             height: screenHeight(context, dividedBy: 150),
                           ),
                           Wrap(
-                            spacing: 8,
+                            spacing: 5,
                             runSpacing: 8,
                             children: lookingFor
                                 .map((e) => InkWell(
@@ -324,10 +324,10 @@ class _UsersDetailsState extends State<UsersDetails>
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: screenWidth(context,dividedBy: 27),
+                                      horizontal: screenWidth(context,dividedBy: 25),
                                       vertical: screenHeight(context,dividedBy: 150),
                                     ),
-                                    child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 15,fontFamily: 'Roboto',color: AppColor.black),),
+                                    child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 14,fontFamily: 'Roboto',color: AppColor.dropdownfont),),
                                   )),
                             ))
                                 .toList() ??

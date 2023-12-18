@@ -100,8 +100,6 @@ class _StepScreenState extends State<StepScreen> {
   List lookingFor = [
     'Investor',
     'Startup Founder',
-    'Sauna',
-    'Director',
     'Corporate Executive',
     'Manufacturer',
     'Distributor',
@@ -109,8 +107,6 @@ class _StepScreenState extends State<StepScreen> {
     'Business Partner',
     'Translator',
     'Software tester',
-    'Data architect',
-
   ];
   List selectedlookingFor = [];
   final List _type1 = [];
@@ -230,6 +226,7 @@ class _StepScreenState extends State<StepScreen> {
         height: screenHeight(context),
         width: screenWidth(context),
         child: Stack(
+          alignment:Alignment.topLeft ,
           children: [
             Background_Img(context),
             ind == 0 ?
@@ -240,7 +237,7 @@ class _StepScreenState extends State<StepScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: screenHeight(context,dividedBy:10),),
+                    SizedBox(height: screenHeight(context,dividedBy:8),),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -433,7 +430,7 @@ class _StepScreenState extends State<StepScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: screenHeight(context,dividedBy: 10),),
+                    SizedBox(height: screenHeight(context,dividedBy: 8),),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -856,7 +853,7 @@ class _StepScreenState extends State<StepScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: screenHeight(context,dividedBy:10),),
+                    SizedBox(height: screenHeight(context,dividedBy:8),),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -1121,7 +1118,7 @@ class _StepScreenState extends State<StepScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: screenHeight(context,dividedBy:10),),
+                    SizedBox(height: screenHeight(context,dividedBy:8),),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -3734,7 +3731,7 @@ class _StepScreenState extends State<StepScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: screenHeight(context, dividedBy: 10),
+                      height: screenHeight(context, dividedBy: 8),
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -3758,7 +3755,7 @@ class _StepScreenState extends State<StepScreen> {
                     SizedBox(
                       height: screenHeight(context,dividedBy: 1.7),
                       child: Wrap(
-                        spacing: 8,
+                        spacing: 200,
                         runSpacing: 8,
                         children: lookingFor
                             .map((e) => InkWell(
@@ -3830,7 +3827,7 @@ class _StepScreenState extends State<StepScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: screenHeight(context,dividedBy: 10),),
+                    SizedBox(height: screenHeight(context,dividedBy: 8),),
                     // custom_stepper(context, positaion: 6),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -3851,8 +3848,8 @@ class _StepScreenState extends State<StepScreen> {
                     SizedBox(
                       height: screenHeight(context,dividedBy: 1.7),
                       child: Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
+                        spacing: 200,
+                        runSpacing: 5,
                         children: lookingFor
                             .map((e) => InkWell(
                           overlayColor: MaterialStatePropertyAll(Colors.white),
@@ -3909,23 +3906,29 @@ class _StepScreenState extends State<StepScreen> {
               ),
             ),
             Positioned(
-                top: screenHeight(context,dividedBy: 200),
+                top: screenHeight(context,dividedBy: 30),
                 left: screenWidth(context, dividedBy: 15),
                 right: screenWidth(context, dividedBy: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                         ind < 1 ? ind=ind : ind-- ;
-                         print(ind);
-                        });
-                      },
-                        child: const Icon(Icons.arrow_back_ios_sharp)),
-                    custom_stepper(context, positaion: ind)
-                  ],
+                child: SizedBox(
+                  height: screenHeight(context,dividedBy: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            setState(() {
+                              ind < 1 ? ind=ind : ind-- ;
+                              print(ind);
+                            });
+                          },
+                          child: const Icon(Icons.arrow_back_ios_sharp)),
+
+                      custom_stepper(context, positaion: ind)
+                    ],
+                  ),
                 )),
+
           ],
         ),
       ),

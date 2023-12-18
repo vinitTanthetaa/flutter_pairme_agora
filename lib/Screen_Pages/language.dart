@@ -61,7 +61,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                  custom_discription(text: 'counter'),
                  SizedBox(height: screenHeight(context,dividedBy: 50),),
                  Container(
-                   height: screenHeight(context,dividedBy: 17),
+                   height: screenHeight(context,dividedBy: 20),
                    width: screenWidth(context,dividedBy: 1.15),
                    decoration: BoxDecoration(
                        borderRadius: BorderRadius.circular(7),
