@@ -170,7 +170,7 @@ class _Profile_pageState extends State<Profile_page> {
                                       // width: screenWidth(context, dividedBy: 5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Color(0xff6D9AFF)
+                                        color: AppColor.Blue
                                         // gradient: const LinearGradient(colors: [
                                         //   AppColor.skyBlue,
                                         //   AppColor.whiteskyBlue
@@ -481,7 +481,7 @@ class _Profile_pageState extends State<Profile_page> {
                         margin: EdgeInsets.only(
                             top: screenHeight(context, dividedBy: 100),
                             bottom: screenHeight(context, dividedBy: 70)),
-                        height: screenHeight(context, dividedBy: 15),
+                        height: screenHeight(context, dividedBy: 20),
                         width: screenWidth(context, dividedBy: 1.15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
@@ -500,40 +500,15 @@ class _Profile_pageState extends State<Profile_page> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: screenWidth(context, dividedBy: 30)),
-                          child: Row(
+                          child: const Row(
                             children: [
-                              Container(
-                                height: screenHeight(context, dividedBy: 25),
-                                width: screenWidth(context, dividedBy: 13),
-                                decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/Images/University.png'))),
-                              ),
-                              SizedBox(
-                                width: screenWidth(context, dividedBy: 40),
-                              ),
-                              const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'University of Portland',
-                                    style: TextStyle(
-                                        color: AppColor.black,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15),
-                                  ),
-                                  Text(
-                                    'Portland, OR ‧ Private, non-profit ‧ 4-year',
-                                    style: TextStyle(
-                                        color: AppColor.black,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 10),
-                                  ),
-                                ],
+                              Text(
+                                'Veer Narmad South Gujarat University',
+                                style: TextStyle(
+                                    color: AppColor.black,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12),
                               ),
                             ],
                           ),

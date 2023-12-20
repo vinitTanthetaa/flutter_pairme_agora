@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -117,8 +116,8 @@ class _Filter_pageState extends State<Filter_page> {
                                 width: screenWidth(context),
                                 child:
                                 GradientSlider(
-                                  thumbHeight: 30,
-                                  thumbWidth: 30,
+                                  thumbHeight: 20,
+                                  thumbWidth: 20,
                                   trackHeight: 5,
                                   activeTrackGradient: const LinearGradient(colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
                                   inactiveTrackGradient:
@@ -131,7 +130,7 @@ class _Filter_pageState extends State<Filter_page> {
                                           _slider=value;
                                         });
                                       }
-                                  ), thumbAsset: '',
+                                  ), thumbAsset: 'assets/Images/stepper.png',
                                 ),
                               ),
                               Container(

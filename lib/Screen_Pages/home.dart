@@ -2,23 +2,18 @@ import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:pair_me/Screen_Pages/bottom_bar/show_users.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
-import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
-import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
-import 'package:swipeable_page_route/swipeable_page_route.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
@@ -34,11 +29,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final GlobalKey _key = GlobalKey();
   final GlobalKey _key1 = GlobalKey();
   final GlobalKey _key3 = GlobalKey();
-  final GlobalKey _key4 = GlobalKey();
-  final GlobalKey _key5 = GlobalKey();
-  final GlobalKey _key6 = GlobalKey();
-  final GlobalKey _key23 = GlobalKey();
+
   int pageViewIndex = 0;
+  double height = 0;
+  double height1 = 1.2;
+  double wight = 1;
   late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController _bio = TextEditingController();
   List users = [
@@ -111,7 +106,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   List lookingFor = [
     'Investor',
     'Startup founder',
-    'Corporate executive',
+    'Startup founder',
+  //  'Corporate executive',
   ];
   List list = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
@@ -128,13 +124,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   int ind = 0;
   bool swipeUp = false;
   bool swipeDown = false;
-  late VideoPlayerController _controller;
-  late PageController _pageController = PageController();
+  bool month = false;
+  late final PageController _pageController = PageController();
   @override
   void initState() {
     createTutorial();
     controller = AppinioSwiperController();
-    // tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     Future.delayed(Duration.zero, showTutorial);
     FocusManager.instance.primaryFocus?.unfocus();
     super.initState();
@@ -176,7 +171,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       image: DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/pairme.png'
-                                              // 'assets/Images/MicrosoftTeams-image (1).png'
                                               ))),
                                 ),
                                 InkWell(
@@ -212,33 +206,46 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                               children: [
                                 AppinioSwiper(
                                     controller: controller,
+                                  //  duration: Duration(milliseconds: 500),
+                                  //  invertAngleOnBottomDrag: true,
                                     onCardPositionChanged: (position) {
                                       // print("position ==> ${position.offset.direction}");
                                       if(position.offset.direction > 0){
                                         setState(() {
                                           swipeDown = true;
+                                          height = height + 20;
                                           swipeUp = false;
                                         });
                                       }
                                       if(position.offset.direction < 0){
                                         setState(() {
                                           swipeUp = true;
+                                          height1 = height1+0.01;
+                                          wight = wight+0.01;
+                                          height = height + 20;
+                                         // height = 200;
                                           swipeDown = false;
                                         });
                                       }
                                     },
-
                                     onSwipeCancelled:(activity) {
                                       setState(() {
                                         swipeUp = false;
                                         swipeDown = false;
+                                        height1 = 1.2;
+                                        wight = 1;
+                                        height = 0;
                                       });
                                     },
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
                                         ind >= users.length-1 ? ind = ind : ind++;
+                                        height = 0;
+
                                       });
                                       setState(() {
+                                        height1 = 1.2;
+                                        wight = 1;
                                         swipeUp = false;
                                         swipeDown = false;
                                       });
@@ -251,17 +258,64 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           screenWidth(context, dividedBy: 100),
                                         ),
                                         child: Container(
-                                          height: screenHeight(context),
-                                          width: screenWidth(context),
+                                          // height: screenHeight(context),
+                                          // width: screenWidth(context),
                                           decoration: const BoxDecoration(
                                               borderRadius: BorderRadius.only(
                                                   topRight: Radius.circular(20),
                                                   topLeft: Radius.circular(20))),
                                           child: Stack(
                                             children: [
-                                              users[index]['images'][pageViewIndex].toString().endsWith(".mp4")?
-                                              VideoWidget(videoUrl: users[index]['images'][pageViewIndex])
-                                                  :  CachedNetworkImage(
+                                              swipeUp || swipeDown  ?   Align(
+                                          alignment:  Alignment.topCenter,
+                                              child:SizedBox(
+
+                                                child: Stack(
+                                                  children: [
+                                                    CachedNetworkImage(
+                                                      imageUrl: users[index]['images'][pageViewIndex],
+                                                      imageBuilder: (context, imageProvider) => Container(
+                                                        height: screenHeight(context,dividedBy: height1),
+                                                        width: screenWidth(context,dividedBy: wight),
+                                                        decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                                image: imageProvider,
+                                                                fit: BoxFit.cover,
+                                                                filterQuality: FilterQuality.high
+                                                            ),
+                                                            borderRadius: const BorderRadius.only(
+                                                                topRight: Radius.circular(20),
+                                                                topLeft: Radius.circular(20))
+                                                        ),
+                                                      ),
+                                                      placeholder: (context, url) => Container(
+                                                        height: screenHeight(context),
+                                                        width: screenWidth(context),
+                                                        decoration: const BoxDecoration(
+                                                            borderRadius: BorderRadius.only(
+                                                                topRight: Radius.circular(20),
+                                                                topLeft: Radius.circular(20)),
+                                                            color: Colors.black
+                                                        ),
+                                                        child: const Center(
+                                                          child: CircularProgressIndicator(color: AppColor.skyBlue,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                                    ),
+                                                    Container(
+                                                      height: screenHeight(context,dividedBy: height1),
+                                                      width: screenWidth(context,dividedBy: wight),
+                                                      decoration: BoxDecoration(
+                                                          gradient:LinearGradient(begin: Alignment.bottomCenter,end: Alignment.topCenter,colors: [Colors.black,Colors.black38]),
+                                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                          ): users[index]['images'][pageViewIndex].toString().endsWith(".mp4")? VideoWidget(videoUrl: users[index]['images'][pageViewIndex]) :  CachedNetworkImage(
                                                 imageUrl: users[index]['images'][pageViewIndex],
                                                 imageBuilder: (context, imageProvider) => Container(
                                                   decoration: BoxDecoration(
@@ -282,7 +336,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       borderRadius: BorderRadius.only(
                                                           topRight: Radius.circular(20),
                                                           topLeft: Radius.circular(20)),
-                                                    color: Colors.black
+                                                      color: Colors.black
                                                   ),
                                                   child: const Center(
                                                     child: CircularProgressIndicator(color: AppColor.skyBlue,
@@ -291,7 +345,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 ),
                                                 errorWidget: (context, url, error) => Icon(Icons.error),
                                               ),
-                                              Align(
+                                              swipeUp || swipeDown  ? SizedBox() : Align(
                                                 alignment: Alignment.topCenter,
                                                 child: swipeUp == false &&
                                                     swipeDown == false
@@ -317,7 +371,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 )
                                                     : const SizedBox(),
                                               ),
-                                              Row(
+                                              swipeUp || swipeDown  ? SizedBox() :  Row(
                                                 children: [
                                                   Expanded(
                                                     child: InkWell(
@@ -357,11 +411,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   ),
                                                 ],
                                               ),
-                                             Align(
+                                              swipeUp || swipeDown  ? SizedBox() : Align(
                                                 alignment: Alignment.bottomCenter,
                                                 child: Container(
-                                                  height: screenHeight(context,
-                                                      dividedBy: 3.9),
+                                                  alignment: Alignment.bottomCenter,
+                                                  height: screenHeight(context, dividedBy: 4.1),
                                                   width: screenWidth(context),
                                                   decoration: const BoxDecoration(
                                                       gradient: LinearGradient(
@@ -428,37 +482,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 ],
                                                               ),
                                                             ),
-                                                            // GestureDetector(
-                                                            //     onTap: () {
-                                                            //       Navigator.push(
-                                                            //           context,
-                                                            //           SwipeablePageRoute(
-                                                            //             builder:
-                                                            //                 (context) {
-                                                            //               return ShowUsers(
-                                                            //                 list: users[
-                                                            //                 index]
-                                                            //                 [
-                                                            //                 'images'],
-                                                            //               );
-                                                            //             },
-                                                            //           ));
-                                                            //     },
-                                                            //     child: SizedBox(
-                                                            //       key: _key23,
-                                                            //       child: Image(
-                                                            //         image: const AssetImage(
-                                                            //             'assets/Images/side.png'),
-                                                            //         height:
-                                                            //         screenHeight(
-                                                            //             context,
-                                                            //             dividedBy:
-                                                            //             25),
-                                                            //         width: screenHeight(
-                                                            //             context,
-                                                            //             dividedBy: 25),
-                                                            //       ),
-                                                            //     ))
                                                           ],
                                                         ),
                                                         const Text(
@@ -528,6 +551,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               dividedBy: 100),
                                                         ),
                                                         Wrap(
+                                                          alignment: WrapAlignment.spaceBetween,
+                                                          direction: Axis.horizontal,
                                                           spacing: 9,
                                                           runSpacing: 8,
                                                           children: lookingFor
@@ -554,62 +579,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   ),
                                                 ),
                                               ),
-                                              Align(
-                                                alignment: swipeDown
-                                                    ? Alignment.bottomCenter
-                                                    : Alignment.topCenter,
-                                                child: swipeUp || swipeDown
-                                                    ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                    top: screenHeight(context,
-                                                        dividedBy: 7),
-                                                    bottom: screenHeight(
-                                                        context,
-                                                        dividedBy: 3.5),
-                                                  ),
-                                                  child: Container(
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(
-                                                            width: 5,
-                                                            color: AppColor.skyBlue
-                                                            // color: swipeUp
-                                                            //     ? Colors.red
-                                                            //     : Color(0xff004FFF),
-                                                          )),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(
-                                                            horizontal:
-                                                            screenWidth(
-                                                                context,
-                                                                dividedBy:
-                                                                10),
-                                                            vertical:
-                                                            screenHeight(
-                                                                context,
-                                                                dividedBy:
-                                                                70)),
-                                                        child: Text(
-                                                          swipeUp
-                                                              ? "Skip"
-                                                              : "Connect",
-                                                          style: TextStyle(
-                                                              fontSize: 25,
-                                                              fontFamily:
-                                                              'Roboto',
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w700,
-                                                              color: AppColor.skyBlue
-                                                              // color: swipeUp
-                                                              //     ? Colors.red
-                                                              //     : Color(0xff004FFF)
-                                                          ),
-                                                        ),
-                                                      )),
-                                                )
-                                                    : const SizedBox(),
-                                              ),
-                                              Align(
+                                              swipeUp || swipeDown  ? Align(
+                                                alignment: swipeUp ? Alignment.bottomCenter : Alignment.topCenter,
+                                                child: Container(
+                                                  height: height,
+                                                  decoration: BoxDecoration(
+                                                    ),
+                                                ),
+                                              ) : Align(
                                                 alignment: Alignment.topCenter,
                                                 child: Container(
                                                   key: _key3,
@@ -618,10 +595,100 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   width: screenHeight(context,dividedBy: 9),
 
                                                 ),
-                                              )
+                                              ),
+                                              // Align(
+                                              //   alignment: swipeDown
+                                              //       ? Alignment.bottomCenter
+                                              //       : Alignment.topCenter,
+                                              //   child: swipeUp || swipeDown
+                                              //       ? Padding(
+                                              //     padding: EdgeInsets.only(
+                                              //       top: screenHeight(context,
+                                              //           dividedBy: 7),
+                                              //       bottom: screenHeight(
+                                              //           context,
+                                              //           dividedBy: 3.5),
+                                              //     ),
+                                              //     child: Container(
+                                              //         decoration: BoxDecoration(
+                                              //             borderRadius: BorderRadius.circular(30),
+                                              //             border: Border.all(
+                                              //                 width: 5,
+                                              //                 //color: AppColor.gray
+                                              //                 color: swipeUp
+                                              //                     ? AppColor.gray
+                                              //                     : AppColor.skyBlue
+                                              //             )),
+                                              //         child: Padding(
+                                              //           padding: EdgeInsets.symmetric(
+                                              //               horizontal:
+                                              //               screenWidth(
+                                              //                   context,
+                                              //                   dividedBy:
+                                              //                   15),
+                                              //               vertical:
+                                              //               screenHeight(
+                                              //                   context,
+                                              //                   dividedBy:
+                                              //                   100)),
+                                              //           child: Text(
+                                              //             swipeUp
+                                              //                 ? "Skip"
+                                              //                 : "Connect",
+                                              //             style: TextStyle(
+                                              //                 fontSize: 25,
+                                              //                 fontFamily:
+                                              //                 'Roboto',
+                                              //                 fontWeight:
+                                              //                 FontWeight
+                                              //                     .w700,
+                                              //                 // color: AppColor.skyBlue
+                                              //                 color: swipeUp
+                                              //                     ? AppColor.gray
+                                              //                     : AppColor.skyBlue
+                                              //             ),
+                                              //           ),
+                                              //         )),
+                                              //   )
+                                              //       : const SizedBox(),
+                                              // ),
+
                                             ],
                                           ),
                                         ),
+                                      );
+                                }, cardBuilder1: (BuildContext context, int index) {
+                                      return   users[index]['images'][pageViewIndex].toString().endsWith(".mp4")?
+                                      VideoWidget(videoUrl: users[index]['images'][pageViewIndex])
+                                          :  CachedNetworkImage(
+                                        imageUrl: users[index]['images'][pageViewIndex],
+                                        imageBuilder: (context, imageProvider) => Container(
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover,
+                                                  filterQuality: FilterQuality.high
+                                              ),
+                                              borderRadius: const BorderRadius.only(
+                                                  topRight: Radius.circular(20),
+                                                  topLeft: Radius.circular(20))
+                                          ),
+                                        ),
+                                        placeholder: (context, url) => Container(
+                                          height: screenHeight(context),
+                                          width: screenWidth(context),
+                                          decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(20),
+                                                  topLeft: Radius.circular(20)),
+                                              color: Colors.black
+                                          ),
+                                          child: const Center(
+                                            child: CircularProgressIndicator(color: AppColor.skyBlue,
+                                            ),
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) => Icon(Icons.error),
                                       );
                                 },),
                                 Align(
@@ -765,13 +832,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           ),
                                         ),
                                       ),
-                                    ) :
-                                    Row(
+                                    ) : month ?
+                                      Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment
                                           .spaceAround,
                                       children: [
-                                        buttons(key: _key4, context: context, img: "assets/Images/button1.png", onTap: () {
+                                        buttons(context: context, img: "assets/Images/button1.png", onTap: () {
 
                                             // setState(() {
                                             //   ind++;
@@ -779,8 +846,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             controller
                                                 .swipeUp();
 
-                                        }, buttonName: "Skip"),
-                                        buttons(key: _key5, context: context, img: "assets/Images/button2.png", onTap: () {
+                                        }, buttonName: "Skip",bool: month),
+                                        buttons(context: context, img: "assets/Images/button2.png", onTap: () {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -793,8 +860,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   );
                                                 },
                                               ));
-                                        }, buttonName: "Chat"),
-                                        buttons(key: _key6, context: context, img: "assets/Images/button3.png", onTap: () {
+                                        }, buttonName: "Chat",bool: month),
+                                        buttons(context: context, img: "assets/Images/button3.png", onTap: () {
 
                                             // setState(() {
                                             //   ind++;
@@ -802,7 +869,49 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             controller
                                                 .swipeDown();
 
-                                        }, buttonName: "Connect"),
+                                        }, buttonName: "Connect",bool: month),
+                                      ],
+                                    ) :
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .spaceAround,
+                                      children: [
+                                        buttons( context: context, img: "assets/Images/button1.png", onTap: () {
+
+                                          // setState(() {
+                                          //   ind++;
+                                          // });
+                                          controller
+                                              .swipeUp();
+
+                                        }, buttonName: "Skip",bool: month),
+                                        buttons( context: context, img: "assets/Images/button4.png", onTap: () {
+
+                                        }, buttonName: "Undo",bool: month),
+                                        buttons( context: context, img: "assets/Images/button2.png", onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (context) {
+                                                  return Chatting_Page(
+                                                    name:
+                                                    'chatting', Username: users[ind]
+                                                  ['Name'], image: users[ind]['images'][pageViewIndex],
+                                                  );
+                                                },
+                                              ));
+                                        }, buttonName: "Chat", bool: month),
+                                        buttons( context: context, img: "assets/Images/button3.png", onTap: () {
+
+                                          // setState(() {
+                                          //   ind++;
+                                          // });
+                                          controller
+                                              .swipeDown();
+
+                                        }, buttonName: "Connect", bool: month),
                                       ],
                                     ),
                                   )
@@ -834,7 +943,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                    UsersDetails(list: users[ind]['images'], onTap: () {
                      _pageController.animateToPage(
                        0,
-                       duration: Duration(milliseconds: 500),
+                       duration: const Duration(milliseconds: 500),
                        curve: Curves.ease,
                      );
                    },)
@@ -995,7 +1104,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                 children: [
                   Image(
                     image:
-                        const AssetImage('assets/Images/SwipeUp-unscreen.gif'),
+                        const AssetImage('assets/Images/Swipe-unscreen.gif'),
                     fit: BoxFit.cover,
                     height: screenHeight(context, dividedBy: 5),
                     width: screenHeight(context, dividedBy: 5),
@@ -1077,8 +1186,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
               return Column(
                 children: [
                   Image(
-                    image: const AssetImage(
-                        'assets/Images/SwipeLeft-unscreen.gif'),
+                    image: const AssetImage('assets/Images/SwipeLeft-unscreen.gif'),
                     fit: BoxFit.cover,
                     height: screenHeight(context, dividedBy: 5),
                     width: screenHeight(context, dividedBy: 5),
@@ -1108,18 +1216,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     return targets;
   }
 }
- Widget buttons ({required GlobalKey key,required BuildContext context,required String img,required Function() onTap,required String buttonName}){
+ Widget buttons ({required BuildContext context,required String img,required Function() onTap,required String buttonName,required bool bool}){
   return  Container(
-    height: screenHeight(context,dividedBy: 25),
-    width: screenWidth(context,dividedBy: 3.7),
-    key: key,
+    height: screenHeight(context,dividedBy:25),
+    width: screenWidth(context,dividedBy:bool ?  3.7 : 4.9),
     decoration:
     BoxDecoration(
         borderRadius:
         BorderRadius
             .circular(
             20),
-        color: const Color(0xff6D9AFF)
+        color: AppColor.Blue
       // gradient:
       // const LinearGradient(
       //     colors: [
@@ -1156,7 +1263,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           ),
           Text(
             buttonName,
-            style: TextStyle(
+            style: const TextStyle(
                 color: AppColor
                     .white,
                 fontSize:

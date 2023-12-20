@@ -143,12 +143,9 @@ class _Login_pageState extends State<Login_page> {
                                   margin: const EdgeInsets.symmetric(horizontal: 10),
                                   height: screenHeight(context,dividedBy: 40),
                                   width: screenHeight(context,dividedBy: 40),
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(image: AssetImage('assets/Images/google.png'))),
+                                  decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/google.png'))),
                                 ),
-
                                 const Text("Login with Google",style: TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
-
                               ],
                             ),
                           ),
