@@ -37,12 +37,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Image(
-                        image: const AssetImage('assets/Images/back.png'),
-                        height: screenHeight(context,dividedBy: 35),
-                        width: screenHeight(context,dividedBy: 35),
-                        color: AppColor.white,
-                      ),
+                      child: Icon(Icons.arrow_back_ios_new,color: AppColor.white,)
                     ),
                   ],
                 ),

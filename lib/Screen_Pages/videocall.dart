@@ -32,15 +32,10 @@ class _VideoCallPageState extends State<VideoCallPage> {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Image(
-                        image: const AssetImage('assets/Images/back.png'),
-                        height: screenHeight(context,dividedBy: 35),
-                        width: screenHeight(context,dividedBy: 35),
-                        color: AppColor.white,
-                      ),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.arrow_back_ios_new,color: AppColor.white,)
                     ),
                   ],
                 ),
@@ -68,7 +63,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
                             ),
                             child:  Center(
                               child: Image(
-                                image:  AssetImage('assets/Images/Endcall.png'),
+                                image:  const AssetImage('assets/Images/Endcall.png'),
                                 height: screenHeight(context,dividedBy: 20),
                                 width: screenHeight(context,dividedBy: 20),
                                 color: AppColor.white,

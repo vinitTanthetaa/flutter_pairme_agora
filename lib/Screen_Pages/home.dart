@@ -3,7 +3,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
@@ -33,9 +32,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   int pageViewIndex = 0;
   double height = 0;
   double height1 = 1.2;
+  double fontsize = 70.0;
   double wight = 1;
   late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController _bio = TextEditingController();
+  String _string = "Skip";
+  int _currentCharIndex = 0;
   List users = [
     {
       'Name': 'Virat Kohli',
@@ -182,7 +184,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     ));
                                   },
                                   child: Container(
-                                    //key: showcase ?_key : _key4,
                                     key: _key,
                                     height:
                                         screenHeight(context, dividedBy: 40),
@@ -200,16 +201,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                         SizedBox(
                           height: screenHeight(context, dividedBy: 100),
                         ),
-                        Flexible(
+                        Expanded(
                             child:
                             Stack(
                               children: [
                                 AppinioSwiper(
                                     controller: controller,
-                                  //  duration: Duration(milliseconds: 500),
-                                  //  invertAngleOnBottomDrag: true,
+                                    invertAngleOnBottomDrag: true,
                                     onCardPositionChanged: (position) {
-                                      // print("position ==> ${position.offset.direction}");
                                       if(position.offset.direction > 0){
                                         setState(() {
                                           swipeDown = true;
@@ -220,10 +219,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       if(position.offset.direction < 0){
                                         setState(() {
                                           swipeUp = true;
-                                          height1 = height1+0.01;
-                                          wight = wight+0.01;
+                                          height1 = height1 >= 1.60? height1 + 0.001 : height1 + 0.004;
+                                          print("height ===> $height1" );
+                                          height1 >= 1.50 && fontsize >= 20 ? fontsize = fontsize - 1 : fontsize=fontsize;
+                                          wight =height1 >= 1.60? wight + 0.001 : wight+0.003;
+                                         // print("wight ===> $wight");
                                           height = height + 20;
-                                         // height = 200;
                                           swipeDown = false;
                                         });
                                       }
@@ -232,6 +233,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       setState(() {
                                         swipeUp = false;
                                         swipeDown = false;
+                                        fontsize = 70;
                                         height1 = 1.2;
                                         wight = 1;
                                         height = 0;
@@ -239,11 +241,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     },
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
-                                        ind >= users.length-1 ? ind = ind : ind++;
+                                        ind >= users.length-1 ? ind = ind : ind = targetIndex;
                                         height = 0;
-
-                                      });
-                                      setState(() {
+                                        fontsize = 70;
                                         height1 = 1.2;
                                         wight = 1;
                                         swipeUp = false;
@@ -261,15 +261,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           // height: screenHeight(context),
                                           // width: screenWidth(context),
                                           decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(20),
-                                                  topLeft: Radius.circular(20))),
+                                              borderRadius:BorderRadius.all(Radius.circular(20))
+                                              // BorderRadius.only(
+                                              //     topRight: Radius.circular(20),
+                                              //     topLeft: Radius.circular(20)
+                                              // )
+                                          ),
                                           child: Stack(
                                             children: [
                                               swipeUp || swipeDown  ?   Align(
                                           alignment:  Alignment.topCenter,
                                               child:SizedBox(
-
                                                 child: Stack(
                                                   children: [
                                                     CachedNetworkImage(
@@ -283,9 +285,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 fit: BoxFit.cover,
                                                                 filterQuality: FilterQuality.high
                                                             ),
-                                                            borderRadius: const BorderRadius.only(
-                                                                topRight: Radius.circular(20),
-                                                                topLeft: Radius.circular(20))
+                                                            borderRadius: BorderRadius.all(Radius.circular(20))
+                                                            // BorderRadius.only(
+                                                            //     topRight: Radius.circular(20),
+                                                            //     topLeft: Radius.circular(20))
                                                         ),
                                                       ),
                                                       placeholder: (context, url) => Container(
@@ -309,9 +312,23 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       width: screenWidth(context,dividedBy: wight),
                                                       decoration: BoxDecoration(
                                                           gradient:LinearGradient(begin: Alignment.bottomCenter,end: Alignment.topCenter,colors: [Colors.black,Colors.black38]),
-                                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+                                                          borderRadius: BorderRadius.all(Radius.circular(20))
                                                       ),
-                                                    )
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Skip",
+                                                          style: TextStyle(
+                                                              fontSize: fontsize,
+                                                              fontFamily: 'Roboto',
+                                                              fontWeight: FontWeight.w700,
+                                                              // color: AppColor.skyBlue
+                                                              color: AppColor.white
+
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+
                                                   ],
                                                 ),
                                               )
@@ -324,18 +341,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           fit: BoxFit.cover,
                                                           filterQuality: FilterQuality.high
                                                       ),
-                                                      borderRadius: const BorderRadius.only(
-                                                          topRight: Radius.circular(20),
-                                                          topLeft: Radius.circular(20))
+                                                      borderRadius:const BorderRadius.all(Radius.circular(20))
                                                   ),
                                                 ),
                                                 placeholder: (context, url) => Container(
                                                   height: screenHeight(context),
                                                   width: screenWidth(context),
                                                   decoration: const BoxDecoration(
-                                                      borderRadius: BorderRadius.only(
-                                                          topRight: Radius.circular(20),
-                                                          topLeft: Radius.circular(20)),
+                                                      borderRadius: BorderRadius.all(Radius.circular(20)),
                                                       color: Colors.black
                                                   ),
                                                   child: const Center(
@@ -345,7 +358,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 ),
                                                 errorWidget: (context, url, error) => Icon(Icons.error),
                                               ),
-                                              swipeUp || swipeDown  ? SizedBox() : Align(
+                                              swipeUp || swipeDown  ? const SizedBox() : Align(
                                                 alignment: Alignment.topCenter,
                                                 child: swipeUp == false &&
                                                     swipeDown == false
@@ -371,7 +384,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 )
                                                     : const SizedBox(),
                                               ),
-                                              swipeUp || swipeDown  ? SizedBox() :  Row(
+                                              swipeUp || swipeDown  ? const SizedBox() :  Row(
                                                 children: [
                                                   Expanded(
                                                     child: InkWell(
@@ -411,13 +424,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   ),
                                                 ],
                                               ),
-                                              swipeUp || swipeDown  ? SizedBox() : Align(
+                                              swipeUp || swipeDown  ? const SizedBox() : Align(
                                                 alignment: Alignment.bottomCenter,
                                                 child: Container(
                                                   alignment: Alignment.bottomCenter,
-                                                  height: screenHeight(context, dividedBy: 4.1),
+                                                  height: screenHeight(context, dividedBy: 4.5),
                                                   width: screenWidth(context),
                                                   decoration: const BoxDecoration(
+                                                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
                                                       gradient: LinearGradient(
                                                           begin: Alignment.topCenter,
                                                           end: Alignment.bottomCenter,
@@ -565,10 +579,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               ),
                                                               child: Padding(
                                                                 padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(context,dividedBy: 37),
-                                                                  vertical: screenHeight(context,dividedBy: 150),
+                                                                  horizontal: screenWidth(context,dividedBy: 45),
+                                                                  vertical: screenHeight(context,dividedBy: 250),
                                                                 ),
-                                                                child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 13,fontFamily: 'Roboto',color: AppColor.white),),
+                                                                child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 12.7,fontFamily: 'Roboto',color: AppColor.white),),
                                                               )))
                                                               .toList() ??
                                                               [],
@@ -581,13 +595,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               ),
                                               swipeUp || swipeDown  ? Align(
                                                 alignment: swipeUp ? Alignment.bottomCenter : Alignment.topCenter,
-                                                child: Container(
+                                                child: SizedBox(
                                                   height: height,
-                                                  decoration: BoxDecoration(
-                                                    ),
                                                 ),
                                               ) : Align(
-                                                alignment: Alignment.topCenter,
+                                                alignment: Alignment.center,
                                                 child: Container(
                                                   key: _key3,
                                                   margin: EdgeInsets.only(top: screenHeight(context,dividedBy: 10)),
@@ -595,6 +607,27 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   width: screenHeight(context,dividedBy: 9),
 
                                                 ),
+                                              ),
+                                              swipeUp || swipeDown  ? const SizedBox() : Align(
+                                                alignment: Alignment.topRight,
+                                                child: swipeUp == false &&
+                                                    swipeDown == false
+                                                    ? Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: screenHeight(context, dividedBy: 40),
+                                                      horizontal: screenHeight(context, dividedBy: 35),
+                                                  ),
+                                                  child: Container(
+                                                    color: Colors.grey,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                          vertical: screenHeight(context, dividedBy: 500),
+                                                          horizontal: screenHeight(context, dividedBy: 75),
+                                                        ),
+                                                        child: const Text("PREMIUM",style: TextStyle(color: Colors.white,fontSize: 12,fontFamily: "Roboto",fontWeight: FontWeight.bold),),
+                                                      ))
+                                                )
+                                                    : const SizedBox(),
                                               ),
                                               // Align(
                                               //   alignment: swipeDown
@@ -632,9 +665,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               //                   dividedBy:
                                               //                   100)),
                                               //           child: Text(
-                                              //             swipeUp
-                                              //                 ? "Skip"
-                                              //                 : "Connect",
+                                              //             _string.substring(0, _currentCharIndex),
                                               //             style: TextStyle(
                                               //                 fontSize: 25,
                                               //                 fontFamily:
@@ -657,7 +688,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           ),
                                         ),
                                       );
-                                }, cardBuilder1: (BuildContext context, int index) {
+                                },
+                                    cardBuilder1: (BuildContext context, int index) {
                                       return   users[index]['images'][pageViewIndex].toString().endsWith(".mp4")?
                                       VideoWidget(videoUrl: users[index]['images'][pageViewIndex])
                                           :  CachedNetworkImage(
@@ -669,18 +701,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   fit: BoxFit.cover,
                                                   filterQuality: FilterQuality.high
                                               ),
-                                              borderRadius: const BorderRadius.only(
-                                                  topRight: Radius.circular(20),
-                                                  topLeft: Radius.circular(20))
+                                              borderRadius:BorderRadius.all(Radius.circular(20))
                                           ),
                                         ),
                                         placeholder: (context, url) => Container(
                                           height: screenHeight(context),
                                           width: screenWidth(context),
                                           decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(20),
-                                                  topLeft: Radius.circular(20)),
+                                              borderRadius: BorderRadius.all(Radius.circular(20)),
                                               color: Colors.black
                                           ),
                                           child: const Center(
@@ -714,22 +742,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               .circular(
                                               20),
                                             color: const Color(0xff6D9AFF)
-                                          // gradient:
-                                          // const LinearGradient(
-                                          //     colors: [
-                                          //       AppColor
-                                          //           .skyBlue,
-                                          //       AppColor
-                                          //           .whiteskyBlue
-                                          //     ]),
                                         ),
                                         child: InkWell(
                                           onTap: () {
-                                            // setState(() {
-                                            //   ind++;
-                                            // });
-                                            controller
-                                                .swipeUp();
+                                            controller.swipeUp();
                                           },
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -773,22 +789,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               .circular(
                                               20),
                                             color: const Color(0xff6D9AFF)
-                                          // gradient:
-                                          // const LinearGradient(
-                                          //     colors: [
-                                          //       AppColor
-                                          //           .skyBlue,
-                                          //       AppColor
-                                          //           .whiteskyBlue
-                                          //     ]),
                                         ),
                                         child: InkWell(
                                           onTap: () {
-                                            // setState(() {
-                                            //   ind++;
-                                            // });
-                                            controller
-                                                .swipeUp();
+                                            controller.swipeUp();
                                           },
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -797,7 +801,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 color: AppColor
                                                     .white,
                                                 filterQuality: FilterQuality.high,
-
                                                 image: const AssetImage(
                                                     'assets/Images/button3.png'),
                                                 height: screenHeight(
@@ -839,13 +842,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           .spaceAround,
                                       children: [
                                         buttons(context: context, img: "assets/Images/button1.png", onTap: () {
-
-                                            // setState(() {
-                                            //   ind++;
-                                            // });
-                                            controller
-                                                .swipeUp();
-
+                                            controller.swipeUp();
                                         }, buttonName: "Skip",bool: month),
                                         buttons(context: context, img: "assets/Images/button2.png", onTap: () {
                                           Navigator.push(
@@ -862,13 +859,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               ));
                                         }, buttonName: "Chat",bool: month),
                                         buttons(context: context, img: "assets/Images/button3.png", onTap: () {
-
-                                            // setState(() {
-                                            //   ind++;
-                                            // });
-                                            controller
-                                                .swipeDown();
-
+                                            controller.swipeDown();
                                         }, buttonName: "Connect",bool: month),
                                       ],
                                     ) :
@@ -878,13 +869,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           .spaceAround,
                                       children: [
                                         buttons( context: context, img: "assets/Images/button1.png", onTap: () {
-
-                                          // setState(() {
-                                          //   ind++;
-                                          // });
-                                          controller
-                                              .swipeUp();
-
+                                          controller.swipeUp();
                                         }, buttonName: "Skip",bool: month),
                                         buttons( context: context, img: "assets/Images/button4.png", onTap: () {
 
@@ -916,24 +901,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     ),
                                   )
                                 )
-                                // swipeUp ? Positioned(
-                                //       bottom: screenHeight(context,dividedBy: 20),
-                                //         left: screenWidth(context,dividedBy: 5),
-                                //         child:   Center(
-                                //           child: Image(image: const AssetImage('assets/Images/CloseShow.png'),
-                                //             height: screenHeight(context,dividedBy: 10),
-                                //             width: screenHeight(context,dividedBy: 10),
-                                //             fit: BoxFit.fill,
-                                //           ),
-                                //         )
-                                //     ) : swipeDown ?  Positioned(
-                                //     bottom: screenHeight(context,dividedBy: 20),
-                                //     right: screenWidth(context,dividedBy: 5),
-                                //     child:   Image(image: const AssetImage('assets/Images/connectShow.png'),
-                                //       height: screenHeight(context,dividedBy: 10),
-                                //       width: screenHeight(context,dividedBy: 10),
-                                //       fit: BoxFit.fill,
-                                //     )) : const SizedBox()
                               ],
                             )
                         )
@@ -1056,22 +1023,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        "Tap to Left Side Show the previous image of this User",
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Roboto',
-                          fontSize: 17,
-                          color: AppColor.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Tap Right Side to Show the Next image of this User",
+                        "Tap left or right to see different images",
                         maxLines: 2,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -1104,7 +1056,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                 children: [
                   Image(
                     image:
-                        const AssetImage('assets/Images/Swipe-unscreen.gif'),
+                        const AssetImage('assets/Images/SwipeUp-unscreen.gif'),
                     fit: BoxFit.cover,
                     height: screenHeight(context, dividedBy: 5),
                     width: screenHeight(context, dividedBy: 5),
@@ -1154,7 +1106,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        " Swipe Down to Connect user ",
+                        " Swipe Down to connect with a user ",
                         maxLines: 2,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -1246,14 +1198,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                 .white,
             image: AssetImage(
                 img),
-            height: screenHeight(
-                context,
-                dividedBy:
-                65),
-            width: screenHeight(
-                context,
-                dividedBy:
-                65),
+            height: screenHeight(context, dividedBy: img.endsWith("button1.png") ? 80 : 65),
+            width: screenHeight(context, dividedBy: img.endsWith("button1.png") ? 80 : 65),
           ),
           SizedBox(
             width: screenWidth(
@@ -1322,10 +1268,8 @@ class _VideoWidgetState extends State<VideoWidget> {
      Container(
        height: screenHeight(context),
        width: screenWidth(context),
-       decoration: const BoxDecoration(
-           borderRadius: BorderRadius.only(
-               topRight: Radius.circular(20),
-               topLeft: Radius.circular(20)),
+       decoration:  BoxDecoration(
+           borderRadius: BorderRadius.circular(20),
            color: Colors.black
        ),
        child: Center(

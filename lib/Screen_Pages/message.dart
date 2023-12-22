@@ -189,9 +189,10 @@ class _Message_pageState extends State<Message_page> {
                                          Padding(
                                            padding: EdgeInsets.symmetric(vertical: screenWidth(context,dividedBy: 40)),
                                            child: Column(
-                                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                             mainAxisAlignment: MainAxisAlignment.start,
                                              children: [
                                                const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 12,color: Color(0xffAAAAAA)),),
+                                               SizedBox(height: screenHeight(context,dividedBy: 70),),
                                                Container(
                                                  alignment: Alignment.center,
                                                  height: screenHeight(context,dividedBy: 70),

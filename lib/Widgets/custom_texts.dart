@@ -42,7 +42,7 @@ Widget custom_textfield_header({required String text,bool header = false}) {
                 color: AppColor.black),
             
           ),
-          const TextSpan(text:' *',style: TextStyle(fontSize: 15,color:Color(0xffFF2C2C),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),
+           TextSpan(text:' *',style: TextStyle(fontSize: 15,color:Colors.red.shade300,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),
           ),
         ],
 

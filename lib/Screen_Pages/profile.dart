@@ -81,7 +81,7 @@ class _Profile_pageState extends State<Profile_page> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Vincenzo cassano',
+                                  'Vincenzo Cassano',
                                   style: TextStyle(
                                       fontFamily: 'Roboto',
                                       fontSize: 16,

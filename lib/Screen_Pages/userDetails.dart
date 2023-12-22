@@ -310,101 +310,21 @@ class _UsersDetailsState extends State<UsersDetails>
                             spacing: 5,
                             runSpacing: 8,
                             children: lookingFor
-                                .map((e) => InkWell(
-                              overlayColor: MaterialStatePropertyAll(Colors.white),
-                              onTap: () {
-                                setState(() {
-                                 // selectedlookingFor.contains(e) ? selectedlookingFor.remove(e) : selectedlookingFor.add(e);
-                                });
-                              },
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: const Color(0xff6D9Aff), width: 2.5),
-                                      borderRadius: BorderRadius.circular(20)
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: screenWidth(context,dividedBy: 25),
-                                      vertical: screenHeight(context,dividedBy: 150),
+                                .map((e) => Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: const Color(0xff6D9Aff), width: 2.5),
+                                        borderRadius: BorderRadius.circular(20)
                                     ),
-                                    child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 14,fontFamily: 'Roboto',color: AppColor.dropdownfont),),
-                                  )),
-                            ))
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: screenWidth(context,dividedBy: 35),
+                                        vertical: screenHeight(context,dividedBy: 250),
+                                      ),
+                                      child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 14,fontFamily: 'Roboto',color: AppColor.dropdownfont),),
+                                    )))
                                 .toList() ??
                                 [],
                           ),
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       height: screenHeight(context, dividedBy: 130),
-                          //       width: screenHeight(context, dividedBy: 130),
-                          //       decoration: BoxDecoration(
-                          //           shape: BoxShape.circle,
-                          //           border: Border.all(
-                          //               color: AppColor.dropdownfont,
-                          //               width: 1.5)),
-                          //     ),
-                          //     SizedBox(
-                          //       width: screenWidth(context, dividedBy: 50),
-                          //     ),
-                          //     Text(
-                          //       lookingFor[0],
-                          //       style: const TextStyle(
-                          //           fontWeight: FontWeight.w400,
-                          //           fontSize: 14,
-                          //           fontFamily: 'Roboto',
-                          //           color: AppColor.dropdownfont),
-                          //     )
-                          //   ],
-                          // ),
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       height: screenHeight(context, dividedBy: 130),
-                          //       width: screenHeight(context, dividedBy: 130),
-                          //       decoration: BoxDecoration(
-                          //           shape: BoxShape.circle,
-                          //           border: Border.all(
-                          //               color: AppColor.dropdownfont,
-                          //               width: 1.5)),
-                          //     ),
-                          //     SizedBox(
-                          //       width: screenWidth(context, dividedBy: 50),
-                          //     ),
-                          //     Text(
-                          //       lookingFor[1],
-                          //       style: const TextStyle(
-                          //           fontWeight: FontWeight.w400,
-                          //           fontSize: 14,
-                          //           fontFamily: 'Roboto',
-                          //           color: AppColor.dropdownfont),
-                          //     )
-                          //   ],
-                          // ),
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       height: screenHeight(context, dividedBy: 130),
-                          //       width: screenHeight(context, dividedBy: 130),
-                          //       decoration: BoxDecoration(
-                          //           shape: BoxShape.circle,
-                          //           border: Border.all(
-                          //               color: AppColor.dropdownfont,
-                          //               width: 1.5)),
-                          //     ),
-                          //     SizedBox(
-                          //       width: screenWidth(context, dividedBy: 50),
-                          //     ),
-                          //     Text(
-                          //       lookingFor[2],
-                          //       style: const TextStyle(
-                          //           fontWeight: FontWeight.w400,
-                          //           fontSize: 14,
-                          //           fontFamily: 'Roboto',
-                          //           color: AppColor.dropdownfont),
-                          //     )
-                          //   ],
-                          // ),
                           SizedBox(
                             height: screenHeight(context, dividedBy: 50),
                           ),

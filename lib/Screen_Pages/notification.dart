@@ -118,10 +118,11 @@ List list = [
                              ),
                            ) ,
                          ),
-                         child: SizedBox(
+                         child: Container(
                            // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
                            height: screenHeight(context,dividedBy: 10),
                            width: screenHeight(context),
+                           color: index  == 0 ?Color(0xffE7F3FE) : index  == 1 ?Color(0xffE7F3FE):Colors.transparent,
                            child: Padding(
                              padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 17),),
                              child: Row(

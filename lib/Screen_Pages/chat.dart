@@ -132,13 +132,6 @@ bool emojiShowing = false;
                             Navigator.pop(context);
                           },
                           child: const Icon(Icons.arrow_back_ios_new,color: AppColor.white,)
-                          // Image(
-                          //   image: const AssetImage('assets/Images/back.png'),
-                          //   height: screenHeight(context, dividedBy: 40),
-                          //   width: screenHeight(context, dividedBy: 70),
-                          //   color: AppColor.white,
-                          //   alignment: Alignment.centerLeft,
-                          // ),
                         ),
                         SizedBox(
                           width: screenWidth(context, dividedBy: 35),
@@ -243,7 +236,7 @@ bool emojiShowing = false;
                 ),
                Expanded(child: SingleChildScrollView(
                  child: Padding(
-                   padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
+                   padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -285,7 +278,7 @@ bool emojiShowing = false;
                        ),
                        Container(
                          margin: EdgeInsets.only(
-                           left: screenWidth(context,dividedBy: 2.1),
+                           left: screenWidth(context,dividedBy: 1.82),
                              top: screenHeight(context,dividedBy: 100)),
                         // width: screenWidth(context, dividedBy: 2),
                          decoration: const BoxDecoration(
