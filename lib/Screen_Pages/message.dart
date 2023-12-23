@@ -195,8 +195,8 @@ class _Message_pageState extends State<Message_page> {
                                                SizedBox(height: screenHeight(context,dividedBy: 70),),
                                                Container(
                                                  alignment: Alignment.center,
-                                                 height: screenHeight(context,dividedBy: 70),
-                                                 width: screenHeight(context,dividedBy: 70),
+                                                 height: screenHeight(context,dividedBy: 90),
+                                                 width: screenHeight(context,dividedBy: 90),
                                                  decoration: BoxDecoration(
                                                      //borderRadius: BorderRadius.circular(3),
                                                      shape: BoxShape.circle,

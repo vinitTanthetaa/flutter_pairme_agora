@@ -46,7 +46,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         'https://i.pinimg.com/originals/e1/3e/c7/e13ec7f56eb99e1e1226137c8fd3c198.jpg',
         'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         //'https://files.oyebesmartest.com/uploads/large/virat-kohli-wallpaper-fulr32sd.jpg',
-      ]
+      ],
+      'premium':'assets/Images/premium.png'
     },
     {
       'Name': 'Hardik Pande',
@@ -54,7 +55,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         'https://i.pinimg.com/originals/2e/31/a4/2e31a4fce6c52a98d518053d269d7eba.jpg',
         'https://w0.peakpx.com/wallpaper/380/775/HD-wallpaper-cricket-player-hardik-pandya-indian-cricketer.jpg',
         'https://m.timesofindia.com/photo/98910356/98910356.jpg',
-      ]
+      ],
+      'premium':'assets/Images/premium1.png'
     },
     {
       'Name': 'Amitabh Bachchan',
@@ -62,7 +64,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         'https://e1.pxfuel.com/desktop-wallpaper/85/759/desktop-wallpaper-%E2%9C%85-8-amitabh-bachchan-amitabh-bachchan-thumbnail.jpg',
         'https://c4.wallpaperflare.com/wallpaper/439/757/292/5bd141c33ba4a-wallpaper-preview.jpg',
         'https://c4.wallpaperflare.com/wallpaper/170/960/966/amitabh-bachchan-dashing-photoshoot-wallpaper-preview.jpg',
-      ]
+      ],
+      'premium':'assets/Images/premium2.png'
     },
     {
       'Name': 'Vincenzo Cassano',
@@ -70,7 +73,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         'https://e0.pxfuel.com/wallpapers/251/76/desktop-wallpaper-vincenzo-cassano-thumbnail.jpg',
         'https://i.pinimg.com/originals/9f/f8/fa/9ff8fa7d57de8a836f634716a85e56af.jpg',
         'https://assets.vogue.in/photos/62751a3c8cd4b91f5309d0d4/master/pass/Song%20Joong-ki.jpeg',
-      ]
+      ],
+      'premium':'assets/Images/premium3.png'
     },
     {
       'Name': 'Shahrukh khan',
@@ -78,7 +82,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         'https://e0.pxfuel.com/wallpapers/531/653/desktop-wallpaper-shah-rukh-khan-actor-king-gentleman-shahrukhkhan-attitude.jpg',
         'https://w0.peakpx.com/wallpaper/518/289/HD-wallpaper-shahrukh-khan-srk-smile-srk-smile-thumbnail.jpg',
         'https://www.filmibeat.com/wimgm/500x70/mobi/2019/08/shahrukh-khan_9.jpg',
-      ]
+      ],
+      'premium':'assets/Images/premium.png'
     },
     {
       'Name': 'Robert Downey jr',
@@ -86,7 +91,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         'https://static.wikia.nocookie.net/ironman/images/7/79/Photo%28906%29.jpg/revision/latest?cb=20141019122536',
         'https://static.wikia.nocookie.net/bakerstreet/images/7/78/Robert_Downey_Jr._%282022%29.jpg/revision/latest?cb=20220526032213',
         'https://upnrm.in/wp-content/uploads/2022/08/ironman.webp',
-      ]
+      ],
+      'premium':'assets/Images/premium1.png'
     },
     {
       'Name': 'Johnny Depp',
@@ -94,7 +100,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         'https://images.saymedia-content.com/.image/t_share/MTc0NDI1MDExOTk2NTk5OTQy/top-10-greatest-johnny-depp-movies-of-all-time.jpg',
         'https://m.economictimes.com/thumb/msid-92536857,width-1200,height-900,resizemode-4,imgsize-62856/johnny-depp.jpg',
         'https://www.cultjer.com/img/ug_photo/2017_02/4061620170221075428.jpg',
-      ]
+      ],
+      'premium':'assets/Images/premium2.png'
     },
     {
       'Name': 'úrsula corberó',
@@ -102,7 +109,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         'https://www.bollywoodhungama.com/wp-content/uploads/2021/09/WhatsApp-Image-2021-09-23-at-10.45.54-AM.jpeg',
         'https://cdn.7days.ru/upload/images/55d/bb61c45240d3f7d28c2a08a452b7a.jpg',
         'https://i.ytimg.com/vi/pIUiApJEAIg/oar2.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLC71MqhrXj47zXDwMaIc2K4G7_HxQ',
-      ]
+      ],
+      'premium':'assets/Images/premium3.png'
     },
   ];
   List lookingFor = [
@@ -251,7 +259,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       });
                                     },
                                     swipeOptions: const SwipeOptions.only(down: true,up: true) ,
-                                    cardCount: users.length, cardBuilder: (BuildContext context, int index) {
+                                    cardCount: users.length,
+                                  cardBuilder: (BuildContext context, int index) {
                                       return  Padding(
                                         padding: EdgeInsets.symmetric(
                                           horizontal:
@@ -428,7 +437,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 alignment: Alignment.bottomCenter,
                                                 child: Container(
                                                   alignment: Alignment.bottomCenter,
-                                                  height: screenHeight(context, dividedBy: 4.5),
+                                                  height: screenHeight(context, dividedBy: 4.1),
                                                   width: screenWidth(context),
                                                   decoration: const BoxDecoration(
                                                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
@@ -618,14 +627,20 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       horizontal: screenHeight(context, dividedBy: 35),
                                                   ),
                                                   child: Container(
-                                                    color: Colors.grey,
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(
-                                                          vertical: screenHeight(context, dividedBy: 500),
-                                                          horizontal: screenHeight(context, dividedBy: 75),
-                                                        ),
-                                                        child: const Text("PREMIUM",style: TextStyle(color: Colors.white,fontSize: 12,fontFamily: "Roboto",fontWeight: FontWeight.bold),),
-                                                      ))
+                                                    height: screenHeight(context,dividedBy: 35),
+                                                    width: screenHeight(context,dividedBy: 35),
+                                                      decoration:BoxDecoration(
+
+                                                        image: DecorationImage(image: AssetImage(users[index]['premium']),fit: BoxFit.cover,filterQuality: FilterQuality.high)
+                                                      ) ,
+                                                      // child: Padding(
+                                                      //   padding: EdgeInsets.symmetric(
+                                                      //     vertical: screenHeight(context, dividedBy: 500),
+                                                      //     horizontal: screenHeight(context, dividedBy: 75),
+                                                      //   ),
+                                                      //   child: const Text("PREMIUM",style: TextStyle(color: Colors.white,fontSize: 12,fontFamily: "Roboto",fontWeight: FontWeight.bold),),
+                                                      // )
+                                                  )
                                                 )
                                                     : const SizedBox(),
                                               ),

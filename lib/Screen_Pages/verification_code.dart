@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/Step_Screens.dart';
 import 'package:pair_me/Screen_Pages/address_details.dart';
 import 'package:pair_me/Screen_Pages/creat_new_password.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/cubits/Verify.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pinput/pinput.dart';
 
 class Verification_code extends StatefulWidget {
+  String Number;
   bool Forggot;
-  Verification_code({super.key,required this.Forggot});
+  Verification_code({super.key,required this.Forggot,required this.Number});
 
   @override
   State<Verification_code> createState() => _Verification_codeState();
@@ -19,6 +22,14 @@ class Verification_code extends StatefulWidget {
 
 class _Verification_codeState extends State<Verification_code> {
   final pinController = TextEditingController();
+  VerifyCubit verifyCubit = VerifyCubit();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    verifyCubit = BlocProvider.of<VerifyCubit>(context);
+
+  }
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -61,17 +72,23 @@ class _Verification_codeState extends State<Verification_code> {
                       keyboardType: TextInputType.numberWithOptions(),
                       crossAxisAlignment: CrossAxisAlignment.start,
                       showCursor: true,
-                      onCompleted: (pin) => print(pin),
+                      onCompleted: (pin) {
+                        pinController.text = pin;
+                      },
                     )),
                 SizedBox(height: screenHeight(context,dividedBy: 70),),
                 const Text('Resend Code',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5)),
                 const Spacer(),
-                Custom_botton(context, text: 'Verify', onTap: () {
+                Custom_botton(context, text: 'Verify',
+                onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return widget.Forggot ? Create_New_Password() : StepScreen();
-                    //Address_Details(Name: '',);
+                    return widget.Forggot ? const Create_New_Password() : const StepScreen();
                   },));
-                }, height: screenHeight(context,dividedBy: 20),)
+                },
+                //   onTap: () {
+                //   verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
+                // },
+                  height: screenHeight(context,dividedBy: 20),)
               ],
             ),)
           ],

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_slider/gradient_slider.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/select.dart';
@@ -91,7 +90,7 @@ class _Filter_pageState extends State<Filter_page> {
                           ),
                         ),
                         Container(
-                          height: screenHeight(context,dividedBy: 10),
+                          height: screenHeight(context,dividedBy: 10.5),
                           width: screenWidth(context),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7),
@@ -112,26 +111,35 @@ class _Filter_pageState extends State<Filter_page> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
-                                height: screenHeight(context,dividedBy: 30),
+                                height: screenHeight(context,dividedBy: 35),
                                 width: screenWidth(context),
                                 child:
-                                GradientSlider(
-                                  thumbHeight: 20,
-                                  thumbWidth: 20,
-                                  trackHeight: 5,
-                                  activeTrackGradient: const LinearGradient(colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                                  inactiveTrackGradient:
-                                  const LinearGradient(colors: [AppColor.gray, AppColor.gray]),
-                                  slider: Slider(
-                                      value: _slider,
-                                      max: 100,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _slider=value;
-                                        });
-                                      }
-                                  ), thumbAsset: 'assets/Images/stepper.png',
-                                ),
+                                  Slider(value: _slider,
+                                    max: 100,
+                                    inactiveColor:AppColor.gray,
+                                    activeColor: AppColor.skyBlue,
+                                    onChanged: (value) {
+                                    setState(() {
+                                      _slider = value;
+                                    });
+                                  },)
+                                // GradientSlider(
+                                //   thumbHeight: 25,
+                                //   thumbWidth: 25,
+                                //   trackHeight: 6,
+                                //   activeTrackGradient: const LinearGradient(colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                //   inactiveTrackGradient:
+                                //   const LinearGradient(colors: [AppColor.gray, AppColor.gray]),
+                                //   slider: Slider(
+                                //       value: _slider,
+                                //       max: 100,
+                                //       onChanged: (value) {
+                                //         setState(() {
+                                //           _slider=value;
+                                //         });
+                                //       }
+                                //   ), thumbAsset: 'assets/Images/stepper.png',
+                                // ),
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 20)),
@@ -407,7 +415,7 @@ class _Filter_pageState extends State<Filter_page> {
                             child: Wrap(
                               spacing: 10,
                               runSpacing: 10,
-                              direction: Axis.vertical,
+                               direction: Axis.vertical,
                               children: lookingFor
                                   .map((e) => InkWell(
                                 overlayColor: MaterialStatePropertyAll(Colors.white),
@@ -423,8 +431,8 @@ class _Filter_pageState extends State<Filter_page> {
                                     ),
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
-                                        horizontal: screenWidth(context,dividedBy: 27),
-                                        vertical: screenHeight(context,dividedBy: 150),
+                                        horizontal: screenWidth(context,dividedBy: 30),
+                                        vertical: screenHeight(context,dividedBy: 280),
                                       ),
                                       child: Text(e,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15,fontFamily: 'Roboto',color: _type.contains(e)? AppColor.black : AppColor.fontgray),),
                                     )),

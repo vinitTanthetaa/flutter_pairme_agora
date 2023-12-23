@@ -241,8 +241,8 @@ class _MessageRequestState extends State<MessageRequest> {
                                               SizedBox(height: screenHeight(context,dividedBy: 70),),
                                               Container(
                                                 alignment: Alignment.center,
-                                                height: screenHeight(context,dividedBy: 70),
-                                                width: screenHeight(context,dividedBy: 70),
+                                                height: screenHeight(context,dividedBy: 90),
+                                                width: screenHeight(context,dividedBy: 90),
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
                                                     color: AppColor.skyBlue

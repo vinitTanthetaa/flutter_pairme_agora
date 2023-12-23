@@ -40,7 +40,7 @@ class _Forget_PasswordState extends State<Forget_Password> {
                   const Spacer(),
                   Custom_botton(context, text: 'Send', onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return Verification_code(Forggot: true,);
+                      return Verification_code(Forggot: true, Number: '',);
                     },));
                   }, height: screenHeight(context,dividedBy: 20),)
                 ],

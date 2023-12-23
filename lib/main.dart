@@ -1,7 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
+import 'package:pair_me/cubits/City&state.dart';
+import 'package:pair_me/cubits/Verify.dart';
+import 'package:pair_me/cubits/adsress_drtails.dart';
+import 'package:pair_me/cubits/signup.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 
 Future<void> main() async {
@@ -27,23 +32,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      locale: context.locale,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.skyBlue),
-        useMaterial3: true,
-      ),
-      supportedLocales: const [
-        Locale('en'),
-        Locale('sp'),
-        Locale('hi'),
-        Locale('can'),
-        Locale('man'),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SignUpCubit()),
+        BlocProvider(create: (context) => VerifyCubit()),
+        BlocProvider(create: (context) => CityStateCubit()),
+        BlocProvider(create: (context) => AdressDetailsCubit()),
       ],
-      localizationsDelegates: context.localizationDelegates,
-      home: const SpleshScreen(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        locale: context.locale,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColor.skyBlue),
+          useMaterial3: true,
+        ),
+        supportedLocales: const [
+          Locale('en'),
+          Locale('sp'),
+          Locale('hi'),
+          Locale('can'),
+          Locale('man'),
+        ],
+        localizationsDelegates: context.localizationDelegates,
+        home: const SpleshScreen(),
+      ),
     );
   }
 }

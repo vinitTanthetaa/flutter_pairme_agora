@@ -7,6 +7,7 @@ import 'package:pair_me/Screen_Pages/set_password_page.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -267,9 +268,9 @@ class _SignUp_pageState extends State<SignUp_page> {
                                   if (!isSameDay(_selectedDate, selectedDay)) {
                                     print(
                                         'selectedDay${DateFormat('dd MMM yy').format(selectedDay)}');
-                                    _date.text = DateFormat('dd MMM yy')
-                                        .format(selectedDay);
+                                    _date.text = DateFormat('dd MMM yy').format(selectedDay);
                                     setState(() {
+                                      calendar = !calendar;
                                       _selectedDate = selectedDay;
                                       _focusedDay = focusedDay;
                                       // update `_focusedDay` here as well
@@ -287,7 +288,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                     Container(
                       margin: EdgeInsets.symmetric(
                           vertical: screenHeight(context, dividedBy: 75)),
-                       height: screenHeight(context,dividedBy: 20),
+                      height: screenHeight(context, dividedBy: 20),
                       // width: screenWidth(context,dividedBy: 1),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
@@ -352,8 +353,11 @@ class _SignUp_pageState extends State<SignUp_page> {
                                               dividedBy: 70)),
                                       Text(
                                         "$countryCodeflagsvg +$countryCodeSelect",
-                                        style: const TextStyle(
-                                            fontSize: 14,
+                                        style: TextStyle(
+                                            fontSize:
+                                                countryCodeSelect.length <= 3
+                                                    ? 13
+                                                    : 14,
                                             fontFamily: 'Roboto',
                                             fontWeight: FontWeight.w400,
                                             color: AppColor.dropdownfont),
@@ -448,10 +452,48 @@ class _SignUp_pageState extends State<SignUp_page> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return const Set_Password();
+                              return Set_Password(
+                                firstname: _firstName.text,
+                                lastname: _lastName.text,
+                                gender: gender,
+                                dob: _date.text,
+                                number: _phoneNumber.text,
+                                email: _eMail.text, T_C: select,
+                              );
                             },
                           ));
                         },
+                        // onTap: () {
+                        //   if (_firstName.text.isEmpty) {
+                        //     flutterToast("Please Enter FirstName", false);
+                        //   } else if (_lastName.text.isEmpty) {
+                        //     flutterToast("Please Enter LastName", false);
+                        //   } else if (gender.isEmpty) {
+                        //     flutterToast("Please Enter Gender", false);
+                        //   } else if (_date.text.isEmpty) {
+                        //     flutterToast("Please Enter Date of Birth", false);
+                        //   } else if (_phoneNumber.text.isEmpty) {
+                        //     flutterToast(
+                        //         "Please Enter Your Phonenumber", false);
+                        //   } else if (_eMail.text.isEmpty) {
+                        //     flutterToast("Please Enter your email", false);
+                        //   } else if (select == false) {
+                        //     flutterToast("Please Agree to the terms & conditions ", false);
+                        //   } else {
+                        //     Navigator.push(context, MaterialPageRoute(
+                        //       builder: (context) {
+                        //         return Set_Password(
+                        //           firstname: _firstName.text,
+                        //           lastname: _lastName.text,
+                        //           gender: gender,
+                        //           dob: _date.text,
+                        //           number: _phoneNumber.text,
+                        //           email: _eMail.text, T_C: select,
+                        //         );
+                        //       },
+                        //     ));
+                        //   }
+                        // },
                         height: screenHeight(context, dividedBy: 570),
                       ),
                     ),

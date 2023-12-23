@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/professional_details.dart';
@@ -101,43 +102,55 @@ class _Address_DetailsState extends State<Address_Details> {
                           _contry = !_contry;
                         });
                       },show_icon: true,image: _contry ?'assets/Images/Vector.png' : 'assets/Images/right_arrow.png', readOnly: true, onPress: () {
-                        setState(() {
-                          _contry = !_contry;
-                        });
+                        // setState(() {
+                        //   _contry = !_contry;
+                        // });
+                        showCountryPicker(
+                          context: context,
+                          showPhoneCode: true,
+                          onSelect: (Country country) {
+                            print(
+                                'Select country: ${country.phoneCode}');
+                            // countryCodeSelect = country.phoneCode;
+                            // countryCodeflagsvg = country.flagEmoji;
+                            //flutterToast(country.displayNameNoCountryCode, true);
+                            setState(() {});
+                          },
+                        );
                       }, hint: "Select", hidetext: false, controller: _Contry),
-                      _contry ?Container(
-                        height: screenHeight(context,dividedBy: 7),
-                        width: screenWidth(context),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                offset: Offset(
-                                  1,
-                                  1,
-                                ),
-                                blurRadius: 4,
-                                // spreadRadius: 1.0,
-                              ),
-                            ]
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              custom_text(text: 'Armenia', color: const Color(0xff303030)),
-                              custom_text(text: 'Bangladesh', color: const Color(0xff303030)),
-                              custom_text(text: 'Denmark', color: const Color(0xff303030)),
-                              custom_text(text: 'Ecuador', color: const Color(0xff303030)),
-                            ],
-                          ),
-                        ),
-                      ) : const SizedBox(),
+                      // _contry ?Container(
+                      //   height: screenHeight(context,dividedBy: 7),
+                      //   width: screenWidth(context),
+                      //   margin: const EdgeInsets.only(bottom: 10),
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(7),
+                      //       color: Colors.white,
+                      //       boxShadow: const [
+                      //         BoxShadow(
+                      //           color: Colors.grey,
+                      //           offset: Offset(
+                      //             1,
+                      //             1,
+                      //           ),
+                      //           blurRadius: 4,
+                      //           // spreadRadius: 1.0,
+                      //         ),
+                      //       ]
+                      //   ),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
+                      //     child: Column(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       children: [
+                      //         custom_text(text: 'Armenia', color: const Color(0xff303030)),
+                      //         custom_text(text: 'Bangladesh', color: const Color(0xff303030)),
+                      //         custom_text(text: 'Denmark', color: const Color(0xff303030)),
+                      //         custom_text(text: 'Ecuador', color: const Color(0xff303030)),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ) : const SizedBox(),
                       Row(
                         children: [
                           Expanded(

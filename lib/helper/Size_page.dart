@@ -16,3 +16,4 @@ double screenWidth(BuildContext context, {double dividedBy = 1.0}) {
 int selectedStep = 0;
 bool showcase = true;
 int showcasetime = 0;
+String Authtoken = '';
