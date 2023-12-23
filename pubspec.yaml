@@ -64,7 +64,7 @@ dependencies:
   emoji_picker_flutter: ^1.6.3
   video_thumbnail_imageview: ^0.0.5
   flutter_animated_button: ^2.0.3
-  image_picker_plus: ^0.5.9
+  image_picker_plus:
   photo_manager: ^2.8.1
   flutter_bloc: ^8.1.3
 
