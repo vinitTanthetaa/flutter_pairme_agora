@@ -134,7 +134,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   int ind = 0;
   bool swipeUp = false;
   bool swipeDown = false;
-  bool month = false;
+  bool month = true;
   late final PageController _pageController = PageController();
   @override
   void initState() {
@@ -258,6 +258,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         swipeDown = false;
                                       });
                                     },
+                                   threshold: screenHeight(context,dividedBy: 4.5),
+                                  maxAngle: screenHeight(context,dividedBy: 5),
                                     swipeOptions: const SwipeOptions.only(down: true,up: true) ,
                                     cardCount: users.length,
                                   cardBuilder: (BuildContext context, int index) {
@@ -507,65 +509,97 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             ),
                                                           ],
                                                         ),
-                                                        const Text(
-                                                          'Entrepreneur',
-                                                          style: TextStyle(
-                                                              fontSize: 15,
-                                                              fontFamily: 'Roboto',
-                                                              fontWeight:
-                                                              FontWeight.w400,
-                                                              color: Colors.white),
-                                                        ),
-                                                        const Row(
+                                                        Row(
                                                           children: [
-                                                            Text(
-                                                              'City/Country: ',
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontFamily:
-                                                                  'Roboto',
-                                                                  fontWeight:
-                                                                  FontWeight.w500,
-                                                                  color:
-                                                                  Colors.white),
-                                                            ),
-                                                            Text(
-                                                              'Yorktown',
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontFamily:
-                                                                  'Roboto',
-                                                                  fontWeight:
-                                                                  FontWeight.w400,
-                                                                  color:
-                                                                  Colors.white),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const Row(
-                                                          children: [
-                                                            Text(
-                                                              'Company: ',
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontFamily:
-                                                                  'Roboto',
-                                                                  fontWeight:
-                                                                  FontWeight.w500,
-                                                                  color:
-                                                                  Colors.white),
-                                                            ),
-                                                            Text(
-                                                              'Infosys',
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontFamily:
-                                                                  'Roboto',
-                                                                  fontWeight:
-                                                                  FontWeight.w400,
-                                                                  color:
-                                                                  Colors.white),
-                                                            ),
+                                                           Wrap(
+                                                             spacing: 7,
+                                                             direction: Axis.vertical,
+                                                             children: [
+                                                               Text(
+                                                                 'Entrepreneur',
+                                                                 style: TextStyle(
+                                                                     fontSize: 15,
+                                                                     fontFamily: 'Roboto',
+                                                                     fontWeight:
+                                                                     FontWeight.w400,
+                                                                     color: Colors.white),
+                                                               ),
+                                                               Row(
+                                                                 children: [
+                                                                   Text(
+                                                                     'City/Country: ',
+                                                                     style: TextStyle(
+                                                                         fontSize: 14,
+                                                                         fontFamily:
+                                                                         'Roboto',
+                                                                         fontWeight:
+                                                                         FontWeight.w500,
+                                                                         color:
+                                                                         Colors.white),
+                                                                   ),
+                                                                   Text(
+                                                                     'Yorktown',
+                                                                     style: TextStyle(
+                                                                         fontSize: 14,
+                                                                         fontFamily:
+                                                                         'Roboto',
+                                                                         fontWeight:
+                                                                         FontWeight.w400,
+                                                                         color:
+                                                                         Colors.white),
+                                                                   ),
+                                                                 ],
+                                                               ),
+                                                               Row(
+                                                                 children: [
+                                                                   Text(
+                                                                     'Company: ',
+                                                                     style: TextStyle(
+                                                                         fontSize: 14,
+                                                                         fontFamily:
+                                                                         'Roboto',
+                                                                         fontWeight:
+                                                                         FontWeight.w500,
+                                                                         color:
+                                                                         Colors.white),
+                                                                   ),
+                                                                   Text(
+                                                                     'Infosys',
+                                                                     style: TextStyle(
+                                                                         fontSize: 14,
+                                                                         fontFamily:
+                                                                         'Roboto',
+                                                                         fontWeight:
+                                                                         FontWeight.w400,
+                                                                         color:
+                                                                         Colors.white),
+                                                                   ),
+                                                                 ],
+                                                               ),
+                                                             ],
+                                                           ),
+                                                            const Spacer(),
+                                                            Wrap(
+                                                              direction: Axis.vertical,
+                                                              spacing: 5,
+                                                              children: lookingFor
+                                                                  .map((e) => Container(
+                                                                  decoration: BoxDecoration(
+                                                                      border: Border.all(color:AppColor.white
+                                                                          //const Color(0xff6D9Aff)
+                                                                          , width: 2),
+                                                                      borderRadius: BorderRadius.circular(20)
+                                                                  ),
+                                                                  child: Padding(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                      horizontal: screenWidth(context,dividedBy: 45),
+                                                                      vertical: screenHeight(context,dividedBy: 250),
+                                                                    ),
+                                                                    child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 12.7,fontFamily: 'Roboto',color: AppColor.white),),
+                                                                  )))
+                                                                  .toList() ??
+                                                                  [],
+                                                            )
                                                           ],
                                                         ),
                                                         SizedBox(
@@ -573,29 +607,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               context,
                                                               dividedBy: 100),
                                                         ),
-                                                        Wrap(
-                                                          alignment: WrapAlignment.spaceBetween,
-                                                          direction: Axis.horizontal,
-                                                          spacing: 9,
-                                                          runSpacing: 8,
-                                                          children: lookingFor
-                                                              .map((e) => Container(
-                                                              decoration: BoxDecoration(
-                                                                  border: Border.all(color:AppColor.white
-                                                                      //const Color(0xff6D9Aff)
-                                                                      , width: 2),
-                                                                  borderRadius: BorderRadius.circular(20)
-                                                              ),
-                                                              child: Padding(
-                                                                padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(context,dividedBy: 45),
-                                                                  vertical: screenHeight(context,dividedBy: 250),
-                                                                ),
-                                                                child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 12.7,fontFamily: 'Roboto',color: AppColor.white),),
-                                                              )))
-                                                              .toList() ??
-                                                              [],
-                                                        ),
+
                                                         const Spacer(),
                                                       ],
                                                     ),
@@ -612,9 +624,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 child: Container(
                                                   key: _key3,
                                                   margin: EdgeInsets.only(top: screenHeight(context,dividedBy: 10)),
-                                                  height: screenHeight(context,dividedBy: 9),
-                                                  width: screenHeight(context,dividedBy: 9),
-
+                                                  height: screenHeight(context,dividedBy: 2000),
+                                                  width: screenHeight(context,dividedBy: 2000),
+                                                  color: Colors.red,
                                                 ),
                                               ),
                                               swipeUp || swipeDown  ? const SizedBox() : Align(
@@ -633,71 +645,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
 
                                                         image: DecorationImage(image: AssetImage(users[index]['premium']),fit: BoxFit.cover,filterQuality: FilterQuality.high)
                                                       ) ,
-                                                      // child: Padding(
-                                                      //   padding: EdgeInsets.symmetric(
-                                                      //     vertical: screenHeight(context, dividedBy: 500),
-                                                      //     horizontal: screenHeight(context, dividedBy: 75),
-                                                      //   ),
-                                                      //   child: const Text("PREMIUM",style: TextStyle(color: Colors.white,fontSize: 12,fontFamily: "Roboto",fontWeight: FontWeight.bold),),
-                                                      // )
                                                   )
                                                 )
                                                     : const SizedBox(),
                                               ),
-                                              // Align(
-                                              //   alignment: swipeDown
-                                              //       ? Alignment.bottomCenter
-                                              //       : Alignment.topCenter,
-                                              //   child: swipeUp || swipeDown
-                                              //       ? Padding(
-                                              //     padding: EdgeInsets.only(
-                                              //       top: screenHeight(context,
-                                              //           dividedBy: 7),
-                                              //       bottom: screenHeight(
-                                              //           context,
-                                              //           dividedBy: 3.5),
-                                              //     ),
-                                              //     child: Container(
-                                              //         decoration: BoxDecoration(
-                                              //             borderRadius: BorderRadius.circular(30),
-                                              //             border: Border.all(
-                                              //                 width: 5,
-                                              //                 //color: AppColor.gray
-                                              //                 color: swipeUp
-                                              //                     ? AppColor.gray
-                                              //                     : AppColor.skyBlue
-                                              //             )),
-                                              //         child: Padding(
-                                              //           padding: EdgeInsets.symmetric(
-                                              //               horizontal:
-                                              //               screenWidth(
-                                              //                   context,
-                                              //                   dividedBy:
-                                              //                   15),
-                                              //               vertical:
-                                              //               screenHeight(
-                                              //                   context,
-                                              //                   dividedBy:
-                                              //                   100)),
-                                              //           child: Text(
-                                              //             _string.substring(0, _currentCharIndex),
-                                              //             style: TextStyle(
-                                              //                 fontSize: 25,
-                                              //                 fontFamily:
-                                              //                 'Roboto',
-                                              //                 fontWeight:
-                                              //                 FontWeight
-                                              //                     .w700,
-                                              //                 // color: AppColor.skyBlue
-                                              //                 color: swipeUp
-                                              //                     ? AppColor.gray
-                                              //                     : AppColor.skyBlue
-                                              //             ),
-                                              //           ),
-                                              //         )),
-                                              //   )
-                                              //       : const SizedBox(),
-                                              // ),
 
                                             ],
                                           ),
@@ -850,7 +801,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           ),
                                         ),
                                       ),
-                                    ) : month ?
+                                    ) : ind ==0  ?
                                       Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment
@@ -877,19 +828,16 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             controller.swipeDown();
                                         }, buttonName: "Connect",bool: month),
                                       ],
-                                    ) :
+                                    ) : ind == 1 || ind == 3 || ind == 5 ?
                                     Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment
                                           .spaceAround,
                                       children: [
-                                        buttons( context: context, img: "assets/Images/button1.png", onTap: () {
-                                          controller.swipeUp();
-                                        }, buttonName: "Skip",bool: month),
                                         buttons( context: context, img: "assets/Images/button4.png", onTap: () {
 
                                         }, buttonName: "Undo",bool: month),
-                                        buttons( context: context, img: "assets/Images/button2.png", onTap: () {
+                                        buttons(context: context, img: "assets/Images/button2.png", onTap: () {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -902,18 +850,39 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   );
                                                 },
                                               ));
-                                        }, buttonName: "Chat", bool: month),
-                                        buttons( context: context, img: "assets/Images/button3.png", onTap: () {
-
-                                          // setState(() {
-                                          //   ind++;
-                                          // });
-                                          controller
-                                              .swipeDown();
-
-                                        }, buttonName: "Connect", bool: month),
+                                        }, buttonName: "Chat",bool: month),
+                                        buttons(context: context, img: "assets/Images/button3.png", onTap: () {
+                                          controller.swipeDown();
+                                        }, buttonName: "Connect",bool: month),
                                       ],
-                                    ),
+                                    ) :
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .spaceAround,
+                                      children: [
+                                        buttons(context: context, img: "assets/Images/button1.png", onTap: () {
+                                          controller.swipeUp();
+                                        }, buttonName: "Skip",bool: month),
+                                        buttons(context: context, img: "assets/Images/button2.png", onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (context) {
+                                                  return Chatting_Page(
+                                                    name:
+                                                    'chatting', Username: users[ind]
+                                                  ['Name'], image: users[ind]['images'][pageViewIndex],
+                                                  );
+                                                },
+                                              ));
+                                        }, buttonName: "Chat",bool: month),
+                                        buttons( context: context, img: "assets/Images/button4.png", onTap: () {
+
+                                        }, buttonName: "Undo",bool: month),
+                                      ],
+                                    )
                                   )
                                 )
                               ],
@@ -960,6 +929,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             fontSize: 17,
           ),
           paddingFocus: 10,
+
           opacityShadow: 0.5,
           imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
           onFinish: () {
@@ -979,9 +949,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             print('onClickOverlay: $target');
           },
           onSkip: () {
-            print("skip");
-            showcase = false;
-            prefsService.setBoolData('showcase', showcase);
+            // print("skip");
+            // showcase = false;
+            // prefsService.setBoolData('showcase', showcase);
             return true;
           },
         );
@@ -1058,11 +1028,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     );
     targets.add(
       TargetFocus(
-        identify: "swipe",
         keyTarget: _key3,
         alignSkip: Alignment.topRight,
         enableOverlayTab: true,
-        shape: ShapeLightFocus.RRect,
+        radius: 100,
+
         contents: [
           TargetContent(
             align: ContentAlign.bottom,

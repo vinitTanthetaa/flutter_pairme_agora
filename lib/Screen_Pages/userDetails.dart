@@ -310,18 +310,23 @@ class _UsersDetailsState extends State<UsersDetails>
                             spacing: 5,
                             runSpacing: 8,
                             children: lookingFor
-                                .map((e) => Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: const Color(0xff6D9Aff), width: 2.5),
-                                        borderRadius: BorderRadius.circular(20)
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: screenWidth(context,dividedBy: 35),
-                                        vertical: screenHeight(context,dividedBy: 250),
+                                .map((e) => InkWell(
+                              onTap: () {
+                                print(e);
+                              },
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: e == "Startup founder" ? AppColor.black :e == "Distributor" ? AppColor.skyBlue :Color(0xff6D9Aff), width: 2),
+                                          borderRadius: BorderRadius.circular(20)
                                       ),
-                                      child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 14,fontFamily: 'Roboto',color: AppColor.dropdownfont),),
-                                    )))
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: screenWidth(context,dividedBy: 35),
+                                          vertical: screenHeight(context,dividedBy: 250),
+                                        ),
+                                        child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 14,fontFamily: 'Roboto',color: AppColor.dropdownfont),),
+                                      )),
+                                ))
                                 .toList() ??
                                 [],
                           ),

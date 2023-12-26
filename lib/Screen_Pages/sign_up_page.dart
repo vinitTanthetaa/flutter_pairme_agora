@@ -231,6 +231,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                               child: TableCalendar(
                                 firstDay: DateTime.utc(2010, 10, 16),
                                 lastDay: DateTime.utc(2030, 3, 14),
+                                calendarFormat: CalendarFormat.month,
                                 headerStyle: const HeaderStyle(
                                   titleTextStyle: TextStyle(
                                       color: AppColor.skyBlue,
@@ -238,6 +239,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                                       fontWeight: FontWeight.w500,
                                       fontSize: 20),
                                   formatButtonVisible: false,
+
                                   titleCentered: true,
                                   leftChevronIcon: Icon(
                                     Icons.arrow_back_ios_rounded,

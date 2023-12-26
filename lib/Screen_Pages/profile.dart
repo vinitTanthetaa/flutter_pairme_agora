@@ -503,6 +503,44 @@ class _Profile_pageState extends State<Profile_page> {
                           child: const Row(
                             children: [
                               Text(
+                                'BCA - Bachelor of Computer Applications',
+                                style: TextStyle(
+                                    color: AppColor.black,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      custom_textfield_header(text: 'Univercity'),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: screenHeight(context, dividedBy: 100),
+                            bottom: screenHeight(context, dividedBy: 70)),
+                        height: screenHeight(context, dividedBy: 20),
+                        width: screenWidth(context, dividedBy: 1.15),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: AppColor.fontgray,
+                                offset: Offset(
+                                  1,
+                                  1,
+                                ),
+                                blurRadius: 4,
+                                // spreadRadius: 1.0,
+                              ),
+                            ]),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth(context, dividedBy: 30)),
+                          child: const Row(
+                            children: [
+                              Text(
                                 'Veer Narmad South Gujarat University',
                                 style: TextStyle(
                                     color: AppColor.black,

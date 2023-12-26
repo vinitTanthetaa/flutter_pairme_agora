@@ -7,6 +7,10 @@ class apis{
   static const String signUp = "${baseurl}/signup";
   static const String verify = "${baseurl}/verify";
   static const String Address = "${baseurl}/address_details";
+  static const String professional_details = "${baseurl}/professional_details";
+  static const String business_address = "${baseurl}/business_address";
+  static const String describe_yourself = "${baseurl}/describe_yourself";
+  static const String describe_connect_with = "${baseurl}/describe_connect_with";
 
 
   //city and state

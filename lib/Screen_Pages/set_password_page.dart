@@ -46,7 +46,7 @@ class _Set_PasswordState extends State<Set_Password> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: screenHeight(context,dividedBy: 10),),
-                  custom_header(text: "Set your password"),
+                  custom_header(text: "Set your Password"),
                   custom_discription(text: "counter1"),
                   SizedBox(height: screenHeight(context,dividedBy: 50),),
                   custom_textfield_header(text: 'Password'),

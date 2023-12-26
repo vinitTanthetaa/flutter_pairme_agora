@@ -6,6 +6,7 @@ import 'package:pair_me/Screen_Pages/creat_new_password.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/cubits/Verify.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -86,7 +87,11 @@ class _Verification_codeState extends State<Verification_code> {
                   },));
                 },
                 //   onTap: () {
-                //   verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
+                //   if(pinController.text.isEmpty){
+                //     flutterToast("Plese Enter Pin", true);
+                //   } else{
+                //     verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
+                //   }
                 // },
                   height: screenHeight(context,dividedBy: 20),)
               ],

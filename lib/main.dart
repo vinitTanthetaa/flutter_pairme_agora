@@ -6,6 +6,8 @@ import 'package:pair_me/Screen_Pages/splash_Screen.dart';
 import 'package:pair_me/cubits/City&state.dart';
 import 'package:pair_me/cubits/Verify.dart';
 import 'package:pair_me/cubits/adsress_drtails.dart';
+import 'package:pair_me/cubits/business_address_cubit.dart';
+import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/cubits/signup.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 
@@ -38,6 +40,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => VerifyCubit()),
         BlocProvider(create: (context) => CityStateCubit()),
         BlocProvider(create: (context) => AdressDetailsCubit()),
+        BlocProvider(create: (context) => ProfessionalDetailsCubit()),
+       // BlocProvider(create: (context) => BusinessDetailsCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
