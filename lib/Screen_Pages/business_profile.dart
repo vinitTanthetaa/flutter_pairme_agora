@@ -152,12 +152,13 @@ class _Business_ProfileState extends State<Business_Profile> {
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 automaticallyImplyLeading: false,
+                titleSpacing: 0,
                 leading: GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: screenWidth(context,dividedBy: 20)),
+                      padding: EdgeInsets.only(left: 8),
                       child: Icon(Icons.arrow_back_ios_rounded),
                     )),
                 title: custom_header(text: "Profile"),

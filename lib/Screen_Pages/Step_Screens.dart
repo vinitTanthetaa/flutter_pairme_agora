@@ -1043,7 +1043,7 @@ class _StepScreenState extends State<StepScreen> {
                                 ),
                               )
                                   : const SizedBox(),
-                              custom_textfield_header(text: 'Univercity'),
+                              custom_textfield_header(text: 'University'),
                               Custom_textfield(context,
                                   show_icon: true,
                                   image: _education

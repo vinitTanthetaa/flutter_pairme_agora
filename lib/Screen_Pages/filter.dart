@@ -156,19 +156,19 @@ class _Filter_pageState extends State<Filter_page> {
                                       Container(
                                         height: screenHeight(context,dividedBy: 45),
                                         width: screenHeight(context,dividedBy: 45),
-                                        color: Color(0xffD4E2FF),
+                                        color: const Color(0xffD4E2FF),
                                         child: Center(
                                           child: _switch ? Container(
                                             height: screenHeight(context,dividedBy: 65),
                                             width: screenHeight(context,dividedBy: 65),
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 image: DecorationImage(image: AssetImage('assets/Images/check.png'),fit: BoxFit.fill)
                                             ),
                                           ) : const SizedBox(),
                                         ),
                                       ),
                                       SizedBox(width: screenWidth(context,dividedBy: 70),),
-                                      const Text('only show people in this range',textAlign: TextAlign.center,maxLines: 1,style: TextStyle(
+                                      const Text('Only show people in this range',textAlign: TextAlign.center,maxLines: 1,style: TextStyle(
                                           fontWeight: FontWeight.w400,fontFamily: 'Roboto',fontSize: 13,color: AppColor.fontdarkgray
                                       ),),
                                     ],
@@ -418,7 +418,7 @@ class _Filter_pageState extends State<Filter_page> {
                                direction: Axis.vertical,
                               children: lookingFor
                                   .map((e) => InkWell(
-                                overlayColor: MaterialStatePropertyAll(Colors.white),
+                                overlayColor: const MaterialStatePropertyAll(Colors.white),
                                 onTap: () {
                                   setState(() {
                                     _type.contains(e) ? _type.remove(e) :_type.add(e);

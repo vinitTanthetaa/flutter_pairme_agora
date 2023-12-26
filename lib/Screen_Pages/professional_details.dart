@@ -77,6 +77,7 @@ class _Professional_DetailsState extends State<Professional_Details> {
             Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
+                titleSpacing: 0,
                 centerTitle: false,
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
@@ -86,7 +87,7 @@ class _Professional_DetailsState extends State<Professional_Details> {
                       Navigator.pop(context);
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: screenWidth(context,dividedBy: 20)),
+                      padding: EdgeInsets.only(left:8),
                       child: Icon(Icons.arrow_back_ios_rounded),
                     )),
                 title: custom_header(text: "Professional Details"),

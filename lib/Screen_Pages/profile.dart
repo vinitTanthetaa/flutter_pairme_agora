@@ -514,7 +514,7 @@ class _Profile_pageState extends State<Profile_page> {
                           ),
                         ),
                       ),
-                      custom_textfield_header(text: 'Univercity'),
+                      custom_textfield_header(text: 'University'),
                       Container(
                         margin: EdgeInsets.only(
                             top: screenHeight(context, dividedBy: 100),
