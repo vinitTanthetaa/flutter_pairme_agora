@@ -3,6 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
@@ -36,8 +37,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   double wight = 1;
   late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController bio = TextEditingController();
-  final String _string = "Skip";
-  final int _currentCharIndex = 0;
+  AnimationController? _controller;
   List users = [
     {
       'Name': 'Virat Kohli',
@@ -140,6 +140,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   @override
   void initState() {
     createTutorial();
+    _controller = AnimationController(vsync: this);
     controller = AppinioSwiperController();
     Future.delayed(Duration.zero, showTutorial);
     FocusManager.instance.primaryFocus?.unfocus();
@@ -641,18 +642,33 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               direction:
                                                                   Axis.vertical,
                                                               children: [
-                                                                Text(
-                                                                  'Entrepreneur',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontFamily:
+                                                                Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      'Job Title: ',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                          14,
+                                                                          fontFamily:
                                                                           'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                          Colors.white),
+                                                                    ),
+                                                                    Text(
+                                                                      'Entrepreneur',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                          14,
+                                                                          fontFamily:
+                                                                          'Roboto',
+                                                                          fontWeight: FontWeight
                                                                               .w400,
-                                                                      color: Colors
-                                                                          .white),
+                                                                          color:
+                                                                          Colors.white),
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                                 Row(
                                                                   children: [
@@ -820,7 +836,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                   ),
                                 );
                               },
-                                  cardBuilder1: (BuildContext context, int index) {
+                              cardBuilder1: (BuildContext context, int index) {
                                     return   users[index]['images'][pageViewIndex].toString().endsWith(".mp4")?
                                     VideoWidget(videoUrl: users[index]['images'][pageViewIndex])
                                         :  CachedNetworkImage(
@@ -1085,8 +1101,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   }
 
   Future<void> createTutorial() async {
-   // showcase = await prefsService.getBoolData('showcase') ?? true;
-   // showcasetime = await prefsService.getIntData("showcasetime") ?? 1;
+    showcase = await prefsService.getBoolData('showcase') ?? true;
+    showcasetime = await prefsService.getIntData("showcasetime") ?? 1;
     if (showcase) {
       if (showcasetime >= 3) {
       } else {
@@ -1094,14 +1110,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           targets: _createTargets(),
           colorShadow: Colors.black12,
           textSkip: "SKIP",
-
           textStyleSkip: const TextStyle(
             fontFamily: 'Roboto',
             color: AppColor.white,
             fontWeight: FontWeight.w600,
             fontSize: 17,
           ),
-          // paddingFocus: 10,
+           paddingFocus: 0,
           // opacityShadow: 0.5,
           // imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
           onFinish: () {
@@ -1114,15 +1129,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           },
           onClickTargetWithTapPosition: (target, tapDetails) {
             print("target: $target");
-            print(
-                "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
+            print("clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
           },
           onClickOverlay: (target) {
             print('onClickOverlay: $target');
           },
           onSkip: () {
-            showcase = false;
-            prefsService.setBoolData('showcase', showcase);
+             showcase = false;
+             prefsService.setBoolData('showcase', showcase);
             return true;
           },
         );
@@ -1134,6 +1148,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     List<TargetFocus> targets = [];
     targets.add(
       TargetFocus(
+        unFocusAnimationDuration: Duration.zero,
         identify: "keyBottomNavigation",
         keyTarget: _key,
         alignSkip: Alignment.topLeft,
@@ -1164,6 +1179,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     );
     targets.add(
       TargetFocus(
+       // unFocusAnimationDuration: Duration.zero,
         identify: "keyBottomNavigation1",
         keyTarget: _key1,
         alignSkip: Alignment.topRight,
@@ -1205,7 +1221,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         paddingFocus: 0.0,
        // focusAnimationDuration: Duration.zero,
         borderSide: BorderSide.none,
-        //unFocusAnimationDuration: Duration.zero,
+        unFocusAnimationDuration: Duration.zero,
         shape: ShapeLightFocus.Circle,
         contents: [
           TargetContent(
@@ -1213,13 +1229,26 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             builder: (context, controller) {
               return Column(
                 children: [
-                  Image(
-                    image:
-                        const AssetImage('assets/Images/SwipeUp-unscreen.gif'),
-                    fit: BoxFit.cover,
+                  Lottie.asset(
+                    'assets/json/Swipe To Left.json',
                     height: screenHeight(context, dividedBy: 5),
                     width: screenHeight(context, dividedBy: 5),
+                    controller: _controller,
+                    onLoaded: (composition) {
+                      // Configure the AnimationController with the duration of the
+                      // Lottie file and start the animation.
+                      _controller
+                        ?..duration = composition.duration
+                        ..forward();
+                    },
                   ),
+                  // Image(
+                  //   image:
+                  //       const AssetImage('assets/Images/SwipeUp-unscreen.gif'),
+                  //   fit: BoxFit.cover,
+                  //   height: screenHeight(context, dividedBy: 5),
+                  //   width: screenHeight(context, dividedBy: 5),
+                  // ),
                   const Card(
                     child: Padding(
                       padding: EdgeInsets.all(5.0),
@@ -1251,7 +1280,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         paddingFocus: 0.0,
         // focusAnimationDuration: Duration.zero,
         borderSide: BorderSide.none,
-        //unFocusAnimationDuration: Duration.zero,
+        unFocusAnimationDuration: Duration.zero,
         shape: ShapeLightFocus.Circle,
         contents: [
           TargetContent(
@@ -1296,7 +1325,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         paddingFocus: 0.0,
         // focusAnimationDuration: Duration.zero,
         borderSide: BorderSide.none,
-        //unFocusAnimationDuration: Duration.zero,
+        unFocusAnimationDuration: Duration.zero,
         shape: ShapeLightFocus.Circle,
         contents: [
           TargetContent(
@@ -1348,14 +1377,6 @@ Widget buttons(
     width: screenWidth(context, dividedBy: bool ? 3.7 : 4.9),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20), color: AppColor.Blue
-        // gradient:
-        // const LinearGradient(
-        //     colors: [
-        //       AppColor
-        //           .skyBlue,
-        //       AppColor
-        //           .whiteskyBlue
-        //     ]),
         ),
     child: InkWell(
       onTap: onTap,

@@ -7,6 +7,7 @@ import 'package:pair_me/Screen_Pages/payment.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/Delete_logout_user.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -18,6 +19,9 @@ class Setting_page extends StatefulWidget {
 }
 
 class _Setting_pageState extends State<Setting_page> {
+
+  DeleteUserCubit deleteUserCubit = DeleteUserCubit();
+  LogoutUserCubit logoutUserCubit = LogoutUserCubit();
   bool language = false;
   bool show_box = false;
   bool icon = false;
@@ -425,7 +429,7 @@ class _Setting_pageState extends State<Setting_page> {
                     GestureDetector(
                       onTap: () {
                         showDialog(context: context,builder: (context) => addFolderNameDialog(name: 'Confirm Logout', describ: 'Are you sure you want to logout?', cancel: 'Cancel', remove: 'OK', onTap: () {
-                          Navigator.pop(context);
+                          logoutUserCubit.LogoutService(context);
                         }),);
                       },
                       child: Container(
@@ -457,7 +461,7 @@ class _Setting_pageState extends State<Setting_page> {
                     GestureDetector(
                       onTap: () {
                         showDialog(context: context,builder: (context) => addFolderNameDialog(name: 'Delete Account', describ: 'Are you sure you want to delete account?', cancel: 'Cancel', remove: 'Delete', onTap: () {
-                          Navigator.pop(context);
+                          deleteUserCubit.DeleteService(context);
                         }),);
                       },
                       child: Container(

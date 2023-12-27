@@ -4,16 +4,19 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/textfield.dart';
+import 'package:pair_me/cubits/Reset_Password.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class Create_New_Password extends StatefulWidget {
-  const Create_New_Password({super.key});
+  String Phonenumber;
+  Create_New_Password({super.key,required this.Phonenumber});
 
   @override
   State<Create_New_Password> createState() => _Create_New_PasswordState();
 }
 
 class _Create_New_PasswordState extends State<Create_New_Password> {
+  ResetPasswordCubit resetPasswordCubit = ResetPasswordCubit();
   final TextEditingController  _Password = TextEditingController();
   final TextEditingController  _confirmPassword = TextEditingController();
   bool hidePassword = false;
@@ -50,9 +53,7 @@ class _Create_New_PasswordState extends State<Create_New_Password> {
                   },  hint: 'Enter your Confirm password', image: hideconfirmPassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
                   Spacer(),
                   Custom_botton(context, text: 'Save', onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return Login_page();
-                    },));
+                   // resetPasswordCubit.ResetPasswordService(phoneNumber: widget.Phonenumber, password: _Password.text, confirmPassword: _confirmPassword.text, context: context);
                   }, height: screenHeight(context,dividedBy: 20),)
                 ],
               ),

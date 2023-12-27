@@ -10,52 +10,52 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
 
 
-abstract class VerifyState {}
+abstract class VerifyForgotOtpState {}
 
-class VerifyInitials extends VerifyState {}
+class VerifyForgotOtpInitials extends VerifyForgotOtpState {}
 
-class VerifyLoading extends VerifyState {}
+class VerifyForgotOtpLoading extends VerifyForgotOtpState {}
 
-class VerifyError extends VerifyState {}
+class VerifyForgotOtpError extends VerifyForgotOtpState {}
 
-class VerifySuccess extends VerifyState {}
+class VerifyForgotOtpSuccess extends VerifyForgotOtpState {}
 
-class VerifyCubit extends Cubit<VerifyState> {
-  VerifyCubit() : super(VerifyInitials());
+class VerifyForgotOtpCubit extends Cubit<VerifyForgotOtpState> {
+  VerifyForgotOtpCubit() : super(VerifyForgotOtpInitials());
 
-  Future<void> VerifyService(
+  Future<void> VerifyForgotOtpService(
       {required String phoneNumber,
         required String otp,
         required bool forget,
         required BuildContext context}) async {
-    emit(VerifyLoading());
+    emit(VerifyForgotOtpLoading());
     final dio = Dio();
     SharedPrefsService prefsService = SharedPrefsService();
     Map<String, dynamic> body = {
       "phoneNumber": phoneNumber,
-      "otp": otp,
+      "OTP": otp,
     };
-   // print("Body is $body");
+    // print("Body is $body");
     try {
-      Response response = await dio.post(apis.verify, data: jsonEncode(body));
+      Response response = await dio.post(apis.verify_forgot_otp, data: jsonEncode(body));
       final hello = response.data;
       print(hello);
-      if (hello['message'] == 'Otp Verified.') {
+      if (hello['code'] == 200) {
         print("Response ===> ${response.data}");
-        emit(VerifySuccess());
+        emit(VerifyForgotOtpSuccess());
         Authtoken = "Bearer ${hello['Token']}";
         prefsService.setStringData("Authtoken", Authtoken);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return forget ?  Create_New_Password(Phonenumber: phoneNumber,) : const StepScreen();
+          return forget ? Create_New_Password(Phonenumber: phoneNumber,) : const StepScreen();
         },));
         flutterToast(hello['message'], true);
       } else {
-        emit(VerifyError());
+        emit(VerifyForgotOtpError());
         flutterToast(hello['message'], false);
       }
     } on Exception catch (e) {
       print("fail ====> $e");
-      emit(VerifyError());
+      emit(VerifyForgotOtpError());
       flutterToast("Something went wrong!", false);
       // TODO
     }

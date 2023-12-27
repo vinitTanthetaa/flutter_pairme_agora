@@ -1,12 +1,16 @@
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:pair_me/Modal/city&state.dart';
+import 'package:pair_me/Modal/file_modal.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -23,7 +27,6 @@ import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
-import 'package:table_calendar/table_calendar.dart';
 import '../Widgets/custom_button.dart';
 
 class StepScreen extends StatefulWidget {
@@ -224,7 +227,9 @@ class _StepScreenState extends State<StepScreen> {
       ],
     );
   }
-
+  List<FileModel>? files;
+  FileModel? selectedModel;
+  String? image;
   GetData(String country) async {
     cityandState = (await cityStateCubit.getcalendarEvents(country: country))!;
     setState(() {});
@@ -1525,90 +1530,42 @@ class _StepScreenState extends State<StepScreen> {
                                       show_icon: true,
                                       image: 'assets/Images/calendar.png',
                                       onPress: () {
-                                        setState(() {
-                                          calendar = !calendar;
-                                        });
+                                        BottomPicker.date(
+                                          title: 'Set your Birthday',
+                                          dateOrder: DatePickerDateOrder.dmy,
+                                          initialDateTime: _focusedDay,
+                                          gradientColors: [AppColor.skyBlue,AppColor.whiteskyBlue],
+                                          titlePadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 100)),
+                                          height: screenHeight(context,dividedBy: 3),
+                                          dismissable: true,
+                                          displayCloseIcon: false,
+                                          maxDateTime: DateTime(2050),
+                                          minDateTime: DateTime(1980),
+                                          pickerTextStyle: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                          titleStyle: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Roboto',
+                                              fontWeight: FontWeight.w500,
+                                              overflow: TextOverflow.ellipsis,
+                                              color: AppColor.black),
+                                          titleAlignment: CrossAxisAlignment.center,
+                                          onChange: (index) {
+
+                                          },
+                                          onSubmit: (index) {
+                                            _date.text = DateFormat('dd MMMM yyyy').format(index);
+                                          },
+                                          bottomPickerTheme: BottomPickerTheme.plumPlate,
+                                        ).show(context);
                                       },
                                       hint: 'Select ',
                                       controller: _date,
                                       hidetext: false,
                                       readOnly: true),
-                                  calendar
-                                      ? Container(
-                                          margin:
-                                              const EdgeInsets.only(bottom: 10),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: AppColor.white,
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Colors.grey,
-                                                  offset: Offset(
-                                                    1,
-                                                    1,
-                                                  ),
-                                                  blurRadius: 4,
-                                                  spreadRadius: 0.0,
-                                                ),
-                                              ]),
-                                          child:
-                                          //TableCalendar(focusedDay: _focusedDay, firstDay: DateTime.utc(2010, 10, 16), lastDay: DateTime.utc(2030, 3, 14))
-                                          TableCalendar(
-                                            firstDay: DateTime.utc(2010, 10, 16),
-                                            lastDay: DateTime.utc(2030, 3, 14),
-                                            headerStyle: const HeaderStyle(
-                                              titleTextStyle: TextStyle(
-                                                  color: AppColor.skyBlue,
-                                                  fontFamily: "Roboto",
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 20),
-                                              formatButtonVisible: false,
-                                              titleCentered: true,
-                                              leftChevronIcon: Icon(
-                                                Icons.arrow_back_ios_rounded,
-                                                size: 20,
-                                                color: AppColor.black,
-                                              ),
-                                              rightChevronIcon: Icon(
-                                                Icons.arrow_forward_ios_rounded,
-                                                size: 20,
-                                                color: AppColor.black,
-                                              ),
-                                            ),
-                                            calendarStyle: const CalendarStyle(
-                                              defaultTextStyle: TextStyle(
-                                                  fontFamily: 'Roboto',
-                                                  color: AppColor.black),
-                                              disabledTextStyle: TextStyle(
-                                                  fontFamily: 'Roboto',
-                                                  color: AppColor.skyBlue),
-                                            ),
-                                            focusedDay: _focusedDay,
-                                            onPageChanged: (focusedDay) {
-                                              _focusedDay = focusedDay;
-                                            },
-                                            selectedDayPredicate: (day) =>
-                                                isSameDay(_selectedDate, day),
-                                            onDaySelected:
-                                                (selectedDay, focusedDay) {
-                                              if (!isSameDay(
-                                                  _selectedDate, selectedDay)) {
-                                                print(
-                                                    'selectedDay${DateFormat('dd MMM yy').format(selectedDay)}');
-                                                _date.text =
-                                                    DateFormat('dd MMM yy')
-                                                        .format(selectedDay);
-                                                setState(() {
-                                                  _selectedDate = selectedDay;
-                                                  _focusedDay = focusedDay;
-                                                  // update `_focusedDay` here as well
-                                                });
-                                              }
-                                            },
-                                          ),
-                                        )
-                                      : const SizedBox(),
                                   Custom_botton(
                                     context,
                                     text: 'Next',

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -81,8 +80,7 @@ class _Location_pageState extends State<Location_page> {
     super.initState();
     getUserCurrentLocation().then((value) async {
       print('${value.longitude} ${value.latitude}');
-      List<Placemark> placemark = await placemarkFromCoordinates(value.latitude, value.longitude);
-      print(placemark);
+     // List<Placemark> placemark = await placemarkFromCoordinates(value.latitude, value.longitude);
       setState(() {});
     });
   }

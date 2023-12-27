@@ -12,6 +12,15 @@ class apis{
   static const String business_address = "${baseurl}/business_address";
   static const String describe_yourself = "${baseurl}/describe_yourself";
   static const String describe_connect_with = "${baseurl}/describe_connect_with";
+  static const String forgotpassword = "${baseurl}/forgotpassword";
+  static const String verify_forgot_otp = "${baseurl}/verify_forgot_otp";
+  static const String reset_password = "${baseurl}/reset_password";
+  static const String resendOtp = "${baseurl}/resendOtp";
+
+  // App Manage
+  static const String change_password = "${baseurl}/change_password";
+  static const String delete_user = "${baseurl}/delete_user";
+  static const String logout = "${baseurl}/logout";
 
 
   //city and state

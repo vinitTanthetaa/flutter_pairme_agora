@@ -15,15 +15,18 @@ Widget custom_stepper(BuildContext context, {required int positaion}) {
     undoneLineThickness: 7,
     unselectedStepWidget: const CircleAvatar(
       radius: 10,
-      backgroundImage: AssetImage('assets/Images/stepper.png'),
+      backgroundColor: AppColor.skyBlue,
+      // backgroundImage: AssetImage('assets/Images/stepper.png'),
     ),
     doneStepWidget: const CircleAvatar(
       radius: 10,
-      backgroundImage: AssetImage('assets/Images/stepper.png'),
+      backgroundColor: AppColor.skyBlue,
+      // backgroundImage: AssetImage('assets/Images/stepper.png'),
     ),
     selectedStepWidget: const CircleAvatar(
       radius: 10,
-      backgroundImage: AssetImage('assets/Images/stepper.png'),
+      backgroundColor: AppColor.skyBlue,
+      // backgroundImage: AssetImage('assets/Images/stepper.png'),
     ),
     enableLineAnimation: true,
     enableStepAnimation: true,

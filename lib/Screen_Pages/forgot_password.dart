@@ -6,6 +6,7 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/textfield.dart';
+import 'package:pair_me/cubits/forggot_password.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -17,6 +18,7 @@ class Forget_Password extends StatefulWidget {
 }
 
 class _Forget_PasswordState extends State<Forget_Password> {
+  ForgotPasswordCubit forgotPasswordCubit = ForgotPasswordCubit();
   final TextEditingController _Email = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -149,6 +151,7 @@ class _Forget_PasswordState extends State<Forget_Password> {
                     context,
                     text: 'Send',
                     onTap: () {
+                      //forgotPasswordCubit.ForgotPasswordService(phoneNumber: _Email.text, context: context);
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return Verification_code(

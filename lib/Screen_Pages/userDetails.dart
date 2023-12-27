@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
-import 'package:pair_me/Widgets/select.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
-import 'package:swipeable_page_route/swipeable_page_route.dart';
-import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class UsersDetails extends StatefulWidget {

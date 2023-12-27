@@ -3,6 +3,7 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/textfield.dart';
+import 'package:pair_me/cubits/change_password.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -13,6 +14,7 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
+  ChangePasswordCubit changePasswordCubit = ChangePasswordCubit();
   final TextEditingController _Password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final TextEditingController _oldPassword = TextEditingController();
@@ -73,21 +75,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                     SizedBox(
                       height: screenHeight(context, dividedBy: 50),
                     ),
-                    // custom_textfield_header(text: 'User ID'),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 8.0),
-                    //   child: Text(
-                    //     'Jane Koblenz',
-                    //     style: const TextStyle(
-                    //         fontSize: 15,
-                    //         fontFamily: 'Roboto',
-                    //         fontWeight: FontWeight.w500,
-                    //         overflow: TextOverflow.ellipsis,
-                    //         color: AppColor.fontdarkgray),
-                    //     maxLines: 2,
-                    //   ),
-                    // ),
-                    // SizedBox(height: screenHeight(context,dividedBy: 50),),
                     custom_textfield_header(text: 'Old Password'),
                     Custom_textfield(context, show_icon: true, onPress: () {
                       setState(() {
@@ -132,7 +119,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                       context,
                       text: 'Update Password',
                       onTap: () {
-                        Navigator.pop(context);
+                        changePasswordCubit.ChangePasswordService(currentPassword: _oldPassword.text, newPassword: _Password.text, confirmPassword: _confirmPassword.text, context: context);
+                        //Navigator.pop(context);
                         // Navigator.push(context, MaterialPageRoute(builder: (context) {
                         //   return Login_page();
                         // },));

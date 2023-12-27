@@ -7,7 +7,9 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
+import 'package:pair_me/cubits/ReSend_Otp_cubit.dart';
 import 'package:pair_me/cubits/Verify.dart';
+import 'package:pair_me/cubits/verify_forgot_otp.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pinput/pinput.dart';
@@ -24,6 +26,8 @@ class Verification_code extends StatefulWidget {
 class _Verification_codeState extends State<Verification_code> {
   final pinController = TextEditingController();
   VerifyCubit verifyCubit = VerifyCubit();
+  ResendOtpCubit resendOtpCubit = ResendOtpCubit();
+  VerifyForgotOtpCubit verifyForgotOtpCubit = VerifyForgotOtpCubit();
   @override
   void initState() {
     // TODO: implement initState
@@ -78,18 +82,24 @@ class _Verification_codeState extends State<Verification_code> {
                       },
                     )),
                 SizedBox(height: screenHeight(context,dividedBy: 70),),
-                const Text('Resend Code',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5)),
+                InkWell(
+                  onTap: () {
+                   // resendOtpCubit.ResendOtpService(phoneNumber: widget.Number, context: context);
+                  },
+                    child: const Text('Resend Code',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5))),
                 const Spacer(),
                 Custom_botton(context, text: 'Verify',
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return widget.Forggot ? const Create_New_Password() : const StepScreen();
+                    return widget.Forggot ? Create_New_Password(Phonenumber: '',) : const StepScreen();
                   },));
                 },
                 //   onTap: () {
                 //   if(pinController.text.isEmpty){
                 //     flutterToast("Plese Enter Pin", true);
-                //   } else{
+                //   } else if(widget.Forggot){
+                //     verifyForgotOtpCubit.VerifyForgotOtpService(phoneNumber: widget.Number, otp: pinController.text, forget: true, context: context);
+                //   } else {
                 //     verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
                 //   }
                 // },

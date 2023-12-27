@@ -1,5 +1,8 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pair_me/Screen_Pages/login_page.dart';
@@ -11,7 +14,6 @@ import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class SignUp_page extends StatefulWidget {
   const SignUp_page({super.key});
@@ -194,98 +196,48 @@ class _SignUp_pageState extends State<SignUp_page> {
                     Custom_textfield(context,
                         show_icon: true,
                         onTap: () {
-                          setState(() {
-                            calendar = !calendar;
-                          });
+                          // setState(() {
+                          //   calendar = !calendar;
+                          // });
                         },
                         image: 'assets/Images/calendar.png',
                         onPress: () {
-                          setState(() {
-                            calendar = !calendar;
-                          });
+                          BottomPicker.date(
+                            title: 'Set your Birthday',
+                            dateOrder: DatePickerDateOrder.dmy,
+                            initialDateTime: _focusedDay,
+                            gradientColors: [AppColor.skyBlue,AppColor.whiteskyBlue],
+                            titlePadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 100)),
+                            height: screenHeight(context,dividedBy: 3),
+                            dismissable: true,
+                            displayCloseIcon: false,
+                            maxDateTime: DateTime(2050),
+                            minDateTime: DateTime(1980),
+                            pickerTextStyle: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                            titleStyle: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: AppColor.black),
+                            titleAlignment: CrossAxisAlignment.center,
+                            onChange: (index) {
+
+                            },
+                            onSubmit: (index) {
+                              _date.text = DateFormat('dd MMMM yyyy').format(index);
+                            },
+                            bottomPickerTheme: BottomPickerTheme.plumPlate,
+                          ).show(context);
                         },
                         hint: 'Select ',
                         controller: _date,
                         hidetext: false,
                         readOnly: true),
-                    calendar
-                        ? FadeInDown(
-                            animate: true,
-                            from: 10,
-                            child: Container(
-                              margin: const EdgeInsets.only(bottom: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: AppColor.white,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      offset: Offset(
-                                        1,
-                                        1,
-                                      ),
-                                      blurRadius: 4,
-                                      spreadRadius: 0.0,
-                                    ),
-                                  ]),
-                              child: TableCalendar(
-                                firstDay: DateTime.utc(2010, 10, 16),
-                                lastDay: DateTime.utc(2030, 3, 14),
-                                calendarFormat: CalendarFormat.month,
-                                headerStyle: const HeaderStyle(
-                                  titleTextStyle: TextStyle(
-                                      color: AppColor.skyBlue,
-                                      fontFamily: "Roboto",
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 20),
-                                  formatButtonVisible: false,
-
-                                  titleCentered: true,
-                                  leftChevronIcon: Icon(
-                                    Icons.arrow_back_ios_rounded,
-                                    size: 20,
-                                    color: AppColor.black,
-                                  ),
-                                  rightChevronIcon: Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 20,
-                                    color: AppColor.black,
-                                  ),
-                                ),
-                                calendarStyle: const CalendarStyle(
-                                  defaultTextStyle: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      color: AppColor.black),
-                                  disabledTextStyle: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      color: AppColor.skyBlue),
-                                ),
-                                focusedDay: _focusedDay,
-                                onPageChanged: (focusedDay) {
-                                  _focusedDay = focusedDay;
-                                },
-                                selectedDayPredicate: (day) =>
-                                    isSameDay(_selectedDate, day),
-                                onDaySelected: (selectedDay, focusedDay) {
-                                  if (!isSameDay(_selectedDate, selectedDay)) {
-                                    print(
-                                        'selectedDay${DateFormat('dd MMM yy').format(selectedDay)}');
-                                    _date.text = DateFormat('dd MMM yy').format(selectedDay);
-                                    setState(() {
-                                      calendar = !calendar;
-                                      _selectedDate = selectedDay;
-                                      _focusedDay = focusedDay;
-                                      // update `_focusedDay` here as well
-                                    });
-                                  }
-                                  // setState(() {
-                                  //   calendar = !calendar;
-                                  // });
-                                },
-                              ),
-                            ),
-                          )
-                        : const SizedBox(),
                     custom_textfield_header(text: 'Phone Number'),
                     Container(
                       margin: EdgeInsets.symmetric(
