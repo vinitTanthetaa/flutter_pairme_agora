@@ -75,9 +75,9 @@ class _StepScreenState extends State<StepScreen> {
   final TextEditingController _educationcontroller = TextEditingController();
   final TextEditingController _univercitycontroller = TextEditingController();
   final TextEditingController _date = TextEditingController();
-  // SelectedByte? _selectedimag1;
-  // SelectedByte? _selectedimag2;
-  // SelectedByte? _selectedimag3;
+   // SelectedByte? _selectedimag1;
+   // SelectedByte? _selectedimag2;
+   // SelectedByte? _selectedimag3;
   String img = '';
   String Uname = '';
   final List _categorys = [
@@ -237,7 +237,9 @@ class _StepScreenState extends State<StepScreen> {
     cityStateCubit = BlocProvider.of<CityStateCubit>(context);
     adressDetailsCubit = BlocProvider.of<AdressDetailsCubit>(context);
     professionalDetailsCubit = BlocProvider.of<ProfessionalDetailsCubit>(context);
-   // businessDetailsCubit = BlocProvider.of<BusinessDetailsCubit>(context);
+    businessDetailsCubit = BlocProvider.of<BusinessDetailsCubit>(context);
+    describeYourSelfCubit = BlocProvider.of<DescribeYourSelfCubit>(context);
+    connectwithCubit = BlocProvider.of<ConnectwithCubit>(context);
   }
 
   @override
@@ -335,9 +337,21 @@ class _StepScreenState extends State<StepScreen> {
                           custom_textfield_header(text: 'Country'),
                           Custom_textfield(context,
                               onTap: () {
-                                setState(() {
-                                  _contry = !_contry;
-                                });
+                                showCountryPicker(
+                                  context: context,
+                                  showPhoneCode: true,
+                                  onSelect: (Country country) {
+                                    print(
+                                        'Select country: ${country.phoneCode}');
+                                    print('Select country: ${country.name}');
+                                    _Contry.text = country.name;
+                                    GetData(_Contry.text);
+                                    // countryCodeSelect = country.phoneCode;
+                                    // countryCodeflagsvg = country.flagEmoji;
+                                    //flutterToast(country.displayNameNoCountryCode, true);
+                                    setState(() {});
+                                  },
+                                );
                               },
                               show_icon: true,
                               image: _contry
@@ -655,6 +669,30 @@ class _StepScreenState extends State<StepScreen> {
                                           text: "Professional Details")),
                                   skip_button(
                                     context,
+                                    // onTap: () {
+                                    //   if(_compnyName.text.isEmpty){
+                                    //     flutterToast("Please Enter Your Company Name", false);
+                                    //   } else
+                                    //   if(_jobTitle.text.isEmpty){
+                                    //     flutterToast("Please Enter Your Job Title/Add Role", false);
+                                    //   } else
+                                    //   if(_compnyDomain.text.isEmpty){
+                                    //     flutterToast("Please Enter Your Company Domain", false);
+                                    //   } else
+                                    //   if(_email.text.isEmpty){
+                                    //     flutterToast("Please Enter Email", false);
+                                    //   } else
+                                    //   if(_categorycontroller.text.isEmpty){
+                                    //     flutterToast("Please Enter Category", false);
+                                    //   } else {
+                                    //     professionalDetailsCubit.ProfessionalDetailsService(company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) {
+                                    //       setState(() {
+                                    //         ind++;
+                                    //       });
+                                    //     },);
+                                    //   }
+                                    //
+                                    // },
                                     onTap: () {
                                       setState(() {
                                         ind++;
@@ -1099,7 +1137,7 @@ class _StepScreenState extends State<StepScreen> {
                                                     _education = !_education;
                                                   });
                                                 },
-                                                child: Text(
+                                                child: const Text(
                                                     'Veer Narmad South Gujarat University')),
                                             // SizedBox(height: screenHeight(context,dividedBy: 205),),
                                           ],
@@ -1111,18 +1149,35 @@ class _StepScreenState extends State<StepScreen> {
                                 child: Custom_botton(
                                   context,
                                   text: 'Next',
-                                  onTap: () {
-                                    if(_compnyDomain.text.isEmpty){
-
-                                    }
-                                  },
                                   // onTap: () {
-                                  //   professionalDetailsCubit.ProfessionalDetailsService(company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) {
-                                  //     setState(() {
-                                  //       ind++;
-                                  //     });
-                                  //   },);
+                                  //   if(_compnyName.text.isEmpty){
+                                  //     flutterToast("Please Enter Your Company Name", false);
+                                  //   } else
+                                  //   if(_jobTitle.text.isEmpty){
+                                  //     flutterToast("Please Enter Your Job Title/Add Role", false);
+                                  //   } else
+                                  //   if(_compnyDomain.text.isEmpty){
+                                  //     flutterToast("Please Enter Your Company Domain", false);
+                                  //   } else
+                                  //   if(_email.text.isEmpty){
+                                  //     flutterToast("Please Enter Email", false);
+                                  //   } else
+                                  //   if(_categorycontroller.text.isEmpty){
+                                  //     flutterToast("Please Enter Category", false);
+                                  //   } else {
+                                  //     professionalDetailsCubit.ProfessionalDetailsService(company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) {
+                                  //       setState(() {
+                                  //         ind++;
+                                  //       });
+                                  //     },);
+                                  //   }
+                                  //
                                   // },
+                                  onTap: () {
+                                    setState(() {
+                                      ind++;
+                                    });
+                                  },
                                   height: screenHeight(context, dividedBy: 20),
                                 ),
                               ),
@@ -1558,12 +1613,18 @@ class _StepScreenState extends State<StepScreen> {
                                     context,
                                     text: 'Next',
                                     onTap: () {
-                                      businessDetailsCubit.BusinessDetailsService(address: "${_Address1.text}${_Address3.text}", country: _Contry1.text, state: _State1.text, city: _City1.text, zipCode: _Zipcode1.text, context: context, startDate: _date.text).then((value) {
-                                        setState(() {
-                                          ind++;
-                                        });
-                                      },);
-
+                                      setState(() {
+                                        ind++;
+                                      });
+                                      // if(_Address1.text.isNotEmpty || _Address3.text.isNotEmpty){
+                                      //   businessDetailsCubit.BusinessDetailsService(address: "${_Address1.text}${_Address3.text}", country: _Contry1.text, state: _State1.text, city: _City1.text, zipCode: _Zipcode1.text, context: context, startDate: _date.text).then((value) {
+                                      //     setState(() {
+                                      //       ind++;
+                                      //     });
+                                      //   },);
+                                      // } else {
+                                      //   flutterToast("Please Enter", false);
+                                      // }
                                     },
                                     height:
                                         screenHeight(context, dividedBy: 20),
@@ -4123,6 +4184,21 @@ class _StepScreenState extends State<StepScreen> {
                                                     ind++;
                                                   });
                                                 },
+                                                // onTap: () {
+                                                //   if(selectedlookingFor.length <= 0){
+                                                //     flutterToast("Select atlist 1 describe your self", false);
+                                                //   } else {
+                                                //     describeYourSelfCubit
+                                                //         .DescribeYourSelfService(
+                                                //         array: selectedlookingFor,
+                                                //         context: context).then((
+                                                //         value) {
+                                                //       setState(() {
+                                                //         ind++;
+                                                //       });
+                                                //     },);
+                                                //   }
+                                                // },
                                               )
                                             ],
                                           ),
@@ -4144,12 +4220,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                         .white),
                                                             onTap: () {
                                                               setState(() {
-                                                                selectedlookingFor.contains(e)
-                                                                    ? selectedlookingFor
-                                                                        .remove(
-                                                                            e)
-                                                                    : selectedlookingFor
-                                                                        .add(e);
+                                                                selectedlookingFor.contains(e) ? selectedlookingFor.remove(e) :selectedlookingFor.length < 3 ?  selectedlookingFor.add(e) : selectedlookingFor.remove(e);
                                                               });
                                                             },
                                                             child: Container(
@@ -4200,15 +4271,27 @@ class _StepScreenState extends State<StepScreen> {
                                           ),
                                           Custom_botton(context, text: 'Done',
                                               onTap: () {
-                                            describeYourSelfCubit.DescribeYourSelfService(array: selectedlookingFor, context: context).then((value) {
-                                              setState(() {
-                                                ind++;
-                                              });
-                                            },);
-
-                                          },
+                                                setState(() {
+                                                  ind++;
+                                                });
+                                              },
+                                          //     onTap: () {
+                                          //   if(selectedlookingFor.length <= 0){
+                                          //     flutterToast("Select atlist 1 describe your self", false);
+                                          //   } else {
+                                          //     describeYourSelfCubit
+                                          //         .DescribeYourSelfService(
+                                          //         array: selectedlookingFor,
+                                          //         context: context).then((
+                                          //         value) {
+                                          //       setState(() {
+                                          //         ind++;
+                                          //       });
+                                          //     },);
+                                          //   }
+                                          // },
                                               height: screenHeight(context,
-                                                  dividedBy: 25))
+                                                  dividedBy: 25),)
                                         ],
                                       ),
                                     ),
@@ -4241,13 +4324,27 @@ class _StepScreenState extends State<StepScreen> {
                                                           "Who are you looking to connect with? Select up to 3 of the following:")),
                                               skip_button(
                                                 context,
+                                                // onTap: () {
+                                                //   Navigator.push(context,
+                                                //       MaterialPageRoute(
+                                                //     builder: (context) {
+                                                //       return const Home_screen();
+                                                //     },
+                                                //   ));
+                                                // },
                                                 onTap: () {
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return const Home_screen();
-                                                    },
-                                                  ));
+                                                  if(selectedlookingFor.length <= 0){
+                                                    flutterToast("Select atlist 1 describe your self", false);
+                                                  } else {
+                                                    connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) {
+                                                              return const Home_screen();
+                                                            },
+                                                          ));
+                                                    },);
+                                                  }
                                                 },
                                               )
                                             ],
@@ -4270,12 +4367,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                         .white),
                                                             onTap: () {
                                                               setState(() {
-                                                                selectedlookingFor.contains(e)
-                                                                    ? selectedlookingFor
-                                                                        .remove(
-                                                                            e)
-                                                                    : selectedlookingFor
-                                                                        .add(e);
+                                                                selectedlookingFor.contains(e) ? selectedlookingFor.remove(e) :selectedlookingFor.length < 3 ?  selectedlookingFor.add(e) : selectedlookingFor.remove(e);
                                                               });
                                                             },
                                                             child: Container(
@@ -4325,15 +4417,28 @@ class _StepScreenState extends State<StepScreen> {
                                             ),
                                           ),
                                           Custom_botton(context, text: 'Done',
+                                              // onTap: () {
+                                              //   if(selectedlookingFor.length <= 0){
+                                              //     flutterToast("Select atlist 1 describe your self", false);
+                                              //   } else {
+                                              //     connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
+                                              //       Navigator.push(context,
+                                              //           MaterialPageRoute(
+                                              //             builder: (context) {
+                                              //               return const Home_screen();
+                                              //             },
+                                              //           ));
+                                              //     },);
+                                              //   }
+                                              // },
                                               onTap: () async {
-                                                connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
                                                   Navigator.push(context,
                                                       MaterialPageRoute(
                                                         builder: (context) {
                                                           return const Home_screen();
                                                         },
                                                       ));
-                                                },);
+
                                           },
                                               height: screenHeight(context,
                                                   dividedBy: 25))

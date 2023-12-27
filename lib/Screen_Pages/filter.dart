@@ -1,12 +1,12 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_slider/gradient_slider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
-import 'package:pair_me/Widgets/select.dart';
 import 'package:pair_me/Widgets/textfield.dart';
+import 'package:pair_me/cubits/City&state.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -34,13 +34,24 @@ class _Filter_pageState extends State<Filter_page> {
     'Business partner',
     'Translator',
   ];
-  bool _contry = false;
   bool _state = false;
   bool _city = false;
   double _slider = 10;
   bool _switch = false;
   String gender = 'Female';
   bool popup = false;
+  CityStateCubit cityStateCubit = CityStateCubit();
+  CityandState cityandState = CityandState();
+  GetData(String country) async {
+    cityandState = (await cityStateCubit.getcalendarEvents(country: country))!;
+    setState(() {});
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cityStateCubit = BlocProvider.of<CityStateCubit>(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -245,47 +256,24 @@ class _Filter_pageState extends State<Filter_page> {
                         ) : const SizedBox(),
                         custom_textfield_header(text: 'Country'),
                         Custom_textfield(context, onTap: () {
-                          setState(() {
-                            _contry = !_contry;
-                          });
-                        },show_icon: true,image: _contry ?'assets/Images/Vector.png' : 'assets/Images/right_arrow.png', readOnly: true, onPress: () {
-                          setState(() {
-                            _contry = !_contry;
-                          });
+                          showCountryPicker(
+                            context: context,
+                            showPhoneCode: true,
+                            onSelect: (Country country) {
+                              print(
+                                  'Select country: ${country.phoneCode}');
+                              print('Select country: ${country.name}');
+                              _Contry.text = country.name;
+                              GetData(_Contry.text);
+                              // countryCodeSelect = country.phoneCode;
+                              // countryCodeflagsvg = country.flagEmoji;
+                              //flutterToast(country.displayNameNoCountryCode, true);
+                              setState(() {});
+                            },
+                          );
+                        },show_icon: true,image:  'assets/Images/right_arrow.png', readOnly: true, onPress: () {
+
                         }, hint: "Select", hidetext: false, controller: _Contry),
-                        _contry ?Container(
-                          height: screenHeight(context,dividedBy: 7),
-                          width: screenWidth(context),
-                          margin: const EdgeInsets.only(bottom: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: Colors.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: AppColor.fontgray,
-                                  offset: Offset(
-                                    1,
-                                    1,
-                                  ),
-                                  blurRadius: 4,
-                                  // spreadRadius: 1.0,
-                                ),
-                              ]
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                custom_text(text: 'Armenia', color: const Color(0xff303030)),
-                                custom_text(text: 'Bangladesh', color: const Color(0xff303030)),
-                                custom_text(text: 'Denmark', color: const Color(0xff303030)),
-                                custom_text(text: 'Ecuador', color: const Color(0xff303030)),
-                              ],
-                            ),
-                          ),
-                        ) : const SizedBox(),
                         Row(
                           children: [
                             Expanded(
@@ -293,76 +281,150 @@ class _Filter_pageState extends State<Filter_page> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   custom_textfield_header(text: 'State'),
-                                  Custom_textfield(context, onTap: () {
-                                    setState(() {
-                                      _state = !_state;
-                                    });
-                                  },show_icon: true,image: _state ?'assets/Images/Vector.png' : 'assets/Images/right_arrow.png', readOnly: true, onPress: () {
-                                    setState(() {
-                                      _state = !_state;
-                                    });
-                                  }, hint: "Select", hidetext: false, controller: _State),
-                                  _state ? Container(
-                                    height: screenHeight(context,dividedBy: 7),
-                                    width: screenWidth(context),
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: AppColor.fontgray,
-                                            offset: Offset(
-                                              1,
-                                              1,
+                                  Custom_textfield(context,
+                                      onTap: () {
+                                        setState(() {
+                                          _state = !_state;
+                                        });
+                                      },
+                                      show_icon: true,
+                                      image: _state
+                                          ? 'assets/Images/Vector.png'
+                                          : 'assets/Images/right_arrow.png',
+                                      readOnly: true,
+                                      onPress: () {
+                                        setState(() {
+                                          _state = !_state;
+                                        });
+                                      },
+                                      hint: "Select",
+                                      hidetext: false,
+                                      controller: _State),
+                                  _state
+                                      ? Container(
+                                      height: screenHeight(context,
+                                          dividedBy: 7),
+                                      width: screenWidth(context),
+                                      margin: const EdgeInsets.only(
+                                          bottom: 10),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(7),
+                                          color: Colors.white,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors.grey,
+                                              offset: Offset(
+                                                1,
+                                                1,
+                                              ),
+                                              blurRadius: 4,
+                                              // spreadRadius: 1.0,
                                             ),
-                                            blurRadius: 4,
-                                            // spreadRadius: 1.0,
-                                          ),
-                                        ]
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          custom_text(text: 'Armenia', color: const Color(0xff303030)),
-                                          custom_text(text: 'Bangladesh', color: const Color(0xff303030)),
-                                          custom_text(text: 'Denmark', color: const Color(0xff303030)),
-                                          custom_text(text: 'Ecuador', color: const Color(0xff303030)),
-                                        ],
-                                      ),
-                                    ),
-                                  ) : SizedBox(height: _city ?screenHeight(context,dividedBy: 6.35) : 0,)
+                                          ]),
+                                      child: BlocBuilder<CityStateCubit,
+                                          CityStateState>(
+                                        builder: (context, state) {
+                                          print(state);
+                                          if (state is CityStateError)
+                                            return Center(
+                                              child: Text("No State"),
+                                            );
+                                          return Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: screenHeight(
+                                                    context,
+                                                    dividedBy: 100),
+                                                horizontal: screenWidth(
+                                                    context,
+                                                    dividedBy: 30)),
+                                            child: ListView.builder(
+                                              physics:
+                                              const ClampingScrollPhysics(),
+                                              padding: EdgeInsets.zero,
+                                              itemCount: cityandState
+                                                  .state?.states.length,
+                                              itemBuilder:
+                                                  (context, index) {
+                                                return InkWell(
+                                                  onTap: () {
+                                                    _State.text = cityandState
+                                                        .state
+                                                        ?.states[
+                                                    index]
+                                                        .name ??
+                                                        '';
+                                                    _state = !_state;
+                                                    setState(() {
+
+                                                    });
+                                                  },
+                                                  child: custom_text(
+                                                      text: cityandState
+                                                          .state
+                                                          ?.states[
+                                                      index]
+                                                          .name ??
+                                                          '',
+                                                      color: const Color(
+                                                          0xff303030)),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      ))
+                                      : SizedBox(
+                                    height: _city
+                                        ? screenHeight(context,
+                                        dividedBy: 6.35)
+                                        : 0,
+                                  )
                                 ],
                               ),
                             ),
-                            SizedBox(width: screenWidth(context,dividedBy: 50),),
+                            SizedBox(
+                              width: screenWidth(context, dividedBy: 50),
+                            ),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   custom_textfield_header(text: 'City'),
-                                  Custom_textfield(onTap: () {
-                                    setState(() {
-                                      _city = !_city;
-                                    });
-                                  },context, show_icon: true,image: _city ?'assets/Images/Vector.png' : 'assets/Images/right_arrow.png', readOnly: true, onPress: () {
-                                    setState(() {
-                                      _city = !_city;
-                                    });
-                                  }, hint: "Select", hidetext: false, controller: _City),
-                                  _city? Container(
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    height: screenHeight(context,dividedBy: 7),
+                                  Custom_textfield(
+                                      onTap: () {
+                                        setState(() {
+                                          _city = !_city;
+                                        });
+                                      },
+                                      context,
+                                      show_icon: true,
+                                      image: _city
+                                          ? 'assets/Images/Vector.png'
+                                          : 'assets/Images/right_arrow.png',
+                                      readOnly: true,
+                                      onPress: () {
+                                        setState(() {
+                                          _city = !_city;
+                                        });
+                                      },
+                                      hint: "Select",
+                                      hidetext: false,
+                                      controller: _City),
+                                  _city
+                                      ? Container(
+                                    margin: const EdgeInsets.only(
+                                        bottom: 10),
+                                    height: screenHeight(context,
+                                        dividedBy: 7),
                                     width: screenWidth(context),
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
+                                        borderRadius:
+                                        BorderRadius.circular(7),
                                         color: Colors.white,
                                         boxShadow: const [
                                           BoxShadow(
-                                            color: AppColor.fontgray,
+                                            color: Colors.grey,
                                             offset: Offset(
                                               1,
                                               1,
@@ -370,26 +432,66 @@ class _Filter_pageState extends State<Filter_page> {
                                             blurRadius: 4,
                                             // spreadRadius: 1.0,
                                           ),
-                                        ]
+                                        ]),
+                                    child: BlocBuilder<CityStateCubit,
+                                        CityStateState>(
+                                      builder: (context, state) {
+                                        print(state);
+                                        if (state is CityStateError)
+                                          return Center(
+                                            child: Text("No State"),
+                                          );
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: screenHeight(
+                                                  context,
+                                                  dividedBy: 100),
+                                              horizontal: screenWidth(
+                                                  context,
+                                                  dividedBy: 30)),
+                                          child: ListView.builder(
+                                            physics:
+                                            const ClampingScrollPhysics(),
+                                            padding: EdgeInsets.zero,
+                                            itemCount: cityandState
+                                                .city?.cities.length,
+                                            itemBuilder:
+                                                (context, index) {
+                                              return InkWell(
+                                                  onTap: () {
+                                                    _City.text = cityandState
+                                                        .city
+                                                        ?.cities[
+                                                    index] ??
+                                                        '';
+                                                    _city = !_city;
+                                                    setState(() {});
+                                                  },
+                                                  child: custom_text(
+                                                      text: cityandState
+                                                          .city
+                                                          ?.cities[
+                                                      index] ??
+                                                          '',
+                                                      color: const Color(
+                                                          0xff303030)));
+                                            },
+                                          ),
+                                        );
+                                      },
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          custom_text(text: 'Armenia', color: const Color(0xff303030)),
-                                          custom_text(text: 'Bangladesh', color: const Color(0xff303030)),
-                                          custom_text(text: 'Denmark', color: const Color(0xff303030)),
-                                          custom_text(text: 'Ecuador', color: const Color(0xff303030)),
-                                        ],
-                                      ),
-                                    ),
-                                  ):SizedBox(height:_state ? screenHeight(context,dividedBy: 6.35) : 0,)
+                                  )
+                                      : SizedBox(
+                                    height: _state
+                                        ? screenHeight(context,
+                                        dividedBy: 6.35)
+                                        : 0,
+                                  )
                                 ],
                               ),
                             )
-                          ],),
+                          ],
+                        ),
                         custom_textfield_header(text: 'Looking for'),
                         Container(
                          margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 70)),

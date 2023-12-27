@@ -1,6 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/forgot_password.dart';
 import 'package:pair_me/Screen_Pages/sign_up_page.dart';
@@ -9,6 +10,7 @@ import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
+import 'package:pair_me/cubits/login_cubit.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
@@ -28,7 +30,13 @@ class _Login_pageState extends State<Login_page> {
   final TextEditingController _Email = TextEditingController();
   final TextEditingController _Password = TextEditingController();
   SharedPrefsService prefsService = SharedPrefsService();
-
+  LoginCubit loginCubit = LoginCubit();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loginCubit = BlocProvider.of<LoginCubit>(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,18 +189,17 @@ class _Login_pageState extends State<Login_page> {
                     Center(
                       child: Custom_botton(context, text: 'Login', onTap: () async {
                         if(_Email.text.isEmpty){
-                          flutterToast('Please Enter Email', false);
+                          flutterToast('Please Enter Valid Phone number', false);
                         } else if(_Password.text.isEmpty) {
                           flutterToast('Please Enter Password', false);
                         } else {
-                          showcase = true;
-                          prefsService.setBoolData('showcase', showcase);
-                          showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
-                          showcasetime++;
-                          prefsService.setIntData("showcasetime", showcasetime);
-                          Navigator.push(context,MaterialPageRoute(builder:(context) {
-                            return const Home_screen();
-                          }, ));
+                          loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
+                          // showcase = true;
+                          // prefsService.setBoolData('showcase', showcase);
+                          // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
+                          // showcasetime++;
+                          // prefsService.setIntData("showcasetime", showcasetime);
+
                         }
                       }, height: screenHeight(context,dividedBy: 13),),
                     ),

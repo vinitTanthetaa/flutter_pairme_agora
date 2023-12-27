@@ -42,7 +42,7 @@ class _Forget_PasswordState extends State<Forget_Password> {
                   SizedBox(
                     height: screenHeight(context, dividedBy: 50),
                   ),
-                  custom_textfield_header(text: 'E-mail'),
+                  custom_textfield_header(text: 'Phone Number'),
                   Container(
                     margin: EdgeInsets.symmetric(
                         vertical: screenHeight(context, dividedBy: 75)),

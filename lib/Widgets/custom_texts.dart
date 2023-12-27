@@ -62,7 +62,7 @@ Widget custom_text({required String text, required Color color}) {
   return Text(
     text.tr(),
     style: TextStyle(
-        fontSize: 12,
+        fontSize: 15,
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w400,
         color: color),

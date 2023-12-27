@@ -4,9 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
 import 'package:pair_me/cubits/City&state.dart';
+import 'package:pair_me/cubits/Describe_yourself_cubit.dart';
 import 'package:pair_me/cubits/Verify.dart';
 import 'package:pair_me/cubits/adsress_drtails.dart';
 import 'package:pair_me/cubits/business_address_cubit.dart';
+import 'package:pair_me/cubits/connect_with_cubit.dart';
+import 'package:pair_me/cubits/login_cubit.dart';
 import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/cubits/signup.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -37,11 +40,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => SignUpCubit()),
+        BlocProvider(create: (context) => LoginCubit()),
         BlocProvider(create: (context) => VerifyCubit()),
         BlocProvider(create: (context) => CityStateCubit()),
         BlocProvider(create: (context) => AdressDetailsCubit()),
         BlocProvider(create: (context) => ProfessionalDetailsCubit()),
-       // BlocProvider(create: (context) => BusinessDetailsCubit()),
+        BlocProvider(create: (context) => BusinessDetailsCubit()),
+        BlocProvider(create: (context) => ConnectwithCubit()),
+        BlocProvider(create: (context) => DescribeYourSelfCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

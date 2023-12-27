@@ -4,6 +4,7 @@ class apis{
 
 
   //Sign up
+  static const String Login = "${baseurl}/login";
   static const String signUp = "${baseurl}/signup";
   static const String verify = "${baseurl}/verify";
   static const String Address = "${baseurl}/address_details";

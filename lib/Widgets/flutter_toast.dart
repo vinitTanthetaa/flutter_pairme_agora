@@ -13,7 +13,7 @@ void flutterToast(String text, bool isBottom) {
           text ==
               'Please wait, It can take up to a minute depending on contacts'
           ? AppColor.whiteskyBlue
-          : Colors.orangeAccent,
+          : Colors.black54,
       textColor: Colors.white,
       fontSize: 16.0);
 }

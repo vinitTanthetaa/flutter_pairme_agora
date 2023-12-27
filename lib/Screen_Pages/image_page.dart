@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -56,22 +57,32 @@ class _Image_ScreenState extends State<Image_Screen> {
                     ))
               ],
             ),
-          )
-          : Container(
-        height: screenHeight(context),
-        width: screenWidth(context),
-        decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage(widget.image),fit: BoxFit.cover,filterQuality: FilterQuality.high)
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IconButton(onPressed: () {
-              Navigator.pop(context);
-            }, icon: Icon(Icons.arrow_back_ios_new,color: AppColor.white,))
-          ],
+          ) :
+      InteractiveViewer(
+        child: CachedNetworkImage(
+          imageUrl: widget.image,
+          imageBuilder: (context, imageProvider) {
+            return  Container(
+              height: screenHeight(context),
+              width: screenWidth(context),
+              decoration: BoxDecoration(
+                  image: DecorationImage(image: NetworkImage(widget.image),fit: BoxFit.cover,filterQuality: FilterQuality.high)
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(onPressed: () {
+                    Navigator.pop(context);
+                  }, icon: Icon(Icons.arrow_back_ios_new,color: AppColor.white,))
+                ],
+              ),
+            );
+          },
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
         ),
       ),
+
     );
   }
 }

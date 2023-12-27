@@ -266,7 +266,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 });
                               },
                               threshold: screenHeight(context, dividedBy: 4.5),
-                              maxAngle: screenHeight(context, dividedBy: 5),
+                              maxAngle: screenHeight(context, dividedBy: 7),
                               swipeOptions:
                                   const SwipeOptions.only(down: true, up: true),
                               cardCount: users.length,
@@ -767,14 +767,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 alignment: Alignment.center,
                                                 child: Container(
                                                   key: _key3,
-                                                  margin: EdgeInsets.only(
-                                                      top: screenHeight(context,
-                                                          dividedBy: 10)),
-                                                  height: screenHeight(context,
-                                                      dividedBy: 2000),
-                                                  width: screenHeight(context,
-                                                      dividedBy: 2000),
-                                                  color: Colors.red,
+                                                  // margin: EdgeInsets.only(
+                                                  //     top: screenHeight(context,
+                                                  //         dividedBy: 10)),
+                                                  height: 0,
+                                                  width: 0,
                                                 ),
                                               ),
                                         swipeUp || swipeDown
@@ -823,36 +820,36 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                   ),
                                 );
                               },
-                              //     cardBuilder: (BuildContext context, int index) {
-                              //       return   users[index]['images'][pageViewIndex].toString().endsWith(".mp4")?
-                              //       VideoWidget(videoUrl: users[index]['images'][pageViewIndex])
-                              //           :  CachedNetworkImage(
-                              //         imageUrl: users[index]['images'][pageViewIndex],
-                              //         imageBuilder: (context, imageProvider) => Container(
-                              //           decoration: BoxDecoration(
-                              //               image: DecorationImage(
-                              //                   image: imageProvider,
-                              //                   fit: BoxFit.cover,
-                              //                   filterQuality: FilterQuality.high
-                              //               ),
-                              //               borderRadius:BorderRadius.all(Radius.circular(20))
-                              //           ),
-                              //         ),
-                              //         placeholder: (context, url) => Container(
-                              //           height: screenHeight(context),
-                              //           width: screenWidth(context),
-                              //           decoration: const BoxDecoration(
-                              //               borderRadius: BorderRadius.all(Radius.circular(20)),
-                              //               color: Colors.black
-                              //           ),
-                              //           child: const Center(
-                              //             child: CircularProgressIndicator(color: AppColor.skyBlue,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //         errorWidget: (context, url, error) => Icon(Icons.error),
-                              //       );
-                              // },
+                                  cardBuilder1: (BuildContext context, int index) {
+                                    return   users[index]['images'][pageViewIndex].toString().endsWith(".mp4")?
+                                    VideoWidget(videoUrl: users[index]['images'][pageViewIndex])
+                                        :  CachedNetworkImage(
+                                      imageUrl: users[index]['images'][pageViewIndex],
+                                      imageBuilder: (context, imageProvider) => Container(
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                                filterQuality: FilterQuality.high
+                                            ),
+                                            borderRadius:BorderRadius.all(Radius.circular(20))
+                                        ),
+                                      ),
+                                      placeholder: (context, url) => Container(
+                                        height: screenHeight(context),
+                                        width: screenWidth(context),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                            color: Colors.black
+                                        ),
+                                        child: const Center(
+                                          child: CircularProgressIndicator(color: AppColor.skyBlue,
+                                          ),
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                    );
+                              },
                             ),
                             Align(
                                 alignment: swipeUp
@@ -1088,8 +1085,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   }
 
   Future<void> createTutorial() async {
-    showcase = await prefsService.getBoolData('showcase') ?? true;
-    showcasetime = await prefsService.getIntData("showcasetime") ?? 1;
+   // showcase = await prefsService.getBoolData('showcase') ?? true;
+   // showcasetime = await prefsService.getIntData("showcasetime") ?? 1;
     if (showcase) {
       if (showcasetime >= 3) {
       } else {
@@ -1097,15 +1094,16 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           targets: _createTargets(),
           colorShadow: Colors.black12,
           textSkip: "SKIP",
+
           textStyleSkip: const TextStyle(
             fontFamily: 'Roboto',
             color: AppColor.white,
             fontWeight: FontWeight.w600,
             fontSize: 17,
           ),
-          paddingFocus: 10,
-          opacityShadow: 0.5,
-          imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+          // paddingFocus: 10,
+          // opacityShadow: 0.5,
+          // imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
           onFinish: () {
             print("finish");
             showcase = false;
@@ -1123,9 +1121,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             print('onClickOverlay: $target');
           },
           onSkip: () {
-            // print("skip");
-            // showcase = false;
-            // prefsService.setBoolData('showcase', showcase);
+            showcase = false;
+            prefsService.setBoolData('showcase', showcase);
             return true;
           },
         );
@@ -1205,7 +1202,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         keyTarget: _key3,
         alignSkip: Alignment.topRight,
         enableOverlayTab: true,
-        radius: 100,
+        paddingFocus: 0.0,
+       // focusAnimationDuration: Duration.zero,
+        borderSide: BorderSide.none,
+        //unFocusAnimationDuration: Duration.zero,
+        shape: ShapeLightFocus.Circle,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
@@ -1247,7 +1248,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         keyTarget: _key3,
         alignSkip: Alignment.topRight,
         enableOverlayTab: true,
-        shape: ShapeLightFocus.RRect,
+        paddingFocus: 0.0,
+        // focusAnimationDuration: Duration.zero,
+        borderSide: BorderSide.none,
+        //unFocusAnimationDuration: Duration.zero,
+        shape: ShapeLightFocus.Circle,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
@@ -1288,7 +1293,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         keyTarget: _key3,
         alignSkip: Alignment.topRight,
         enableOverlayTab: true,
-        shape: ShapeLightFocus.RRect,
+        paddingFocus: 0.0,
+        // focusAnimationDuration: Duration.zero,
+        borderSide: BorderSide.none,
+        //unFocusAnimationDuration: Duration.zero,
+        shape: ShapeLightFocus.Circle,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,

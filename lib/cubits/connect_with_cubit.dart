@@ -30,7 +30,7 @@ class ConnectwithCubit extends Cubit<ConnectwithState> {
     };
     print("Body is $body");
     try {
-      final response = await dio.post(apis.describe_yourself,options:  Options(headers: {
+      final response = await dio.post(apis.describe_connect_with,options:  Options(headers: {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }) ,data: jsonEncode(body));
