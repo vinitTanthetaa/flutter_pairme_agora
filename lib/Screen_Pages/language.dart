@@ -145,11 +145,22 @@ class _Language_ScreenState extends State<Language_Screen> {
                                  language = !language;
                                  if(language == false){
                                    show_box = !show_box;
-                                   context.setLocale(Locale('en'));
-                                   // show_box ?
-                                   // context.setLocale(Locale('sp')):
-                                   //context.setLocale(Locale('hi'));
-                                   _selected_language == 'English' ? context.setLocale(const Locale('en')) :_selected_language == 'Spanish' ? context.setLocale(Locale('can')) : context.setLocale(Locale('man'));
+                                   if(_selected_language == 'English') {
+                                     context.setLocale(const Locale('en'));
+                                   }
+                                   if(_selected_language == 'Spanish') {
+                                     context.setLocale(const Locale('sp'));
+                                   }
+                                   if(_selected_language == 'Hindi') {
+                                     context.setLocale(const Locale('hi'));
+                                   }
+                                   if(_selected_language == 'Cantonese') {
+                                     context.setLocale(const Locale('can'));
+                                   }
+                                   if(_selected_language == 'Mandarin') {
+                                     context.setLocale(const Locale('man'));
+                                   }
+                                  // _selected_language == 'English' ? context.setLocale(const Locale('en')) :_selected_language == 'Spanish' ? context.setLocale(Locale('sp')) : context.setLocale(Locale('man'));
                                    Timer(const Duration(milliseconds: 600), () {
                                      setState(() {
                                        show_box = !show_box;

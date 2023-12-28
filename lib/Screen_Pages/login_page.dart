@@ -193,15 +193,15 @@ class _Login_pageState extends State<Login_page> {
                         } else if(_Password.text.isEmpty) {
                           flutterToast('Please Enter Password', false);
                         } else {
-                         // loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
+                          loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
                           // showcase = true;
                           // prefsService.setBoolData('showcase', showcase);
                           // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
                           // showcasetime++;
                           // prefsService.setIntData("showcasetime", showcasetime);
-                          Navigator.push(context,MaterialPageRoute(builder:(context) {
-                            return const Home_screen();
-                          }, ));
+                          // Navigator.push(context,MaterialPageRoute(builder:(context) {
+                          //   return const Home_screen();
+                          // }, ));
                         }
                       }, height: screenHeight(context,dividedBy: 13),),
                     ),
@@ -224,42 +224,41 @@ class _Login_pageState extends State<Login_page> {
                               )),
                         ),
                       ]),
-                    Center(
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 60)),
-                          height: screenHeight(context,dividedBy: 20),
-                          width: screenWidth(context),
-                          decoration: BoxDecoration(
-                              color: AppColor.white,
-                              borderRadius: BorderRadius.circular(9),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: AppColor.fontgray,
-                                  offset: Offset(
-                                    1,
-                                    1,
-                                  ),
-                                  blurRadius: 4,
-                                  // spreadRadius: 1.0,
-                                ),
-                              ]
-                          ),
-                          child: Padding(
-                            padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 4.5)),
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                                  height: screenHeight(context,dividedBy: 40),
-                                  width: screenHeight(context,dividedBy: 40),
-                                  decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/google.png'))),
-                                ),
-                                const Text("Login with Google",style: TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
-                              ],
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 60)),
+                      height: screenHeight(context,dividedBy: 20),
+                      width: screenWidth(context),
+                      decoration: BoxDecoration(
+                          color: AppColor.white,
+                          borderRadius: BorderRadius.circular(9),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: AppColor.fontgray,
+                              offset: Offset(
+                                1,
+                                1,
+                              ),
+                              blurRadius: 4,
+                              // spreadRadius: 1.0,
                             ),
-                          ),
+                          ]
+                      ),
+                      child: Padding(
+                        padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 5)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 10),
+                              height: screenHeight(context,dividedBy: 40),
+                              width: screenHeight(context,dividedBy: 40),
+                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/google.png'))),
+                            ),
+                            const Text("Login with Google",style: TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
+                          ],
                         ),
                       ),
+                    ),
                     Center(
                         child: Container(
                           height: screenHeight(context,dividedBy: 20),

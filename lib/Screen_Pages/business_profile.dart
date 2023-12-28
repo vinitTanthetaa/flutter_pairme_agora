@@ -3,7 +3,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -86,11 +85,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                   height: 35,
                   width: 100,
                   decoration: BoxDecoration(
-                    border: const GradientBoxBorder(
-                      gradient: LinearGradient(
-                          colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                      width: 1.5,
-                    ),
+                    border: Border.all(color: AppColor.skyBlue,width: 2),
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: const Text(

@@ -5,7 +5,7 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
-import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
+import 'package:video_player/video_player.dart';
 
 class UsersDetails extends StatefulWidget {
   List list;
@@ -124,15 +124,7 @@ class _UsersDetailsState extends State<UsersDetails>
                             ),
                             child: Stack(
                               children: [
-                                Center(
-                                  child: VTImageView(
-                                    videoUrl: widget
-                                        .list[pageViewIndex],
-                                    assetPlaceHolder:
-                                    'assets/Images/videoThumbnail.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
+                                VideoPlayer(VideoPlayerController.networkUrl(Uri.parse(widget.list[pageViewIndex]))),
                                 const Align(
                                   child: CircleAvatar(
                                     backgroundColor:

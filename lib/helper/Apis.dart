@@ -8,6 +8,7 @@ class apis{
   static const String signUp = "${baseurl}/signup";
   static const String verify = "${baseurl}/verify";
   static const String Address = "${baseurl}/address_details";
+  static const String business_profile = "${baseurl}/profile";
   static const String professional_details = "${baseurl}/professional_details";
   static const String business_address = "${baseurl}/business_address";
   static const String describe_yourself = "${baseurl}/describe_yourself";
@@ -21,6 +22,7 @@ class apis{
   static const String change_password = "${baseurl}/change_password";
   static const String delete_user = "${baseurl}/delete_user";
   static const String logout = "${baseurl}/logout";
+  static const String filter = "${baseurl}/filter";
 
 
   //city and state

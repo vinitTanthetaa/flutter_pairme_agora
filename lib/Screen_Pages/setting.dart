@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:pair_me/Screen_Pages/change_password.dart';
 import 'package:pair_me/Screen_Pages/payment.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
@@ -66,10 +65,7 @@ class _Setting_pageState extends State<Setting_page> {
                   height: 35,
                   width: 100,
                   decoration: BoxDecoration(
-                    border: const GradientBoxBorder(
-                      gradient: LinearGradient(colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                      width: 1.5,
-                    ),
+                    border: Border.all(width: 2,color: AppColor.skyBlue),
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child:  Text(cancel,style: const TextStyle(fontFamily: 'Roboto',fontSize: 15,fontWeight: FontWeight.w600,color: AppColor.skyBlue),),

@@ -7,6 +7,7 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/cubits/City&state.dart';
+import 'package:pair_me/cubits/Filter_user.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -38,10 +39,11 @@ class _Filter_pageState extends State<Filter_page> {
   bool _city = false;
   double _slider = 10;
   bool _switch = false;
-  String gender = 'Female';
+  String gender = '';
   bool popup = false;
   CityStateCubit cityStateCubit = CityStateCubit();
   CityandState cityandState = CityandState();
+  FilterUserCubit filterUserCubit = FilterUserCubit();
   GetData(String country) async {
     cityandState = (await cityStateCubit.getcalendarEvents(country: country))!;
     setState(() {});
@@ -71,6 +73,7 @@ class _Filter_pageState extends State<Filter_page> {
                 leading: GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
+                     // filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text, state: _State.text, city: _City.text, gender: gender, looking_for: _type, context: context);
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 8.0),
@@ -260,14 +263,8 @@ class _Filter_pageState extends State<Filter_page> {
                             context: context,
                             showPhoneCode: true,
                             onSelect: (Country country) {
-                              print(
-                                  'Select country: ${country.phoneCode}');
-                              print('Select country: ${country.name}');
                               _Contry.text = country.name;
                               GetData(_Contry.text);
-                              // countryCodeSelect = country.phoneCode;
-                              // countryCodeflagsvg = country.flagEmoji;
-                              //flutterToast(country.displayNameNoCountryCode, true);
                               setState(() {});
                             },
                           );
@@ -437,10 +434,11 @@ class _Filter_pageState extends State<Filter_page> {
                                         CityStateState>(
                                       builder: (context, state) {
                                         print(state);
-                                        if (state is CityStateError)
-                                          return Center(
+                                        if (state is CityStateError) {
+                                          return const Center(
                                             child: Text("No State"),
                                           );
+                                        }
                                         return Padding(
                                           padding: EdgeInsets.symmetric(
                                               vertical: screenHeight(
