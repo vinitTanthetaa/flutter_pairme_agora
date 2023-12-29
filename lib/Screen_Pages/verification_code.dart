@@ -89,20 +89,20 @@ class _Verification_codeState extends State<Verification_code> {
                     child: const Text('Resend Code',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5))),
                 const Spacer(),
                 Custom_botton(context, text: 'Verify',
-                // onTap: () {
-                //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //     return widget.Forggot ? Create_New_Password(Phonenumber: '',) : const StepScreen();
-                //   },));
-                // },
-                  onTap: () {
-                  if(pinController.text.isEmpty){
-                    flutterToast("Plese Enter Pin", true);
-                  } else if(widget.Forggot){
-                    verifyForgotOtpCubit.VerifyForgotOtpService(phoneNumber: widget.Number, otp: pinController.text, forget: true, context: context);
-                  } else {
-                    verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
-                  }
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return widget.Forggot ? Create_New_Password(Phonenumber: '',) : const StepScreen();
+                  },));
                 },
+                //   onTap: () {
+                //   if(pinController.text.isEmpty){
+                //     flutterToast("Plese Enter Pin", true);
+                //   } else if(widget.Forggot){
+                //     verifyForgotOtpCubit.VerifyForgotOtpService(phoneNumber: widget.Number, otp: pinController.text, forget: true, context: context);
+                //   } else {
+                //     verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
+                //   }
+                // },
                   height: screenHeight(context,dividedBy: 20),)
               ],
             ),)

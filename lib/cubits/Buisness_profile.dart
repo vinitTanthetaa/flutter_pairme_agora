@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
@@ -21,12 +22,16 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
   BusinessProfileCubit() : super(BusinessProfileInitials());
 
   Future<void> BusinessProfileService(
-      {required File photo_1,
-      // required  File photo_2,
-      // required File photo_3,
-      // required File photo_4,
-      // required File photo_5,
-      // required File photo_6,
+      { File? photo_1,
+        File? photo_2,
+       File? photo_3,
+       File? photo_4,
+       File? photo_5,
+       File? photo_6,
+       PlatformFile? file_1,
+       PlatformFile? file_2,
+       PlatformFile? file_3,
+        String? bio,
         required BuildContext context}) async {
     emit(BusinessProfileLoading());
     final dio = Dio();
@@ -42,18 +47,29 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
     // };
     //print("Body is $body");
     try {
-      String? fileName = photo_1.path.split('/').last;
-      FormData formData = FormData.fromMap({
-        'photo_1': await MultipartFile.fromFile(photo_1.path,filename: fileName),
-        // 'photo_2': await MultipartFile.fromFile(photo_2.path, filename: 'image.jpg'),
-        // 'photo_3': await MultipartFile.fromFile(photo_3.path, filename: 'image.jpg'),
-        // 'photo_4': await MultipartFile.fromFile(photo_4.path, filename: 'image.jpg'),
-        // 'photo_5': await MultipartFile.fromFile(photo_5.path, filename: 'image.jpg'),
-        // 'photo_6': await MultipartFile.fromFile(photo_6.path, filename: 'image.jpg'),
-        // You can add other fields if needed
-        // 'field_name': 'field_value',
-      });
-      print("frodata ==> ${formData.boundary}");
+
+      String? fileName = photo_1?.path.split('/').last;
+      String? fileName1 = photo_2?.path.split('/').last;
+      String? fileName2 = photo_3?.path.split('/').last;
+      String? fileName3 = photo_4?.path.split('/').last;
+      String? fileName4 = photo_5?.path.split('/').last;
+      String? fileName5 = photo_6?.path.split('/').last;
+
+      FormData formData = FormData.fromMap(
+          {
+        'photo_1': await MultipartFile.fromFile(photo_1!.path,filename: fileName),
+        'photo_2': await MultipartFile.fromFile(photo_2!.path,filename: fileName1),
+        'photo_3': await MultipartFile.fromFile(photo_3!.path,filename: fileName2),
+        'photo_4': await MultipartFile.fromFile(photo_4!.path,filename: fileName3),
+        'photo_5': await MultipartFile.fromFile(photo_5!.path,filename: fileName4),
+        'photo_6': await MultipartFile.fromFile(photo_6!.path,filename: fileName5),
+        'file_1': await MultipartFile.fromFile(file_1!.path!,filename: file_1.name),
+        // 'file_2': await MultipartFile.fromFile(file_2.path!,filename: file_2.name),
+        // 'file_3': await MultipartFile.fromFile(file_3.path!,filename: file_3.name),
+      },
+      );
+
+      print("frodata ==> ${formData.files}");
       Response response = await dio.post(
         apis.business_profile,
         data: formData,
@@ -69,9 +85,10 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
       print("Response ===> ${response.data}");
       final hello = response.data;
       print(hello);
-      if (hello['message'] == "BusinessProfile Successfully") {
+      if (hello['message'] == "data saved successfully") {
         print("Response ===> ${response.data}");
         emit(BusinessProfileSuccess());
+        print("photo_1 ==> ${photo_1.path}");
         flutterToast(hello['message'], true);
       } else {
         emit(BusinessProfileError());

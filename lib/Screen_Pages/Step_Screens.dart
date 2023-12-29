@@ -1885,7 +1885,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                       child:
                                                                           Row(
                                                                         children: [
-                                                                          Container(
+                                                                          SizedBox(
                                                                             height:
                                                                                 screenHeight(context, dividedBy: 17),
                                                                             width:
@@ -4501,10 +4501,10 @@ class _StepScreenState extends State<StepScreen> {
                                         context,
                                         text: 'Next',
                                         onTap: () {
-                                          businessProfileCubit.BusinessProfileService(photo_1: _selectedimag1!.selectedFile,context: context);
-                                          // setState(() {
-                                          //   ind++;
-                                          // });
+                                         // businessProfileCubit.BusinessProfileService(photo_1: _selectedimag1!.selectedFile,context: context, photo_2: _selectedimag2!.selectedFile, photo_3: _selectedimag3!.selectedFile, photo_4: _selectedimag4!.selectedFile, photo_5: _selectedimag5!.selectedFile, photo_6: _selectedimag6!.selectedFile, file_1: null, file_2: null, file_3: null);
+                                          setState(() {
+                                            ind++;
+                                          });
                                           // Navigator.push(context, MaterialPageRoute(
                                           //   builder: (context) {
                                           //     return const Describe_Yourself();

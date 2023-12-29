@@ -63,22 +63,22 @@ class _Set_PasswordState extends State<Set_Password> {
                   },  hint: 'Enter your confirm password', image: hideconfirmPassword == false ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
                   const Spacer(),
                   Custom_botton(context, text: 'Save',
-                  // onTap: () {
-                  //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //     return  Verification_code(Forggot: false, Number: widget.number,);
-                  //   },));
-                  // },
-                    onTap: () {
-                    if(_Password.text.isEmpty){
-                      flutterToast("Please Enter Your Password", false);
-                    }else if (_confirmPassword.text.isEmpty){
-                      flutterToast("Please Enter Your Confirm Password", false);
-                    }else if (_confirmPassword.text != _Password.text){
-                      flutterToast("Please Enter Password And Confirm Password are same", false);
-                    }else {
-                      signUpCubit.signUpService(email: widget.email, firstname: widget.firstname, lastname: widget.lastname, phoneNumber: widget.number, password: _Password.text, confirmPassword: _confirmPassword.text, context: context, gender: widget.gender, dob: widget.dob, terms: widget.T_C);
-                    }
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return  Verification_code(Forggot: false, Number: widget.number,);
+                    },));
                   },
+                  //   onTap: () {
+                  //   if(_Password.text.isEmpty){
+                  //     flutterToast("Please Enter Your Password", false);
+                  //   }else if (_confirmPassword.text.isEmpty){
+                  //     flutterToast("Please Enter Your Confirm Password", false);
+                  //   }else if (_confirmPassword.text != _Password.text){
+                  //     flutterToast("Please Enter Password And Confirm Password are same", false);
+                  //   }else {
+                  //     signUpCubit.signUpService(email: widget.email, firstname: widget.firstname, lastname: widget.lastname, phoneNumber: widget.number, password: _Password.text, confirmPassword: _confirmPassword.text, context: context, gender: widget.gender, dob: widget.dob, terms: widget.T_C);
+                  //   }
+                  // },
                     height: screenHeight(context,dividedBy: 20),)
                 ],
               ),
