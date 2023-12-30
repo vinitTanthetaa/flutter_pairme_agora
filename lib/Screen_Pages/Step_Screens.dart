@@ -11,7 +11,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
@@ -1749,31 +1748,31 @@ class _StepScreenState extends State<StepScreen> {
                                                                               dividedBy: 2),
                                                                           child:
                                                                               GestureDetector(
-                                                                            onTap: () async {
-                                                                              // final ImagePicker picker = ImagePicker();
-                                                                              // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                              // print("image ===> $image");
-                                                                              ImagePickerPlus picker = ImagePickerPlus(context);
-                                                                              SelectedImagesDetails? details = await picker.pickBoth(
-                                                                                source: ImageSource.camera,
-                                                                                /// On long tap, it will be available.
-                                                                                multiSelection: true,
-                                                                                galleryDisplaySettings: GalleryDisplaySettings(
-                                                                                  appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                                  cropImage: true,
-                                                                                  showImagePreview: true,
-                                                                                ),
-                                                                              );
-                                                                              print('Details ===> ${details}');
-                                                                              if (details != null) {
-                                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                                _selectedimag1 = details.selectedFiles[0];
-                                                                                Navigator.pop(context);
-                                                                                setState(() {});
-                                                                                print('selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                                              }
-                                                                              // if (details != null) await displayDetails(details);
-                                                                            },
+                                                                            // onTap: () async {
+                                                                            //   // final ImagePicker picker = ImagePicker();
+                                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                            //   // print("image ===> $image");
+                                                                            //   ImagePickerPlus picker = ImagePickerPlus(context);
+                                                                            //   SelectedImagesDetails? details = await picker.pickBoth(
+                                                                            //     source: ImageSource.camera,
+                                                                            //     /// On long tap, it will be available.
+                                                                            //     multiSelection: true,
+                                                                            //     galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            //       appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            //       cropImage: true,
+                                                                            //       showImagePreview: true,
+                                                                            //     ),
+                                                                            //   );
+                                                                            //   print('Details ===> ${details}');
+                                                                            //   if (details != null) {
+                                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            //     _selectedimag1 = details.selectedFiles[0];
+                                                                            //     Navigator.pop(context);
+                                                                            //     setState(() {});
+                                                                            //     print('selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                                            //   }
+                                                                            //   // if (details != null) await displayDetails(details);
+                                                                            // },
                                                                             child:
                                                                                 Row(
                                                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1810,43 +1809,43 @@ class _StepScreenState extends State<StepScreen> {
                                                                                 100)),
                                                                     child:
                                                                         GestureDetector(
-                                                                      onTap: () async {
-                                                                        ImagePickerPlus
-                                                                            picker =
-                                                                            ImagePickerPlus(context);
-                                                                        SelectedImagesDetails?
-                                                                            details =
-                                                                            await picker.pickBoth(
-                                                                          source: ImageSource.gallery,
-
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                              true,
-                                                                          galleryDisplaySettings:
-                                                                              GalleryDisplaySettings(
-                                                                            appTheme:
-                                                                                AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                            cropImage:
-                                                                                true,
-                                                                            showImagePreview:
-                                                                                true,
-                                                                          ),
-                                                                        );
-                                                                        print('Details ===> ${details}');
-                                                                        if (details !=
-                                                                            null) {
-                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                          _selectedimag1 =
-                                                                              details.selectedFiles[0];
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          setState(
-                                                                              () {});
-                                                                          print(
-                                                                              'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                                        }
-                                                                        // if (details != null) await displayDetails(details);
-                                                                      },
+                                                                      // onTap: () async {
+                                                                      //   ImagePickerPlus
+                                                                      //       picker =
+                                                                      //       ImagePickerPlus(context);
+                                                                      //   SelectedImagesDetails?
+                                                                      //       details =
+                                                                      //       await picker.pickBoth(
+                                                                      //     source: ImageSource.gallery,
+                                                                      //
+                                                                      //     /// On long tap, it will be available.
+                                                                      //     multiSelection:
+                                                                      //         true,
+                                                                      //     galleryDisplaySettings:
+                                                                      //         GalleryDisplaySettings(
+                                                                      //       appTheme:
+                                                                      //           AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                      //       cropImage:
+                                                                      //           true,
+                                                                      //       showImagePreview:
+                                                                      //           true,
+                                                                      //     ),
+                                                                      //   );
+                                                                      //   print('Details ===> ${details}');
+                                                                      //   if (details !=
+                                                                      //       null) {
+                                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      //     _selectedimag1 =
+                                                                      //         details.selectedFiles[0];
+                                                                      //     Navigator.pop(
+                                                                      //         context);
+                                                                      //     setState(
+                                                                      //         () {});
+                                                                      //     print(
+                                                                      //         'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                                      //   }
+                                                                      //   // if (details != null) await displayDetails(details);
+                                                                      // },
                                                                       child:
                                                                           Row(
                                                                         children: [
@@ -2059,31 +2058,31 @@ class _StepScreenState extends State<StepScreen> {
                                                                               dividedBy: 2),
                                                                           child:
                                                                           GestureDetector(
-                                                                            onTap: () async {
-                                                                              // final ImagePicker picker = ImagePicker();
-                                                                              // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                              // print("image ===> $image");
-                                                                              ImagePickerPlus picker = ImagePickerPlus(context);
-                                                                              SelectedImagesDetails? details = await picker.pickBoth(
-                                                                                source: ImageSource.camera,
-                                                                                /// On long tap, it will be available.
-                                                                                multiSelection: true,
-                                                                                galleryDisplaySettings: GalleryDisplaySettings(
-                                                                                  appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                                  cropImage: true,
-                                                                                  showImagePreview: true,
-                                                                                ),
-                                                                              );
-                                                                              print('Details ===> ${details}');
-                                                                              if (details != null) {
-                                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                                _selectedimag2 = details.selectedFiles[0];
-                                                                                Navigator.pop(context);
-                                                                                setState(() {});
-                                                                                print('selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                                              }
-                                                                              // if (details != null) await displayDetails(details);
-                                                                            },
+                                                                            // onTap: () async {
+                                                                            //   // final ImagePicker picker = ImagePicker();
+                                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                            //   // print("image ===> $image");
+                                                                            //   ImagePickerPlus picker = ImagePickerPlus(context);
+                                                                            //   SelectedImagesDetails? details = await picker.pickBoth(
+                                                                            //     source: ImageSource.camera,
+                                                                            //     /// On long tap, it will be available.
+                                                                            //     multiSelection: true,
+                                                                            //     galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            //       appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            //       cropImage: true,
+                                                                            //       showImagePreview: true,
+                                                                            //     ),
+                                                                            //   );
+                                                                            //   print('Details ===> ${details}');
+                                                                            //   if (details != null) {
+                                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            //     _selectedimag2 = details.selectedFiles[0];
+                                                                            //     Navigator.pop(context);
+                                                                            //     setState(() {});
+                                                                            //     print('selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                            //   }
+                                                                            //   // if (details != null) await displayDetails(details);
+                                                                            // },
                                                                             child:
                                                                             Row(
                                                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -2120,43 +2119,43 @@ class _StepScreenState extends State<StepScreen> {
                                                                             100)),
                                                                     child:
                                                                     GestureDetector(
-                                                                      onTap: () async {
-                                                                        ImagePickerPlus
-                                                                        picker =
-                                                                        ImagePickerPlus(context);
-                                                                        SelectedImagesDetails?
-                                                                        details =
-                                                                        await picker.pickBoth(
-                                                                          source: ImageSource.gallery,
-
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                          true,
-                                                                          galleryDisplaySettings:
-                                                                          GalleryDisplaySettings(
-                                                                            appTheme:
-                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                            cropImage:
-                                                                            true,
-                                                                            showImagePreview:
-                                                                            true,
-                                                                          ),
-                                                                        );
-                                                                        print('Details ===> ${details}');
-                                                                        if (details !=
-                                                                            null) {
-                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                          _selectedimag2 =
-                                                                          details.selectedFiles[0];
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          setState(
-                                                                                  () {});
-                                                                          print(
-                                                                              'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                                        }
-                                                                        // if (details != null) await displayDetails(details);
-                                                                      },
+                                                                      // onTap: () async {
+                                                                      //   ImagePickerPlus
+                                                                      //   picker =
+                                                                      //   ImagePickerPlus(context);
+                                                                      //   SelectedImagesDetails?
+                                                                      //   details =
+                                                                      //   await picker.pickBoth(
+                                                                      //     source: ImageSource.gallery,
+                                                                      //
+                                                                      //     /// On long tap, it will be available.
+                                                                      //     multiSelection:
+                                                                      //     true,
+                                                                      //     galleryDisplaySettings:
+                                                                      //     GalleryDisplaySettings(
+                                                                      //       appTheme:
+                                                                      //       AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                      //       cropImage:
+                                                                      //       true,
+                                                                      //       showImagePreview:
+                                                                      //       true,
+                                                                      //     ),
+                                                                      //   );
+                                                                      //   print('Details ===> ${details}');
+                                                                      //   if (details !=
+                                                                      //       null) {
+                                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      //     _selectedimag2 =
+                                                                      //     details.selectedFiles[0];
+                                                                      //     Navigator.pop(
+                                                                      //         context);
+                                                                      //     setState(
+                                                                      //             () {});
+                                                                      //     print(
+                                                                      //         'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                      //   }
+                                                                      //   // if (details != null) await displayDetails(details);
+                                                                      // },
                                                                       child:
                                                                       Row(
                                                                         children: [
@@ -2404,31 +2403,31 @@ class _StepScreenState extends State<StepScreen> {
                                                                               dividedBy: 2),
                                                                           child:
                                                                           GestureDetector(
-                                                                            onTap: () async {
-                                                                              // final ImagePicker picker = ImagePicker();
-                                                                              // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                              // print("image ===> $image");
-                                                                              ImagePickerPlus picker = ImagePickerPlus(context);
-                                                                              SelectedImagesDetails? details = await picker.pickBoth(
-                                                                                source: ImageSource.camera,
-                                                                                /// On long tap, it will be available.
-                                                                                multiSelection: true,
-                                                                                galleryDisplaySettings: GalleryDisplaySettings(
-                                                                                  appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                                  cropImage: true,
-                                                                                  showImagePreview: true,
-                                                                                ),
-                                                                              );
-                                                                              print('Details ===> ${details}');
-                                                                              if (details != null) {
-                                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                                _selectedimag3 = details.selectedFiles[0];
-                                                                                Navigator.pop(context);
-                                                                                setState(() {});
-                                                                                print('selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                                              }
-                                                                              // if (details != null) await displayDetails(details);
-                                                                            },
+                                                                            // onTap: () async {
+                                                                            //   // final ImagePicker picker = ImagePicker();
+                                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                            //   // print("image ===> $image");
+                                                                            //   ImagePickerPlus picker = ImagePickerPlus(context);
+                                                                            //   SelectedImagesDetails? details = await picker.pickBoth(
+                                                                            //     source: ImageSource.camera,
+                                                                            //     /// On long tap, it will be available.
+                                                                            //     multiSelection: true,
+                                                                            //     galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            //       appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            //       cropImage: true,
+                                                                            //       showImagePreview: true,
+                                                                            //     ),
+                                                                            //   );
+                                                                            //   print('Details ===> ${details}');
+                                                                            //   if (details != null) {
+                                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            //     _selectedimag3 = details.selectedFiles[0];
+                                                                            //     Navigator.pop(context);
+                                                                            //     setState(() {});
+                                                                            //     print('selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                                            //   }
+                                                                            //   // if (details != null) await displayDetails(details);
+                                                                            // },
                                                                             child:
                                                                             Row(
                                                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -2465,43 +2464,43 @@ class _StepScreenState extends State<StepScreen> {
                                                                             100)),
                                                                     child:
                                                                     GestureDetector(
-                                                                      onTap: () async {
-                                                                        ImagePickerPlus
-                                                                        picker =
-                                                                        ImagePickerPlus(context);
-                                                                        SelectedImagesDetails?
-                                                                        details =
-                                                                        await picker.pickBoth(
-                                                                          source: ImageSource.gallery,
-
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                          true,
-                                                                          galleryDisplaySettings:
-                                                                          GalleryDisplaySettings(
-                                                                            appTheme:
-                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                            cropImage:
-                                                                            true,
-                                                                            showImagePreview:
-                                                                            true,
-                                                                          ),
-                                                                        );
-                                                                        print('Details ===> ${details}');
-                                                                        if (details !=
-                                                                            null) {
-                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                          _selectedimag3 =
-                                                                          details.selectedFiles[0];
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          setState(
-                                                                                  () {});
-                                                                          print(
-                                                                              'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                                        }
-                                                                        // if (details != null) await displayDetails(details);
-                                                                      },
+                                                                      // onTap: () async {
+                                                                      //   ImagePickerPlus
+                                                                      //   picker =
+                                                                      //   ImagePickerPlus(context);
+                                                                      //   SelectedImagesDetails?
+                                                                      //   details =
+                                                                      //   await picker.pickBoth(
+                                                                      //     source: ImageSource.gallery,
+                                                                      //
+                                                                      //     /// On long tap, it will be available.
+                                                                      //     multiSelection:
+                                                                      //     true,
+                                                                      //     galleryDisplaySettings:
+                                                                      //     GalleryDisplaySettings(
+                                                                      //       appTheme:
+                                                                      //       AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                      //       cropImage:
+                                                                      //       true,
+                                                                      //       showImagePreview:
+                                                                      //       true,
+                                                                      //     ),
+                                                                      //   );
+                                                                      //   print('Details ===> ${details}');
+                                                                      //   if (details !=
+                                                                      //       null) {
+                                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      //     _selectedimag3 =
+                                                                      //     details.selectedFiles[0];
+                                                                      //     Navigator.pop(
+                                                                      //         context);
+                                                                      //     setState(
+                                                                      //             () {});
+                                                                      //     print(
+                                                                      //         'selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                                      //   }
+                                                                      //   // if (details != null) await displayDetails(details);
+                                                                      // },
                                                                       child:
                                                                       Row(
                                                                         children: [
@@ -2759,31 +2758,31 @@ class _StepScreenState extends State<StepScreen> {
                                                                               dividedBy: 2),
                                                                           child:
                                                                           GestureDetector(
-                                                                            onTap: () async {
-                                                                              // final ImagePicker picker = ImagePicker();
-                                                                              // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                              // print("image ===> $image");
-                                                                              ImagePickerPlus picker = ImagePickerPlus(context);
-                                                                              SelectedImagesDetails? details = await picker.pickBoth(
-                                                                                source: ImageSource.camera,
-                                                                                /// On long tap, it will be available.
-                                                                                multiSelection: true,
-                                                                                galleryDisplaySettings: GalleryDisplaySettings(
-                                                                                  appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                                  cropImage: true,
-                                                                                  showImagePreview: true,
-                                                                                ),
-                                                                              );
-                                                                              print('Details ===> ${details}');
-                                                                              if (details != null) {
-                                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                                _selectedimag4 = details.selectedFiles[0];
-                                                                                Navigator.pop(context);
-                                                                                setState(() {});
-                                                                                print('selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                                              }
-                                                                              // if (details != null) await displayDetails(details);
-                                                                            },
+                                                                            // onTap: () async {
+                                                                            //   // final ImagePicker picker = ImagePicker();
+                                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                            //   // print("image ===> $image");
+                                                                            //   ImagePickerPlus picker = ImagePickerPlus(context);
+                                                                            //   SelectedImagesDetails? details = await picker.pickBoth(
+                                                                            //     source: ImageSource.camera,
+                                                                            //     /// On long tap, it will be available.
+                                                                            //     multiSelection: true,
+                                                                            //     galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            //       appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            //       cropImage: true,
+                                                                            //       showImagePreview: true,
+                                                                            //     ),
+                                                                            //   );
+                                                                            //   print('Details ===> ${details}');
+                                                                            //   if (details != null) {
+                                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            //     _selectedimag4 = details.selectedFiles[0];
+                                                                            //     Navigator.pop(context);
+                                                                            //     setState(() {});
+                                                                            //     print('selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                                            //   }
+                                                                            //   // if (details != null) await displayDetails(details);
+                                                                            // },
                                                                             child:
                                                                             Row(
                                                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -2820,43 +2819,43 @@ class _StepScreenState extends State<StepScreen> {
                                                                             100)),
                                                                     child:
                                                                     GestureDetector(
-                                                                      onTap: () async {
-                                                                        ImagePickerPlus
-                                                                        picker =
-                                                                        ImagePickerPlus(context);
-                                                                        SelectedImagesDetails?
-                                                                        details =
-                                                                        await picker.pickBoth(
-                                                                          source: ImageSource.gallery,
-
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                          true,
-                                                                          galleryDisplaySettings:
-                                                                          GalleryDisplaySettings(
-                                                                            appTheme:
-                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                            cropImage:
-                                                                            true,
-                                                                            showImagePreview:
-                                                                            true,
-                                                                          ),
-                                                                        );
-                                                                        print('Details ===> ${details}');
-                                                                        if (details !=
-                                                                            null) {
-                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                          _selectedimag4 =
-                                                                          details.selectedFiles[0];
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          setState(
-                                                                                  () {});
-                                                                          print(
-                                                                              'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                                        }
-                                                                        // if (details != null) await displayDetails(details);
-                                                                      },
+                                                                      // onTap: () async {
+                                                                      //   ImagePickerPlus
+                                                                      //   picker =
+                                                                      //   ImagePickerPlus(context);
+                                                                      //   SelectedImagesDetails?
+                                                                      //   details =
+                                                                      //   await picker.pickBoth(
+                                                                      //     source: ImageSource.gallery,
+                                                                      //
+                                                                      //     /// On long tap, it will be available.
+                                                                      //     multiSelection:
+                                                                      //     true,
+                                                                      //     galleryDisplaySettings:
+                                                                      //     GalleryDisplaySettings(
+                                                                      //       appTheme:
+                                                                      //       AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                      //       cropImage:
+                                                                      //       true,
+                                                                      //       showImagePreview:
+                                                                      //       true,
+                                                                      //     ),
+                                                                      //   );
+                                                                      //   print('Details ===> ${details}');
+                                                                      //   if (details !=
+                                                                      //       null) {
+                                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      //     _selectedimag4 =
+                                                                      //     details.selectedFiles[0];
+                                                                      //     Navigator.pop(
+                                                                      //         context);
+                                                                      //     setState(
+                                                                      //             () {});
+                                                                      //     print(
+                                                                      //         'selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                                      //   }
+                                                                      //   // if (details != null) await displayDetails(details);
+                                                                      // },
                                                                       child:
                                                                       Row(
                                                                         children: [
@@ -3104,31 +3103,31 @@ class _StepScreenState extends State<StepScreen> {
                                                                               dividedBy: 2),
                                                                           child:
                                                                           GestureDetector(
-                                                                            onTap: () async {
-                                                                              // final ImagePicker picker = ImagePicker();
-                                                                              // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                              // print("image ===> $image");
-                                                                              ImagePickerPlus picker = ImagePickerPlus(context);
-                                                                              SelectedImagesDetails? details = await picker.pickBoth(
-                                                                                source: ImageSource.camera,
-                                                                                /// On long tap, it will be available.
-                                                                                multiSelection: true,
-                                                                                galleryDisplaySettings: GalleryDisplaySettings(
-                                                                                  appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                                  cropImage: true,
-                                                                                  showImagePreview: true,
-                                                                                ),
-                                                                              );
-                                                                              print('Details ===> ${details}');
-                                                                              if (details != null) {
-                                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                                _selectedimag5 = details.selectedFiles[0];
-                                                                                Navigator.pop(context);
-                                                                                setState(() {});
-                                                                                print('selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                                              }
-                                                                              // if (details != null) await displayDetails(details);
-                                                                            },
+                                                                            // onTap: () async {
+                                                                            //   // final ImagePicker picker = ImagePicker();
+                                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                            //   // print("image ===> $image");
+                                                                            //   ImagePickerPlus picker = ImagePickerPlus(context);
+                                                                            //   SelectedImagesDetails? details = await picker.pickBoth(
+                                                                            //     source: ImageSource.camera,
+                                                                            //     /// On long tap, it will be available.
+                                                                            //     multiSelection: true,
+                                                                            //     galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            //       appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            //       cropImage: true,
+                                                                            //       showImagePreview: true,
+                                                                            //     ),
+                                                                            //   );
+                                                                            //   print('Details ===> ${details}');
+                                                                            //   if (details != null) {
+                                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            //     _selectedimag5 = details.selectedFiles[0];
+                                                                            //     Navigator.pop(context);
+                                                                            //     setState(() {});
+                                                                            //     print('selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                                            //   }
+                                                                            //   // if (details != null) await displayDetails(details);
+                                                                            // },
                                                                             child:
                                                                             Row(
                                                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -3165,43 +3164,43 @@ class _StepScreenState extends State<StepScreen> {
                                                                             100)),
                                                                     child:
                                                                     GestureDetector(
-                                                                      onTap: () async {
-                                                                        ImagePickerPlus
-                                                                        picker =
-                                                                        ImagePickerPlus(context);
-                                                                        SelectedImagesDetails?
-                                                                        details =
-                                                                        await picker.pickBoth(
-                                                                          source: ImageSource.gallery,
-
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                          true,
-                                                                          galleryDisplaySettings:
-                                                                          GalleryDisplaySettings(
-                                                                            appTheme:
-                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                            cropImage:
-                                                                            true,
-                                                                            showImagePreview:
-                                                                            true,
-                                                                          ),
-                                                                        );
-                                                                        print('Details ===> ${details}');
-                                                                        if (details !=
-                                                                            null) {
-                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                          _selectedimag5 =
-                                                                          details.selectedFiles[0];
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          setState(
-                                                                                  () {});
-                                                                          print(
-                                                                              'selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                                        }
-                                                                        // if (details != null) await displayDetails(details);
-                                                                      },
+                                                                      // onTap: () async {
+                                                                      //   ImagePickerPlus
+                                                                      //   picker =
+                                                                      //   ImagePickerPlus(context);
+                                                                      //   SelectedImagesDetails?
+                                                                      //   details =
+                                                                      //   await picker.pickBoth(
+                                                                      //     source: ImageSource.gallery,
+                                                                      //
+                                                                      //     /// On long tap, it will be available.
+                                                                      //     multiSelection:
+                                                                      //     true,
+                                                                      //     galleryDisplaySettings:
+                                                                      //     GalleryDisplaySettings(
+                                                                      //       appTheme:
+                                                                      //       AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                      //       cropImage:
+                                                                      //       true,
+                                                                      //       showImagePreview:
+                                                                      //       true,
+                                                                      //     ),
+                                                                      //   );
+                                                                      //   print('Details ===> ${details}');
+                                                                      //   if (details !=
+                                                                      //       null) {
+                                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      //     _selectedimag5 =
+                                                                      //     details.selectedFiles[0];
+                                                                      //     Navigator.pop(
+                                                                      //         context);
+                                                                      //     setState(
+                                                                      //             () {});
+                                                                      //     print(
+                                                                      //         'selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                                      //   }
+                                                                      //   // if (details != null) await displayDetails(details);
+                                                                      // },
                                                                       child:
                                                                       Row(
                                                                         children: [
@@ -3449,31 +3448,31 @@ class _StepScreenState extends State<StepScreen> {
                                                                               dividedBy: 2),
                                                                           child:
                                                                           GestureDetector(
-                                                                            onTap: () async {
-                                                                              // final ImagePicker picker = ImagePicker();
-                                                                              // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                              // print("image ===> $image");
-                                                                              ImagePickerPlus picker = ImagePickerPlus(context);
-                                                                              SelectedImagesDetails? details = await picker.pickBoth(
-                                                                                source: ImageSource.camera,
-                                                                                /// On long tap, it will be available.
-                                                                                multiSelection: true,
-                                                                                galleryDisplaySettings: GalleryDisplaySettings(
-                                                                                  appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                                  cropImage: true,
-                                                                                  showImagePreview: true,
-                                                                                ),
-                                                                              );
-                                                                              print('Details ===> ${details}');
-                                                                              if (details != null) {
-                                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                                _selectedimag6 = details.selectedFiles[0];
-                                                                                Navigator.pop(context);
-                                                                                setState(() {});
-                                                                                print('selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                                              }
-                                                                              // if (details != null) await displayDetails(details);
-                                                                            },
+                                                                            // onTap: () async {
+                                                                            //   // final ImagePicker picker = ImagePicker();
+                                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                            //   // print("image ===> $image");
+                                                                            //   ImagePickerPlus picker = ImagePickerPlus(context);
+                                                                            //   SelectedImagesDetails? details = await picker.pickBoth(
+                                                                            //     source: ImageSource.camera,
+                                                                            //     /// On long tap, it will be available.
+                                                                            //     multiSelection: true,
+                                                                            //     galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            //       appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            //       cropImage: true,
+                                                                            //       showImagePreview: true,
+                                                                            //     ),
+                                                                            //   );
+                                                                            //   print('Details ===> ${details}');
+                                                                            //   if (details != null) {
+                                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            //     _selectedimag6 = details.selectedFiles[0];
+                                                                            //     Navigator.pop(context);
+                                                                            //     setState(() {});
+                                                                            //     print('selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                            //   }
+                                                                            //   // if (details != null) await displayDetails(details);
+                                                                            // },
                                                                             child:
                                                                             Row(
                                                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -3510,43 +3509,43 @@ class _StepScreenState extends State<StepScreen> {
                                                                             100)),
                                                                     child:
                                                                     GestureDetector(
-                                                                      onTap: () async {
-                                                                        ImagePickerPlus
-                                                                        picker =
-                                                                        ImagePickerPlus(context);
-                                                                        SelectedImagesDetails?
-                                                                        details =
-                                                                        await picker.pickBoth(
-                                                                          source: ImageSource.gallery,
-
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                          true,
-                                                                          galleryDisplaySettings:
-                                                                          GalleryDisplaySettings(
-                                                                            appTheme:
-                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                            cropImage:
-                                                                            true,
-                                                                            showImagePreview:
-                                                                            true,
-                                                                          ),
-                                                                        );
-                                                                        print('Details ===> ${details}');
-                                                                        if (details !=
-                                                                            null) {
-                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                          _selectedimag6 =
-                                                                          details.selectedFiles[0];
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          setState(
-                                                                                  () {});
-                                                                          print(
-                                                                              'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                                        }
-                                                                        // if (details != null) await displayDetails(details);
-                                                                      },
+                                                                      // onTap: () async {
+                                                                      //   ImagePickerPlus
+                                                                      //   picker =
+                                                                      //   ImagePickerPlus(context);
+                                                                      //   SelectedImagesDetails?
+                                                                      //   details =
+                                                                      //   await picker.pickBoth(
+                                                                      //     source: ImageSource.gallery,
+                                                                      //
+                                                                      //     /// On long tap, it will be available.
+                                                                      //     multiSelection:
+                                                                      //     true,
+                                                                      //     galleryDisplaySettings:
+                                                                      //     GalleryDisplaySettings(
+                                                                      //       appTheme:
+                                                                      //       AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                      //       cropImage:
+                                                                      //       true,
+                                                                      //       showImagePreview:
+                                                                      //       true,
+                                                                      //     ),
+                                                                      //   );
+                                                                      //   print('Details ===> ${details}');
+                                                                      //   if (details !=
+                                                                      //       null) {
+                                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      //     _selectedimag6 =
+                                                                      //     details.selectedFiles[0];
+                                                                      //     Navigator.pop(
+                                                                      //         context);
+                                                                      //     setState(
+                                                                      //             () {});
+                                                                      //     print(
+                                                                      //         'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                      //   }
+                                                                      //   // if (details != null) await displayDetails(details);
+                                                                      // },
                                                                       child:
                                                                       Row(
                                                                         children: [

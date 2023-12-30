@@ -98,8 +98,8 @@ class _Language_ScreenState extends State<Language_Screen> {
                        child: Row(
                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
-                          _selected_language == '' ?  const Text("Select",style: TextStyle(color: AppColor.fontgray,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),):
-                            Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
+                          _selected_language == '' ?   Text("Select".tr(),style: TextStyle(color: AppColor.fontgray,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),):
+                            Text(_selected_language.tr(),style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
                            language ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.fontgray,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.fontgray,)
                          ],
                        ),

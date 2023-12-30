@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/Step_Screens.dart';
@@ -64,7 +65,7 @@ class _Verification_codeState extends State<Verification_code> {
               children: [
                 SizedBox(height: screenHeight(context,dividedBy: 10),),
                 custom_header(text: "Verification Code"),
-                custom_discription(text: "Please enter the code we sent to your phone"),
+                custom_discription(text: "counter2"),
                 SizedBox(height: screenHeight(context,dividedBy: 50),),
                 Container(
                     padding: EdgeInsets.only(right: screenWidth(context, dividedBy: 10)),
@@ -86,7 +87,7 @@ class _Verification_codeState extends State<Verification_code> {
                   onTap: () {
                    // resendOtpCubit.ResendOtpService(phoneNumber: widget.Number, context: context);
                   },
-                    child: const Text('Resend Code',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5))),
+                    child: Text('Resend Code'.tr(),style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5))),
                 const Spacer(),
                 Custom_botton(context, text: 'Verify',
                 onTap: () {

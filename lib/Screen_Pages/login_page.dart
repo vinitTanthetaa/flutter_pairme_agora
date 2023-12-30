@@ -153,7 +153,7 @@ class _Login_pageState extends State<Login_page> {
                             //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
                             //     //semanticsLabel: 'A red up arrow'
                             // ),
-                            hintText: 'Phone Number',
+                            hintText: 'Phone Number'.tr(),
                             hintStyle: const TextStyle(
                                 color: Color(0xffB3B3B3),
                                 fontFamily: 'Roboto',
@@ -243,20 +243,18 @@ class _Login_pageState extends State<Login_page> {
                             ),
                           ]
                       ),
-                      child: Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 5)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 10),
-                              height: screenHeight(context,dividedBy: 40),
-                              width: screenHeight(context,dividedBy: 40),
-                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/google.png'))),
-                            ),
-                            const Text("Login with Google",style: TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
-                          ],
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                          //  margin: const EdgeInsets.symmetric(horizontal: 10),
+                            height: screenHeight(context,dividedBy: 40),
+                            width: screenHeight(context,dividedBy: 40),
+                            decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/google.png'))),
+                          ),
+                           SizedBox(width: screenWidth(context,dividedBy: 40),),
+                           Text("Login with Google".tr(),style: TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
+                        ],
                       ),
                     ),
                     Center(
@@ -278,22 +276,21 @@ class _Login_pageState extends State<Login_page> {
                                 ),
                               ]
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 4.6)),
-                            child: Row(
-                             // mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                                  height: screenHeight(context,dividedBy: 35),
-                                  width: screenHeight(context,dividedBy: 40),
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(image: AssetImage('assets/Images/facebook.png'),fit: BoxFit.contain)),
-                                ),
-                                const Text("Login with Facebook",style: TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                               // margin: const EdgeInsets.symmetric(horizontal: 5),
+                                height: screenHeight(context,dividedBy: 37),
+                                width: screenHeight(context,dividedBy: 60),
+                                decoration: const BoxDecoration(
+                                 // color: Colors.red,
+                                    image: DecorationImage(image: AssetImage('assets/Images/facebook.png'),fit: BoxFit.fitHeight)),
+                              ),
+                              SizedBox(width: screenWidth(context,dividedBy: 50),),
+                               Text("Login with Facebook".tr(),style: TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
 
-                              ],
-                            ),
+                            ],
                           ),
                         ),
                       ),
@@ -302,13 +299,13 @@ class _Login_pageState extends State<Login_page> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don’t have an account? ",style: TextStyle(color: Color(0xff888888),fontSize: 15  ,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
+                           Text("Don’t have an account?".tr(),style: TextStyle(color: Color(0xff888888),fontSize: 15  ,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
                           InkWell(onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
                               return const SignUp_page();
                             },));
                           },
-                              child: const Text("Sign Up",style: TextStyle(color: Color(0xff231F20),fontSize: 15  ,fontWeight: FontWeight.w600,fontFamily: 'Roboto'),)),
+                              child: Text("Sign Up".tr(),style: TextStyle(color: Color(0xff231F20),fontSize: 15  ,fontWeight: FontWeight.w600,fontFamily: 'Roboto'),)),
                       ],),
                     )
                   ],),
