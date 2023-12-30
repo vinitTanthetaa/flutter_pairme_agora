@@ -149,7 +149,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                                      context.setLocale(const Locale('en'));
                                    }
                                    if(_selected_language == 'Spanish') {
-                                     context.setLocale(const Locale('sp'));
+                                     context.setLocale(const Locale('es'));
                                    }
                                    if(_selected_language == 'Hindi') {
                                      context.setLocale(const Locale('hi'));

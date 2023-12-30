@@ -193,15 +193,15 @@ class _Login_pageState extends State<Login_page> {
                         } else if(_Password.text.isEmpty) {
                           flutterToast('Please Enter Password', false);
                         } else {
-                          loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
+                         // loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
                           // showcase = true;
                           // prefsService.setBoolData('showcase', showcase);
                           // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
                           // showcasetime++;
                           // prefsService.setIntData("showcasetime", showcasetime);
-                          // Navigator.push(context,MaterialPageRoute(builder:(context) {
-                          //   return const Home_screen();
-                          // }, ));
+                          Navigator.push(context,MaterialPageRoute(builder:(context) {
+                            return const Home_screen();
+                          }, ));
                         }
                       }, height: screenHeight(context,dividedBy: 13),),
                     ),

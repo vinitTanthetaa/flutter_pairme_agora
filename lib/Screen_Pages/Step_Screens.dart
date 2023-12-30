@@ -1674,41 +1674,6 @@ class _StepScreenState extends State<StepScreen> {
                                               ),
                                               child: Stack(
                                                 children: [
-                                                  // Container(
-                                                  //   height: screenHeight(context,
-                                                  //       dividedBy: 8),
-                                                  //   width: screenHeight(context,
-                                                  //       dividedBy: 8),
-                                                  //   decoration: BoxDecoration(
-                                                  //       borderRadius:
-                                                  //       BorderRadius.circular(15),
-                                                  //       boxShadow: const [
-                                                  //         BoxShadow(
-                                                  //           color: AppColor.fontgray,
-                                                  //           offset: Offset(
-                                                  //             1,
-                                                  //             1,
-                                                  //           ),
-                                                  //           blurRadius: 5,
-                                                  //           // spreadRadius: 1.0,
-                                                  //         ),
-                                                  //       ],
-                                                  //       image:
-                                                  //       _selectedimag1
-                                                  //           ?.selectedFile !=
-                                                  //           null
-                                                  //           ? DecorationImage(
-                                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                  //           image: FileImage(
-                                                  //               _selectedimag1!
-                                                  //                   .selectedFile),
-                                                  //           fit: BoxFit.fill) :
-                                                  //       const DecorationImage(
-                                                  //           image: AssetImage(
-                                                  //               'assets/Images/placeHolderImage.jpg'),
-                                                  //           fit: BoxFit.fill)
-                                                  //   ),
-                                                  // ),
                                                   Positioned(
                                                     bottom: 0.0,
                                                     right: 0.0,
@@ -2019,41 +1984,6 @@ class _StepScreenState extends State<StepScreen> {
                                               ),
                                               child: Stack(
                                                 children: [
-                                                  // Container(
-                                                  //   height: screenHeight(context,
-                                                  //       dividedBy: 8),
-                                                  //   width: screenHeight(context,
-                                                  //       dividedBy: 8),
-                                                  //   decoration: BoxDecoration(
-                                                  //       borderRadius:
-                                                  //       BorderRadius.circular(15),
-                                                  //       boxShadow: const [
-                                                  //         BoxShadow(
-                                                  //           color: AppColor.fontgray,
-                                                  //           offset: Offset(
-                                                  //             1,
-                                                  //             1,
-                                                  //           ),
-                                                  //           blurRadius: 5,
-                                                  //           // spreadRadius: 1.0,
-                                                  //         ),
-                                                  //       ],
-                                                  //       image:
-                                                  //       _selectedimag2
-                                                  //           ?.selectedFile !=
-                                                  //           null
-                                                  //           ? DecorationImage(
-                                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                  //           image: FileImage(
-                                                  //               _selectedimag2!
-                                                  //                   .selectedFile),
-                                                  //           fit: BoxFit.fill) :
-                                                  //       const DecorationImage(
-                                                  //           image: AssetImage(
-                                                  //               'assets/Images/placeHolderImage.jpg'),
-                                                  //           fit: BoxFit.fill)
-                                                  //   ),
-                                                  // ),
                                                   Positioned(
                                                     bottom: 0.0,
                                                     right: 0.0,
@@ -4436,7 +4366,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                 ),
                                                               ],
                                                             )
-                                                          : SizedBox(),
+                                                          : const SizedBox(),
                                             ],
                                           ),
                                         ),
@@ -4520,7 +4450,7 @@ class _StepScreenState extends State<StepScreen> {
                               )
                             : ind == 4
                                 ? SingleChildScrollView(
-                                    physics: ClampingScrollPhysics(),
+                                    physics: const ClampingScrollPhysics(),
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                         horizontal:
@@ -4551,21 +4481,6 @@ class _StepScreenState extends State<StepScreen> {
                                                     ind++;
                                                   });
                                                 },
-                                                // onTap: () {
-                                                //   if(selectedlookingFor.length <= 0){
-                                                //     flutterToast("Select atlist 1 describe your self", false);
-                                                //   } else {
-                                                //     describeYourSelfCubit
-                                                //         .DescribeYourSelfService(
-                                                //         array: selectedlookingFor,
-                                                //         context: context).then((
-                                                //         value) {
-                                                //       setState(() {
-                                                //         ind++;
-                                                //       });
-                                                //     },);
-                                                //   }
-                                                // },
                                               )
                                             ],
                                           ),
@@ -4642,21 +4557,7 @@ class _StepScreenState extends State<StepScreen> {
                                                   ind++;
                                                 });
                                               },
-                                          //     onTap: () {
-                                          //   if(selectedlookingFor.length <= 0){
-                                          //     flutterToast("Select atlist 1 describe your self", false);
-                                          //   } else {
-                                          //     describeYourSelfCubit
-                                          //         .DescribeYourSelfService(
-                                          //         array: selectedlookingFor,
-                                          //         context: context).then((
-                                          //         value) {
-                                          //       setState(() {
-                                          //         ind++;
-                                          //       });
-                                          //     },);
-                                          //   }
-                                          // },
+
                                               height: screenHeight(context,
                                                   dividedBy: 25),)
                                         ],
@@ -4691,28 +4592,28 @@ class _StepScreenState extends State<StepScreen> {
                                                           "Who are you looking to connect with? Select up to 3 of the following:")),
                                               skip_button(
                                                 context,
-                                                // onTap: () {
-                                                //   Navigator.push(context,
-                                                //       MaterialPageRoute(
-                                                //     builder: (context) {
-                                                //       return const Home_screen();
-                                                //     },
-                                                //   ));
-                                                // },
                                                 onTap: () {
-                                                  if(selectedlookingFor.length <= 0){
-                                                    flutterToast("Select atlist 1 describe your self", false);
-                                                  } else {
-                                                    connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) {
-                                                              return const Home_screen();
-                                                            },
-                                                          ));
-                                                    },);
-                                                  }
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return const Home_screen();
+                                                    },
+                                                  ));
                                                 },
+                                                // onTap: () {
+                                                //   if(selectedlookingFor.length <= 0){
+                                                //     flutterToast("Select atlist 1 describe your self", false);
+                                                //   } else {
+                                                //     connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
+                                                //       Navigator.push(context,
+                                                //           MaterialPageRoute(
+                                                //             builder: (context) {
+                                                //               return const Home_screen();
+                                                //             },
+                                                //           ));
+                                                //     },);
+                                                //   }
+                                                // },
                                               )
                                             ],
                                           ),

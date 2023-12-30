@@ -22,54 +22,111 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
   BusinessProfileCubit() : super(BusinessProfileInitials());
 
   Future<void> BusinessProfileService(
-      { File? photo_1,
-        File? photo_2,
-       File? photo_3,
-       File? photo_4,
-       File? photo_5,
-       File? photo_6,
-       PlatformFile? file_1,
-       PlatformFile? file_2,
-       PlatformFile? file_3,
+      { required File photo_1,
+        required File photo_2,
+       required File photo_3,
+       required File photo_4,
+       required File photo_5,
+       required File photo_6,
+       required PlatformFile file_1,
+       required PlatformFile file_2,
+       required PlatformFile file_3,
         String? bio,
         required BuildContext context}) async {
     emit(BusinessProfileLoading());
     final dio = Dio();
-
-
-    // Map body = {
-    //   "photo_1": photo_1,
-    //   "photo_2": photo_2,
-    //   "photo_3": photo_3,
-    //   "photo_4": photo_4,
-    //   "photo_5": photo_5,
-    //   "photo_6": photo_6,
-    // };
-    //print("Body is $body");
+    FormData formData = FormData();
+    formData.fields.add(MapEntry("bio", bio??''));
+    // Adding photo files
+    if (photo_1.path.isNotEmpty && photo_2.path.isNotEmpty && photo_3.path.isNotEmpty && photo_4.path.isNotEmpty && photo_5.path.isNotEmpty && photo_6.path.isNotEmpty)
+    {
+      String? fileName = photo_1.path.split('/').last ;
+      String? fileName1 = photo_2.path.split('/').last;
+      String? fileName2 = photo_3.path.split('/').last;
+      String? fileName3 = photo_4.path.split('/').last;
+      String? fileName4 = photo_5.path.split('/').last;
+      String? fileName5 = photo_6.path.split('/').last;
+      print("6");
+      formData.files.addAll([
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
+        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2)),
+        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3)),
+        MapEntry('photo_5', await MultipartFile.fromFile(photo_5.path, filename: fileName4)),
+        MapEntry('photo_6', await MultipartFile.fromFile(photo_6.path, filename: fileName5)),
+      ]);
+    } else if(photo_1.path.isNotEmpty && photo_2.path.isNotEmpty && photo_3.path.isNotEmpty && photo_4.path.isNotEmpty && photo_5.path.isNotEmpty){
+      print("5");
+      String? fileName = photo_1.path.split('/').last ;
+      String? fileName1 = photo_2.path.split('/').last;
+      String? fileName2 = photo_3.path.split('/').last;
+      String? fileName3 = photo_4.path.split('/').last;
+      String? fileName4 = photo_5.path.split('/').last;
+      formData.files.addAll([
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
+        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2)),
+        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3)),
+        MapEntry('photo_5', await MultipartFile.fromFile(photo_5.path, filename: fileName4)),
+      ]);
+    }else if(photo_1.path.isNotEmpty && photo_2.path.isNotEmpty && photo_3.path.isNotEmpty && photo_4.path.isNotEmpty ){
+      print("4");
+      String? fileName = photo_1.path.split('/').last ;
+      String? fileName1 = photo_2.path.split('/').last;
+      String? fileName2 = photo_3.path.split('/').last;
+      String? fileName3 = photo_4.path.split('/').last;
+      formData.files.addAll([
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
+        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2)),
+        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3)),
+      ]);
+    }else if(photo_1.path.isNotEmpty && photo_2.path.isNotEmpty && photo_3.path.isNotEmpty){
+      print("3");
+      String? fileName = photo_1.path.split('/').last ;
+      String? fileName1 = photo_2.path.split('/').last;
+      String? fileName2 = photo_3.path.split('/').last;
+      formData.files.addAll([
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
+        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2)),
+      ]);
+    }else if(photo_1.path.isNotEmpty && photo_2.path.isNotEmpty){
+      print("2");
+      String? fileName = photo_1.path.split('/').last ;
+      String? fileName1 = photo_2.path.split('/').last;
+      formData.files.addAll([
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
+      ]);
+    }else if(photo_1.path.isNotEmpty ){
+      print("1");
+      String? fileName = photo_1.path.split('/').last ;
+      formData.files.addAll([
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path ?? "", filename: fileName)),
+      ]);
+    }
+    // Adding file files
+    if(file_1.name.isNotEmpty && file_2.name.isNotEmpty && file_3.name.isNotEmpty ){
+      formData.files.addAll([
+        MapEntry('file_1', await MultipartFile.fromFile(file_1.path!, filename: file_1.name)),
+        MapEntry('file_2', await MultipartFile.fromFile(file_2.path!, filename: file_2.name)),
+        MapEntry('file_3', await MultipartFile.fromFile(file_3.path!, filename: file_3.name)),
+      ]);
+    } else if(file_1.name.isNotEmpty && file_2.name.isNotEmpty){
+      formData.files.addAll([
+        MapEntry('file_1', await MultipartFile.fromFile(file_1.path!, filename: file_1.name)),
+        MapEntry('file_2', await MultipartFile.fromFile(file_2.path!, filename: file_2.name)),
+      ]);
+    }else if(file_1.name.isNotEmpty){
+      formData.files.addAll([
+        MapEntry('file_1', await MultipartFile.fromFile(file_1.path!, filename: file_1.name)),
+      ]);
+    }
     try {
-
-      String? fileName = photo_1?.path.split('/').last;
-      String? fileName1 = photo_2?.path.split('/').last;
-      String? fileName2 = photo_3?.path.split('/').last;
-      String? fileName3 = photo_4?.path.split('/').last;
-      String? fileName4 = photo_5?.path.split('/').last;
-      String? fileName5 = photo_6?.path.split('/').last;
-
-      FormData formData = FormData.fromMap(
-          {
-        'photo_1': await MultipartFile.fromFile(photo_1!.path,filename: fileName),
-        'photo_2': await MultipartFile.fromFile(photo_2!.path,filename: fileName1),
-        'photo_3': await MultipartFile.fromFile(photo_3!.path,filename: fileName2),
-        'photo_4': await MultipartFile.fromFile(photo_4!.path,filename: fileName3),
-        'photo_5': await MultipartFile.fromFile(photo_5!.path,filename: fileName4),
-        'photo_6': await MultipartFile.fromFile(photo_6!.path,filename: fileName5),
-        'file_1': await MultipartFile.fromFile(file_1!.path!,filename: file_1.name),
-        // 'file_2': await MultipartFile.fromFile(file_2.path!,filename: file_2.name),
-        // 'file_3': await MultipartFile.fromFile(file_3.path!,filename: file_3.name),
-      },
-      );
-
+      print("frodata ==> ${formData.fields}");
       print("frodata ==> ${formData.files}");
+      print("bio ==> $bio");
       Response response = await dio.post(
         apis.business_profile,
         data: formData,
@@ -88,7 +145,7 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
       if (hello['message'] == "data saved successfully") {
         print("Response ===> ${response.data}");
         emit(BusinessProfileSuccess());
-        print("photo_1 ==> ${photo_1.path}");
+      //  print("photo_1 ==> ${photo_1.path}");
         flutterToast(hello['message'], true);
       } else {
         emit(BusinessProfileError());

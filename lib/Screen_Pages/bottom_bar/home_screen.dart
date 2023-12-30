@@ -38,7 +38,7 @@ class _Home_screenState extends State<Home_screen> {
     ),
       body: BottomNavBar(
           selectedIndex: selectedIndex,
-          screenList: [
+          screenList: const [
             Home_Page(),
             Message_page(),
             Profile_page(),

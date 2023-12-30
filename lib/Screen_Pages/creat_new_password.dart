@@ -54,6 +54,9 @@ class _Create_New_PasswordState extends State<Create_New_Password> {
                   Spacer(),
                   Custom_botton(context, text: 'Save', onTap: () {
                    // resetPasswordCubit.ResetPasswordService(phoneNumber: widget.Phonenumber, password: _Password.text, confirmPassword: _confirmPassword.text, context: context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return const Login_page();
+                    },));
                   }, height: screenHeight(context,dividedBy: 20),)
                 ],
               ),

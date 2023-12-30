@@ -21,7 +21,7 @@ Future<void> main() async {
     runApp(EasyLocalization(
         supportedLocales: const [
           Locale('en'),
-          Locale('sp'),
+          Locale('es'),
           Locale('hi'),
           Locale('can'),
           Locale('man'),
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         ),
         supportedLocales: const [
           Locale('en'),
-          Locale('sp'),
+          Locale('es'),
           Locale('hi'),
           Locale('can'),
           Locale('man'),
