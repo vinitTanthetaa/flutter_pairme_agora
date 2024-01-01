@@ -75,7 +75,7 @@ class _Verification_codeState extends State<Verification_code> {
                       controller: pinController,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       defaultPinTheme: defaultPinTheme,
-                      keyboardType: TextInputType.numberWithOptions(),
+                      keyboardType: const TextInputType.numberWithOptions(),
                       crossAxisAlignment: CrossAxisAlignment.start,
                       showCursor: true,
                       onCompleted: (pin) {
@@ -87,23 +87,23 @@ class _Verification_codeState extends State<Verification_code> {
                   onTap: () {
                    // resendOtpCubit.ResendOtpService(phoneNumber: widget.Number, context: context);
                   },
-                    child: Text('Resend Code'.tr(),style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5))),
+                    child: Text('Resend Code'.tr(),style: const TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5))),
                 const Spacer(),
                 Custom_botton(context, text: 'Verify',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return widget.Forggot ? Create_New_Password(Phonenumber: '',) : const StepScreen();
-                  },));
-                },
-                //   onTap: () {
-                //   if(pinController.text.isEmpty){
-                //     flutterToast("Plese Enter Pin", true);
-                //   } else if(widget.Forggot){
-                //     verifyForgotOtpCubit.VerifyForgotOtpService(phoneNumber: widget.Number, otp: pinController.text, forget: true, context: context);
-                //   } else {
-                //     verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
-                //   }
+                // onTap: () {
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //     return widget.Forggot ? Create_New_Password(Phonenumber: '',) : const StepScreen();
+                //   },));
                 // },
+                  onTap: () {
+                  if(pinController.text.isEmpty){
+                    flutterToast("Plese Enter Pin", true);
+                  } else if(widget.Forggot){
+                    verifyForgotOtpCubit.VerifyForgotOtpService(phoneNumber: widget.Number, otp: pinController.text, forget: true, context: context);
+                  } else {
+                    verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
+                  }
+                },
                   height: screenHeight(context,dividedBy: 20),)
               ],
             ),)

@@ -12,6 +12,7 @@ import 'package:pair_me/cubits/connect_with_cubit.dart';
 import 'package:pair_me/cubits/login_cubit.dart';
 import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/cubits/signup.dart';
+import 'package:pair_me/cubits/user_profile_cubit.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 
 Future<void> main() async {
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BusinessDetailsCubit()),
         BlocProvider(create: (context) => ConnectwithCubit()),
         BlocProvider(create: (context) => DescribeYourSelfCubit()),
+        BlocProvider(create: (context) => UserDetailsCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

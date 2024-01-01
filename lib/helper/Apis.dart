@@ -18,6 +18,11 @@ class apis{
   static const String reset_password = "${baseurl}/reset_password";
   static const String resendOtp = "${baseurl}/resendOtp";
 
+
+
+  static const String UserProfile = "${baseurl}/user_profile";
+
+
   // App Manage
   static const String change_password = "${baseurl}/change_password";
   static const String delete_user = "${baseurl}/delete_user";

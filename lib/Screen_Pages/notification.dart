@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -91,7 +92,7 @@ List list = [
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         custom_header(text: 'Notification'),
-                        const Text('Clear all',style: TextStyle(fontFamily: 'Roboto',fontSize: 14,fontWeight: FontWeight.w500,color: AppColor.skyBlue),)
+                        Text('Clear all'.tr(),style: const TextStyle(fontFamily: 'Roboto',fontSize: 14,fontWeight: FontWeight.w500,color: AppColor.skyBlue),)
                       ],
                     ),
                   ),

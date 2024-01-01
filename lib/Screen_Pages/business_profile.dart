@@ -3,7 +3,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:image_picker_plus/image_picker_plus.dart';
+import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -38,12 +38,12 @@ class _Business_ProfileState extends State<Business_Profile> {
   // }
   BusinessProfileCubit businessProfileCubit = BusinessProfileCubit();
   final TextEditingController _bio = TextEditingController();
-  // SelectedByte? _selectedimag1;
-  // SelectedByte? _selectedimag2;
-  // SelectedByte? _selectedimag3;
-  // SelectedByte? _selectedimag4;
-  // SelectedByte? _selectedimag5;
-  // SelectedByte? _selectedimag6;
+  SelectedByte? _selectedimag1;
+  SelectedByte? _selectedimag2;
+  SelectedByte? _selectedimag3;
+  SelectedByte? _selectedimag4;
+  SelectedByte? _selectedimag5;
+  SelectedByte? _selectedimag6;
   PlatformFile? file1;
   PlatformFile? file2;
   PlatformFile? file3;
@@ -284,56 +284,56 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               dividedBy: 2),
                                                           child:
                                                               GestureDetector(
-                                                            // onTap: () async {
-                                                            //   // final ImagePicker picker = ImagePicker();
-                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
-                                                            //   // print("image ===> $image");
-                                                            //   ImagePickerPlus
-                                                            //       picker =
-                                                            //       ImagePickerPlus(
-                                                            //           context);
-                                                            //   SelectedImagesDetails?
-                                                            //       details =
-                                                            //       await picker
-                                                            //           .pickBoth(
-                                                            //     source:
-                                                            //         ImageSource
-                                                            //             .camera,
-                                                            //
-                                                            //     /// On long tap, it will be available.
-                                                            //     multiSelection:
-                                                            //         true,
-                                                            //     galleryDisplaySettings:
-                                                            //         GalleryDisplaySettings(
-                                                            //       appTheme: AppTheme(
-                                                            //           focusColor:
-                                                            //               Colors
-                                                            //                   .white,
-                                                            //           primaryColor:
-                                                            //               Colors
-                                                            //                   .black),
-                                                            //       cropImage:
-                                                            //           true,
-                                                            //       showImagePreview:
-                                                            //           true,
-                                                            //     ),
-                                                            //   );
-                                                            //   print(
-                                                            //       'Details ===> ${details}');
-                                                            //   if (details !=
-                                                            //       null) {
-                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                            //     _selectedimag1 =
-                                                            //         details
-                                                            //             .selectedFiles[0];
-                                                            //     Navigator.pop(
-                                                            //         context);
-                                                            //     setState(() {});
-                                                            //     print(
-                                                            //         'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                            //   }
-                                                            //   // if (details != null) await displayDetails(details);
-                                                            // },
+                                                            onTap: () async {
+                                                              // final ImagePicker picker = ImagePicker();
+                                                              // final image = picker.pickImage(source: ImageSource.gallery);
+                                                              // print("image ===> $image");
+                                                              ImagePickerPlus
+                                                                  picker =
+                                                                  ImagePickerPlus(
+                                                                      context);
+                                                              SelectedImagesDetails?
+                                                                  details =
+                                                                  await picker
+                                                                      .pickBoth(
+                                                                source:
+                                                                    ImageSource
+                                                                        .camera,
+
+                                                                /// On long tap, it will be available.
+                                                                multiSelection:
+                                                                    true,
+                                                                galleryDisplaySettings:
+                                                                    GalleryDisplaySettings(
+                                                                  appTheme: AppTheme(
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      primaryColor:
+                                                                          Colors
+                                                                              .black),
+                                                                  cropImage:
+                                                                      true,
+                                                                  showImagePreview:
+                                                                      true,
+                                                                ),
+                                                              );
+                                                              print(
+                                                                  'Details ===> ${details}');
+                                                              if (details !=
+                                                                  null) {
+                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                _selectedimag1 =
+                                                                    details
+                                                                        .selectedFiles[0];
+                                                                Navigator.pop(
+                                                                    context);
+                                                                setState(() {});
+                                                                print(
+                                                                    'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                              }
+                                                              // if (details != null) await displayDetails(details);
+                                                            },
                                                             child: Row(
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
@@ -395,47 +395,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     dividedBy:
                                                                         100)),
                                                     child: GestureDetector(
-                                                      // onTap: () async {
-                                                      //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
-                                                      //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
-                                                      //     source: ImageSource
-                                                      //         .gallery,
-                                                      //
-                                                      //     /// On long tap, it will be available.
-                                                      //     multiSelection: true,
-                                                      //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
-                                                      //       appTheme: AppTheme(
-                                                      //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
-                                                      //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
-                                                      //       cropImage: true,
-                                                      //       showImagePreview:
-                                                      //           true,
-                                                      //     ),
-                                                      //   );
-                                                      //   print(
-                                                      //       'Details ===> ${details}');
-                                                      //   if (details != null) {
-                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                      //     _selectedimag1 = details
-                                                      //         .selectedFiles[0];
-                                                      //     Navigator.pop(
-                                                      //         context);
-                                                      //     setState(() {});
-                                                      //     print(
-                                                      //         'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                      //   }
-                                                      //   // if (details != null) await displayDetails(details);
-                                                      // },
+                                                      onTap: () async {
+                                                        ImagePickerPlus picker =
+                                                            ImagePickerPlus(
+                                                                context);
+                                                        SelectedImagesDetails?
+                                                            details =
+                                                            await picker
+                                                                .pickBoth(
+                                                          source: ImageSource
+                                                              .gallery,
+
+                                                          /// On long tap, it will be available.
+                                                          multiSelection: true,
+                                                          galleryDisplaySettings:
+                                                              GalleryDisplaySettings(
+                                                            appTheme: AppTheme(
+                                                                focusColor:
+                                                                    Colors
+                                                                        .white,
+                                                                primaryColor:
+                                                                    Colors
+                                                                        .black),
+                                                            cropImage: true,
+                                                            showImagePreview:
+                                                                true,
+                                                          ),
+                                                        );
+                                                        print(
+                                                            'Details ===> ${details}');
+                                                        if (details != null) {
+                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                          _selectedimag1 = details
+                                                              .selectedFiles[0];
+                                                          Navigator.pop(
+                                                              context);
+                                                          setState(() {});
+                                                          print(
+                                                              'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                        }
+                                                        // if (details != null) await displayDetails(details);
+                                                      },
                                                       child: Row(
                                                         children: [
                                                           SizedBox(
@@ -799,47 +799,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     dividedBy:
                                                                         100)),
                                                     child: GestureDetector(
-                                                      // onTap: () async {
-                                                      //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
-                                                      //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
-                                                      //     source: ImageSource
-                                                      //         .gallery,
-                                                      //
-                                                      //     /// On long tap, it will be available.
-                                                      //     multiSelection: true,
-                                                      //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
-                                                      //       appTheme: AppTheme(
-                                                      //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
-                                                      //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
-                                                      //       cropImage: true,
-                                                      //       showImagePreview:
-                                                      //           true,
-                                                      //     ),
-                                                      //   );
-                                                      //   print(
-                                                      //       'Details ===> ${details}');
-                                                      //   if (details != null) {
-                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                      //     _selectedimag2 = details
-                                                      //         .selectedFiles[0];
-                                                      //     Navigator.pop(
-                                                      //         context);
-                                                      //     setState(() {});
-                                                      //     print(
-                                                      //         'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      //   }
-                                                      //   // if (details != null) await displayDetails(details);
-                                                      // },
+                                                      onTap: () async {
+                                                        ImagePickerPlus picker =
+                                                            ImagePickerPlus(
+                                                                context);
+                                                        SelectedImagesDetails?
+                                                            details =
+                                                            await picker
+                                                                .pickBoth(
+                                                          source: ImageSource
+                                                              .gallery,
+
+                                                          /// On long tap, it will be available.
+                                                          multiSelection: true,
+                                                          galleryDisplaySettings:
+                                                              GalleryDisplaySettings(
+                                                            appTheme: AppTheme(
+                                                                focusColor:
+                                                                    Colors
+                                                                        .white,
+                                                                primaryColor:
+                                                                    Colors
+                                                                        .black),
+                                                            cropImage: true,
+                                                            showImagePreview:
+                                                                true,
+                                                          ),
+                                                        );
+                                                        print(
+                                                            'Details ===> ${details}');
+                                                        if (details != null) {
+                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                          _selectedimag2 = details
+                                                              .selectedFiles[0];
+                                                          Navigator.pop(
+                                                              context);
+                                                          setState(() {});
+                                                          print(
+                                                              'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                        }
+                                                        // if (details != null) await displayDetails(details);
+                                                      },
                                                       child: Row(
                                                         children: [
                                                           SizedBox(
@@ -1203,47 +1203,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     dividedBy:
                                                                         100)),
                                                     child: GestureDetector(
-                                                      // onTap: () async {
-                                                      //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
-                                                      //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
-                                                      //     source: ImageSource
-                                                      //         .gallery,
-                                                      //
-                                                      //     /// On long tap, it will be available.
-                                                      //     multiSelection: true,
-                                                      //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
-                                                      //       appTheme: AppTheme(
-                                                      //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
-                                                      //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
-                                                      //       cropImage: true,
-                                                      //       showImagePreview:
-                                                      //           true,
-                                                      //     ),
-                                                      //   );
-                                                      //   print(
-                                                      //       'Details ===> ${details}');
-                                                      //   if (details != null) {
-                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                      //     _selectedimag3 = details
-                                                      //         .selectedFiles[0];
-                                                      //     Navigator.pop(
-                                                      //         context);
-                                                      //     setState(() {});
-                                                      //     print(
-                                                      //         'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                      //   }
-                                                      //   // if (details != null) await displayDetails(details);
-                                                      // },
+                                                      onTap: () async {
+                                                        ImagePickerPlus picker =
+                                                            ImagePickerPlus(
+                                                                context);
+                                                        SelectedImagesDetails?
+                                                            details =
+                                                            await picker
+                                                                .pickBoth(
+                                                          source: ImageSource
+                                                              .gallery,
+
+                                                          /// On long tap, it will be available.
+                                                          multiSelection: true,
+                                                          galleryDisplaySettings:
+                                                              GalleryDisplaySettings(
+                                                            appTheme: AppTheme(
+                                                                focusColor:
+                                                                    Colors
+                                                                        .white,
+                                                                primaryColor:
+                                                                    Colors
+                                                                        .black),
+                                                            cropImage: true,
+                                                            showImagePreview:
+                                                                true,
+                                                          ),
+                                                        );
+                                                        print(
+                                                            'Details ===> ${details}');
+                                                        if (details != null) {
+                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                          _selectedimag3 = details
+                                                              .selectedFiles[0];
+                                                          Navigator.pop(
+                                                              context);
+                                                          setState(() {});
+                                                          print(
+                                                              'selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                        }
+                                                        // if (details != null) await displayDetails(details);
+                                                      },
                                                       child: Row(
                                                         children: [
                                                           SizedBox(
@@ -1615,47 +1615,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     dividedBy:
                                                                         100)),
                                                     child: GestureDetector(
-                                                      // onTap: () async {
-                                                      //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
-                                                      //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
-                                                      //     source: ImageSource
-                                                      //         .gallery,
-                                                      //
-                                                      //     /// On long tap, it will be available.
-                                                      //     multiSelection: true,
-                                                      //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
-                                                      //       appTheme: AppTheme(
-                                                      //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
-                                                      //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
-                                                      //       cropImage: true,
-                                                      //       showImagePreview:
-                                                      //           true,
-                                                      //     ),
-                                                      //   );
-                                                      //   print(
-                                                      //       'Details ===> ${details}');
-                                                      //   if (details != null) {
-                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                      //     _selectedimag4 = details
-                                                      //         .selectedFiles[0];
-                                                      //     Navigator.pop(
-                                                      //         context);
-                                                      //     setState(() {});
-                                                      //     print(
-                                                      //         'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                      //   }
-                                                      //   // if (details != null) await displayDetails(details);
-                                                      // },
+                                                      onTap: () async {
+                                                        ImagePickerPlus picker =
+                                                            ImagePickerPlus(
+                                                                context);
+                                                        SelectedImagesDetails?
+                                                            details =
+                                                            await picker
+                                                                .pickBoth(
+                                                          source: ImageSource
+                                                              .gallery,
+
+                                                          /// On long tap, it will be available.
+                                                          multiSelection: true,
+                                                          galleryDisplaySettings:
+                                                              GalleryDisplaySettings(
+                                                            appTheme: AppTheme(
+                                                                focusColor:
+                                                                    Colors
+                                                                        .white,
+                                                                primaryColor:
+                                                                    Colors
+                                                                        .black),
+                                                            cropImage: true,
+                                                            showImagePreview:
+                                                                true,
+                                                          ),
+                                                        );
+                                                        print(
+                                                            'Details ===> ${details}');
+                                                        if (details != null) {
+                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                          _selectedimag4 = details
+                                                              .selectedFiles[0];
+                                                          Navigator.pop(
+                                                              context);
+                                                          setState(() {});
+                                                          print(
+                                                              'selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                        }
+                                                        // if (details != null) await displayDetails(details);
+                                                      },
                                                       child: Row(
                                                         children: [
                                                           SizedBox(
@@ -2019,47 +2019,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     dividedBy:
                                                                         100)),
                                                     child: GestureDetector(
-                                                      // onTap: () async {
-                                                      //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
-                                                      //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
-                                                      //     source: ImageSource
-                                                      //         .gallery,
-                                                      //
-                                                      //     /// On long tap, it will be available.
-                                                      //     multiSelection: true,
-                                                      //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
-                                                      //       appTheme: AppTheme(
-                                                      //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
-                                                      //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
-                                                      //       cropImage: true,
-                                                      //       showImagePreview:
-                                                      //           true,
-                                                      //     ),
-                                                      //   );
-                                                      //   print(
-                                                      //       'Details ===> ${details}');
-                                                      //   if (details != null) {
-                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                      //     _selectedimag5 = details
-                                                      //         .selectedFiles[0];
-                                                      //     Navigator.pop(
-                                                      //         context);
-                                                      //     setState(() {});
-                                                      //     print(
-                                                      //         'selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                      //   }
-                                                      //   // if (details != null) await displayDetails(details);
-                                                      // },
+                                                      onTap: () async {
+                                                        ImagePickerPlus picker =
+                                                            ImagePickerPlus(
+                                                                context);
+                                                        SelectedImagesDetails?
+                                                            details =
+                                                            await picker
+                                                                .pickBoth(
+                                                          source: ImageSource
+                                                              .gallery,
+
+                                                          /// On long tap, it will be available.
+                                                          multiSelection: true,
+                                                          galleryDisplaySettings:
+                                                              GalleryDisplaySettings(
+                                                            appTheme: AppTheme(
+                                                                focusColor:
+                                                                    Colors
+                                                                        .white,
+                                                                primaryColor:
+                                                                    Colors
+                                                                        .black),
+                                                            cropImage: true,
+                                                            showImagePreview:
+                                                                true,
+                                                          ),
+                                                        );
+                                                        print(
+                                                            'Details ===> ${details}');
+                                                        if (details != null) {
+                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                          _selectedimag5 = details
+                                                              .selectedFiles[0];
+                                                          Navigator.pop(
+                                                              context);
+                                                          setState(() {});
+                                                          print(
+                                                              'selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                        }
+                                                        // if (details != null) await displayDetails(details);
+                                                      },
                                                       child: Row(
                                                         children: [
                                                           SizedBox(
@@ -2458,47 +2458,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     dividedBy:
                                                                         100)),
                                                     child: GestureDetector(
-                                                      // onTap: () async {
-                                                      //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
-                                                      //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
-                                                      //     source: ImageSource
-                                                      //         .gallery,
-                                                      //
-                                                      //     /// On long tap, it will be available.
-                                                      //     multiSelection: true,
-                                                      //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
-                                                      //       appTheme: AppTheme(
-                                                      //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
-                                                      //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
-                                                      //       cropImage: true,
-                                                      //       showImagePreview:
-                                                      //           true,
-                                                      //     ),
-                                                      //   );
-                                                      //   print(
-                                                      //       'Details ===> ${details}');
-                                                      //   if (details != null) {
-                                                      //     //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                      //     _selectedimag6 = details
-                                                      //         .selectedFiles[0];
-                                                      //     Navigator.pop(
-                                                      //         context);
-                                                      //     setState(() {});
-                                                      //     print(
-                                                      //         'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                      //   }
-                                                      //   // if (details != null) await displayDetails(details);
-                                                      // },
+                                                      onTap: () async {
+                                                        ImagePickerPlus picker =
+                                                            ImagePickerPlus(
+                                                                context);
+                                                        SelectedImagesDetails?
+                                                            details =
+                                                            await picker
+                                                                .pickBoth(
+                                                          source: ImageSource
+                                                              .gallery,
+
+                                                          /// On long tap, it will be available.
+                                                          multiSelection: true,
+                                                          galleryDisplaySettings:
+                                                              GalleryDisplaySettings(
+                                                            appTheme: AppTheme(
+                                                                focusColor:
+                                                                    Colors
+                                                                        .white,
+                                                                primaryColor:
+                                                                    Colors
+                                                                        .black),
+                                                            cropImage: true,
+                                                            showImagePreview:
+                                                                true,
+                                                          ),
+                                                        );
+                                                        print(
+                                                            'Details ===> ${details}');
+                                                        if (details != null) {
+                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                          _selectedimag6 = details
+                                                              .selectedFiles[0];
+                                                          Navigator.pop(
+                                                              context);
+                                                          setState(() {});
+                                                          print(
+                                                              'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                        }
+                                                        // if (details != null) await displayDetails(details);
+                                                      },
                                                       child: Row(
                                                         children: [
                                                           SizedBox(
@@ -3492,25 +3492,25 @@ class _Business_ProfileState extends State<Business_Profile> {
                         context,
                         text: 'SAVE',
                         onTap: () {
-                          Navigator.pop(context);
-                          // if(_selectedimag1 != null){
-                          //   print("hello");
-                          //   Navigator.pop(context);
-                          // } else {
-                          //   print("try again");
-                          // }
-                          // businessProfileCubit.BusinessProfileService(
-                          //     photo_1: _selectedimag1?.selectedFile ?? File(''),
-                          //     bio: _bio.text,
-                          //     file_2: file2 ?? PlatformFile(name: "", size: 0) ,
-                          //     file_3: file3 ?? PlatformFile(name: "", size: 0),
-                          //     context: context,
-                          //     photo_2: _selectedimag2?.selectedFile ?? File(''),
-                          //     photo_3: _selectedimag3?.selectedFile ?? File(''),
-                          //     photo_4: _selectedimag4?.selectedFile ?? File(''),
-                          //     photo_5: _selectedimag5?.selectedFile ?? File(''),
-                          //     photo_6: _selectedimag6?.selectedFile ?? File(''),
-                          //     file_1: file1 ?? PlatformFile(name: "", size: 0));
+                         // Navigator.pop(context);
+                         //  if(_selectedimag1 != null){
+                         //    print("hello");
+                         //    Navigator.pop(context);
+                         //  } else {
+                         //    print("try again");
+                         //  }
+                          businessProfileCubit.BusinessProfileService(
+                              photo_1: _selectedimag1?.selectedFile ?? File(''),
+                              bio: _bio.text,
+                              file_2: file2 ?? PlatformFile(name: "", size: 0) ,
+                              file_3: file3 ?? PlatformFile(name: "", size: 0),
+                              context: context,
+                              photo_2: _selectedimag2?.selectedFile ?? File(''),
+                              photo_3: _selectedimag3?.selectedFile ?? File(''),
+                              photo_4: _selectedimag4?.selectedFile ?? File(''),
+                              photo_5: _selectedimag5?.selectedFile ?? File(''),
+                              photo_6: _selectedimag6?.selectedFile ?? File(''),
+                              file_1: file1 ?? PlatformFile(name: "", size: 0));
                         },
                         height: screenHeight(context, dividedBy: 20),
                       )

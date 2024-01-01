@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/change_password.dart';
 import 'package:pair_me/Screen_Pages/payment.dart';
@@ -24,13 +25,7 @@ class _Setting_pageState extends State<Setting_page> {
   bool language = false;
   bool show_box = false;
   bool icon = false;
-  final List _language = [
-    'English',
-    'Spanish',
-    'Hindi',
-    'Cantonese',
-    'Mandarin',
-  ];
+
   addFolderNameDialog( {required String name,required String describ,required String cancel,required String remove,required Function() onTap}) {
     return SimpleDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 60),
@@ -152,7 +147,7 @@ class _Setting_pageState extends State<Setting_page> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               //_selected_language == '' ?  const
-                              const Text("Change Password",style: TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                               Text("Change Password".tr(),style: const TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                               //:
                               // Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
                               icon ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)
@@ -201,7 +196,7 @@ class _Setting_pageState extends State<Setting_page> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               //_selected_language == '' ?  const
-                              const Text("Language",style: TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                               Text("Language".tr(),style: const TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                                   //:
                              // Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
                               language ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)
@@ -240,11 +235,41 @@ class _Setting_pageState extends State<Setting_page> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                custom_text(text: "English", color: AppColor.fontdarkgray),
-                                custom_text(text: "Spanish", color: AppColor.fontdarkgray),
-                                custom_text(text: "Hindi", color: AppColor.fontdarkgray),
-                                custom_text(text: "Cantonese", color: AppColor.fontdarkgray),
-                                custom_text(text: "Mandarin", color: AppColor.fontdarkgray),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      context.setLocale(const Locale('en'));
+                                    });
+                                  },
+                                    child: custom_text(text: "English", color: AppColor.fontdarkgray)),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      context.setLocale(const Locale('es'));
+                                    });
+                                  },
+                                    child: custom_text(text: "Spanish", color: AppColor.fontdarkgray)),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      context.setLocale(const Locale('hi'));
+                                    });
+                                  },
+                                    child: custom_text(text: "Hindi", color: AppColor.fontdarkgray)),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      context.setLocale(const Locale('en'));
+                                    });
+                                  },
+                                    child: custom_text(text: "Cantonese", color: AppColor.fontdarkgray)),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      context.setLocale(const Locale('en'));
+                                    });
+                                  },
+                                    child: custom_text(text: "Mandarin", color: AppColor.fontdarkgray)),
                               ],
                             )
                         ),
@@ -310,13 +335,13 @@ class _Setting_pageState extends State<Setting_page> {
                         child:   InkWell(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return PaymentPage();
+                              return const PaymentPage();
                             },));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Payment",style: TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                              Text("Payment".tr(),style: const TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                               icon ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)
                             ],
                           ),
@@ -363,7 +388,7 @@ class _Setting_pageState extends State<Setting_page> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               //_selected_language == '' ?  const
-                              const Text("Privacy Policy",style: TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                               Text("Privacy Policy".tr(),style: const TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                               //:
                               // Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
                               icon ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)
@@ -412,7 +437,7 @@ class _Setting_pageState extends State<Setting_page> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               //_selected_language == '' ?  const
-                              const Text("Terms & Conditions",style: TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                               Text("Terms & Conditions".tr(),style: const TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                               //:
                               // Text(_selected_language,style: const TextStyle(color: AppColor.black,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: "Roboto"),),
                               icon ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)
@@ -449,7 +474,7 @@ class _Setting_pageState extends State<Setting_page> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 30)),
-                          child:   const Text("Logout",style: TextStyle(color: Color(0xffFF0000),fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                          child:   Text("Logout".tr(),style: const TextStyle(color: Color(0xffFF0000),fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                         ),
                       ),
                     ),
@@ -481,7 +506,7 @@ class _Setting_pageState extends State<Setting_page> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 30)),
-                          child:   const Text("Delete Account",style: TextStyle(color: Color(0xffFF0000),fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                          child:   Text("Delete Account".tr(),style: const TextStyle(color: Color(0xffFF0000),fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                         ),
                       ),
                     ),

@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -457,9 +458,9 @@ class _SignUp_pageState extends State<SignUp_page> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "Already have an account? ",
-                            style: TextStyle(
+                           Text(
+                            "Already have an account?".tr(),
+                            style: const TextStyle(
                                 color: Color(0xff888888),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -469,9 +470,9 @@ class _SignUp_pageState extends State<SignUp_page> {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text(
-                                "Log In",
-                                style: TextStyle(
+                              child:  Text(
+                                "Log In".tr(),
+                                style: const TextStyle(
                                     color: Color(0xff231F20),
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,

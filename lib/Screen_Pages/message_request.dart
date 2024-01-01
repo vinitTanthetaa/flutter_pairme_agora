@@ -96,7 +96,7 @@ class _MessageRequestState extends State<MessageRequest> {
                 spreadRadius: 0.0,
               ),
             ]),
-        child: Text(
+        child: const Text(
           'Delete all',
           style: TextStyle(
               fontSize: 17,
