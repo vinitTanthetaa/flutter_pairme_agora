@@ -33,4 +33,14 @@ class apis{
   //city and state
   static const String city = "${baseurl}/find_city";
   static const String state = "${baseurl}/find_state";
+
+  // update
+  static const String userupdate = "${baseurl}/user_update";
+  static const String address_update = "${baseurl}/address_update";
+  static const String business_address_update = "${baseurl}/business_address_update";
+  static const String professional_details_update = "${baseurl}/professional_details_update";
+  static const String profile_update = "${baseurl}/profile_update";
+
+  //Payment
+  static const String payment = "http://192.168.29.204:3334/checkout";
 }

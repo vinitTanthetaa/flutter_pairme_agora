@@ -235,7 +235,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                             bottomPickerTheme: BottomPickerTheme.plumPlate,
                           ).show(context);
                         },
-                        hint: 'Select ',
+                        hint: 'Select'.tr(),
                         controller: _date,
                         hidetext: false,
                         readOnly: true),
@@ -334,7 +334,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                             //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
                             //     //semanticsLabel: 'A red up arrow'
                             // ),
-                            hintText: 'Phone Number',
+                            hintText: 'Phone Number'.tr(),
                             hintStyle: const TextStyle(
                                 color: Color(0xffB3B3B3),
                                 fontFamily: 'Roboto',

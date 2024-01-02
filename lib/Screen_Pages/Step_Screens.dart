@@ -245,6 +245,7 @@ class _StepScreenState extends State<StepScreen> {
     businessDetailsCubit = BlocProvider.of<BusinessDetailsCubit>(context);
     describeYourSelfCubit = BlocProvider.of<DescribeYourSelfCubit>(context);
     connectwithCubit = BlocProvider.of<ConnectwithCubit>(context);
+    businessProfileCubit = BlocProvider.of<BusinessProfileCubit>(context);
   }
 
   @override
@@ -1562,7 +1563,7 @@ class _StepScreenState extends State<StepScreen> {
                                           bottomPickerTheme: BottomPickerTheme.plumPlate,
                                         ).show(context);
                                       },
-                                      hint: 'Select ',
+                                      hint: 'Select'.tr(),
                                       controller: _date,
                                       hidetext: false,
                                       readOnly: true),
@@ -3653,9 +3654,9 @@ class _StepScreenState extends State<StepScreen> {
                                         height: screenHeight(context,
                                             dividedBy: 80),
                                       ),
-                                      const Text(
-                                        'Pitch Deck',
-                                        style: TextStyle(
+                                       Text(
+                                        'Pitch Deck'.tr(),
+                                        style: const TextStyle(
                                             fontFamily: 'Roboto',
                                             fontSize: 14,
                                             color: AppColor.black,
@@ -3748,9 +3749,9 @@ class _StepScreenState extends State<StepScreen> {
                                                                   image: AssetImage(
                                                                       'assets/Images/upload.png'))),
                                                         ),
-                                                        const Text(
-                                                          'Browse file to upload',
-                                                          style: TextStyle(
+                                                         Text(
+                                                          'Browse file to upload'.tr(),
+                                                          style: const TextStyle(
                                                               color: AppColor
                                                                   .skyBlue,
                                                               fontWeight:
@@ -4370,9 +4371,9 @@ class _StepScreenState extends State<StepScreen> {
                                           ),
                                         ),
                                       ),
-                                      const Text(
-                                        'Bio',
-                                        style: TextStyle(
+                                       Text(
+                                        'Bio'.tr(),
+                                        style: const TextStyle(
                                             fontFamily: 'Roboto',
                                             fontSize: 14,
                                             color: AppColor.black,
@@ -4415,11 +4416,11 @@ class _StepScreenState extends State<StepScreen> {
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 14,
                                                 color: AppColor.dropdownfont),
-                                            decoration: const InputDecoration(
+                                            decoration: InputDecoration(
                                                 border: InputBorder.none,
                                                 hintText:
-                                                    'Enter some words of your Profile',
-                                                hintStyle: TextStyle(
+                                                    'Enter some words of your Profile'.tr(),
+                                                hintStyle: const TextStyle(
                                                     fontFamily: 'Roboto',
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 15)),
@@ -4496,7 +4497,7 @@ class _StepScreenState extends State<StepScreen> {
                                               children: lookingFor
                                                       .map((e) => InkWell(
                                                             overlayColor:
-                                                                MaterialStatePropertyAll(
+                                                                const MaterialStatePropertyAll(
                                                                     Colors
                                                                         .white),
                                                             onTap: () {
@@ -4546,8 +4547,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                   ),
                                                                 )),
                                                           ))
-                                                      .toList() ??
-                                                  [],
+                                                      .toList() ?? [],
                                             ),
                                           ),
                                           Custom_botton(context, text: 'Done',
@@ -4594,28 +4594,28 @@ class _StepScreenState extends State<StepScreen> {
                                                           "Who are you looking to connect with? Select up to 3 of the following:")),
                                               skip_button(
                                                 context,
-                                                // onTap: () {
-                                                //   Navigator.push(context,
-                                                //       MaterialPageRoute(
-                                                //     builder: (context) {
-                                                //       return const Home_screen();
-                                                //     },
-                                                //   ));
-                                                // },
                                                 onTap: () {
-                                                  if(selectedlookingFor.length <= 0){
-                                                    flutterToast("Select atlist 1 describe your self", false);
-                                                  } else {
-                                                    connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) {
-                                                              return const Home_screen();
-                                                            },
-                                                          ));
-                                                    },);
-                                                  }
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return const Home_screen();
+                                                    },
+                                                  ));
                                                 },
+                                                // onTap: () {
+                                                //   if(selectedlookingFor.length <= 0){
+                                                //     flutterToast("Select atlist 1 describe your self", false);
+                                                //   } else {
+                                                //     connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
+                                                //       Navigator.push(context,
+                                                //           MaterialPageRoute(
+                                                //             builder: (context) {
+                                                //               return const Home_screen();
+                                                //             },
+                                                //           ));
+                                                //     },);
+                                                //   }
+                                                // },
                                               )
                                             ],
                                           ),

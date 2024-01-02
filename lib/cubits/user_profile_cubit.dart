@@ -39,6 +39,7 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
       print("you are fully fail my friend" + e.toString());
       // TODO
     }
+    return null;
   }
 
 }

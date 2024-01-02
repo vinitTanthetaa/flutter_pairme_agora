@@ -97,22 +97,22 @@ class Datum {
 }
 
 class Address {
-  String address;
-  String country;
-  String state;
-  String city;
-  String zipCode;
-  double latitude;
-  double longitude;
+  String? address;
+  String? country;
+  String? state;
+  String? city;
+  String? zipCode;
+  double? latitude;
+  double? longitude;
 
   Address({
-    required this.address,
-    required this.country,
-    required this.state,
-    required this.city,
-    required this.zipCode,
-    required this.latitude,
-    required this.longitude,
+     this.address,
+     this.country,
+     this.state,
+     this.city,
+     this.zipCode,
+     this.latitude,
+     this.longitude,
   });
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
@@ -126,25 +126,25 @@ class Address {
   );
 
   Map<String, dynamic> toJson() => {
-    "address": address,
-    "country": country,
-    "state": state,
-    "city": city,
-    "zipCode": zipCode,
-    "latitude": latitude,
-    "longitude": longitude,
+    "address": address ??'',
+    "country": country ?? '',
+    "state": state ?? '',
+    "city": city ?? '',
+    "zipCode": zipCode ?? '',
+    "latitude": latitude ?? 0.0,
+    "longitude": longitude ?? 0.0,
   };
 }
 
 class FileClass {
-  String file1;
-  String file2;
-  String file3;
+  String? file1;
+  String? file2;
+  String? file3;
 
   FileClass({
-    required this.file1,
-    required this.file2,
-    required this.file3,
+     this.file1,
+     this.file2,
+     this.file3,
   });
 
   factory FileClass.fromJson(Map<String, dynamic> json) => FileClass(
@@ -154,27 +154,27 @@ class FileClass {
   );
 
   Map<String, dynamic> toJson() => {
-    "file_1": file1,
-    "file_2": file2,
-    "file_3": file3,
+    "file_1": file1 ?? '',
+    "file_2": file2 ?? '',
+    "file_3": file3 ?? '',
   };
 }
 
 class Image {
-  String photo1;
-  String photo2;
-  String photo3;
-  String photo4;
-  String photo5;
-  String photo6;
+  String? photo1;
+  String? photo2;
+  String? photo3;
+  String? photo4;
+  String? photo5;
+  String? photo6;
 
   Image({
-    required this.photo1,
-    required this.photo2,
-    required this.photo3,
-    required this.photo4,
-    required this.photo5,
-    required this.photo6,
+     this.photo1,
+     this.photo2,
+     this.photo3,
+     this.photo4,
+     this.photo5,
+     this.photo6,
   });
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
@@ -187,11 +187,11 @@ class Image {
   );
 
   Map<String, dynamic> toJson() => {
-    "photo_1": photo1,
-    "photo_2": photo2,
-    "photo_3": photo3,
-    "photo_4": photo4,
-    "photo_5": photo5,
-    "photo_6": photo6,
+    "photo_1": photo1 ?? '',
+    "photo_2": photo2 ?? '',
+    "photo_3": photo3 ?? '',
+    "photo_4": photo4 ?? '',
+    "photo_5": photo5 ?? '',
+    "photo_6": photo6 ?? '',
   };
 }

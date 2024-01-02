@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
@@ -22,6 +23,12 @@ class _Create_New_PasswordState extends State<Create_New_Password> {
   bool hidePassword = false;
   bool hideconfirmPassword = false;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    resetPasswordCubit = BlocProvider.of<ResetPasswordCubit>(context);
+
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -49,7 +50,7 @@ bool emojiShowing = false;
                     ),
                   ]
               ),
-              child: Text('Block',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
+              child: Text('Block'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
             ),
             Container(
               alignment: Alignment.center,
@@ -71,7 +72,7 @@ bool emojiShowing = false;
                     ),
                   ]
               ),
-              child: const Text('Delete',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
+              child:  Text('Delete'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
             ),
             Container(
               alignment: Alignment.center,
@@ -93,7 +94,7 @@ bool emojiShowing = false;
                     ),
                   ]
               ),
-              child: const Text('Accept',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xff1D1D1D)),),
+              child: Text('Accept'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xff1D1D1D)),),
             ),
           ],
         ),
@@ -184,16 +185,16 @@ bool emojiShowing = false;
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Roboto'),
                             ),
-                            widget.name == 'Request' ? const Text(
-                              'Just Joined',
-                              style: TextStyle(
+                            widget.name == 'Request' ?  Text(
+                              'Just Joined'.tr(),
+                              style: const TextStyle(
                                   color: AppColor.white,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Roboto'),
-                            ) : const Text(
-                              'online',
-                              style: TextStyle(
+                            ) :  Text(
+                              'online'.tr(),
+                              style: const TextStyle(
                                   color: AppColor.white,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -202,7 +203,7 @@ bool emojiShowing = false;
                           ],
                         ),
                         const Spacer(),
-                        widget.name == 'Request' ? SizedBox() : GestureDetector(
+                        widget.name == 'Request' ? const SizedBox() : GestureDetector(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
                               return const VoiceCallPage();

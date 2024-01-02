@@ -27,12 +27,12 @@ class _Profile_pageState extends State<Profile_page> {
   final TextEditingController _bio = TextEditingController();
   UserDetailsCubit userDetailsCubit = UserDetailsCubit();
   UserProfile userProfile = UserProfile();
-  int length = 15;
+  int length = 0;
   GetData() async {
-    userProfile = (await userDetailsCubit.GetUserdetails())!;
+    userProfile = await userDetailsCubit.GetUserdetails() ?? UserProfile();
     print("user profile ===> $userProfile");
-    length = userProfile.data![1].companyName!.length;
-    _bio.text =userProfile.data![2].bio!;
+     length = userProfile.data?[1].companyName?.length ?? 0;
+     _bio.text =userProfile.data?[2].bio ?? '';
     setState(() {});
   }
 
@@ -40,10 +40,9 @@ class _Profile_pageState extends State<Profile_page> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
       userDetailsCubit = BlocProvider.of<UserDetailsCubit>(context);
       GetData();
-    });
+    setState(() {});
   }
 
   @override
@@ -67,7 +66,8 @@ class _Profile_pageState extends State<Profile_page> {
                   child: custom_header(text: "Profile"),
                 ),
               ),
-              body: BlocBuilder<UserDetailsCubit,UserDetailsState>(builder: (context, state) {
+              body: BlocBuilder<UserDetailsCubit,UserDetailsState>(
+              builder: (context, state) {
                 print("stste  ===> $state");
                 if(state is UserDetailsLoading){
                   return const Center(child: Text("Please wait ..."),);
@@ -115,7 +115,7 @@ class _Profile_pageState extends State<Profile_page> {
                                       children: [
                                         Text(
                                           'Role'.tr(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.w500,
                                               fontSize: 13,
                                               fontFamily: 'Roboto',
@@ -158,8 +158,8 @@ class _Profile_pageState extends State<Profile_page> {
                                               color: AppColor.skyBlue),
                                         ),
                                         Text(
-                                          length >= 15 ? "${userProfile.data?[1].companyName?.substring(0,10)}...": userProfile.data?[1].companyName?.substring(0,15) ?? '',
-                                          style: TextStyle(
+                                          length >= 10 ? "${userProfile.data?[1].companyName?.substring(0,10)}...": userProfile.data?[1].companyName ?? '',
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 13,
                                               fontFamily: 'Roboto',
@@ -178,7 +178,7 @@ class _Profile_pageState extends State<Profile_page> {
                                       onTap: () {
                                         Navigator.push(context, MaterialPageRoute(
                                           builder: (context) {
-                                            return const Edit_Profile();
+                                            return Edit_Profile(id: userProfile.data?[0].id ??'',);
                                           },
                                         ));
                                       },
@@ -246,7 +246,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                 ),
                                                 Text(
                                                   'Location'.tr(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: AppColor.white,
                                                       fontSize: 13,
                                                       fontWeight: FontWeight.w400,
@@ -336,7 +336,8 @@ class _Profile_pageState extends State<Profile_page> {
                           SizedBox(
                             height: screenHeight(context, dividedBy: 150),
                           ),
-                          userProfile.data![2].file!.file1.isNotEmpty ? InkWell(
+                         // userProfile.data?[2].file?.file1.isNotEmpty ?
+                          InkWell(
                             onTap: () async {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                 return Pdfview( pdfUrl: '${apis.baseurl}/${userProfile.data?[2].file?.file1}',);
@@ -409,141 +410,142 @@ class _Profile_pageState extends State<Profile_page> {
                                 ),
                               ),
                             ),
-                          ) : const SizedBox(),
-                          userProfile.data![2].file!.file2.isNotEmpty ? Container(
-                            margin: EdgeInsets.symmetric(
-                                vertical:
-                                screenHeight(context, dividedBy: 190)),
-                            height: screenHeight(context, dividedBy: 15),
-                            width: screenWidth(context),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: AppColor.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: AppColor.fontgray,
-                                  offset: Offset(
-                                    1,
-                                    1,
-                                  ),
-                                  blurRadius: 4,
-                                  // spreadRadius: 1.0,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical:
-                                  screenHeight(context, dividedBy: 150),
-                                  horizontal:
-                                  screenWidth(context, dividedBy: 70)),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width:
-                                    screenWidth(context, dividedBy: 13),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/Images/uploadedfile.png'))),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                    screenWidth(context, dividedBy: 50),
-                                  ),
-                                  const Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'image_03.PDF ',
-                                        style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        '96.47 KB ',
-                                        style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ) : const SizedBox(),
-                          userProfile.data![2].file!.file3.isNotEmpty ? Container(
-                            margin: EdgeInsets.symmetric(
-                                vertical:
-                                screenHeight(context, dividedBy: 190)),
-                            height: screenHeight(context, dividedBy: 15),
-                            width: screenWidth(context),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: AppColor.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: AppColor.fontgray,
-                                  offset: Offset(
-                                    1,
-                                    1,
-                                  ),
-                                  blurRadius: 4,
-                                  // spreadRadius: 1.0,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical:
-                                  screenHeight(context, dividedBy: 150),
-                                  horizontal:
-                                  screenWidth(context, dividedBy: 70)),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width:
-                                    screenWidth(context, dividedBy: 13),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/Images/uploadedfile.png'))),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                    screenWidth(context, dividedBy: 50),
-                                  ),
-                                  const Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'image_03.PDF ',
-                                        style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        '96.47 KB ',
-                                        style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ) : const SizedBox(),
+                          ),
+                              // : const SizedBox(),
+                          // userProfile.data![2].file!.file2.isNotEmpty ? Container(
+                          //   margin: EdgeInsets.symmetric(
+                          //       vertical:
+                          //       screenHeight(context, dividedBy: 190)),
+                          //   height: screenHeight(context, dividedBy: 15),
+                          //   width: screenWidth(context),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(7),
+                          //     color: AppColor.white,
+                          //     boxShadow: const [
+                          //       BoxShadow(
+                          //         color: AppColor.fontgray,
+                          //         offset: Offset(
+                          //           1,
+                          //           1,
+                          //         ),
+                          //         blurRadius: 4,
+                          //         // spreadRadius: 1.0,
+                          //       ),
+                          //     ],
+                          //   ),
+                          //   child: Padding(
+                          //     padding: EdgeInsets.symmetric(
+                          //         vertical:
+                          //         screenHeight(context, dividedBy: 150),
+                          //         horizontal:
+                          //         screenWidth(context, dividedBy: 70)),
+                          //     child: Row(
+                          //       children: [
+                          //         Container(
+                          //           width:
+                          //           screenWidth(context, dividedBy: 13),
+                          //           decoration: const BoxDecoration(
+                          //               image: DecorationImage(
+                          //                   image: AssetImage(
+                          //                       'assets/Images/uploadedfile.png'))),
+                          //         ),
+                          //         SizedBox(
+                          //           width:
+                          //           screenWidth(context, dividedBy: 50),
+                          //         ),
+                          //         const Column(
+                          //           mainAxisAlignment:
+                          //           MainAxisAlignment.center,
+                          //           crossAxisAlignment:
+                          //           CrossAxisAlignment.start,
+                          //           children: [
+                          //             Text(
+                          //               'image_03.PDF ',
+                          //               style: TextStyle(
+                          //                   fontFamily: 'Roboto',
+                          //                   fontSize: 13,
+                          //                   fontWeight: FontWeight.w500),
+                          //             ),
+                          //             Text(
+                          //               '96.47 KB ',
+                          //               style: TextStyle(
+                          //                   fontFamily: 'Roboto',
+                          //                   fontSize: 10,
+                          //                   fontWeight: FontWeight.w500),
+                          //             )
+                          //           ],
+                          //         )
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ) : const SizedBox(),
+                          // userProfile.data![2].file!.file3.isNotEmpty ? Container(
+                          //   margin: EdgeInsets.symmetric(
+                          //       vertical:
+                          //       screenHeight(context, dividedBy: 190)),
+                          //   height: screenHeight(context, dividedBy: 15),
+                          //   width: screenWidth(context),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(7),
+                          //     color: AppColor.white,
+                          //     boxShadow: const [
+                          //       BoxShadow(
+                          //         color: AppColor.fontgray,
+                          //         offset: Offset(
+                          //           1,
+                          //           1,
+                          //         ),
+                          //         blurRadius: 4,
+                          //         // spreadRadius: 1.0,
+                          //       ),
+                          //     ],
+                          //   ),
+                          //   child: Padding(
+                          //     padding: EdgeInsets.symmetric(
+                          //         vertical:
+                          //         screenHeight(context, dividedBy: 150),
+                          //         horizontal:
+                          //         screenWidth(context, dividedBy: 70)),
+                          //     child: Row(
+                          //       children: [
+                          //         Container(
+                          //           width:
+                          //           screenWidth(context, dividedBy: 13),
+                          //           decoration: const BoxDecoration(
+                          //               image: DecorationImage(
+                          //                   image: AssetImage(
+                          //                       'assets/Images/uploadedfile.png'))),
+                          //         ),
+                          //         SizedBox(
+                          //           width:
+                          //           screenWidth(context, dividedBy: 50),
+                          //         ),
+                          //         const Column(
+                          //           mainAxisAlignment:
+                          //           MainAxisAlignment.center,
+                          //           crossAxisAlignment:
+                          //           CrossAxisAlignment.start,
+                          //           children: [
+                          //             Text(
+                          //               'image_03.PDF ',
+                          //               style: TextStyle(
+                          //                   fontFamily: 'Roboto',
+                          //                   fontSize: 13,
+                          //                   fontWeight: FontWeight.w500),
+                          //             ),
+                          //             Text(
+                          //               '96.47 KB ',
+                          //               style: TextStyle(
+                          //                   fontFamily: 'Roboto',
+                          //                   fontSize: 10,
+                          //                   fontWeight: FontWeight.w500),
+                          //             )
+                          //           ],
+                          //         )
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ) : const SizedBox(),
                           SizedBox(
                             height: screenHeight(context, dividedBy: 100),
                           ),
@@ -748,7 +750,7 @@ class _Profile_pageState extends State<Profile_page> {
                     ),
                   );
                 }
-                return Center(child: Text("Please wait ..."),);
+                return Center(child: Text("Please wait  ..."),);
               },)
             )
           ],

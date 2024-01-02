@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
@@ -385,7 +386,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           child: swipeUp
                                                               ? Center(
                                                                   child: Text(
-                                                                    "Skip",
+                                                                    "Skip".tr(),
                                                                     style: TextStyle(
                                                                         fontSize: fontsize,
                                                                         fontFamily: 'Roboto',
@@ -599,9 +600,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               child: Row(
                                                                 children: [
                                                                   Text(
-                                                                    users[index]
-                                                                        [
-                                                                        'Name'],
+                                                                    users[index]['Name'],
                                                                     style: const TextStyle(
                                                                         color: AppColor
                                                                             .white,
@@ -637,7 +636,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                         ),
                                                         Row(
                                                           children: [
-                                                            const Wrap(
+                                                             Wrap(
                                                               spacing: 7,
                                                               direction:
                                                                   Axis.vertical,
@@ -645,8 +644,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 Row(
                                                                   children: [
                                                                     Text(
-                                                                      'Job Title: ',
-                                                                      style: TextStyle(
+                                                                      'Job Title'.tr(),
+                                                                      style: const TextStyle(
                                                                           fontSize:
                                                                           14,
                                                                           fontFamily:
@@ -656,7 +655,16 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           color:
                                                                           Colors.white),
                                                                     ),
-                                                                    Text(
+                                                                    const Text(" : ",style: TextStyle(
+                                                                        fontSize:
+                                                                        14,
+                                                                        fontFamily:
+                                                                        'Roboto',
+                                                                        fontWeight: FontWeight
+                                                                            .w500,
+                                                                        color:
+                                                                        Colors.white),),
+                                                                    const Text(
                                                                       'Entrepreneur',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -673,8 +681,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 Row(
                                                                   children: [
                                                                     Text(
-                                                                      'City/Country: ',
-                                                                      style: TextStyle(
+                                                                      'City/Country'.tr(),
+                                                                      style: const TextStyle(
                                                                           fontSize:
                                                                               14,
                                                                           fontFamily:
@@ -684,7 +692,16 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           color:
                                                                               Colors.white),
                                                                     ),
-                                                                    Text(
+                                                                    const Text(" : ",style: TextStyle(
+                                                                        fontSize:
+                                                                        14,
+                                                                        fontFamily:
+                                                                        'Roboto',
+                                                                        fontWeight: FontWeight
+                                                                            .w500,
+                                                                        color:
+                                                                        Colors.white),),
+                                                                    const Text(
                                                                       'Yorktown',
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -701,8 +718,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 Row(
                                                                   children: [
                                                                     Text(
-                                                                      'Company: ',
-                                                                      style: TextStyle(
+                                                                      'Company'.tr(),
+                                                                      style: const TextStyle(
                                                                           fontSize:
                                                                               14,
                                                                           fontFamily:
@@ -712,7 +729,16 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           color:
                                                                               Colors.white),
                                                                     ),
-                                                                    Text(
+                                                                    const Text(" : ",style: TextStyle(
+                                                                        fontSize:
+                                                                        14,
+                                                                        fontFamily:
+                                                                        'Roboto',
+                                                                        fontWeight: FontWeight
+                                                                            .w500,
+                                                                        color:
+                                                                        Colors.white),),
+                                                                    const Text(
                                                                       'Infosys',
                                                                       style: TextStyle(
                                                                           fontSize:

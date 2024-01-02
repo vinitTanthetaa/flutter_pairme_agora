@@ -13,14 +13,17 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/textfield.dart';
+import 'package:pair_me/cubits/user_update_cubit.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 import 'login_page.dart';
 
 class Edit_Profile extends StatefulWidget {
-  const Edit_Profile({super.key});
-
+  String id;
+  Edit_Profile({super.key,required this.id});
+  // String firstname,lastname,gendar,dob,pnumber,email;
+  // Edit_Profile({super.key,this.firstname,this.lastname,this.dob,this.email,this.gendar,this.pnumber});
   @override
   State<Edit_Profile> createState() => _Edit_ProfileState();
 }
@@ -28,6 +31,7 @@ class Edit_Profile extends StatefulWidget {
 class _Edit_ProfileState extends State<Edit_Profile> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDate;
+  UserUpdateCubit userUpdateCubit = UserUpdateCubit();
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
   final TextEditingController _phoneNumber = TextEditingController();
@@ -411,7 +415,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Professional_Details();
+                              return Professional_Details(id: widget.id,);
                             },
                           ));
                         },
@@ -439,7 +443,9 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         },
                       ),
                       Custom_botton(context, text: 'Save', onTap: () {
-                        Navigator.pop(context);
+                        userUpdateCubit.UserUpdateService(firstname: _firstName.text, lastname: _lastName.text, gendar: _gender.text, dateofbirth: _date.text, phonenumber: "${countryCodeSelect}${_phoneNumber.text}", email: _eMail.text, context: context);
+
+                        // Navigator.pop(context);
                       }, height: screenHeight(context, dividedBy: 30))
                     ],
                   ),

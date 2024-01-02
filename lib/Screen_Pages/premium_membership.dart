@@ -4,6 +4,7 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/payments.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -15,6 +16,7 @@ class PremiumMembership extends StatefulWidget {
 }
 
 class _PremiumMembershipState extends State<PremiumMembership> {
+  PremiumMembershipCubit premiumMembershipCubit = PremiumMembershipCubit();
   List data = [
     {
       'month': '1 Month',
@@ -283,7 +285,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                         Custom_botton(context,
                             text: 'Continue',
                             onTap: () {
-                                Navigator.pop(context);
+                                premiumMembershipCubit.PremiumMembershipService(product: ind == 0 ? "Basic" : ind == 1? "Plus" :"Pro", context: context);
                             },
                             height: screenHeight(context, dividedBy: 20))
                       ],

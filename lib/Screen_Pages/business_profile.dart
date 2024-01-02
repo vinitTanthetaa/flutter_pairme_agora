@@ -9,6 +9,7 @@ import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/cubits/Buisness_profile.dart';
+import 'package:pair_me/cubits/profile_update.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -36,6 +37,7 @@ class _Business_ProfileState extends State<Business_Profile> {
   //     _highQualityImage = uint8List;
   //   });
   // }
+  BusinessprofileupdateCubit businessprofileupdateCubit = BusinessprofileupdateCubit();
   BusinessProfileCubit businessProfileCubit = BusinessProfileCubit();
   final TextEditingController _bio = TextEditingController();
   SelectedByte? _selectedimag1;
@@ -3499,8 +3501,19 @@ class _Business_ProfileState extends State<Business_Profile> {
                          //  } else {
                          //    print("try again");
                          //  }
-                          businessProfileCubit.BusinessProfileService(
-                              photo_1: _selectedimag1?.selectedFile ?? File(''),
+                         //  businessProfileCubit.BusinessProfileService(
+                         //      photo_1: _selectedimag1?.selectedFile ?? File(''),
+                         //      bio: _bio.text,
+                         //      file_2: file2 ?? PlatformFile(name: "", size: 0) ,
+                         //      file_3: file3 ?? PlatformFile(name: "", size: 0),
+                         //      context: context,
+                         //      photo_2: _selectedimag2?.selectedFile ?? File(''),
+                         //      photo_3: _selectedimag3?.selectedFile ?? File(''),
+                         //      photo_4: _selectedimag4?.selectedFile ?? File(''),
+                         //      photo_5: _selectedimag5?.selectedFile ?? File(''),
+                         //      photo_6: _selectedimag6?.selectedFile ?? File(''),
+                         //      file_1: file1 ?? PlatformFile(name: "", size: 0));
+                          businessprofileupdateCubit.BusinessprofileupdateService(photo_1: _selectedimag1?.selectedFile ?? File(''),
                               bio: _bio.text,
                               file_2: file2 ?? PlatformFile(name: "", size: 0) ,
                               file_3: file3 ?? PlatformFile(name: "", size: 0),

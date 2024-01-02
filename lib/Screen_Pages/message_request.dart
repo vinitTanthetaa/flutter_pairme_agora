@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
@@ -96,9 +97,9 @@ class _MessageRequestState extends State<MessageRequest> {
                 spreadRadius: 0.0,
               ),
             ]),
-        child: const Text(
-          'Delete all',
-          style: TextStyle(
+        child:  Text(
+          'Delete all'.tr(),
+          style:const TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w600,
               fontFamily: 'Roboto',
@@ -134,9 +135,9 @@ class _MessageRequestState extends State<MessageRequest> {
                       SizedBox(
                         width: screenWidth(context, dividedBy: 25),
                       ),
-                      const Text(
-                        'Message requests',
-                        style: TextStyle(
+                       Text(
+                        'Message requests'.tr(),
+                        style: const TextStyle(
                             fontSize: 25,
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600),

@@ -34,7 +34,8 @@ class _Verification_codeState extends State<Verification_code> {
     // TODO: implement initState
     super.initState();
     verifyCubit = BlocProvider.of<VerifyCubit>(context);
-
+    resendOtpCubit = BlocProvider.of<ResendOtpCubit>(context);
+    verifyForgotOtpCubit = BlocProvider.of<VerifyForgotOtpCubit>(context);
   }
   @override
   Widget build(BuildContext context) {
