@@ -3,6 +3,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
@@ -137,8 +138,13 @@ class _Business_ProfileState extends State<Business_Profile> {
       ],
     );
   }
-
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    businessprofileupdateCubit = BlocProvider.of<BusinessprofileupdateCubit>(context);
+
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(

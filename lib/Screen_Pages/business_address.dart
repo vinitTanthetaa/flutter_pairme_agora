@@ -49,6 +49,14 @@ class _Business_AddressState extends State<Business_Address> {
     setState(() {});
   }
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cityStateCubit = BlocProvider.of<CityStateCubit>(context);
+    businessaddressUpdatesCubit = BlocProvider.of<BusinessaddressUpdatesCubit>(context);
+
+    // getHttp();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(

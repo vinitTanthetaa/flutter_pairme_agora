@@ -11,27 +11,23 @@ String userProfileToJson(UserProfile data) => json.encode(data.toJson());
 class UserProfile {
   bool? status;
   int? code;
-  String? message;
   List<Datum>? data;
 
   UserProfile({
      this.status,
      this.code,
-     this.message,
      this.data,
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
     status: json["status"],
     code: json["code"],
-    message: json["message"],
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
-    "message": message,
     "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
@@ -39,57 +35,77 @@ class UserProfile {
 class Datum {
   String? id;
   String? name;
+  String? email;
+  String? password;
+  String? gender;
+  String? dateOfBirth;
+  int? phoneNumber;
+  bool? teamsAndCondition;
   int? score;
+  int? v;
+  String? verified;
   Address? address;
-  String? companyName;
-  String? addRole;
-  String? businessExperience;
-  String? skills;
-  String? education;
+  ProfessionalDetails? professionalDetails;
+  Address? businessaddress;
   Image? image;
   FileClass? file;
   String? bio;
 
   Datum({
-    this.id,
-    this.name,
-    this.score,
-    this.address,
-    this.companyName,
-    this.addRole,
-    this.businessExperience,
-    this.skills,
-    this.education,
-    this.image,
-    this.file,
-    this.bio,
+     this.id,
+     this.name,
+     this.email,
+     this.password,
+     this.gender,
+     this.dateOfBirth,
+     this.phoneNumber,
+     this.teamsAndCondition,
+     this.score,
+     this.v,
+     this.verified,
+     this.address,
+     this.professionalDetails,
+     this.businessaddress,
+     this.image,
+     this.file,
+     this.bio,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["_id"],
     name: json["name"],
+    email: json["email"],
+    password: json["password"],
+    gender: json["gender"],
+    dateOfBirth: json["dateOfBirth"],
+    phoneNumber: json["phoneNumber"],
+    teamsAndCondition: json["teamsAndCondition"],
     score: json["score"],
-    address: json["address"] == null ? null : Address.fromJson(json["address"]),
-    companyName: json["company_name"],
-    addRole: json["add_role"],
-    businessExperience: json["business_experience"],
-    skills: json["skills"],
-    education: json["education"],
-    image: json["image"] == null ? null : Image.fromJson(json["image"]),
-    file: json["file"] == null ? null : FileClass.fromJson(json["file"]),
+    v: json["__v"],
+    verified: json["verified"],
+    address: Address.fromJson(json["address"]),
+    professionalDetails: ProfessionalDetails.fromJson(json["professionalDetails"]),
+    businessaddress: Address.fromJson(json["businessaddress"]),
+    image: Image.fromJson(json["image"]),
+    file: FileClass.fromJson(json["file"]),
     bio: json["bio"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
     "name": name,
+    "email": email,
+    "password": password,
+    "gender": gender,
+    "dateOfBirth": dateOfBirth,
+    "phoneNumber": phoneNumber,
+    "teamsAndCondition": teamsAndCondition,
     "score": score,
+    "__v": v,
+    "verified": verified,
     "address": address?.toJson(),
-    "company_name": companyName,
-    "add_role": addRole,
-    "business_experience": businessExperience,
-    "skills": skills,
-    "education": education,
+    "professionalDetails": professionalDetails?.toJson(),
+    "businessaddress": businessaddress?.toJson(),
     "image": image?.toJson(),
     "file": file?.toJson(),
     "bio": bio,
@@ -104,6 +120,7 @@ class Address {
   String? zipCode;
   double? latitude;
   double? longitude;
+  dynamic startdate;
 
   Address({
      this.address,
@@ -113,6 +130,7 @@ class Address {
      this.zipCode,
      this.latitude,
      this.longitude,
+    this.startdate,
   });
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
@@ -123,16 +141,18 @@ class Address {
     zipCode: json["zipCode"],
     latitude: json["latitude"]?.toDouble(),
     longitude: json["longitude"]?.toDouble(),
+    startdate: json["startdate"],
   );
 
   Map<String, dynamic> toJson() => {
-    "address": address ??'',
-    "country": country ?? '',
-    "state": state ?? '',
-    "city": city ?? '',
-    "zipCode": zipCode ?? '',
-    "latitude": latitude ?? 0.0,
-    "longitude": longitude ?? 0.0,
+    "address": address,
+    "country": country,
+    "state": state,
+    "city": city,
+    "zipCode": zipCode,
+    "latitude": latitude,
+    "longitude": longitude,
+    "startdate": startdate,
   };
 }
 
@@ -142,9 +162,9 @@ class FileClass {
   String? file3;
 
   FileClass({
-     this.file1,
-     this.file2,
-     this.file3,
+   this.file1,
+   this.file2,
+   this.file3,
   });
 
   factory FileClass.fromJson(Map<String, dynamic> json) => FileClass(
@@ -154,9 +174,9 @@ class FileClass {
   );
 
   Map<String, dynamic> toJson() => {
-    "file_1": file1 ?? '',
-    "file_2": file2 ?? '',
-    "file_3": file3 ?? '',
+    "file_1": file1,
+    "file_2": file2,
+    "file_3": file3,
   };
 }
 
@@ -187,11 +207,63 @@ class Image {
   );
 
   Map<String, dynamic> toJson() => {
-    "photo_1": photo1 ?? '',
-    "photo_2": photo2 ?? '',
-    "photo_3": photo3 ?? '',
-    "photo_4": photo4 ?? '',
-    "photo_5": photo5 ?? '',
-    "photo_6": photo6 ?? '',
+    "photo_1": photo1,
+    "photo_2": photo2,
+    "photo_3": photo3,
+    "photo_4": photo4,
+    "photo_5": photo5,
+    "photo_6": photo6,
+  };
+}
+
+class ProfessionalDetails {
+  String? userId;
+  String? companyName;
+  String? addRole;
+  String? companyDomain;
+  String? email;
+  String? category;
+  String? businessExperience;
+  String? skills;
+  String? education;
+  dynamic university;
+
+  ProfessionalDetails({
+     this.userId,
+     this.companyName,
+     this.addRole,
+     this.companyDomain,
+     this.email,
+     this.category,
+     this.businessExperience,
+     this.skills,
+     this.education,
+     this.university,
+  });
+
+  factory ProfessionalDetails.fromJson(Map<String, dynamic> json) => ProfessionalDetails(
+    userId: json["user_id"],
+    companyName: json["company_name"],
+    addRole: json["add_role"],
+    companyDomain: json["company_domain"],
+    email: json["email"],
+    category: json["category"],
+    businessExperience: json["business_experience"],
+    skills: json["skills"],
+    education: json["education"],
+    university: json["university"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "user_id": userId,
+    "company_name": companyName,
+    "add_role": addRole,
+    "company_domain": companyDomain,
+    "email": email,
+    "category": category,
+    "business_experience": businessExperience,
+    "skills": skills,
+    "education": education,
+    "university": university,
   };
 }

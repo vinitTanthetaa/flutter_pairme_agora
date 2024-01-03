@@ -10,6 +10,7 @@ import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/show_all_users.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
@@ -36,6 +37,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   double height1 = 1.2;
   double fontsize = 70.0;
   double wight = 1;
+  AllUsersDetailsCubit allUsersDetailsCubit = AllUsersDetailsCubit();
   late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController bio = TextEditingController();
   AnimationController? _controller;
@@ -987,9 +989,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           bool: month),
                                                     ],
                                                   )
-                                                : ind == 1 ||
-                                                        ind == 3 ||
-                                                        ind == 5
+                                                : ind == 1 || ind == 3 || ind == 5
                                                     ? Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -1421,7 +1421,7 @@ Widget buttons(
             width: screenWidth(context, dividedBy: 90),
           ),
           Text(
-            buttonName,
+            buttonName.tr(),
             style: const TextStyle(
                 color: AppColor.white,
                 fontSize: 14,

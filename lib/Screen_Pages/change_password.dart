@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -21,8 +22,12 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool hidePassword = false;
   bool hideconfirmPassword = false;
   bool hideoldPassword = false;
-
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    changePasswordCubit = BlocProvider.of<ChangePasswordCubit>(context);
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(

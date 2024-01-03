@@ -9,12 +9,16 @@ import 'package:pair_me/cubits/Describe_yourself_cubit.dart';
 import 'package:pair_me/cubits/ReSend_Otp_cubit.dart';
 import 'package:pair_me/cubits/Reset_Password.dart';
 import 'package:pair_me/cubits/Verify.dart';
+import 'package:pair_me/cubits/address_update.dart';
 import 'package:pair_me/cubits/adsress_drtails.dart';
+import 'package:pair_me/cubits/business_add_update.dart';
 import 'package:pair_me/cubits/business_address_cubit.dart';
+import 'package:pair_me/cubits/change_password.dart';
 import 'package:pair_me/cubits/connect_with_cubit.dart';
 import 'package:pair_me/cubits/forggot_password.dart';
 import 'package:pair_me/cubits/login_cubit.dart';
 import 'package:pair_me/cubits/professional_details_cubit.dart';
+import 'package:pair_me/cubits/profile_update.dart';
 import 'package:pair_me/cubits/signup.dart';
 import 'package:pair_me/cubits/user_profile_cubit.dart';
 import 'package:pair_me/cubits/verify_forgot_otp.dart';
@@ -60,6 +64,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ForgotPasswordCubit()),
         BlocProvider(create: (context) => ResendOtpCubit()),
         BlocProvider(create: (context) => VerifyForgotOtpCubit()),
+        BlocProvider(create: (context) => AddressDetailsCubit()),
+        BlocProvider(create: (context) => BusinessaddressUpdatesCubit()),
+        BlocProvider(create: (context) => BusinessprofileupdateCubit()),
+        BlocProvider(create: (context) => ChangePasswordCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

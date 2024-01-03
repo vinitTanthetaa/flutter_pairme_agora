@@ -107,7 +107,7 @@
   "Cancel": "Cancel",
   "OK": "Ok",
   "Delete": "Delete",
-  "Are you sure you want to Delete Account": "Are you sure you want to Delete Account",
+  "Are you sure you want to delete account?": "Are you sure you want to delete account?",
   "Old Password": "Old Password",
   "New Password": "New Password",
   "Confirm New Password": "Confirm New Password",

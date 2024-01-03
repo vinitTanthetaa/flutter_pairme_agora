@@ -35,7 +35,7 @@ class _Setting_pageState extends State<Setting_page> {
       children: [
         Padding(
           padding:  EdgeInsets.only(left: screenWidth(context,dividedBy: 20),bottom: screenHeight(context,dividedBy: 100)),
-          child:  Text(name,textAlign: TextAlign.left,maxLines: 1,style: const TextStyle(color: AppColor.black,fontWeight: FontWeight.w500,fontSize: 15,fontFamily: 'Roboto'),),
+          child:  Text(name.tr(),textAlign: TextAlign.left,maxLines: 1,style: const TextStyle(color: AppColor.black,fontWeight: FontWeight.w500,fontSize: 15,fontFamily: 'Roboto'),),
         ),
         const Divider(
           height: 0,
@@ -43,7 +43,7 @@ class _Setting_pageState extends State<Setting_page> {
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 100)),
-          child: Text(describ,textAlign: TextAlign.center,maxLines: 2,style: const TextStyle(color: AppColor.fontdarkgray,fontWeight: FontWeight.w400,fontSize: 12,fontFamily: 'Roboto'),),
+          child: Text(describ.tr(),textAlign: TextAlign.center,maxLines: 2,style: const TextStyle(color: AppColor.fontdarkgray,fontWeight: FontWeight.w400,fontSize: 12,fontFamily: 'Roboto'),),
         ),
         const SizedBox(height: 10,),
         Padding(
@@ -63,7 +63,7 @@ class _Setting_pageState extends State<Setting_page> {
                     border: Border.all(width: 2,color: AppColor.skyBlue),
                     borderRadius: BorderRadius.circular(32),
                   ),
-                  child:  Text(cancel,style: const TextStyle(fontFamily: 'Roboto',fontSize: 15,fontWeight: FontWeight.w600,color: AppColor.skyBlue),),
+                  child:  Text(cancel.tr(),style: const TextStyle(fontFamily: 'Roboto',fontSize: 15,fontWeight: FontWeight.w600,color: AppColor.skyBlue),),
                 ),
               ),
               GestureDetector(
@@ -77,7 +77,7 @@ class _Setting_pageState extends State<Setting_page> {
                     borderRadius: BorderRadius.circular(50),
                     gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
                   ),
-                  child:  Text(remove,style:  const TextStyle(fontWeight: FontWeight.w600,fontSize: 15,fontFamily: 'Roboto',color: AppColor.white),),
+                  child:  Text(remove.tr(),style:  const TextStyle(fontWeight: FontWeight.w600,fontSize: 15,fontFamily: 'Roboto',color: AppColor.white),),
                 ),
               )
             ],

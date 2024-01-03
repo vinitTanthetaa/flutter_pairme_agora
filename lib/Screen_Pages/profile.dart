@@ -28,11 +28,17 @@ class _Profile_pageState extends State<Profile_page> {
   UserDetailsCubit userDetailsCubit = UserDetailsCubit();
   UserProfile userProfile = UserProfile();
   int length = 0;
+  bool file1 = false;
+  bool file2 = false;
+  bool file3 = false;
   GetData() async {
     userProfile = await userDetailsCubit.GetUserdetails() ?? UserProfile();
     print("user profile ===> $userProfile");
-     length = userProfile.data?[1].companyName?.length ?? 0;
-     _bio.text =userProfile.data?[2].bio ?? '';
+     length = userProfile.data?.first.professionalDetails?.companyName?.length ?? 0;
+     _bio.text =userProfile.data?.first.bio ?? '';
+     file1 = userProfile.data?.first.file?.file1?.isNotEmpty ?? false;
+     file2 = userProfile.data?.first.file?.file2?.isNotEmpty ?? false;
+     file3 = userProfile.data?.first.file?.file3?.isNotEmpty ?? false;
     setState(() {});
   }
 
@@ -40,7 +46,7 @@ class _Profile_pageState extends State<Profile_page> {
   void initState() {
     // TODO: implement initState
     super.initState();
-      userDetailsCubit = BlocProvider.of<UserDetailsCubit>(context);
+    userDetailsCubit = BlocProvider.of<UserDetailsCubit>(context);
       GetData();
     setState(() {});
   }
@@ -91,7 +97,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   width: screenHeight(context, dividedBy: 11.5),
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
-                                          image: NetworkImage("${apis.baseurl}/${userProfile.data?[2].image?.photo1}"
+                                          image: NetworkImage("${apis.baseurl}/${userProfile.data?.first.image?.photo1}"
                                             //'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMVP7dBLbLgjKD8lHdaMcQz7XBf2E22eParQ&usqp=CAU'
                                           ),
                                           fit: BoxFit.cover),
@@ -105,7 +111,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      userProfile.data?[0].name ?? '',
+                                      userProfile.data?.first.name ?? '',
                                       style: const TextStyle(
                                           fontFamily: 'Roboto',
                                           fontSize: 16,
@@ -130,7 +136,7 @@ class _Profile_pageState extends State<Profile_page> {
                                               color: AppColor.skyBlue),
                                         ),
                                         Text(
-                                          userProfile.data?[1].addRole ?? '',
+                                          userProfile.data?.first.professionalDetails?.addRole ?? '',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 13,
@@ -158,7 +164,7 @@ class _Profile_pageState extends State<Profile_page> {
                                               color: AppColor.skyBlue),
                                         ),
                                         Text(
-                                          length >= 10 ? "${userProfile.data?[1].companyName?.substring(0,10)}...": userProfile.data?[1].companyName ?? '',
+                                          length >= 10 ? "${userProfile.data?.first.professionalDetails?.companyName?.substring(0,10)}...": userProfile.data?.first.professionalDetails?.companyName ?? '',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 13,
@@ -178,7 +184,7 @@ class _Profile_pageState extends State<Profile_page> {
                                       onTap: () {
                                         Navigator.push(context, MaterialPageRoute(
                                           builder: (context) {
-                                            return Edit_Profile(id: userProfile.data?[0].id ??'',);
+                                            return Edit_Profile(id: userProfile.data?.first.id ??'',);
                                           },
                                         ));
                                       },
@@ -271,10 +277,10 @@ class _Profile_pageState extends State<Profile_page> {
                             child: LinearPercentIndicator(
                                 width: screenWidth(context, dividedBy: 1.25),
                                 lineHeight: 7.0,
-                                percent:userProfile.data?[0].score == 5 ?1 :0.5 ,
+                                percent:userProfile.data?.first.score == 5 ?1 :0.5 ,
                                 barRadius: const Radius.circular(20),
                                 backgroundColor: Colors.grey.shade200,
-                                trailing:custom_text(text: "${userProfile.data?[0].score}/5", color: const Color(0xff434343)),
+                                trailing:custom_text(text: "${userProfile.data?.first.score}/5", color: const Color(0xff434343)),
                                 // progressColor: Colors.blue,
                                 linearGradient: const LinearGradient(colors: [
                                   AppColor.skyBlue,
@@ -336,11 +342,10 @@ class _Profile_pageState extends State<Profile_page> {
                           SizedBox(
                             height: screenHeight(context, dividedBy: 150),
                           ),
-                         // userProfile.data?[2].file?.file1.isNotEmpty ?
-                          InkWell(
+                          file1 ? InkWell(
                             onTap: () async {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return Pdfview( pdfUrl: '${apis.baseurl}/${userProfile.data?[2].file?.file1}',);
+                                return Pdfview( pdfUrl: '${apis.baseurl}/${userProfile.data?.first.file?.file1}',);
                               },));
                             },
                             child: Container(
@@ -410,142 +415,141 @@ class _Profile_pageState extends State<Profile_page> {
                                 ),
                               ),
                             ),
-                          ),
-                              // : const SizedBox(),
-                          // userProfile.data![2].file!.file2.isNotEmpty ? Container(
-                          //   margin: EdgeInsets.symmetric(
-                          //       vertical:
-                          //       screenHeight(context, dividedBy: 190)),
-                          //   height: screenHeight(context, dividedBy: 15),
-                          //   width: screenWidth(context),
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(7),
-                          //     color: AppColor.white,
-                          //     boxShadow: const [
-                          //       BoxShadow(
-                          //         color: AppColor.fontgray,
-                          //         offset: Offset(
-                          //           1,
-                          //           1,
-                          //         ),
-                          //         blurRadius: 4,
-                          //         // spreadRadius: 1.0,
-                          //       ),
-                          //     ],
-                          //   ),
-                          //   child: Padding(
-                          //     padding: EdgeInsets.symmetric(
-                          //         vertical:
-                          //         screenHeight(context, dividedBy: 150),
-                          //         horizontal:
-                          //         screenWidth(context, dividedBy: 70)),
-                          //     child: Row(
-                          //       children: [
-                          //         Container(
-                          //           width:
-                          //           screenWidth(context, dividedBy: 13),
-                          //           decoration: const BoxDecoration(
-                          //               image: DecorationImage(
-                          //                   image: AssetImage(
-                          //                       'assets/Images/uploadedfile.png'))),
-                          //         ),
-                          //         SizedBox(
-                          //           width:
-                          //           screenWidth(context, dividedBy: 50),
-                          //         ),
-                          //         const Column(
-                          //           mainAxisAlignment:
-                          //           MainAxisAlignment.center,
-                          //           crossAxisAlignment:
-                          //           CrossAxisAlignment.start,
-                          //           children: [
-                          //             Text(
-                          //               'image_03.PDF ',
-                          //               style: TextStyle(
-                          //                   fontFamily: 'Roboto',
-                          //                   fontSize: 13,
-                          //                   fontWeight: FontWeight.w500),
-                          //             ),
-                          //             Text(
-                          //               '96.47 KB ',
-                          //               style: TextStyle(
-                          //                   fontFamily: 'Roboto',
-                          //                   fontSize: 10,
-                          //                   fontWeight: FontWeight.w500),
-                          //             )
-                          //           ],
-                          //         )
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ) : const SizedBox(),
-                          // userProfile.data![2].file!.file3.isNotEmpty ? Container(
-                          //   margin: EdgeInsets.symmetric(
-                          //       vertical:
-                          //       screenHeight(context, dividedBy: 190)),
-                          //   height: screenHeight(context, dividedBy: 15),
-                          //   width: screenWidth(context),
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(7),
-                          //     color: AppColor.white,
-                          //     boxShadow: const [
-                          //       BoxShadow(
-                          //         color: AppColor.fontgray,
-                          //         offset: Offset(
-                          //           1,
-                          //           1,
-                          //         ),
-                          //         blurRadius: 4,
-                          //         // spreadRadius: 1.0,
-                          //       ),
-                          //     ],
-                          //   ),
-                          //   child: Padding(
-                          //     padding: EdgeInsets.symmetric(
-                          //         vertical:
-                          //         screenHeight(context, dividedBy: 150),
-                          //         horizontal:
-                          //         screenWidth(context, dividedBy: 70)),
-                          //     child: Row(
-                          //       children: [
-                          //         Container(
-                          //           width:
-                          //           screenWidth(context, dividedBy: 13),
-                          //           decoration: const BoxDecoration(
-                          //               image: DecorationImage(
-                          //                   image: AssetImage(
-                          //                       'assets/Images/uploadedfile.png'))),
-                          //         ),
-                          //         SizedBox(
-                          //           width:
-                          //           screenWidth(context, dividedBy: 50),
-                          //         ),
-                          //         const Column(
-                          //           mainAxisAlignment:
-                          //           MainAxisAlignment.center,
-                          //           crossAxisAlignment:
-                          //           CrossAxisAlignment.start,
-                          //           children: [
-                          //             Text(
-                          //               'image_03.PDF ',
-                          //               style: TextStyle(
-                          //                   fontFamily: 'Roboto',
-                          //                   fontSize: 13,
-                          //                   fontWeight: FontWeight.w500),
-                          //             ),
-                          //             Text(
-                          //               '96.47 KB ',
-                          //               style: TextStyle(
-                          //                   fontFamily: 'Roboto',
-                          //                   fontSize: 10,
-                          //                   fontWeight: FontWeight.w500),
-                          //             )
-                          //           ],
-                          //         )
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ) : const SizedBox(),
+                          ) : const SizedBox(),
+                          file2 ? Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical:
+                                screenHeight(context, dividedBy: 190)),
+                            height: screenHeight(context, dividedBy: 15),
+                            width: screenWidth(context),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: AppColor.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColor.fontgray,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  ),
+                                  blurRadius: 4,
+                                  // spreadRadius: 1.0,
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                  screenHeight(context, dividedBy: 150),
+                                  horizontal:
+                                  screenWidth(context, dividedBy: 70)),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width:
+                                    screenWidth(context, dividedBy: 13),
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/Images/uploadedfile.png'))),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                    screenWidth(context, dividedBy: 50),
+                                  ),
+                                  const Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'image_03.PDF ',
+                                        style: TextStyle(
+                                            fontFamily: 'Roboto',
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        '96.47 KB ',
+                                        style: TextStyle(
+                                            fontFamily: 'Roboto',
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ) : const SizedBox(),
+                          file3 ? Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical:
+                                screenHeight(context, dividedBy: 190)),
+                            height: screenHeight(context, dividedBy: 15),
+                            width: screenWidth(context),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: AppColor.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColor.fontgray,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  ),
+                                  blurRadius: 4,
+                                  // spreadRadius: 1.0,
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                  screenHeight(context, dividedBy: 150),
+                                  horizontal:
+                                  screenWidth(context, dividedBy: 70)),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width:
+                                    screenWidth(context, dividedBy: 13),
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/Images/uploadedfile.png'))),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                    screenWidth(context, dividedBy: 50),
+                                  ),
+                                  const Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'image_03.PDF ',
+                                        style: TextStyle(
+                                            fontFamily: 'Roboto',
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        '96.47 KB ',
+                                        style: TextStyle(
+                                            fontFamily: 'Roboto',
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ) : const SizedBox(),
                           SizedBox(
                             height: screenHeight(context, dividedBy: 100),
                           ),
@@ -576,8 +580,8 @@ class _Profile_pageState extends State<Profile_page> {
                                   horizontal: screenWidth(context, dividedBy: 30),
                                   vertical: screenHeight(context, dividedBy: 100)),
                               child: Text(
-                                "${userProfile.data?[0].address?.address}, ${userProfile.data?[0].address?.city}, ${userProfile.data?[0].address?.state}, ${userProfile.data?[0].address?.country} - ${userProfile.data?[0].address?.zipCode}",
-                                style: TextStyle(
+                                "${userProfile.data?.first.address?.address}, ${userProfile.data?.first.address?.city}, ${userProfile.data?.first.address?.state}, ${userProfile.data?.first.address?.country} - ${userProfile.data?.first.address?.zipCode}",
+                                style: const TextStyle(
                                     color: Color(0xff434343),
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -612,7 +616,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   horizontal: screenWidth(context, dividedBy: 30),
                                   vertical: screenHeight(context, dividedBy: 100)),
                               child: Text(
-                                userProfile.data?[1].businessExperience ?? '1 year',
+                                userProfile.data?.first.professionalDetails?.businessExperience ?? '1 year',
                                 style: TextStyle(
                                     color: Color(0xff434343),
                                     fontSize: 12,
@@ -648,7 +652,7 @@ class _Profile_pageState extends State<Profile_page> {
                                   horizontal: screenWidth(context, dividedBy: 30),
                                   vertical: screenHeight(context, dividedBy: 100)),
                               child: Text(
-                                userProfile.data?[1].skills ?? '1 year',
+                                userProfile.data?.first.professionalDetails?.skills ?? '1 year',
                                 style: const TextStyle(
                                     color: Color(0xff434343),
                                     fontSize: 12,
@@ -684,7 +688,548 @@ class _Profile_pageState extends State<Profile_page> {
                               child:  Row(
                                 children: [
                                   Text(
-                                    userProfile.data?[1].education ?? '1 year',
+                                    userProfile.data?.first.professionalDetails?.education ?? '',
+                                    style: const TextStyle(
+                                        color: AppColor.black,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          custom_textfield_header(text: 'University'),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            margin: EdgeInsets.only(
+                                top: screenHeight(context, dividedBy: 100),
+                                bottom: screenHeight(context, dividedBy: 70)),
+                            height: screenHeight(context, dividedBy: 20),
+                            width: screenWidth(context, dividedBy: 1.15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+                                    // spreadRadius: 1.0,
+                                  ),
+                                ]),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth(context, dividedBy: 30)),
+                              child:  Text(
+                                userProfile.data?.first.professionalDetails?.university ?? '',
+                                style: const TextStyle(
+                                    color: AppColor.black,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12),
+                              ),
+                            ),
+                          ),
+                          Custom_botton(
+                            context,
+                            text: 'Premium Membership',
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return const PremiumMembership();
+                                },
+                              ));
+                            },
+                            height: screenHeight(context, dividedBy: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                if(state is UserDetailsError) {
+                  return SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth(context, dividedBy: 15)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+// height: screenHeight(context, dividedBy: 12),
+                            width: screenWidth(context),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: screenHeight(
+                                      context, dividedBy: 11.5),
+                                  width: screenHeight(context, dividedBy: 11.5),
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMVP7dBLbLgjKD8lHdaMcQz7XBf2E22eParQ&usqp=CAU'),
+                                          fit: BoxFit.cover),
+                                      shape: BoxShape.circle),
+                                ),
+                                SizedBox(
+                                  width: screenWidth(context, dividedBy: 35),
+                                ),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Vincenzo Cassano',
+                                      style: TextStyle(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Role: ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13,
+                                              fontFamily: 'Roboto',
+                                              color: AppColor.skyBlue),
+                                        ),
+                                        Text(
+                                          'CEO',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 13,
+                                              fontFamily: 'Roboto',
+                                              color: AppColor.dropdownfont),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Company: ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13,
+                                              fontFamily: 'Roboto',
+                                              color: AppColor.skyBlue),
+                                        ),
+                                        Text(
+                                          'Infosys',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 13,
+                                              fontFamily: 'Roboto',
+                                              color: AppColor.dropdownfont),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Navigator.push(context, MaterialPageRoute(
+                                        //   builder: (context) {
+                                        //     return const Edit_Profile();
+                                        //   },
+                                        // ));
+                                      },
+                                      child: Container(
+                                        height:
+                                        screenHeight(context, dividedBy: 60),
+                                        width: screenHeight(
+                                            context, dividedBy: 60),
+                                        decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/Images/edit.png'))),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: screenHeight(
+                                          context, dividedBy: 60),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context, MaterialPageRoute(
+                                          builder: (context) {
+                                            return const Location_page();
+                                          },
+                                        ));
+                                      },
+                                      child: Container(
+                                          alignment: Alignment.center,
+                                          height:
+                                          screenHeight(context, dividedBy: 35),
+// width: screenWidth(context, dividedBy: 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius
+                                                  .circular(20),
+                                              color: AppColor.Blue
+// gradient: const LinearGradient(colors: [
+// AppColor.skyBlue,
+// AppColor.whiteskyBlue
+// ]),
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: screenWidth(
+                                                    context, dividedBy: 25)),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 60),
+                                                  width: screenHeight(context,
+                                                      dividedBy: 60),
+                                                  decoration: const BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/Images/location.png'))
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: screenWidth(context,
+                                                      dividedBy: 150),
+                                                ),
+                                                const Text(
+                                                  'Location',
+                                                  style: TextStyle(
+                                                      color: AppColor.white,
+                                                      fontSize: 13,
+                                                      fontWeight: FontWeight
+                                                          .w400,
+                                                      fontFamily: 'Roboto'),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const Divider(
+                            height: 20,
+                            color: Color(0xffF5F5F5),
+                          ),
+                          custom_textfield_header(text: 'Intermediate'),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                bottom: screenHeight(context, dividedBy: 70),
+                                top: screenHeight(context, dividedBy: 100)),
+                            child: LinearPercentIndicator(
+                                width: screenWidth(context, dividedBy: 1.25),
+                                lineHeight: 7.0,
+                                percent: 0.5,
+                                barRadius: const Radius.circular(20),
+                                backgroundColor: Colors.grey.shade200,
+                                trailing: custom_text(text: "2/5",
+                                    color: const Color(0xff434343)),
+// progressColor: Colors.blue,
+                                linearGradient: const LinearGradient(colors: [
+                                  AppColor.skyBlue,
+                                  AppColor.whiteskyBlue
+                                ])),
+                          ),
+// Padding(
+// padding: const EdgeInsets.only(left: 330.0),
+// child: custom_text(text: "2/5", color: Color(0xff434343)),
+// ),
+                          custom_textfield_header(text: 'Bio'),
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: screenHeight(context, dividedBy: 100),
+                                bottom: screenHeight(context, dividedBy: 70)),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: AppColor.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColor.fontgray,
+                                  offset: Offset(
+                                    0,
+                                    0,
+                                  ),
+                                  blurRadius: 8,
+// spreadRadius: 1.0,
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth(
+                                      context, dividedBy: 25),
+                                  vertical: screenHeight(
+                                      context, dividedBy: 150)),
+                              child: TextField(
+                                controller: _bio,
+                                maxLength: 250,
+                                readOnly: true,
+                                minLines: 1,
+                                maxLines: 7,
+                                cursorColor: AppColor.fontdarkgray,
+                                style: const TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: Color(0xff434343)),
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+// hintText: 'Enter some words of your Profile',
+// hintStyle: TextStyle(
+// fontFamily: 'Roboto',
+// fontWeight: FontWeight.w400,
+// fontSize: 15)
+                                ),
+                              ),
+                            ),
+                          ),
+                          custom_textfield_header(text: 'My Documents'),
+                          SizedBox(
+                            height: screenHeight(context, dividedBy: 150),
+                          ),
+                          SizedBox(
+                            height: screenHeight(context, dividedBy: 4.3),
+                            width: screenWidth(context),
+                            child: ListView.builder(
+                              physics: const ClampingScrollPhysics(),
+//padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 100)),
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical:
+                                      screenHeight(context, dividedBy: 190)),
+                                  height: screenHeight(context, dividedBy: 15),
+                                  width: screenWidth(context),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+                                    color: AppColor.white,
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: AppColor.fontgray,
+                                        offset: Offset(
+                                          1,
+                                          1,
+                                        ),
+                                        blurRadius: 4,
+// spreadRadius: 1.0,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical:
+                                        screenHeight(context, dividedBy: 150),
+                                        horizontal:
+                                        screenWidth(context, dividedBy: 70)),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width:
+                                          screenWidth(context, dividedBy: 13),
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/uploadedfile.png'))),
+                                        ),
+                                        SizedBox(
+                                          width:
+                                          screenWidth(context, dividedBy: 50),
+                                        ),
+                                        const Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'image_03.PDF ',
+                                              style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text(
+                                              '96.47 KB ',
+                                              style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: screenHeight(context, dividedBy: 100),
+                          ),
+                          custom_textfield_header(text: 'Address'),
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: screenHeight(context, dividedBy: 100),
+                                bottom: screenHeight(context, dividedBy: 70)),
+                            alignment: Alignment.centerLeft,
+// height: screenHeight(context,dividedBy: 17),
+                            width: screenWidth(context, dividedBy: 1.15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+// spreadRadius: 1.0,
+                                  ),
+                                ]),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth(
+                                      context, dividedBy: 30),
+                                  vertical: screenHeight(
+                                      context, dividedBy: 100)),
+                              child: const Text(
+                                "Ground Floor, BL-91, Plot No. 13/24, Udhana - Magdalla Rd, near Dharti Namkin Udhna, Chandramani Society, Surat, Gujarat 395007",
+                                style: TextStyle(
+                                    color: Color(0xff434343),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Roboto"),
+                              ),
+                            ),
+                          ),
+                          custom_textfield_header(text: 'Business Experience '),
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: screenHeight(context, dividedBy: 100),
+                                bottom: screenHeight(context, dividedBy: 70)),
+                            alignment: Alignment.centerLeft,
+                            height: screenHeight(context, dividedBy: 20),
+                            width: screenWidth(context, dividedBy: 1.15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+// spreadRadius: 1.0,
+                                  ),
+                                ]),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth(
+                                      context, dividedBy: 30),
+                                  vertical: screenHeight(
+                                      context, dividedBy: 100)),
+                              child: const Text(
+                                "1 years",
+                                style: TextStyle(
+                                    color: Color(0xff434343),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Roboto"),
+                              ),
+                            ),
+                          ),
+                          custom_textfield_header(text: 'Skills'),
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: screenHeight(context, dividedBy: 100),
+                                bottom: screenHeight(context, dividedBy: 70)),
+                            alignment: Alignment.centerLeft,
+                            height: screenHeight(context, dividedBy: 20),
+                            width: screenWidth(context, dividedBy: 1.15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+// spreadRadius: 1.0,
+                                  ),
+                                ]),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth(
+                                      context, dividedBy: 30),
+                                  vertical: screenHeight(
+                                      context, dividedBy: 100)),
+                              child: const Text(
+                                "Graphic Design",
+                                style: TextStyle(
+                                    color: Color(0xff434343),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Roboto"),
+                              ),
+                            ),
+                          ),
+                          custom_textfield_header(text: 'Education'),
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: screenHeight(context, dividedBy: 100),
+                                bottom: screenHeight(context, dividedBy: 70)),
+                            height: screenHeight(context, dividedBy: 20),
+                            width: screenWidth(context, dividedBy: 1.15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+// spreadRadius: 1.0,
+                                  ),
+                                ]),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth(
+                                      context, dividedBy: 30)),
+                              child: const Row(
+                                children: [
+                                  Text(
+                                    'BCA - Bachelor of Computer Applications',
                                     style: TextStyle(
                                         color: AppColor.black,
                                         fontFamily: 'Roboto',
@@ -713,12 +1258,13 @@ class _Profile_pageState extends State<Profile_page> {
                                       1,
                                     ),
                                     blurRadius: 4,
-                                    // spreadRadius: 1.0,
+// spreadRadius: 1.0,
                                   ),
                                 ]),
                             child: Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth(context, dividedBy: 30)),
+                                  horizontal: screenWidth(
+                                      context, dividedBy: 30)),
                               child: const Row(
                                 children: [
                                   Text(
@@ -750,7 +1296,558 @@ class _Profile_pageState extends State<Profile_page> {
                     ),
                   );
                 }
-                return Center(child: Text("Please wait  ..."),);
+                return SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth(context, dividedBy: 15)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+// height: screenHeight(context, dividedBy: 12),
+                          width: screenWidth(context),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: screenHeight(
+                                    context, dividedBy: 11.5),
+                                width: screenHeight(context, dividedBy: 11.5),
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMVP7dBLbLgjKD8lHdaMcQz7XBf2E22eParQ&usqp=CAU'),
+                                        fit: BoxFit.cover),
+                                    shape: BoxShape.circle),
+                              ),
+                              SizedBox(
+                                width: screenWidth(context, dividedBy: 35),
+                              ),
+                              const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  Text(
+                                    'Vincenzo Cassano',
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Role: ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            fontFamily: 'Roboto',
+                                            color: AppColor.skyBlue),
+                                      ),
+                                      Text(
+                                        'CEO',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 13,
+                                            fontFamily: 'Roboto',
+                                            color: AppColor.dropdownfont),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Company: ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            fontFamily: 'Roboto',
+                                            color: AppColor.skyBlue),
+                                      ),
+                                      Text(
+                                        'Infosys',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 13,
+                                            fontFamily: 'Roboto',
+                                            color: AppColor.dropdownfont),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      // Navigator.push(context, MaterialPageRoute(
+                                      //   builder: (context) {
+                                      //     return const Edit_Profile();
+                                      //   },
+                                      // ));
+                                    },
+                                    child: Container(
+                                      height:
+                                      screenHeight(context, dividedBy: 60),
+                                      width: screenHeight(
+                                          context, dividedBy: 60),
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/edit.png'))),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: screenHeight(
+                                        context, dividedBy: 60),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context, MaterialPageRoute(
+                                        builder: (context) {
+                                          return const Location_page();
+                                        },
+                                      ));
+                                    },
+                                    child: Container(
+                                        alignment: Alignment.center,
+                                        height:
+                                        screenHeight(context, dividedBy: 35),
+// width: screenWidth(context, dividedBy: 5),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius
+                                                .circular(20),
+                                            color: AppColor.Blue
+// gradient: const LinearGradient(colors: [
+// AppColor.skyBlue,
+// AppColor.whiteskyBlue
+// ]),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: screenWidth(
+                                                  context, dividedBy: 25)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                height: screenHeight(context,
+                                                    dividedBy: 60),
+                                                width: screenHeight(context,
+                                                    dividedBy: 60),
+                                                decoration: const BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            'assets/Images/location.png'))
+                                                ),
+                                              ),
+                                              // Image(
+                                              //   color: AppColor.white,
+                                              //   image: const AssetImage(
+                                              //       'assets/Images/location.png'),
+                                              //   height: screenHeight(context,
+                                              //       dividedBy: 60),
+                                              //   width: screenHeight(context,
+                                              //       dividedBy: 60),
+                                              // ),
+                                              SizedBox(
+                                                width: screenWidth(context,
+                                                    dividedBy: 150),
+                                              ),
+                                              const Text(
+                                                'Location',
+                                                style: TextStyle(
+                                                    color: AppColor.white,
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight
+                                                        .w400,
+                                                    fontFamily: 'Roboto'),
+                                              )
+                                            ],
+                                          ),
+                                        )),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          height: 20,
+                          color: Color(0xffF5F5F5),
+                        ),
+                        custom_textfield_header(text: 'Intermediate'),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              bottom: screenHeight(context, dividedBy: 70),
+                              top: screenHeight(context, dividedBy: 100)),
+                          child: LinearPercentIndicator(
+                              width: screenWidth(context, dividedBy: 1.25),
+                              lineHeight: 7.0,
+                              percent: 0.5,
+                              barRadius: const Radius.circular(20),
+                              backgroundColor: Colors.grey.shade200,
+                              trailing: custom_text(text: "2/5",
+                                  color: const Color(0xff434343)),
+// progressColor: Colors.blue,
+                              linearGradient: const LinearGradient(colors: [
+                                AppColor.skyBlue,
+                                AppColor.whiteskyBlue
+                              ])),
+                        ),
+// Padding(
+// padding: const EdgeInsets.only(left: 330.0),
+// child: custom_text(text: "2/5", color: Color(0xff434343)),
+// ),
+                        custom_textfield_header(text: 'Bio'),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: screenHeight(context, dividedBy: 100),
+                              bottom: screenHeight(context, dividedBy: 70)),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: AppColor.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: AppColor.fontgray,
+                                offset: Offset(
+                                  0,
+                                  0,
+                                ),
+                                blurRadius: 8,
+// spreadRadius: 1.0,
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth(
+                                    context, dividedBy: 25),
+                                vertical: screenHeight(
+                                    context, dividedBy: 150)),
+                            child: TextField(
+                              controller: _bio,
+                              maxLength: 250,
+                              readOnly: true,
+                              minLines: 1,
+                              maxLines: 7,
+                              cursorColor: AppColor.fontdarkgray,
+                              style: const TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                  color: Color(0xff434343)),
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+// hintText: 'Enter some words of your Profile',
+// hintStyle: TextStyle(
+// fontFamily: 'Roboto',
+// fontWeight: FontWeight.w400,
+// fontSize: 15)
+                              ),
+                            ),
+                          ),
+                        ),
+                        custom_textfield_header(text: 'My Documents'),
+                        SizedBox(
+                          height: screenHeight(context, dividedBy: 150),
+                        ),
+                        SizedBox(
+                          height: screenHeight(context, dividedBy: 4.3),
+                          width: screenWidth(context),
+                          child: ListView.builder(
+                            physics: const ClampingScrollPhysics(),
+//padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 100)),
+                            itemCount: 3,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: EdgeInsets.symmetric(
+                                    vertical:
+                                    screenHeight(context, dividedBy: 190)),
+                                height: screenHeight(context, dividedBy: 15),
+                                width: screenWidth(context),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: AppColor.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: AppColor.fontgray,
+                                      offset: Offset(
+                                        1,
+                                        1,
+                                      ),
+                                      blurRadius: 4,
+// spreadRadius: 1.0,
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                      screenHeight(context, dividedBy: 150),
+                                      horizontal:
+                                      screenWidth(context, dividedBy: 70)),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width:
+                                        screenWidth(context, dividedBy: 13),
+                                        decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/Images/uploadedfile.png'))),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                        screenWidth(context, dividedBy: 50),
+                                      ),
+                                      const Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'image_03.PDF ',
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Text(
+                                            '96.47 KB ',
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w500),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: screenHeight(context, dividedBy: 100),
+                        ),
+                        custom_textfield_header(text: 'Address'),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: screenHeight(context, dividedBy: 100),
+                              bottom: screenHeight(context, dividedBy: 70)),
+                          alignment: Alignment.centerLeft,
+// height: screenHeight(context,dividedBy: 17),
+                          width: screenWidth(context, dividedBy: 1.15),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColor.fontgray,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  ),
+                                  blurRadius: 4,
+// spreadRadius: 1.0,
+                                ),
+                              ]),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth(
+                                    context, dividedBy: 30),
+                                vertical: screenHeight(
+                                    context, dividedBy: 100)),
+                            child: const Text(
+                              "Ground Floor, BL-91, Plot No. 13/24, Udhana - Magdalla Rd, near Dharti Namkin Udhna, Chandramani Society, Surat, Gujarat 395007",
+                              style: TextStyle(
+                                  color: Color(0xff434343),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ),
+                        ),
+                        custom_textfield_header(text: 'Business Experience '),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: screenHeight(context, dividedBy: 100),
+                              bottom: screenHeight(context, dividedBy: 70)),
+                          alignment: Alignment.centerLeft,
+                          height: screenHeight(context, dividedBy: 20),
+                          width: screenWidth(context, dividedBy: 1.15),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColor.fontgray,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  ),
+                                  blurRadius: 4,
+// spreadRadius: 1.0,
+                                ),
+                              ]),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth(
+                                    context, dividedBy: 30),
+                                vertical: screenHeight(
+                                    context, dividedBy: 100)),
+                            child: const Text(
+                              "1 years",
+                              style: TextStyle(
+                                  color: Color(0xff434343),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ),
+                        ),
+                        custom_textfield_header(text: 'Skills'),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: screenHeight(context, dividedBy: 100),
+                              bottom: screenHeight(context, dividedBy: 70)),
+                          alignment: Alignment.centerLeft,
+                          height: screenHeight(context, dividedBy: 20),
+                          width: screenWidth(context, dividedBy: 1.15),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColor.fontgray,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  ),
+                                  blurRadius: 4,
+// spreadRadius: 1.0,
+                                ),
+                              ]),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth(
+                                    context, dividedBy: 30),
+                                vertical: screenHeight(
+                                    context, dividedBy: 100)),
+                            child: const Text(
+                              "Graphic Design",
+                              style: TextStyle(
+                                  color: Color(0xff434343),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Roboto"),
+                            ),
+                          ),
+                        ),
+                        custom_textfield_header(text: 'Education'),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: screenHeight(context, dividedBy: 100),
+                              bottom: screenHeight(context, dividedBy: 70)),
+                          height: screenHeight(context, dividedBy: 20),
+                          width: screenWidth(context, dividedBy: 1.15),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColor.fontgray,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  ),
+                                  blurRadius: 4,
+// spreadRadius: 1.0,
+                                ),
+                              ]),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth(
+                                    context, dividedBy: 30)),
+                            child: const Row(
+                              children: [
+                                Text(
+                                  'BCA - Bachelor of Computer Applications',
+                                  style: TextStyle(
+                                      color: AppColor.black,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        custom_textfield_header(text: 'University'),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: screenHeight(context, dividedBy: 100),
+                              bottom: screenHeight(context, dividedBy: 70)),
+                          height: screenHeight(context, dividedBy: 20),
+                          width: screenWidth(context, dividedBy: 1.15),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: AppColor.fontgray,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  ),
+                                  blurRadius: 4,
+// spreadRadius: 1.0,
+                                ),
+                              ]),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth(
+                                    context, dividedBy: 30)),
+                            child: const Row(
+                              children: [
+                                Text(
+                                  'Veer Narmad South Gujarat University',
+                                  style: TextStyle(
+                                      color: AppColor.black,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Custom_botton(
+                          context,
+                          text: 'Premium Membership',
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const PremiumMembership();
+                              },
+                            ));
+                          },
+                          height: screenHeight(context, dividedBy: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               },)
             )
           ],

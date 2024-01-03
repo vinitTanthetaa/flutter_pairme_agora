@@ -44,6 +44,9 @@ class _Address_DetailsState extends State<Address_Details> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    cityStateCubit = BlocProvider.of<CityStateCubit>(context);
+    addressDetailsCubit = BlocProvider.of<AddressDetailsCubit>(context);
+
     // getHttp();
   }
 

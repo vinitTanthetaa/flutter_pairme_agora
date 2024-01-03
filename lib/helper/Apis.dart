@@ -21,6 +21,7 @@ class apis{
 
 
   static const String UserProfile = "${baseurl}/user_profile";
+  static const String showAllProfiles = "${baseurl}/showAllProfiles";
 
 
   // App Manage
