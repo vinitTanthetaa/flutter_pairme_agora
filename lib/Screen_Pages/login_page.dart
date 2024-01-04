@@ -188,15 +188,15 @@ class _Login_pageState extends State<Login_page> {
                       ),
                     Center(
                       child: Custom_botton(context, text: 'Login', onTap: () async {
-                        Navigator.push(context,MaterialPageRoute(builder:(context) {
-                          return const Home_screen();
-                        }, ));
+                        // Navigator.push(context,MaterialPageRoute(builder:(context) {
+                        //   return const Home_screen();
+                        // }, ));
                         // if(_Email.text.isEmpty){
                         //   flutterToast('Please Enter Valid Phone number', false);
                         // } else if(_Password.text.isEmpty) {
                         //   flutterToast('Please Enter Password', false);
                         // } else {
-                        //   loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
+                           loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
                         //   // showcase = true;
                         //   // prefsService.setBoolData('showcase', showcase);
                         //   // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;

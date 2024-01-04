@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:video_player/video_player.dart';
 
 class UsersDetails extends StatefulWidget {
-  List list;
+  String Name,role,country,Company,bio,file1,file2,file3;
+  List list,looking_for;
   Function() onTap;
-  UsersDetails({super.key, required this.list,required this.onTap,});
+  UsersDetails({super.key, required this.list,required this.onTap,required this.country,required this.file1,required this.file3,required this.file2,required this.bio,required this.Company,required this.looking_for,required this.Name,required this.role});
 
   @override
   State<UsersDetails> createState() => _UsersDetailsState();
@@ -59,13 +61,13 @@ class _UsersDetailsState extends State<UsersDetails>
     // TODO: implement initState
     super.initState();
     widget.list;
-    _bio.text =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,.Lorem ipsum dolor sit amet, consectetur adipiscing elit,’';
+
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    _bio.text = widget.bio;
     return Scaffold(
       body: SizedBox(
         height: screenHeight(context),
@@ -104,7 +106,7 @@ class _UsersDetailsState extends State<UsersDetails>
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return Image_Screen(
-                                  image: widget.list[pageViewIndex],
+                                  image: "${apis.baseurl}/${widget.list[pageViewIndex]}",
                                 );
                               },
                             ));
@@ -124,7 +126,7 @@ class _UsersDetailsState extends State<UsersDetails>
                             ),
                             child: Stack(
                               children: [
-                                VideoPlayer(VideoPlayerController.networkUrl(Uri.parse(widget.list[pageViewIndex]))),
+                                VideoPlayer(VideoPlayerController.networkUrl(Uri.parse("${apis.baseurl}/${widget.list[pageViewIndex]}"))),
                                 const Align(
                                   child: CircleAvatar(
                                     backgroundColor:
@@ -145,8 +147,7 @@ class _UsersDetailsState extends State<UsersDetails>
                             width: screenWidth(context,dividedBy: 1.015),
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: NetworkImage(widget
-                                        .list[pageViewIndex]),
+                                    image: NetworkImage("${apis.baseurl}/${widget.list[pageViewIndex]}"),
                                   //fit:BoxFit.cover
                                     )),
                           ),
@@ -193,9 +194,9 @@ class _UsersDetailsState extends State<UsersDetails>
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Text(
-                                'Jane Koblenz',
-                                style: TextStyle(
+                               Text(
+                                widget.Name,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: Color(0xff1E1E1E),
                                     fontSize: 18,
@@ -211,20 +212,20 @@ class _UsersDetailsState extends State<UsersDetails>
                                   const AssetImage('assets/Images/verified.png'))
                             ],
                           ),
-                          const Text(
-                            'Entrepreneur',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontdarkgray,
-                                fontSize: 14,
-                                fontFamily: 'Roboto'),
-                          ),
-                          SizedBox(
-                            height: screenHeight(context, dividedBy: 160),
-                          ),
-                          const Row(
+                          //  Text(
+                          //   widget.role,
+                          //   style: TextStyle(
+                          //       fontWeight: FontWeight.w400,
+                          //       color: AppColor.fontdarkgray,
+                          //       fontSize: 14,
+                          //       fontFamily: 'Roboto'),
+                          // ),
+                          // SizedBox(
+                          //   height: screenHeight(context, dividedBy: 160),
+                          // ),
+                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'City/Country: ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
@@ -233,8 +234,8 @@ class _UsersDetailsState extends State<UsersDetails>
                                     fontFamily: 'Roboto'),
                               ),
                               Text(
-                                'Yorktown',
-                                style: TextStyle(
+                                widget.country,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color: AppColor.dropdownfont,
                                     fontSize: 14,
@@ -245,9 +246,9 @@ class _UsersDetailsState extends State<UsersDetails>
                           SizedBox(
                             height: screenHeight(context, dividedBy: 500),
                           ),
-                          const Row(
+                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Role: ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
@@ -256,8 +257,8 @@ class _UsersDetailsState extends State<UsersDetails>
                                     fontFamily: 'Roboto'),
                               ),
                               Text(
-                                'CEO',
-                                style: TextStyle(
+                                widget.role,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color: AppColor.dropdownfont,
                                     fontSize: 14,

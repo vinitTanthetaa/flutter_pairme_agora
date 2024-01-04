@@ -1,16 +1,18 @@
-import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pair_me/Modal/alluserprofile.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/cubits/show_all_users.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
@@ -38,6 +40,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   double fontsize = 70.0;
   double wight = 1;
   AllUsersDetailsCubit allUsersDetailsCubit = AllUsersDetailsCubit();
+  AllUsersdetails allUsersdetails = AllUsersdetails();
   late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController bio = TextEditingController();
   AnimationController? _controller;
@@ -132,17 +135,53 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU',
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
   ];
+  List image = [];
   bool exchang = false;
-  final List _skills = ['', ''];
   int ind = 0;
   bool swipeUp = false;
   bool swipeDown = false;
   bool month = true;
   late final PageController _pageController = PageController();
+  getData() async {
+    allUsersdetails = (await allUsersDetailsCubit.GetAllUsersDetails())!;
+    print(
+        "==============================================>>${allUsersdetails.data?.first.length}");
+    print(
+        "==============================================>>${allUsersdetails.data?.length}");
+    print(
+        "==============================================>>${allUsersdetails.data?[0].length}");
+    setState(() {});
+  }
+  getImage(int index){
 
+    if (allUsersdetails.data?[index].last.image != null) {
+      if (allUsersdetails.data?[index].last.image?.photo1 == null && image.contains(allUsersdetails.data?[index].last.image?.photo1) ) {
+        image = image;
+      }else if(allUsersdetails.data?[index].last.image?.photo1 != null){image.add(allUsersdetails.data?[index].last.image?.photo1);}
+      if (allUsersdetails.data?[index].last.image?.photo2 == null && image.contains(allUsersdetails.data?[index].last.image?.photo2) ) {
+        image = image;
+      }else if(allUsersdetails.data?[index].last.image?.photo2 != null){image.add(allUsersdetails.data?[index].last.image?.photo2);}
+      if (allUsersdetails.data?[index].last.image?.photo3 == null && image.contains(allUsersdetails.data?[index].last.image?.photo3) ) {
+        image = image;
+      }else if(allUsersdetails.data?[index].last.image?.photo3 != null){image.add(allUsersdetails.data?[index].last.image?.photo3);}
+      if (allUsersdetails.data?[index].last.image?.photo4 == null && image.contains(allUsersdetails.data?[index].last.image?.photo4) ) {
+        image = image;
+      }else if(allUsersdetails.data?[index].last.image?.photo4 != null){image.add(allUsersdetails.data?[index].last.image?.photo4);}
+      if (allUsersdetails.data?[index].last.image?.photo5 == null && image.contains(allUsersdetails.data?[index].last.image?.photo5) ) {
+        image = image;
+      }else if(allUsersdetails.data?[index].last.image?.photo5 != null){image.add(allUsersdetails.data?[index].last.image?.photo5);}
+      if (allUsersdetails.data?[index].last.image?.photo6 == null && image.contains(allUsersdetails.data?[index].last.image?.photo6) ) {
+        image = image;
+      }else if(allUsersdetails.data?[index].last.image?.photo6 != null){image.add(allUsersdetails.data?[index].last.image?.photo6);}
+    }
+    image = image.toSet().toList();
+    print(image);
+  }
   @override
   void initState() {
+    allUsersDetailsCubit.GetAllUsersDetails();
     createTutorial();
+    getData();
     _controller = AnimationController(vsync: this);
     controller = AppinioSwiperController();
     Future.delayed(Duration.zero, showTutorial);
@@ -247,6 +286,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                               },
                               onSwipeCancelled: (activity) {
                                 setState(() {
+                                  image.clear();
                                   swipeUp = false;
                                   swipeDown = false;
                                   fontsize = 70;
@@ -255,8 +295,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                   height = 0;
                                 });
                               },
-                              onSwipeEnd:
-                                  (previousIndex, targetIndex, activity) {
+                              onSwipeEnd: (previousIndex, targetIndex, activity) {
                                 setState(() {
                                   ind >= users.length - 1
                                       ? ind = ind
@@ -267,14 +306,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                   wight = 1;
                                   swipeUp = false;
                                   swipeDown = false;
+                                  image.clear();
                                 });
                               },
                               threshold: screenHeight(context, dividedBy: 4.5),
                               maxAngle: screenHeight(context, dividedBy: 7),
-                              swipeOptions:
-                                  const SwipeOptions.only(down: true, up: true),
-                              cardCount: users.length,
+                              swipeOptions: const SwipeOptions.only(down: true, up: true),
+                              cardCount: allUsersdetails.data?.length ?? 0,
                               cardBuilder: (BuildContext context, int index) {
+                                getImage(index);
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -300,9 +340,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   child: Stack(
                                                     children: [
                                                       CachedNetworkImage(
-                                                        imageUrl: users[index]
-                                                                ['images']
-                                                            [pageViewIndex],
+                                                        imageUrl: image[pageViewIndex],
                                                         imageBuilder: (context,
                                                                 imageProvider) =>
                                                             Container(
@@ -327,9 +365,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                       .all(
                                                                       Radius.circular(
                                                                           20))
-                                                              // BorderRadius.only(
-                                                              //     topRight: Radius.circular(20),
-                                                              //     topLeft: Radius.circular(20))
                                                               ),
                                                         ),
                                                         placeholder:
@@ -411,18 +446,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                     ],
                                                   ),
                                                 ))
-                                            : users[index]['images']
-                                                        [pageViewIndex]
-                                                    .toString()
-                                                    .endsWith(".mp4")
+                                            : image[pageViewIndex].toString().endsWith(".mp4") || image[pageViewIndex].toString().endsWith(".3gpp")
                                                 ? VideoWidget(
-                                                    videoUrl: users[index]
-                                                            ['images']
-                                                        [pageViewIndex])
+                                                    videoUrl: "${apis.baseurl}/${image[pageViewIndex]}")
                                                 : CachedNetworkImage(
-                                                    imageUrl: users[index]
-                                                            ['images']
-                                                        [pageViewIndex],
+                                                    imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
                                                     imageBuilder: (context,
                                                             imageProvider) =>
                                                         Container(
@@ -484,7 +512,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           key: _key1,
                                                           controller: TabController(
                                                               vsync: this,
-                                                              length: 3,
+                                                              length: image.length,
                                                               initialIndex:
                                                                   pageViewIndex),
                                                           color: AppColor.gray,
@@ -509,11 +537,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   .transparent),
                                                       onTap: () {
                                                         setState(() {
-                                                          pageViewIndex <= 2 &&
-                                                                  pageViewIndex >
-                                                                      0
-                                                              ? pageViewIndex--
-                                                              : null;
+                                                          pageViewIndex <= 2 && pageViewIndex > 0 ? pageViewIndex-- : null;
+                                                          image = image;
                                                         });
                                                       },
                                                       child: Container(
@@ -530,11 +555,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   .transparent),
                                                       onTap: () {
                                                         setState(() {
-                                                          pageViewIndex >= 2 &&
-                                                                  pageViewIndex <
-                                                                      6
-                                                              ? null
-                                                              : pageViewIndex++;
+                                                          pageViewIndex >= 2 && pageViewIndex < 6 ? null : pageViewIndex++;
+                                                          image = image;
                                                         });
                                                       },
                                                       child: Container(
@@ -602,7 +624,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               child: Row(
                                                                 children: [
                                                                   Text(
-                                                                    users[index]['Name'],
+                                                                    allUsersdetails
+                                                                            .data?[index]
+                                                                            .first
+                                                                            .name ??
+                                                                        '',
                                                                     style: const TextStyle(
                                                                         color: AppColor
                                                                             .white,
@@ -619,9 +645,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         dividedBy:
                                                                             100),
                                                                   ),
-                                                                  Image(
-                                                                    image: const AssetImage(
-                                                                        "assets/Images/verified.png"),
+                                                                  Container(
                                                                     height: screenHeight(
                                                                         context,
                                                                         dividedBy:
@@ -630,6 +654,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         context,
                                                                         dividedBy:
                                                                             45),
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                            image:
+                                                                                DecorationImage(image: AssetImage("assets/Images/verified.png"))),
                                                                   )
                                                                 ],
                                                               ),
@@ -638,7 +666,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                         ),
                                                         Row(
                                                           children: [
-                                                             Wrap(
+                                                            Wrap(
                                                               spacing: 7,
                                                               direction:
                                                                   Axis.vertical,
@@ -646,44 +674,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 Row(
                                                                   children: [
                                                                     Text(
-                                                                      'Job Title'.tr(),
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                          14,
-                                                                          fontFamily:
-                                                                          'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                          Colors.white),
-                                                                    ),
-                                                                    const Text(" : ",style: TextStyle(
-                                                                        fontSize:
-                                                                        14,
-                                                                        fontFamily:
-                                                                        'Roboto',
-                                                                        fontWeight: FontWeight
-                                                                            .w500,
-                                                                        color:
-                                                                        Colors.white),),
-                                                                    const Text(
-                                                                      'Entrepreneur',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                          14,
-                                                                          fontFamily:
-                                                                          'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                          Colors.white),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      'City/Country'.tr(),
+                                                                      'Job Title'
+                                                                          .tr(),
                                                                       style: const TextStyle(
                                                                           fontSize:
                                                                               14,
@@ -694,17 +686,25 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           color:
                                                                               Colors.white),
                                                                     ),
-                                                                    const Text(" : ",style: TextStyle(
-                                                                        fontSize:
-                                                                        14,
-                                                                        fontFamily:
-                                                                        'Roboto',
-                                                                        fontWeight: FontWeight
-                                                                            .w500,
-                                                                        color:
-                                                                        Colors.white),),
                                                                     const Text(
-                                                                      'Yorktown',
+                                                                      " : ",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    Text(
+                                                                      allUsersdetails
+                                                                              .data?[index]
+                                                                              .first
+                                                                              .professionalDetails
+                                                                              ?.addRole ??
+                                                                          '',
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               14,
@@ -720,7 +720,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 Row(
                                                                   children: [
                                                                     Text(
-                                                                      'Company'.tr(),
+                                                                      'City/Country'
+                                                                          .tr(),
                                                                       style: const TextStyle(
                                                                           fontSize:
                                                                               14,
@@ -731,17 +732,71 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           color:
                                                                               Colors.white),
                                                                     ),
-                                                                    const Text(" : ",style: TextStyle(
-                                                                        fontSize:
-                                                                        14,
-                                                                        fontFamily:
-                                                                        'Roboto',
-                                                                        fontWeight: FontWeight
-                                                                            .w500,
-                                                                        color:
-                                                                        Colors.white),),
                                                                     const Text(
-                                                                      'Infosys',
+                                                                      " : ",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    Text(
+                                                                      allUsersdetails
+                                                                              .data?[index]
+                                                                              .first
+                                                                              .businessaddress
+                                                                              ?.country ??
+                                                                          '',
+                                                                      style: const TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      'Company'
+                                                                          .tr(),
+                                                                      style: const TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    const Text(
+                                                                      " : ",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    Text(
+                                                                      allUsersdetails
+                                                                              .data?[index]
+                                                                              .first
+                                                                              .professionalDetails
+                                                                              ?.companyName ??
+                                                                          '',
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               14,
@@ -761,8 +816,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               direction:
                                                                   Axis.vertical,
                                                               spacing: 5,
-                                                              children: lookingFor
-                                                                      .map((e) => Container(
+                                                              children: allUsersdetails
+                                                                      .data?[
+                                                                          index]
+                                                                      .first
+                                                                      .yourself
+                                                                      ?.map((e) => Container(
                                                                           decoration: BoxDecoration(
                                                                               border: Border.all(
                                                                                   color: AppColor.white
@@ -865,34 +924,42 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 );
                               },
                               cardBuilder1: (BuildContext context, int index) {
-                                    return   users[index]['images'][pageViewIndex].toString().endsWith(".mp4")?
-                                    VideoWidget(videoUrl: users[index]['images'][pageViewIndex])
-                                        :  CachedNetworkImage(
-                                      imageUrl: users[index]['images'][pageViewIndex],
-                                      imageBuilder: (context, imageProvider) => Container(
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover,
-                                                filterQuality: FilterQuality.high
+                                return image[pageViewIndex]
+                                        .toString()
+                                        .endsWith(".mp4")
+                                    ? VideoWidget(
+                                        videoUrl:"${apis.baseurl}/${image[pageViewIndex]}")
+                                    : CachedNetworkImage(
+                                        imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover,
+                                                  filterQuality:
+                                                      FilterQuality.high),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20))),
+                                        ),
+                                        placeholder: (context, url) =>
+                                            Container(
+                                          height: screenHeight(context),
+                                          width: screenWidth(context),
+                                          decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                              color: Colors.black),
+                                          child: const Center(
+                                            child: CircularProgressIndicator(
+                                              color: AppColor.skyBlue,
                                             ),
-                                            borderRadius:BorderRadius.all(Radius.circular(20))
-                                        ),
-                                      ),
-                                      placeholder: (context, url) => Container(
-                                        height: screenHeight(context),
-                                        width: screenWidth(context),
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                                            color: Colors.black
-                                        ),
-                                        child: const Center(
-                                          child: CircularProgressIndicator(color: AppColor.skyBlue,
                                           ),
                                         ),
-                                      ),
-                                      errorWidget: (context, url, error) => Icon(Icons.error),
-                                    );
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      );
                               },
                             ),
                             Align(
@@ -915,7 +982,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             child: buttons(
                                                 context: context,
                                                 img:
-                                                    "assets/Images/button1.png",
+                                                    "assets/Images/button3.svg",
                                                 onTap: () {},
                                                 buttonName: "Skip",
                                                 bool: month),
@@ -928,7 +995,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 child: buttons(
                                                     context: context,
                                                     img:
-                                                        "assets/Images/button3.png",
+                                                        "assets/Images/button2.svg",
                                                     onTap: () {},
                                                     buttonName: "Connect",
                                                     bool: month),
@@ -942,7 +1009,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       buttons(
                                                           context: context,
                                                           img:
-                                                              "assets/Images/button1.png",
+                                                              "assets/Images/button3.svg",
                                                           onTap: () {
                                                             controller
                                                                 .swipeUp();
@@ -952,7 +1019,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       buttons(
                                                           context: context,
                                                           img:
-                                                              "assets/Images/button2.png",
+                                                              "assets/Images/button1.svg",
                                                           onTap: () {
                                                             Navigator.push(
                                                                 context,
@@ -980,7 +1047,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       buttons(
                                                           context: context,
                                                           img:
-                                                              "assets/Images/button3.png",
+                                                              "assets/Images/button2.svg",
                                                           onTap: () {
                                                             controller
                                                                 .swipeDown();
@@ -989,7 +1056,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           bool: month),
                                                     ],
                                                   )
-                                                : ind == 1 || ind == 3 || ind == 5
+                                                : ind == 1 ||
+                                                        ind == 3 ||
+                                                        ind == 5
                                                     ? Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -998,7 +1067,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           buttons(
                                                               context: context,
                                                               img:
-                                                                  "assets/Images/button4.png",
+                                                                  "assets/Images/button4.svg",
                                                               onTap: () {},
                                                               buttonName:
                                                                   "Undo",
@@ -1006,7 +1075,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           buttons(
                                                               context: context,
                                                               img:
-                                                                  "assets/Images/button2.png",
+                                                                  "assets/Images/button1.svg",
                                                               onTap: () {
                                                                 Navigator.push(
                                                                     context,
@@ -1035,7 +1104,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           buttons(
                                                               context: context,
                                                               img:
-                                                                  "assets/Images/button3.png",
+                                                                  "assets/Images/button2.svg",
                                                               onTap: () {
                                                                 controller
                                                                     .swipeDown();
@@ -1053,7 +1122,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           buttons(
                                                               context: context,
                                                               img:
-                                                                  "assets/Images/button1.png",
+                                                                  "assets/Images/button3.svg",
                                                               onTap: () {
                                                                 controller
                                                                     .swipeUp();
@@ -1064,7 +1133,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           buttons(
                                                               context: context,
                                                               img:
-                                                                  "assets/Images/button2.png",
+                                                                  "assets/Images/button1.svg",
                                                               onTap: () {
                                                                 Navigator.push(
                                                                     context,
@@ -1093,7 +1162,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           buttons(
                                                               context: context,
                                                               img:
-                                                                  "assets/Images/button4.png",
+                                                                  "assets/Images/button4.svg",
                                                               onTap: () {},
                                                               buttonName:
                                                                   "Undo",
@@ -1106,7 +1175,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                     ),
                   ),
                   UsersDetails(
-                    list: users[ind]['images'],
+                    list: image,
                     onTap: () {
                       _pageController.animateToPage(
                         0,
@@ -1114,6 +1183,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                         curve: Curves.ease,
                       );
                     },
+                    country: allUsersdetails
+                            .data?[ind].first.businessaddress?.country ??
+                        '',
+                    file1: allUsersdetails.data?[ind].last.file?.file1 ?? '',
+                    file3: allUsersdetails.data?[ind].last.file?.file3 ?? '',
+                    file2: allUsersdetails.data?[ind].last.file?.file2 ?? '',
+                    bio: allUsersdetails.data?[ind].last.bio ?? '',
+                    Company: allUsersdetails.data?[ind].first.professionalDetails?.companyName ?? '',
+                    looking_for: allUsersdetails.data?[ind].last.lookingfor ?? [],
+                    Name: allUsersdetails.data?[ind].first.name ?? '',
+                    role: allUsersdetails.data?[ind].first.professionalDetails?.addRole ?? '',
                   )
                 ],
               )
@@ -1142,7 +1222,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             fontWeight: FontWeight.w600,
             fontSize: 17,
           ),
-           paddingFocus: 0,
+          paddingFocus: 0,
           // opacityShadow: 0.5,
           // imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
           onFinish: () {
@@ -1155,14 +1235,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           },
           onClickTargetWithTapPosition: (target, tapDetails) {
             print("target: $target");
-            print("clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
+            print(
+                "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
           },
           onClickOverlay: (target) {
             print('onClickOverlay: $target');
           },
           onSkip: () {
-             showcase = false;
-             prefsService.setBoolData('showcase', showcase);
+            showcase = false;
+            prefsService.setBoolData('showcase', showcase);
             return true;
           },
         );
@@ -1205,7 +1286,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     );
     targets.add(
       TargetFocus(
-       // unFocusAnimationDuration: Duration.zero,
+        // unFocusAnimationDuration: Duration.zero,
         identify: "keyBottomNavigation1",
         keyTarget: _key1,
         alignSkip: Alignment.topRight,
@@ -1245,7 +1326,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         alignSkip: Alignment.topRight,
         enableOverlayTab: true,
         paddingFocus: 0.0,
-       // focusAnimationDuration: Duration.zero,
+        // focusAnimationDuration: Duration.zero,
         borderSide: BorderSide.none,
         unFocusAnimationDuration: Duration.zero,
         shape: ShapeLightFocus.Circle,
@@ -1314,11 +1395,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             builder: (context, controller) {
               return Column(
                 children: [
-                  Image(
-                    image: const AssetImage('assets/Images/Swipe-unscreen.gif'),
-                    fit: BoxFit.cover,
+                  Container(
                     height: screenHeight(context, dividedBy: 5),
                     width: screenHeight(context, dividedBy: 5),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage("assets/Images/Swipe-unscreen.gif"),
+                            fit: BoxFit.cover)),
                   ),
                   const Card(
                     child: Padding(
@@ -1359,12 +1443,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             builder: (context, controller) {
               return Column(
                 children: [
-                  Image(
-                    image: const AssetImage(
-                        'assets/Images/SwipeLeft-unscreen.gif'),
-                    fit: BoxFit.cover,
+                  Container(
                     height: screenHeight(context, dividedBy: 5),
                     width: screenHeight(context, dividedBy: 5),
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                "assets/Images/SwipeLeft-unscreen.gif"),
+                            fit: BoxFit.cover)),
                   ),
                   const Card(
                     child: Padding(
@@ -1402,21 +1488,36 @@ Widget buttons(
     height: screenHeight(context, dividedBy: 25),
     width: screenWidth(context, dividedBy: bool ? 3.7 : 4.9),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20), color: AppColor.Blue
-        ),
+        borderRadius: BorderRadius.circular(20), color: AppColor.Blue),
     child: InkWell(
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image(
-            color: AppColor.white,
-            image: AssetImage(img),
+          SvgPicture.asset(
+            img,
             height: screenHeight(context,
-                dividedBy: img.endsWith("button1.png") ? 80 : 65),
+                dividedBy: img.endsWith("button3.svg") ? 80 : 65),
             width: screenHeight(context,
-                dividedBy: img.endsWith("button1.png") ? 80 : 65),
+                dividedBy: img.endsWith("button3.svg") ? 80 : 65),
           ),
+          // Container(
+          //   height: screenHeight(context,
+          //       dividedBy: img.endsWith("button1.svg") ? 80 : 65),
+          //   width: screenHeight(context,
+          //       dividedBy: img.endsWith("button1.svg") ? 80 : 65),
+          //   decoration: BoxDecoration(
+          //       image: DecorationImage(image: AssetImage(img),fit: BoxFit.cover,colorFilter: const ColorFilter.mode(AppColor.white, BlendMode.color))
+          //   ),
+          // ),
+          // Image(
+          //   color: AppColor.white,
+          //   image: AssetImage(img),
+          //   height: screenHeight(context,
+          //       dividedBy: img.endsWith("button1.png") ? 80 : 65),
+          //   width: screenHeight(context,
+          //       dividedBy: img.endsWith("button1.png") ? 80 : 65),
+          // ),
           SizedBox(
             width: screenWidth(context, dividedBy: 90),
           ),
@@ -1457,6 +1558,7 @@ class _VideoWidgetState extends State<VideoWidget> {
           _controller.setLooping(true); // Auto-repeating the video
         });
       });
+    setState(() {});
   }
 
   @override
@@ -1469,8 +1571,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   Widget build(BuildContext context) {
     return _controller.value.isInitialized
         ? ClipRRect(
-            borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+            borderRadius:  BorderRadius.circular(20),
             child: VideoPlayer(_controller))
         : Container(
             height: screenHeight(context),

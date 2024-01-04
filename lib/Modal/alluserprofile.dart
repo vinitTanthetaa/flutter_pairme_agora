@@ -12,31 +12,23 @@ class AllUsersdetails {
   bool? status;
   int? code;
   List<List<Datum>>? data;
-  List<dynamic>? rejectedData;
-  List<dynamic>? connectedData;
 
   AllUsersdetails({
      this.status,
      this.code,
      this.data,
-     this.rejectedData,
-     this.connectedData,
   });
 
   factory AllUsersdetails.fromJson(Map<String, dynamic> json) => AllUsersdetails(
     status: json["status"],
     code: json["code"],
     data: List<List<Datum>>.from(json["data"].map((x) => List<Datum>.from(x.map((x) => Datum.fromJson(x))))),
-    rejectedData: List<dynamic>.from(json["rejectedData"].map((x) => x)),
-    connectedData: List<dynamic>.from(json["connectedData"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
     "data": List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
-    "rejectedData": List<dynamic>.from(rejectedData!.map((x) => x)),
-    "connectedData": List<dynamic>.from(connectedData!.map((x) => x)),
   };
 }
 
@@ -187,40 +179,62 @@ class Address {
 class FileClass {
   String? file1;
   String? file2;
+  String? file3;
+
 
   FileClass({
      this.file1,
      this.file2,
+     this.file3,
   });
 
   factory FileClass.fromJson(Map<String, dynamic> json) => FileClass(
     file1: json["file_1"],
     file2: json["file_2"],
+    file3: json["file_3"],
   );
 
   Map<String, dynamic> toJson() => {
     "file_1": file1,
     "file_2": file2,
+    "file_3": file3,
   };
 }
 
 class Image {
   String? photo1;
   String? photo2;
+  String? photo3;
+  String? photo4;
+  String? photo5;
+  String? photo6;
+
 
   Image({
      this.photo1,
      this.photo2,
+     this.photo3,
+     this.photo4,
+     this.photo5,
+     this.photo6,
   });
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
     photo1: json["photo_1"],
     photo2: json["photo_2"],
+    photo3: json["photo_3"],
+    photo4: json["photo_4"],
+    photo5: json["photo_5"],
+    photo6: json["photo_6"],
   );
 
   Map<String, dynamic> toJson() => {
     "photo_1": photo1,
     "photo_2": photo2,
+    "photo_3": photo3,
+    "photo_4": photo4,
+    "photo_5": photo5,
+    "photo_6": photo6,
   };
 }
 
@@ -275,6 +289,7 @@ class ProfessionalDetails {
     "university": university,
   };
 }
+
 
 
 

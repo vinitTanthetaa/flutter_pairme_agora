@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pair_me/Modal/city&state.dart';
-import 'package:pair_me/Modal/user_profile_modal.dart';
+import 'package:pair_me/Modal/alluserprofile.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -19,7 +18,8 @@ class AllUsersDetailsSuccess extends AllUsersDetailsState {}
 class AllUsersDetailsCubit extends Cubit<AllUsersDetailsState> {
   AllUsersDetailsCubit() : super(AllUsersDetailsInitials());
   final dio = Dio();
-  Future<UserProfile?> GetAllUsersDetails() async {
+  AllUsersdetails allUsersdetails = AllUsersdetails();
+  Future<AllUsersdetails?> GetAllUsersDetails() async {
     emit(AllUsersDetailsLoading());
     try {
       Response response = await dio.get(apis.showAllProfiles,options:  Options(headers: {
@@ -33,7 +33,7 @@ class AllUsersDetailsCubit extends Cubit<AllUsersDetailsState> {
         print("passs");
 
       }
-      return UserProfile.fromJson(response.data);
+      return AllUsersdetails.fromJson(response.data);
     } on Exception catch (e) {
       emit(AllUsersDetailsError());
       print("you are fully fail my friend" + e.toString());
