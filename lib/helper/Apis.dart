@@ -24,6 +24,7 @@ class apis{
   static const String showAllProfiles = "${baseurl}/showAllProfiles";
   static const String connectUser = "${baseurl}/connectUser/";
   static const String rejectedUser = "${baseurl}/rejectedUser/";
+  static const String undousers = "${baseurl}/undoAPI/";
 
 
   // App Manage

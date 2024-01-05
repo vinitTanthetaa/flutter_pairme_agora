@@ -3,15 +3,20 @@ import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pair_me/Modal/alluserprofile.dart';
+import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/connect_user.dart';
+import 'package:pair_me/cubits/reject_user.dart';
 import 'package:pair_me/cubits/show_all_users.dart';
+import 'package:pair_me/cubits/undo_users_cubit.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -33,7 +38,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final GlobalKey _key = GlobalKey();
   final GlobalKey _key1 = GlobalKey();
   final GlobalKey _key3 = GlobalKey();
-
+  String undoid = '';
   int pageViewIndex = 0;
   double height = 0;
   double height1 = 1.2;
@@ -41,6 +46,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   double wight = 1;
   AllUsersDetailsCubit allUsersDetailsCubit = AllUsersDetailsCubit();
   AllUsersdetails allUsersdetails = AllUsersdetails();
+  ConnectUserCubit connectUserCubit = ConnectUserCubit();
+  RejectUserCubit rejectUserCubit = RejectUserCubit();
+  UndoUsersCubit undoUsersCubit = UndoUsersCubit();
   late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController bio = TextEditingController();
   AnimationController? _controller;
@@ -175,11 +183,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
       }else if(allUsersdetails.data?[index].last.image?.photo6 != null){image.add(allUsersdetails.data?[index].last.image?.photo6);}
     }
     image = image.toSet().toList();
-    print(image);
   }
   @override
   void initState() {
-    allUsersDetailsCubit.GetAllUsersDetails();
+   // allUsersDetailsCubit.GetAllUsersDetails();
+    allUsersDetailsCubit = BlocProvider.of<AllUsersDetailsCubit>(context);
     createTutorial();
     getData();
     _controller = AnimationController(vsync: this);
@@ -251,926 +259,955 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                         SizedBox(
                           height: screenHeight(context, dividedBy: 100),
                         ),
-                        Expanded(
-                            child: Stack(
-                          children: [
-                            AppinioSwiper(
-                              controller: controller,
-                              invertAngleOnBottomDrag: true,
-                              onCardPositionChanged: (position) {
-                                if (position.offset.direction > 0) {
-                                  setState(() {
-                                    swipeDown = true;
-                                    height = height + 20;
-                                    swipeUp = false;
-                                  });
-                                }
-                                if (position.offset.direction < 0) {
-                                  setState(() {
-                                    swipeUp = true;
-                                    height1 = height1 >= 1.60
-                                        ? height1 + 0.001
-                                        : height1 + 0.004;
-                                    print("height ===> $height1");
-                                    height1 >= 1.50 && fontsize >= 20
-                                        ? fontsize = fontsize - 1
-                                        : fontsize = fontsize;
-                                    wight = height1 >= 1.60
-                                        ? wight + 0.001
-                                        : wight + 0.003;
-                                    // print("wight ===> $wight");
-                                    height = height + 20;
-                                    swipeDown = false;
-                                  });
-                                }
-                              },
-                              onSwipeCancelled: (activity) {
-                                setState(() {
-                                  image.clear();
-                                  swipeUp = false;
-                                  swipeDown = false;
-                                  fontsize = 70;
-                                  height1 = 1.2;
-                                  wight = 1;
-                                  height = 0;
-                                });
-                              },
-                              onSwipeEnd: (previousIndex, targetIndex, activity) {
-                                setState(() {
-                                  ind >= users.length - 1
-                                      ? ind = ind
-                                      : ind = targetIndex;
-                                  height = 0;
-                                  fontsize = 70;
-                                  height1 = 1.2;
-                                  wight = 1;
-                                  swipeUp = false;
-                                  swipeDown = false;
-                                  image.clear();
-                                });
-                              },
-                              threshold: screenHeight(context, dividedBy: 4.5),
-                              maxAngle: screenHeight(context, dividedBy: 7),
-                              swipeOptions: const SwipeOptions.only(down: true, up: true),
-                              cardCount: allUsersdetails.data?.length ?? 0,
-                              cardBuilder: (BuildContext context, int index) {
-                                getImage(index);
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        screenWidth(context, dividedBy: 100),
-                                  ),
-                                  child: Container(
-                                    // height: screenHeight(context),
-                                    // width: screenWidth(context),
-                                    decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))
-                                        // BorderRadius.only(
-                                        //     topRight: Radius.circular(20),
-                                        //     topLeft: Radius.circular(20)
-                                        // )
-                                        ),
-                                    child: Stack(
-                                      children: [
-                                        swipeUp || swipeDown
-                                            ? Align(
-                                                alignment: Alignment.topCenter,
-                                                child: SizedBox(
-                                                  child: Stack(
-                                                    children: [
-                                                      CachedNetworkImage(
-                                                        imageUrl: image[pageViewIndex],
-                                                        imageBuilder: (context,
+                        BlocBuilder<AllUsersDetailsCubit,AllUsersDetailsState>(builder: (context, state) {
+                          if(state is AllUsersDetailsSuccess){
+                            return  Expanded(
+                                child: Stack(
+                                  children: [
+                                    AppinioSwiper(
+                                      controller: controller,
+                                      invertAngleOnBottomDrag: true,
+                                      loop: true,
+                                      onCardPositionChanged: (position) {
+                                        if (position.offset.direction > 0) {
+                                          setState(() {
+                                            swipeDown = true;
+                                            height = height + 20;
+                                            swipeUp = false;
+                                          });
+                                        }
+                                        if (position.offset.direction < 0) {
+                                          setState(() {
+                                            swipeUp = true;
+                                            height1 = height1 >= 1.60
+                                                ? height1 + 0.001
+                                                : height1 + 0.004;
+                                            height1 >= 1.50 && fontsize >= 20
+                                                ? fontsize = fontsize - 1
+                                                : fontsize = fontsize;
+                                            wight = height1 >= 1.60
+                                                ? wight + 0.001
+                                                : wight + 0.003;
+                                            // print("wight ===> $wight");
+                                            height = height + 20;
+                                            swipeDown = false;
+                                          });
+                                        }
+                                      },
+                                      onSwipeCancelled: (activity) {
+                                        setState(() {
+                                          image.clear();
+                                          swipeUp = false;
+                                          swipeDown = false;
+                                          fontsize = 70;
+                                          height1 = 1.2;
+                                          wight = 1;
+                                          height = 0;
+                                        });
+                                      },
+                                      onSwipeEnd: (previousIndex, targetIndex, activity) {
+                                        setState(() {
+                                          undoid = allUsersdetails.data?[ind].first.id ?? '';
+                                          print("undoid =======> $undoid");
+                                          activity.direction == AxisDirection.up ? rejectUserCubit.GetRejectUser(id: allUsersdetails.data?[ind].first.id ?? '') : connectUserCubit.GetConnectUser(id: allUsersdetails.data?[ind].first.id ?? '') ;
+                                          ind >= users.length - 1 ? ind = ind : ind = targetIndex;
+                                          height = 0;
+                                          fontsize = 70;
+                                          height1 = 1.2;
+                                          wight = 1;
+                                          swipeUp = false;
+                                          swipeDown = false;
+                                          image.clear();
+                                          pageViewIndex = 0;
+                                        });
+                                      },
+                                      threshold: screenHeight(context, dividedBy: 4.5),
+                                      maxAngle: screenHeight(context, dividedBy: 7),
+                                      swipeOptions: const SwipeOptions.only(down: true, up: true),
+                                      cardCount: allUsersdetails.data?.length ?? 0,
+                                      cardBuilder: (BuildContext context, int index) {
+                                        getImage(index);
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                            screenWidth(context, dividedBy: 100),
+                                          ),
+                                          child: Container(
+                                            // height: screenHeight(context),
+                                            // width: screenWidth(context),
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20))
+                                              // BorderRadius.only(
+                                              //     topRight: Radius.circular(20),
+                                              //     topLeft: Radius.circular(20)
+                                              // )
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                swipeUp || swipeDown
+                                                    ? Align(
+                                                    alignment: Alignment.topCenter,
+                                                    child: SizedBox(
+                                                      child: Stack(
+                                                        children: [
+                                                          CachedNetworkImage(
+                                                            imageUrl: image[pageViewIndex],
+                                                            imageBuilder: (context,
                                                                 imageProvider) =>
-                                                            Container(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy:
-                                                                  height1),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: wight),
-                                                          decoration: BoxDecoration(
-                                                              image: DecorationImage(
-                                                                  image:
-                                                                      imageProvider,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  filterQuality:
-                                                                      FilterQuality
-                                                                          .high),
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .all(
-                                                                      Radius.circular(
-                                                                          20))
-                                                              ),
-                                                        ),
-                                                        placeholder:
-                                                            (context, url) =>
                                                                 Container(
-                                                          height: screenHeight(
-                                                              context),
-                                                          width: screenWidth(
-                                                              context),
-                                                          decoration: const BoxDecoration(
-                                                              borderRadius: BorderRadius.only(
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          20),
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          20)),
-                                                              color:
-                                                                  Colors.black),
-                                                          child: const Center(
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              color: AppColor
-                                                                  .skyBlue,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        errorWidget: (context,
+                                                                  height: screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      height1),
+                                                                  width: screenWidth(
+                                                                      context,
+                                                                      dividedBy: wight),
+                                                                  decoration: BoxDecoration(
+                                                                      image: DecorationImage(
+                                                                          image:
+                                                                          imageProvider,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          filterQuality:
+                                                                          FilterQuality
+                                                                              .high),
+                                                                      borderRadius:
+                                                                      const BorderRadius
+                                                                          .all(
+                                                                          Radius.circular(
+                                                                              20))
+                                                                  ),
+                                                                ),
+                                                            placeholder:
+                                                                (context, url) =>
+                                                                Container(
+                                                                  height: screenHeight(
+                                                                      context),
+                                                                  width: screenWidth(
+                                                                      context),
+                                                                  decoration: const BoxDecoration(
+                                                                      borderRadius: BorderRadius.only(
+                                                                          topRight: Radius
+                                                                              .circular(
+                                                                              20),
+                                                                          topLeft: Radius
+                                                                              .circular(
+                                                                              20)),
+                                                                      color:
+                                                                      Colors.black),
+                                                                  child: const Center(
+                                                                    child:
+                                                                    CircularProgressIndicator(
+                                                                      color: AppColor
+                                                                          .skyBlue,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                            errorWidget: (context,
                                                                 url, error) =>
                                                             const Icon(
                                                                 Icons.error),
+                                                          ),
+                                                          Container(
+                                                              height: screenHeight(
+                                                                  context,
+                                                                  dividedBy:
+                                                                  height1),
+                                                              width: screenWidth(
+                                                                  context,
+                                                                  dividedBy: wight),
+                                                              decoration: const BoxDecoration(
+                                                                  gradient: LinearGradient(
+                                                                      begin: Alignment
+                                                                          .bottomCenter,
+                                                                      end: Alignment.topCenter,
+                                                                      colors: [
+                                                                        Colors
+                                                                            .black,
+                                                                        Colors
+                                                                            .black38
+                                                                      ]),
+                                                                  borderRadius: BorderRadius
+                                                                      .all(Radius
+                                                                      .circular(
+                                                                      20))),
+                                                              child: swipeUp
+                                                                  ? Center(
+                                                                child: Text(
+                                                                  "Skip".tr(),
+                                                                  style: TextStyle(
+                                                                      fontSize: fontsize,
+                                                                      fontFamily: 'Roboto',
+                                                                      fontWeight: FontWeight.w700,
+                                                                      // color: AppColor.skyBlue
+                                                                      color: AppColor.white),
+                                                                ),
+                                                              )
+                                                                  : Center(
+                                                                child: Text(
+                                                                  "Connect",
+                                                                  style: TextStyle(
+                                                                      fontSize: fontsize,
+                                                                      fontFamily: 'Roboto',
+                                                                      fontWeight: FontWeight.w700,
+                                                                      // color: AppColor.skyBlue
+                                                                      color: AppColor.white),
+                                                                ),
+                                                              )),
+                                                        ],
                                                       ),
+                                                    ))
+                                                    : image[pageViewIndex].toString().endsWith(".mp4") || image[pageViewIndex].toString().endsWith(".3gpp")
+                                                    ? VideoWidget(
+                                                    videoUrl: "${apis.baseurl}/${image[pageViewIndex]}")
+                                                    : CachedNetworkImage(
+                                                  imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
+                                                  imageBuilder: (context,
+                                                      imageProvider) =>
                                                       Container(
+                                                        decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                                image:
+                                                                imageProvider,
+                                                                fit: BoxFit.cover,
+                                                                filterQuality:
+                                                                FilterQuality
+                                                                    .high),
+                                                            borderRadius:
+                                                            const BorderRadius
+                                                                .all(Radius
+                                                                .circular(
+                                                                20))),
+                                                      ),
+                                                  placeholder:
+                                                      (context, url) =>
+                                                      Container(
+                                                        height:
+                                                        screenHeight(context),
+                                                        width:
+                                                        screenWidth(context),
+                                                        decoration: const BoxDecoration(
+                                                            borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius
+                                                                    .circular(
+                                                                    20)),
+                                                            color: Colors.black),
+                                                        child: const Center(
+                                                          child:
+                                                          CircularProgressIndicator(
+                                                            color:
+                                                            AppColor.skyBlue,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                  errorWidget: (context, url,
+                                                      error) =>
+                                                  const Icon(Icons.error),
+                                                ),
+                                                swipeUp || swipeDown
+                                                    ? const SizedBox()
+                                                    : Align(
+                                                  alignment: Alignment.topCenter,
+                                                  child: swipeUp == false &&
+                                                      swipeDown == false
+                                                      ? Padding(
+                                                    padding: EdgeInsets
+                                                        .symmetric(
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            35)),
+                                                    child: TabPageSelector(
+                                                      key: _key1,
+                                                      controller: TabController(
+                                                          vsync: this,
+                                                          length: image.length,
+                                                          initialIndex:
+                                                          pageViewIndex),
+                                                      color: AppColor.gray,
+                                                      borderStyle:
+                                                      BorderStyle.none,
+                                                      indicatorSize: 8,
+                                                      selectedColor:
+                                                      AppColor.skyBlue,
+                                                    ),
+                                                  )
+                                                      : const SizedBox(),
+                                                ),
+                                                swipeUp || swipeDown
+                                                    ? const SizedBox()
+                                                    : Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        overlayColor:
+                                                        const MaterialStatePropertyAll(
+                                                            Colors
+                                                                .transparent),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            pageViewIndex <= 2 && pageViewIndex > 0 ? pageViewIndex-- : null;
+                                                            image = image;
+                                                          });
+                                                        },
+                                                        child: Container(
                                                           height: screenHeight(
+                                                              context),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        overlayColor:
+                                                        const MaterialStatePropertyAll(
+                                                            Colors
+                                                                .transparent),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            pageViewIndex >= image.length -1? null : pageViewIndex++;
+                                                            print(pageViewIndex);
+                                                            print(image.length);
+                                                            image = image;
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                          height: screenHeight(
+                                                              context),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                swipeUp || swipeDown
+                                                    ? const SizedBox()
+                                                    : Align(
+                                                  alignment:
+                                                  Alignment.bottomCenter,
+                                                  child: Container(
+                                                    alignment:
+                                                    Alignment.bottomCenter,
+                                                    height: screenHeight(context,
+                                                        dividedBy: 4.1),
+                                                    width: screenWidth(context),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.only(
+                                                            bottomLeft: Radius
+                                                                .circular(20),
+                                                            bottomRight:
+                                                            Radius
+                                                                .circular(
+                                                                20)),
+                                                        gradient:
+                                                        LinearGradient(
+                                                            begin: Alignment
+                                                                .topCenter,
+                                                            end: Alignment
+                                                                .bottomCenter,
+                                                            colors: [
+                                                              Colors.transparent,
+                                                              Colors.black
+                                                            ])),
+                                                    child: Padding(
+                                                      padding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal:
+                                                          screenWidth(
                                                               context,
                                                               dividedBy:
-                                                                  height1),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: wight),
-                                                          decoration: const BoxDecoration(
-                                                              gradient: LinearGradient(
-                                                                  begin: Alignment
-                                                                      .bottomCenter,
-                                                                  end: Alignment.topCenter,
-                                                                  colors: [
-                                                                    Colors
-                                                                        .black,
-                                                                    Colors
-                                                                        .black38
-                                                                  ]),
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          20))),
-                                                          child: swipeUp
-                                                              ? Center(
-                                                                  child: Text(
-                                                                    "Skip".tr(),
-                                                                    style: TextStyle(
-                                                                        fontSize: fontsize,
-                                                                        fontFamily: 'Roboto',
-                                                                        fontWeight: FontWeight.w700,
-                                                                        // color: AppColor.skyBlue
-                                                                        color: AppColor.white),
-                                                                  ),
-                                                                )
-                                                              : Center(
-                                                                  child: Text(
-                                                                    "Connect",
-                                                                    style: TextStyle(
-                                                                        fontSize: fontsize,
-                                                                        fontFamily: 'Roboto',
-                                                                        fontWeight: FontWeight.w700,
-                                                                        // color: AppColor.skyBlue
-                                                                        color: AppColor.white),
-                                                                  ),
-                                                                )),
-                                                    ],
-                                                  ),
-                                                ))
-                                            : image[pageViewIndex].toString().endsWith(".mp4") || image[pageViewIndex].toString().endsWith(".3gpp")
-                                                ? VideoWidget(
-                                                    videoUrl: "${apis.baseurl}/${image[pageViewIndex]}")
-                                                : CachedNetworkImage(
-                                                    imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
-                                                    imageBuilder: (context,
-                                                            imageProvider) =>
-                                                        Container(
-                                                      decoration: BoxDecoration(
-                                                          image: DecorationImage(
-                                                              image:
-                                                                  imageProvider,
-                                                              fit: BoxFit.cover,
-                                                              filterQuality:
-                                                                  FilterQuality
-                                                                      .high),
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          20))),
-                                                    ),
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Container(
-                                                      height:
-                                                          screenHeight(context),
-                                                      width:
-                                                          screenWidth(context),
-                                                      decoration: const BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          20)),
-                                                          color: Colors.black),
-                                                      child: const Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          color:
-                                                              AppColor.skyBlue,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        const Icon(Icons.error),
-                                                  ),
-                                        swipeUp || swipeDown
-                                            ? const SizedBox()
-                                            : Align(
-                                                alignment: Alignment.topCenter,
-                                                child: swipeUp == false &&
-                                                        swipeDown == false
-                                                    ? Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                vertical:
-                                                                    screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            35)),
-                                                        child: TabPageSelector(
-                                                          key: _key1,
-                                                          controller: TabController(
-                                                              vsync: this,
-                                                              length: image.length,
-                                                              initialIndex:
-                                                                  pageViewIndex),
-                                                          color: AppColor.gray,
-                                                          borderStyle:
-                                                              BorderStyle.none,
-                                                          indicatorSize: 8,
-                                                          selectedColor:
-                                                              AppColor.skyBlue,
-                                                        ),
-                                                      )
-                                                    : const SizedBox(),
-                                              ),
-                                        swipeUp || swipeDown
-                                            ? const SizedBox()
-                                            : Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: InkWell(
-                                                      overlayColor:
-                                                          const MaterialStatePropertyAll(
-                                                              Colors
-                                                                  .transparent),
-                                                      onTap: () {
-                                                        setState(() {
-                                                          pageViewIndex <= 2 && pageViewIndex > 0 ? pageViewIndex-- : null;
-                                                          image = image;
-                                                        });
-                                                      },
-                                                      child: Container(
-                                                        height: screenHeight(
-                                                            context),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: InkWell(
-                                                      overlayColor:
-                                                          const MaterialStatePropertyAll(
-                                                              Colors
-                                                                  .transparent),
-                                                      onTap: () {
-                                                        setState(() {
-                                                          pageViewIndex >= 2 && pageViewIndex < 6 ? null : pageViewIndex++;
-                                                          image = image;
-                                                        });
-                                                      },
-                                                      child: Container(
-                                                        height: screenHeight(
-                                                            context),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                        swipeUp || swipeDown
-                                            ? const SizedBox()
-                                            : Align(
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                child: Container(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  height: screenHeight(context,
-                                                      dividedBy: 4.1),
-                                                  width: screenWidth(context),
-                                                  decoration: const BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              bottomLeft: Radius
-                                                                  .circular(20),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          20)),
-                                                      gradient:
-                                                          LinearGradient(
-                                                              begin: Alignment
-                                                                  .topCenter,
-                                                              end: Alignment
-                                                                  .bottomCenter,
-                                                              colors: [
-                                                            Colors.transparent,
-                                                            Colors.black
-                                                          ])),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
+                                                              20)),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                            children: [
+                                                              SizedBox(
+                                                                width:
                                                                 screenWidth(
                                                                     context,
                                                                     dividedBy:
-                                                                        20)),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            SizedBox(
-                                                              width:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.3),
-                                                              child: Row(
+                                                                    1.3),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      allUsersdetails
+                                                                          .data?[index]
+                                                                          .first
+                                                                          .name ??
+                                                                          '',
+                                                                      style: const TextStyle(
+                                                                          color: AppColor
+                                                                              .white,
+                                                                          fontFamily:
+                                                                          'Roboto',
+                                                                          fontSize:
+                                                                          25,
+                                                                          fontWeight:
+                                                                          FontWeight.w600),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                          100),
+                                                                    ),
+                                                                    Container(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                          45),
+                                                                      width: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                          45),
+                                                                      decoration:
+                                                                      BoxDecoration(
+                                                                          image:
+                                                                          DecorationImage(image: AssetImage("assets/Images/verified.png"))),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Wrap(
+                                                                spacing: 7,
+                                                                direction:
+                                                                Axis.vertical,
                                                                 children: [
-                                                                  Text(
-                                                                    allUsersdetails
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        'Job Title'
+                                                                            .tr(),
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                      const Text(
+                                                                        " : ",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                      Text(
+                                                                        allUsersdetails
                                                                             .data?[index]
                                                                             .first
-                                                                            .name ??
-                                                                        '',
-                                                                    style: const TextStyle(
-                                                                        color: AppColor
-                                                                            .white,
-                                                                        fontFamily:
+                                                                            .professionalDetails
+                                                                            ?.addRole ??
+                                                                            '',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
                                                                             'Roboto',
-                                                                        fontSize:
-                                                                            25,
-                                                                        fontWeight:
-                                                                            FontWeight.w600),
+                                                                            fontWeight: FontWeight
+                                                                                .w400,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                    ],
                                                                   ),
-                                                                  SizedBox(
-                                                                    width: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            100),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        'City/Country'
+                                                                            .tr(),
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                      const Text(
+                                                                        " : ",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                      Text(
+                                                                        allUsersdetails
+                                                                            .data?[index]
+                                                                            .first
+                                                                            .businessaddress
+                                                                            ?.country ??
+                                                                            '',
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontWeight: FontWeight
+                                                                                .w400,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                    ],
                                                                   ),
-                                                                  Container(
-                                                                    height: screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            45),
-                                                                    width: screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            45),
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                            image:
-                                                                                DecorationImage(image: AssetImage("assets/Images/verified.png"))),
-                                                                  )
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        'Company'
+                                                                            .tr(),
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                      const Text(
+                                                                        " : ",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                      Text(
+                                                                        allUsersdetails
+                                                                            .data?[index]
+                                                                            .first
+                                                                            .professionalDetails
+                                                                            ?.companyName ??
+                                                                            '',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontWeight: FontWeight
+                                                                                .w400,
+                                                                            color:
+                                                                            Colors.white),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ],
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            Wrap(
-                                                              spacing: 7,
-                                                              direction:
-                                                                  Axis.vertical,
-                                                              children: [
-                                                                Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      'Job Title'
-                                                                          .tr(),
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                    const Text(
-                                                                      " : ",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                    Text(
-                                                                      allUsersdetails
-                                                                              .data?[index]
-                                                                              .first
-                                                                              .professionalDetails
-                                                                              ?.addRole ??
-                                                                          '',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      'City/Country'
-                                                                          .tr(),
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                    const Text(
-                                                                      " : ",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                    Text(
-                                                                      allUsersdetails
-                                                                              .data?[index]
-                                                                              .first
-                                                                              .businessaddress
-                                                                              ?.country ??
-                                                                          '',
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      'Company'
-                                                                          .tr(),
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                    const Text(
-                                                                      " : ",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                    Text(
-                                                                      allUsersdetails
-                                                                              .data?[index]
-                                                                              .first
-                                                                              .professionalDetails
-                                                                              ?.companyName ??
-                                                                          '',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontFamily:
-                                                                              'Roboto',
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            const Spacer(),
-                                                            Wrap(
-                                                              direction:
-                                                                  Axis.vertical,
-                                                              spacing: 5,
-                                                              children: allUsersdetails
-                                                                      .data?[
-                                                                          index]
-                                                                      .first
-                                                                      .yourself
-                                                                      ?.map((e) => Container(
-                                                                          decoration: BoxDecoration(
-                                                                              border: Border.all(
-                                                                                  color: AppColor.white
-                                                                                  //const Color(0xff6D9Aff)
-                                                                                  ,
-                                                                                  width: 2),
-                                                                              borderRadius: BorderRadius.circular(20)),
-                                                                          child: Padding(
-                                                                            padding:
-                                                                                EdgeInsets.symmetric(
-                                                                              horizontal: screenWidth(context, dividedBy: 45),
-                                                                              vertical: screenHeight(context, dividedBy: 250),
-                                                                            ),
-                                                                            child:
-                                                                                Text(
-                                                                              e,
-                                                                              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12.7, fontFamily: 'Roboto', color: AppColor.white),
-                                                                            ),
-                                                                          )))
-                                                                      .toList() ??
-                                                                  [],
-                                                            )
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 100),
-                                                        ),
-                                                        const Spacer(),
-                                                      ],
+                                                              const Spacer(),
+                                                              Wrap(
+                                                                direction:
+                                                                Axis.vertical,
+                                                                spacing: 5,
+                                                                children: allUsersdetails
+                                                                    .data?[
+                                                                index]
+                                                                    .first
+                                                                    .yourself
+                                                                    ?.map((e) => Container(
+                                                                    decoration: BoxDecoration(
+                                                                        border: Border.all(
+                                                                            color: AppColor.white
+                                                                            //const Color(0xff6D9Aff)
+                                                                            ,
+                                                                            width: 2),
+                                                                        borderRadius: BorderRadius.circular(20)),
+                                                                    child: Padding(
+                                                                      padding:
+                                                                      EdgeInsets.symmetric(
+                                                                        horizontal: screenWidth(context, dividedBy: 45),
+                                                                        vertical: screenHeight(context, dividedBy: 250),
+                                                                      ),
+                                                                      child:
+                                                                      Text(
+                                                                        e,
+                                                                        style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12.7, fontFamily: 'Roboto', color: AppColor.white),
+                                                                      ),
+                                                                    )))
+                                                                    .toList() ??
+                                                                    [],
+                                                              )
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                            height: screenHeight(
+                                                                context,
+                                                                dividedBy: 100),
+                                                          ),
+                                                          const Spacer(),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                        swipeUp || swipeDown
-                                            ? Align(
-                                                alignment: swipeUp
-                                                    ? Alignment.bottomCenter
-                                                    : Alignment.topCenter,
-                                                child: SizedBox(
-                                                  height: height,
+                                                swipeUp || swipeDown
+                                                    ? Align(
+                                                  alignment: swipeUp
+                                                      ? Alignment.bottomCenter
+                                                      : Alignment.topCenter,
+                                                  child: SizedBox(
+                                                    height: height,
+                                                  ),
+                                                )
+                                                    : Align(
+                                                  alignment: Alignment.center,
+                                                  child: Container(
+                                                    key: _key3,
+                                                    // margin: EdgeInsets.only(
+                                                    //     top: screenHeight(context,
+                                                    //         dividedBy: 10)),
+                                                    height: 0,
+                                                    width: 0,
+                                                  ),
                                                 ),
-                                              )
-                                            : Align(
-                                                alignment: Alignment.center,
-                                                child: Container(
-                                                  key: _key3,
-                                                  // margin: EdgeInsets.only(
-                                                  //     top: screenHeight(context,
-                                                  //         dividedBy: 10)),
-                                                  height: 0,
-                                                  width: 0,
+                                                swipeUp || swipeDown
+                                                    ? const SizedBox()
+                                                    : Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: swipeUp == false &&
+                                                      swipeDown == false
+                                                      ? Padding(
+                                                      padding: EdgeInsets
+                                                          .symmetric(
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            40),
+                                                        horizontal:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            35),
+                                                      ),
+                                                      child: Container(
+                                                        height: screenHeight(
+                                                            context,
+                                                            dividedBy: 35),
+                                                        width: screenHeight(
+                                                            context,
+                                                            dividedBy: 35),
+                                                        decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                                image: AssetImage(
+                                                                    users[index]
+                                                                    [
+                                                                    'premium']),
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                filterQuality:
+                                                                FilterQuality
+                                                                    .high)),
+                                                      ))
+                                                      : const SizedBox(),
                                                 ),
-                                              ),
-                                        swipeUp || swipeDown
-                                            ? const SizedBox()
-                                            : Align(
-                                                alignment: Alignment.topRight,
-                                                child: swipeUp == false &&
-                                                        swipeDown == false
-                                                    ? Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                          vertical:
-                                                              screenHeight(
-                                                                  context,
-                                                                  dividedBy:
-                                                                      40),
-                                                          horizontal:
-                                                              screenHeight(
-                                                                  context,
-                                                                  dividedBy:
-                                                                      35),
-                                                        ),
-                                                        child: Container(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 35),
-                                                          width: screenHeight(
-                                                              context,
-                                                              dividedBy: 35),
-                                                          decoration: BoxDecoration(
-                                                              image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      users[index]
-                                                                          [
-                                                                          'premium']),
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  filterQuality:
-                                                                      FilterQuality
-                                                                          .high)),
-                                                        ))
-                                                    : const SizedBox(),
-                                              ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                              cardBuilder1: (BuildContext context, int index) {
-                                return image[pageViewIndex]
-                                        .toString()
-                                        .endsWith(".mp4")
-                                    ? VideoWidget(
-                                        videoUrl:"${apis.baseurl}/${image[pageViewIndex]}")
-                                    : CachedNetworkImage(
-                                        imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                  filterQuality:
-                                                      FilterQuality.high),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
-                                        ),
-                                        placeholder: (context, url) =>
-                                            Container(
-                                          height: screenHeight(context),
-                                          width: screenWidth(context),
-                                          decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20)),
-                                              color: Colors.black),
-                                          child: const Center(
-                                            child: CircularProgressIndicator(
-                                              color: AppColor.skyBlue,
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      );
-                              },
-                            ),
-                            Align(
-                                alignment: swipeUp
-                                    ? Alignment.bottomLeft
-                                    : swipeDown
-                                        ? Alignment.bottomRight
-                                        : Alignment.bottomCenter,
-                                child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: screenHeight(context,
-                                            dividedBy: 70),
-                                        horizontal: screenWidth(context,
-                                            dividedBy: 15)),
-                                    child: swipeUp
-                                        ? FadeIn(
-                                            duration: const Duration(
-                                                milliseconds: 1000),
-                                            animate: true,
-                                            child: buttons(
-                                                context: context,
-                                                img:
-                                                    "assets/Images/button3.svg",
-                                                onTap: () {},
-                                                buttonName: "Skip",
-                                                bool: month),
-                                          )
-                                        : swipeDown
-                                            ? FadeIn(
-                                                duration: const Duration(
-                                                    milliseconds: 1000),
-                                                animate: true,
-                                                child: buttons(
+                                        );
+                                      },
+                                      cardBuilder1: (BuildContext context, int index) {
+                                        return image[pageViewIndex]
+                                            .toString()
+                                            .endsWith(".mp4")
+                                            ? VideoWidget(
+                                            videoUrl:"${apis.baseurl}/${image[pageViewIndex]}")
+                                            : CachedNetworkImage(
+                                          imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover,
+                                                        filterQuality:
+                                                        FilterQuality.high),
+                                                    borderRadius: BorderRadius.all(
+                                                        Radius.circular(20))),
+                                              ),
+                                          placeholder: (context, url) =>
+                                              Container(
+                                                height: screenHeight(context),
+                                                width: screenWidth(context),
+                                                decoration: const BoxDecoration(
+                                                    borderRadius: BorderRadius.all(
+                                                        Radius.circular(20)),
+                                                    color: Colors.black),
+                                                child: const Center(
+                                                  child: CircularProgressIndicator(
+                                                    color: AppColor.skyBlue,
+                                                  ),
+                                                ),
+                                              ),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
+                                        );
+                                      },
+                                    ),
+                                    Align(
+                                        alignment: swipeUp
+                                            ? Alignment.bottomLeft
+                                            : swipeDown
+                                            ? Alignment.bottomRight
+                                            : Alignment.bottomCenter,
+                                        child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: screenHeight(context,
+                                                    dividedBy: 70),
+                                                horizontal: screenWidth(context,
+                                                    dividedBy: 15)),
+                                            child: swipeUp
+                                                ? FadeIn(
+                                              duration: const Duration(
+                                                  milliseconds: 1000),
+                                              animate: true,
+                                              child: buttons(
+                                                  context: context,
+                                                  img:
+                                                  "assets/Images/button3.svg",
+                                                  onTap: () {},
+                                                  buttonName: "Skip",
+                                                  bool: month),
+                                            )
+                                                : swipeDown
+                                                ? FadeIn(
+                                              duration: const Duration(
+                                                  milliseconds: 1000),
+                                              animate: true,
+                                              child: buttons(
+                                                  context: context,
+                                                  img:
+                                                  "assets/Images/button2.svg",
+                                                  onTap: () {},
+                                                  buttonName: "Connect",
+                                                  bool: month),
+                                            )
+                                                : ind == 3
+                                                ? Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceAround,
+                                              children: [
+                                                buttons(
                                                     context: context,
                                                     img:
-                                                        "assets/Images/button2.svg",
-                                                    onTap: () {},
+                                                    "assets/Images/button3.svg",
+                                                    onTap: () {
+                                                      controller
+                                                          .swipeUp();
+                                                    },
+                                                    buttonName: "Skip",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button1.svg",
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) {
+                                                              return Chatting_Page(
+                                                                name:
+                                                                'chatting',
+                                                                Username: users[
+                                                                ind]
+                                                                ['Name'],
+                                                                image: users[
+                                                                ind]
+                                                                [
+                                                                'images']
+                                                                [
+                                                                pageViewIndex],
+                                                              );
+                                                            },
+                                                          ));
+                                                    },
+                                                    buttonName: "Chat",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button2.svg",
+                                                    onTap: () {
+                                                      controller
+                                                          .swipeDown();
+                                                    },
                                                     buttonName: "Connect",
                                                     bool: month),
-                                              )
-                                            : ind == 0
+                                              ],
+                                            )
+                                                : ind == 1 || ind == 0 ||
+                                                ind == 3 ||
+                                                ind == 5
                                                 ? Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    children: [
-                                                      buttons(
-                                                          context: context,
-                                                          img:
-                                                              "assets/Images/button3.svg",
-                                                          onTap: () {
-                                                            controller
-                                                                .swipeUp();
-                                                          },
-                                                          buttonName: "Skip",
-                                                          bool: month),
-                                                      buttons(
-                                                          context: context,
-                                                          img:
-                                                              "assets/Images/button1.svg",
-                                                          onTap: () {
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                                return Chatting_Page(
-                                                                  name:
-                                                                      'chatting',
-                                                                  Username: users[
-                                                                          ind]
-                                                                      ['Name'],
-                                                                  image: users[
-                                                                              ind]
-                                                                          [
-                                                                          'images']
-                                                                      [
-                                                                      pageViewIndex],
-                                                                );
-                                                              },
-                                                            ));
-                                                          },
-                                                          buttonName: "Chat",
-                                                          bool: month),
-                                                      buttons(
-                                                          context: context,
-                                                          img:
-                                                              "assets/Images/button2.svg",
-                                                          onTap: () {
-                                                            controller
-                                                                .swipeDown();
-                                                          },
-                                                          buttonName: "Connect",
-                                                          bool: month),
-                                                    ],
-                                                  )
-                                                : ind == 1 ||
-                                                        ind == 3 ||
-                                                        ind == 5
-                                                    ? Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          buttons(
-                                                              context: context,
-                                                              img:
-                                                                  "assets/Images/button4.svg",
-                                                              onTap: () {},
-                                                              buttonName:
-                                                                  "Undo",
-                                                              bool: month),
-                                                          buttons(
-                                                              context: context,
-                                                              img:
-                                                                  "assets/Images/button1.svg",
-                                                              onTap: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                                    return Chatting_Page(
-                                                                      name:
-                                                                          'chatting',
-                                                                      Username:
-                                                                          users[ind]
-                                                                              [
-                                                                              'Name'],
-                                                                      image: users[ind]
-                                                                              [
-                                                                              'images']
-                                                                          [
-                                                                          pageViewIndex],
-                                                                    );
-                                                                  },
-                                                                ));
-                                                              },
-                                                              buttonName:
-                                                                  "Chat",
-                                                              bool: month),
-                                                          buttons(
-                                                              context: context,
-                                                              img:
-                                                                  "assets/Images/button2.svg",
-                                                              onTap: () {
-                                                                controller
-                                                                    .swipeDown();
-                                                              },
-                                                              buttonName:
-                                                                  "Connect",
-                                                              bool: month),
-                                                        ],
-                                                      )
-                                                    : Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          buttons(
-                                                              context: context,
-                                                              img:
-                                                                  "assets/Images/button3.svg",
-                                                              onTap: () {
-                                                                controller
-                                                                    .swipeUp();
-                                                              },
-                                                              buttonName:
-                                                                  "Skip",
-                                                              bool: month),
-                                                          buttons(
-                                                              context: context,
-                                                              img:
-                                                                  "assets/Images/button1.svg",
-                                                              onTap: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                                    return Chatting_Page(
-                                                                      name:
-                                                                          'chatting',
-                                                                      Username:
-                                                                          users[ind]
-                                                                              [
-                                                                              'Name'],
-                                                                      image: users[ind]
-                                                                              [
-                                                                              'images']
-                                                                          [
-                                                                          pageViewIndex],
-                                                                    );
-                                                                  },
-                                                                ));
-                                                              },
-                                                              buttonName:
-                                                                  "Chat",
-                                                              bool: month),
-                                                          buttons(
-                                                              context: context,
-                                                              img:
-                                                                  "assets/Images/button4.svg",
-                                                              onTap: () {},
-                                                              buttonName:
-                                                                  "Undo",
-                                                              bool: month),
-                                                        ],
-                                                      )))
-                          ],
-                        ))
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceAround,
+                                              children: [
+
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button4.svg",
+                                                    onTap: () {
+                                                      undoUsersCubit.GetUndoUsers(id: undoid).then((value) async {
+                                                        setState(() {
+                                                          image=image;
+                                                        });
+                                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                                            return const Home_screen();
+                                                          },));
+                                                        setState(() { });
+                                                      },);
+                                                    },
+                                                    buttonName:
+                                                    "Undo",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button1.svg",
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) {
+                                                              return Chatting_Page(
+                                                                name:
+                                                                'chatting',
+                                                                Username:
+                                                                users[ind]
+                                                                [
+                                                                'Name'],
+                                                                image: users[ind]
+                                                                [
+                                                                'images']
+                                                                [
+                                                                pageViewIndex],
+                                                              );
+                                                            },
+                                                          ));
+                                                    },
+                                                    buttonName:
+                                                    "Chat",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button2.svg",
+                                                    onTap: () {
+
+                                                      controller.swipeDown();
+                                                    },
+                                                    buttonName:
+                                                    "Connect",
+                                                    bool: month),
+                                              ],
+                                            )
+                                                : Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceAround,
+                                              children: [
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button3.svg",
+                                                    onTap: () {
+                                                      rejectUserCubit.GetRejectUser(id: allUsersdetails.data?[ind].first.id ?? '').then((value) {
+                                                        controller.swipeUp();
+                                                      },);
+                                                    },
+                                                    buttonName:
+                                                    "Skip",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button1.svg",
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) {
+                                                              return Chatting_Page(
+                                                                name:
+                                                                'chatting',
+                                                                Username:
+                                                                users[ind]
+                                                                [
+                                                                'Name'],
+                                                                image: users[ind]
+                                                                [
+                                                                'images']
+                                                                [
+                                                                pageViewIndex],
+                                                              );
+                                                            },
+                                                          ));
+                                                    },
+                                                    buttonName:
+                                                    "Chat",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button4.svg",
+                                                    onTap: () {},
+                                                    buttonName:
+                                                    "Undo",
+                                                    bool: month),
+                                              ],
+                                            )
+                                        ))
+                                  ],
+                                ));
+                          }
+                          if(state is AllUsersDetailsLoading){
+                            return Center(child: Text("Loading ...."),);
+                          }
+                          if(state is AllUsersDetailsError){
+                            return Center(child: Text("Somthing went wrong ...."),);
+                          }
+                          return Center(child: Text("Somthing went wrong ...."),);
+                        },)
+
                       ],
                     ),
                   ),

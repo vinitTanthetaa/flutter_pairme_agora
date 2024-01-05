@@ -19,6 +19,7 @@ import 'package:pair_me/cubits/forggot_password.dart';
 import 'package:pair_me/cubits/login_cubit.dart';
 import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/cubits/profile_update.dart';
+import 'package:pair_me/cubits/show_all_users.dart';
 import 'package:pair_me/cubits/signup.dart';
 import 'package:pair_me/cubits/user_profile_cubit.dart';
 import 'package:pair_me/cubits/verify_forgot_otp.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BusinessaddressUpdatesCubit()),
         BlocProvider(create: (context) => BusinessprofileupdateCubit()),
         BlocProvider(create: (context) => ChangePasswordCubit()),
+        BlocProvider(create: (context) => AllUsersDetailsCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

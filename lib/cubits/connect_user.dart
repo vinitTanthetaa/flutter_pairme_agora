@@ -18,9 +18,10 @@ class ConnectUserCubit extends Cubit<ConnectUserState> {
   ConnectUserCubit() : super(ConnectUserInitials());
   final dio = Dio();
   Future<void> GetConnectUser({required String id}) async {
+    print("id ==> $id");
     emit(ConnectUserLoading());
     try {
-      Response response = await dio.get('${apis.showAllProfiles}$id',options:  Options(headers: {
+      Response response = await dio.get('${apis.connectUser}$id',options:  Options(headers: {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }));
