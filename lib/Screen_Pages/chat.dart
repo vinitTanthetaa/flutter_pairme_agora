@@ -235,7 +235,7 @@ bool emojiShowing = false;
                     ),
                   ),
                 ),
-               Expanded(child: SingleChildScrollView(
+                Expanded(child: SingleChildScrollView(
                  child: Padding(
                    padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                    child: Column(
