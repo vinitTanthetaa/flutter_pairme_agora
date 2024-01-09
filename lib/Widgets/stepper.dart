@@ -10,7 +10,7 @@ Widget custom_stepper(BuildContext context, {required int positaion}) {
     doneLineColor: AppColor.skyBlue,
     doneStepColor: AppColor.skyBlue,
     undoneLineColor: AppColor.gray,
-    lineLength: screenWidth(context, dividedBy: 8.7),
+    lineLength: screenWidth(context, dividedBy: 9),
     doneLineThickness: 7,
     undoneLineThickness: 7,
     unselectedStepWidget: const CircleAvatar(

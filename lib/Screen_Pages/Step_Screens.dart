@@ -407,7 +407,7 @@ class _StepScreenState extends State<StepScreen> {
                                         image: _state
                                             ? 'assets/Images/Vector.png'
                                             : 'assets/Images/right_arrow.png',
-                                        readOnly: true,
+                                        readOnly: false,
                                         onPress: () {
                                           setState(() {
                                             _state = !_state;
@@ -518,7 +518,7 @@ class _StepScreenState extends State<StepScreen> {
                                         image: _city
                                             ? 'assets/Images/Vector.png'
                                             : 'assets/Images/right_arrow.png',
-                                        readOnly: true,
+                                        readOnly: false,
                                         onPress: () {
                                           setState(() {
                                             _city = !_city;
@@ -1293,8 +1293,7 @@ class _StepScreenState extends State<StepScreen> {
                                           context: context,
                                           showPhoneCode: true,
                                           onSelect: (Country country) {
-                                            print(
-                                                'Select country: ${country.phoneCode}');
+                                            print('Select country: ${country.phoneCode}');
                                             print('Select country: ${country.name}');
                                             _Contry1.text = country.name;
                                             GetData(_Contry1.text);
@@ -1325,7 +1324,7 @@ class _StepScreenState extends State<StepScreen> {
                                                 image: _state
                                                     ? 'assets/Images/Vector.png'
                                                     : 'assets/Images/right_arrow.png',
-                                                readOnly: true,
+                                                readOnly: false,
                                                 onPress: () {
                                                   setState(() {
                                                     _state = !_state;
@@ -1436,7 +1435,7 @@ class _StepScreenState extends State<StepScreen> {
                                                 image: _city
                                                     ? 'assets/Images/Vector.png'
                                                     : 'assets/Images/right_arrow.png',
-                                                readOnly: true,
+                                                readOnly: false,
                                                 onPress: () {
                                                   setState(() {
                                                     _city = !_city;
@@ -1549,7 +1548,7 @@ class _StepScreenState extends State<StepScreen> {
                                           title: 'Set your Birthday',
                                           dateOrder: DatePickerDateOrder.dmy,
                                           initialDateTime: _focusedDay,
-                                          gradientColors: [AppColor.skyBlue,AppColor.whiteskyBlue],
+                                          gradientColors: const [AppColor.skyBlue,AppColor.whiteskyBlue],
                                           titlePadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 100)),
                                           height: screenHeight(context,dividedBy: 3),
                                           dismissable: true,
@@ -2183,56 +2182,56 @@ class _StepScreenState extends State<StepScreen> {
                                                                               dividedBy: 2),
                                                                           child:
                                                                           GestureDetector(
-                                                                            // onTap: () async {
-                                                                            //   // final ImagePicker picker = ImagePicker();
-                                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                            //   // print("image ===> $image");
-                                                                            //   ImagePickerPlus
-                                                                            //       picker =
-                                                                            //       ImagePickerPlus(
-                                                                            //           context);
-                                                                            //   SelectedImagesDetails?
-                                                                            //       details =
-                                                                            //       await picker
-                                                                            //           .pickBoth(
-                                                                            //     source:
-                                                                            //         ImageSource
-                                                                            //             .camera,
-                                                                            //
-                                                                            //     /// On long tap, it will be available.
-                                                                            //     multiSelection:
-                                                                            //         true,
-                                                                            //     galleryDisplaySettings:
-                                                                            //         GalleryDisplaySettings(
-                                                                            //       appTheme: AppTheme(
-                                                                            //           focusColor:
-                                                                            //               Colors
-                                                                            //                   .white,
-                                                                            //           primaryColor:
-                                                                            //               Colors
-                                                                            //                   .black),
-                                                                            //       cropImage:
-                                                                            //           true,
-                                                                            //       showImagePreview:
-                                                                            //           true,
-                                                                            //     ),
-                                                                            //   );
-                                                                            //   print(
-                                                                            //       'Details ===> ${details}');
-                                                                            //   if (details !=
-                                                                            //       null) {
-                                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                            //     _selectedimag2 =
-                                                                            //         details
-                                                                            //             .selectedFiles[0];
-                                                                            //     Navigator.pop(
-                                                                            //         context);
-                                                                            //     setState(() {});
-                                                                            //     print(
-                                                                            //         'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                                            //   }
-                                                                            //   // if (details != null) await displayDetails(details);
-                                                                            // },
+                                                                            onTap: () async {
+                                                                              // final ImagePicker picker = ImagePicker();
+                                                                              // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                              // print("image ===> $image");
+                                                                              ImagePickerPlus
+                                                                                  picker =
+                                                                                  ImagePickerPlus(
+                                                                                      context);
+                                                                              SelectedImagesDetails?
+                                                                                  details =
+                                                                                  await picker
+                                                                                      .pickBoth(
+                                                                                source:
+                                                                                    ImageSource
+                                                                                        .camera,
+
+                                                                                /// On long tap, it will be available.
+                                                                                multiSelection:
+                                                                                    true,
+                                                                                galleryDisplaySettings:
+                                                                                    GalleryDisplaySettings(
+                                                                                  appTheme: AppTheme(
+                                                                                      focusColor:
+                                                                                          Colors
+                                                                                              .white,
+                                                                                      primaryColor:
+                                                                                          Colors
+                                                                                              .black),
+                                                                                  cropImage:
+                                                                                      true,
+                                                                                  showImagePreview:
+                                                                                      true,
+                                                                                ),
+                                                                              );
+                                                                              print(
+                                                                                  'Details ===> ${details}');
+                                                                              if (details !=
+                                                                                  null) {
+                                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                                _selectedimag2 =
+                                                                                    details
+                                                                                        .selectedFiles[0];
+                                                                                Navigator.pop(
+                                                                                    context);
+                                                                                setState(() {});
+                                                                                print(
+                                                                                    'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                              }
+                                                                              // if (details != null) await displayDetails(details);
+                                                                            },
                                                                             child: Row(
                                                                               crossAxisAlignment:
                                                                               CrossAxisAlignment

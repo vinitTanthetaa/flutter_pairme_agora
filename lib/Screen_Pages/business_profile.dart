@@ -206,12 +206,12 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag1?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag1!.selectedFile),
-                                  //         fit: BoxFit.fill) :
+                                  _selectedimag1?.selectedFile != null
+                                      ? DecorationImage(
+                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                          image: FileImage(
+                                              _selectedimag1!.selectedFile),
+                                          fit: BoxFit.fill) :
                                   const DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/placeHolderImage.jpg'),
@@ -610,12 +610,12 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag2?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag2!.selectedFile),
-                                  //         fit: BoxFit.fill) :
+                                  _selectedimag2?.selectedFile != null
+                                      ? DecorationImage(
+                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                          image: FileImage(
+                                              _selectedimag2!.selectedFile),
+                                          fit: BoxFit.fill) :
                                   const DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/placeHolderImage.jpg'),
@@ -696,56 +696,56 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               dividedBy: 2),
                                                           child:
                                                               GestureDetector(
-                                                            // onTap: () async {
-                                                            //   // final ImagePicker picker = ImagePicker();
-                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
-                                                            //   // print("image ===> $image");
-                                                            //   ImagePickerPlus
-                                                            //       picker =
-                                                            //       ImagePickerPlus(
-                                                            //           context);
-                                                            //   SelectedImagesDetails?
-                                                            //       details =
-                                                            //       await picker
-                                                            //           .pickBoth(
-                                                            //     source:
-                                                            //         ImageSource
-                                                            //             .camera,
-                                                            //
-                                                            //     /// On long tap, it will be available.
-                                                            //     multiSelection:
-                                                            //         true,
-                                                            //     galleryDisplaySettings:
-                                                            //         GalleryDisplaySettings(
-                                                            //       appTheme: AppTheme(
-                                                            //           focusColor:
-                                                            //               Colors
-                                                            //                   .white,
-                                                            //           primaryColor:
-                                                            //               Colors
-                                                            //                   .black),
-                                                            //       cropImage:
-                                                            //           true,
-                                                            //       showImagePreview:
-                                                            //           true,
-                                                            //     ),
-                                                            //   );
-                                                            //   print(
-                                                            //       'Details ===> ${details}');
-                                                            //   if (details !=
-                                                            //       null) {
-                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                            //     _selectedimag2 =
-                                                            //         details
-                                                            //             .selectedFiles[0];
-                                                            //     Navigator.pop(
-                                                            //         context);
-                                                            //     setState(() {});
-                                                            //     print(
-                                                            //         'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                            //   }
-                                                            //   // if (details != null) await displayDetails(details);
-                                                            // },
+                                                            onTap: () async {
+                                                              // final ImagePicker picker = ImagePicker();
+                                                              // final image = picker.pickImage(source: ImageSource.gallery);
+                                                              // print("image ===> $image");
+                                                              ImagePickerPlus
+                                                                  picker =
+                                                                  ImagePickerPlus(
+                                                                      context);
+                                                              SelectedImagesDetails?
+                                                                  details =
+                                                                  await picker
+                                                                      .pickBoth(
+                                                                source:
+                                                                    ImageSource
+                                                                        .camera,
+
+                                                                /// On long tap, it will be available.
+                                                                multiSelection:
+                                                                    true,
+                                                                galleryDisplaySettings:
+                                                                    GalleryDisplaySettings(
+                                                                  appTheme: AppTheme(
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      primaryColor:
+                                                                          Colors
+                                                                              .black),
+                                                                  cropImage:
+                                                                      true,
+                                                                  showImagePreview:
+                                                                      true,
+                                                                ),
+                                                              );
+                                                              print(
+                                                                  'Details ===> ${details}');
+                                                              if (details !=
+                                                                  null) {
+                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                _selectedimag2 =
+                                                                    details
+                                                                        .selectedFiles[0];
+                                                                Navigator.pop(
+                                                                    context);
+                                                                setState(() {});
+                                                                print(
+                                                                    'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                              }
+                                                              // if (details != null) await displayDetails(details);
+                                                            },
                                                             child: Row(
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
@@ -2706,25 +2706,25 @@ class _Business_ProfileState extends State<Business_Profile> {
                                       // allowMultiple: true,
                                       allowedExtensions: ['jpg', 'pdf', 'doc'],
                                     );
-
-                                    if (filelist.length < 3) {
-                                      filelist.add(result!.files.toString());
-                                      if (filelist.length == 1) {
-                                        file1 = result.files.first;
-                                        print("fille1 ======> " +
-                                            file1.toString());
-                                      } else if (filelist.length == 2) {
-                                        file2 = result.files.first;
-                                        print("fille2 ======> " +
-                                            file2.toString());
-                                      } else if (filelist.length == 3) {
-                                        file3 = result.files.first;
-                                        print("fille3 ======> " +
-                                            file3.toString());
-                                      }
-                                    } else {
-                                      flutterToast('Only 3 items Add', false);
-                                    }
+                                    print("result === >"+ result!.names.toString());
+                                    // if (filelist.length < 3) {
+                                    //   filelist.add(result!.files.toString());
+                                    //   if (filelist.length == 1) {
+                                    //     file1 = result.files.first;
+                                    //     print("fille1 ======> " +
+                                    //         file1.toString());
+                                    //   } else if (filelist.length == 2) {
+                                    //     file2 = result.files.first;
+                                    //     print("fille2 ======> " +
+                                    //         file2.toString());
+                                    //   } else if (filelist.length == 3) {
+                                    //     file3 = result.files.first;
+                                    //     print("fille3 ======> " +
+                                    //         file3.toString());
+                                    //   }
+                                    // } else {
+                                    //   flutterToast('Only 3 items Add', false);
+                                    // }
 
                                     // if(file1.bytes == null){
                                     //   file1 = ;

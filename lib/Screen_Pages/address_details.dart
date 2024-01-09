@@ -275,16 +275,16 @@ class _Address_DetailsState extends State<Address_Details> {
                                 custom_textfield_header(text: 'City'),
                                 Custom_textfield(
                                     onTap: () {
-                                      setState(() {
-                                        _city = !_city;
-                                      });
+                                      // setState(() {
+                                      //   _city = !_city;
+                                      // });
                                     },
                                     context,
                                     show_icon: true,
                                     image: _city
                                         ? 'assets/Images/Vector.png'
                                         : 'assets/Images/right_arrow.png',
-                                    readOnly: true,
+                                    readOnly: false,
                                     onPress: () {
                                       setState(() {
                                         _city = !_city;
