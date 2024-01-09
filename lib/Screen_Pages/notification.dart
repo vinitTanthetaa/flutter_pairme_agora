@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/notification_modal.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/acceptORrejectnotification.dart';
+import 'package:pair_me/cubits/clearAllNotification_cubit.dart';
 import 'package:pair_me/cubits/notification_cubit.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -21,6 +24,8 @@ class Notification_page extends StatefulWidget {
 class _Notification_pageState extends State<Notification_page> {
   NotificationCubit notificationCubit = NotificationCubit();
   UserNotification userNotification = UserNotification();
+  AcceptorRejectCubit acceptorRejectCubit = AcceptorRejectCubit();
+  ClearAllNotificationCubit clearAllNotificationCubit = ClearAllNotificationCubit();
   List list = [
   {
     "Name":"Jane Koblenz",
@@ -80,7 +85,7 @@ class _Notification_pageState extends State<Notification_page> {
   },
 ];
   getData() async {
-    userNotification = await notificationCubit.GetNotification() ?? UserNotification();
+    userNotification = (await notificationCubit.GetNotification())!;
     setState(() {});
   }
   @override
@@ -109,112 +114,140 @@ class _Notification_pageState extends State<Notification_page> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         custom_header(text: 'Notification'),
-                        Text('Clear all'.tr(),style: const TextStyle(fontFamily: 'Roboto',fontSize: 14,fontWeight: FontWeight.w500,color: AppColor.skyBlue),)
+                        GestureDetector(
+                          onTap: () {
+                            clearAllNotificationCubit.GetClearAllNotification();
+                          },
+                            child: Text('Clear all'.tr(),style: const TextStyle(fontFamily: 'Roboto',fontSize: 14,fontWeight: FontWeight.w500,color: AppColor.skyBlue),))
                       ],
                     ),
                   ),
                   SizedBox(height: screenHeight(context,dividedBy: 70),),
                   Expanded(
-                     child: ListView.separated(
-                       physics: const ClampingScrollPhysics(),
-                       padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100), ),
-                     itemBuilder: (context, index) {
-                       return  Dismissible(
-                         direction: DismissDirection.endToStart,
-                         key: UniqueKey(),
-                         background: Container(
-                           padding: EdgeInsets.only(
-                               right: screenWidth(context,
-                                   dividedBy: 10)),
-                           color: AppColor.skyBlue,
-                           alignment: Alignment.centerRight,
-                           child: Container(
-                             height: screenHeight(context,dividedBy: 35),
-                             width: screenWidth(context,dividedBy: 15),
-                             decoration:  const BoxDecoration(
-                               image: DecorationImage(image: AssetImage('assets/Images/delete.png'))
-                             ),
-                           ) ,
-                         ),
-                         child: Container(
-                           // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                           height: screenHeight(context,dividedBy: 10),
-                           width: screenHeight(context),
-                           color: index  == 0 ?Color(0xffE7F3FE) : index  == 1 ?Color(0xffE7F3FE):Colors.transparent,
-                           child: Padding(
-                             padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 17),),
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.start,
-                               crossAxisAlignment: CrossAxisAlignment.center,
-                               children: [
-                                 CachedNetworkImage(
-                                   imageUrl: "${apis.baseurl}/${userNotification.data?[index].sentBy.image.photo1}",
-                                   imageBuilder: (context, imageProvider) => Container(
-                                     height: screenHeight(context,dividedBy: 15),
-                                     width: screenHeight(context,dividedBy: 15),
-                                     decoration: BoxDecoration(
-                                       image: DecorationImage(
-                                         image: imageProvider,
-                                         fit: BoxFit.cover,
+                     child: BlocBuilder<NotificationCubit,NotificationState>(builder: (context, state) {
+                       if(state is NotificationLoading){
+                         return Expanded(child: Center(child: customLoader()));
+                       }
+                       if(state is NotificationError){
+                         return Center();
+                       }
+                       if(state is NotificationSuccess){
+                         return ListView.separated(
+                             physics: const ClampingScrollPhysics(),
+                             padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100), ),
+                             itemBuilder: (context, index) {
+                               return  Dismissible(
+                                   direction: DismissDirection.endToStart,
+                                   key: UniqueKey(),
+                                   background: Container(
+                                     padding: EdgeInsets.only(
+                                         right: screenWidth(context,
+                                             dividedBy: 10)),
+                                     color: AppColor.skyBlue,
+                                     alignment: Alignment.centerRight,
+                                     child: Container(
+                                       height: screenHeight(context,dividedBy: 35),
+                                       width: screenWidth(context,dividedBy: 15),
+                                       decoration:  const BoxDecoration(
+                                           image: DecorationImage(image: AssetImage('assets/Images/delete.png'))
+                                       ),
+                                     ) ,
+                                   ),
+                                   child: Container(
+                                     // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
+                                     height: screenHeight(context,dividedBy: 10),
+                                     width: screenHeight(context),
+                                     color: index  == 0 ?Color(0xffE7F3FE) : index  == 1 ?Color(0xffE7F3FE):Colors.transparent,
+                                     child: Padding(
+                                       padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 17),),
+                                       child: Row(
+                                         mainAxisAlignment: MainAxisAlignment.start,
+                                         crossAxisAlignment: CrossAxisAlignment.center,
+                                         children: [
+                                           CachedNetworkImage(
+                                             imageUrl: "${apis.baseurl}/${userNotification.data?[index].sentBy?.image?.photo1 ?? ''}",
+                                             imageBuilder: (context, imageProvider) => Container(
+                                               height: screenHeight(context,dividedBy: 15),
+                                               width: screenHeight(context,dividedBy: 15),
+                                               decoration: BoxDecoration(
+                                                 image: DecorationImage(
+                                                   image: imageProvider,
+                                                   fit: BoxFit.cover,
 
-                                         // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                                   // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                                 ),
+                                                 shape: BoxShape.circle,
+                                               ),
+                                             ),
+                                             placeholder: (context, url) => CircularProgressIndicator(),
+                                             errorWidget: (context, url, error) => CircleAvatar(
+                                                 radius: screenHeight(context,dividedBy:30),
+                                                 child: Icon(Icons.person)),
+                                           ),
+                                           // Container(
+                                           //   height: screenHeight(context,dividedBy: 15),
+                                           //   width: screenHeight(context,dividedBy: 15),
+                                           //   decoration: BoxDecoration(
+                                           //       shape: BoxShape.circle,
+                                           //       image: DecorationImage(image: NetworkImage("${list[index]["image"]}"),fit: BoxFit.cover)
+                                           //   ),
+                                           // ),
+                                           SizedBox(width: screenWidth(context,dividedBy: 30),),
+                                           Padding(
+                                             padding: EdgeInsets.symmetric(vertical: screenWidth(context,dividedBy: 40)),
+                                             child: Column(
+                                               mainAxisAlignment: MainAxisAlignment.start,
+                                               crossAxisAlignment: CrossAxisAlignment.start,
+                                               children: [
+                                                 SizedBox(
+                                                   width: screenWidth(context,dividedBy: 1.46),
+                                                   child: Row(
+                                                     //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                     children: [
+                                                       Text(userNotification.data?[index].sentBy?.userName ?? '',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
+                                                       const Spacer(),
+                                                       GestureDetector(
+                                                           onTap: () {
+                                                             acceptorRejectCubit.AcceptNotification(id: userNotification.data?[index].id ?? '');
+                                                           },
+                                                           child: const Icon(Icons.add,size: 20,)),
+                                                       const SizedBox(width: 10,),
+                                                       GestureDetector(
+                                                           onTap: () {
+                                                             acceptorRejectCubit.RejectNotification(id: userNotification.data?[index].id ?? '');
+                                                           },
+                                                           child: const Icon(Icons.cancel,size: 20,)),
+                                                       Text(userNotification.data?[index].status ?? '',style: const TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 12,color: Color(0xffAAAAAA)),),
+                                                     ],
+                                                   ),
+                                                 ),
+                                                 SizedBox(height: screenHeight(context,dividedBy: 300),),
+                                                 SizedBox(
+                                                   width: screenWidth(context,dividedBy: 2.2),
+                                                   child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
+                                                 )
+                                               ],
+                                             ),
+                                           ),
+                                         ],
                                        ),
-                                       shape: BoxShape.circle,
                                      ),
-                                   ),
-                                   placeholder: (context, url) => CircularProgressIndicator(),
-                                   errorWidget: (context, url, error) => CircleAvatar(
-                                       radius: screenHeight(context,dividedBy:30),
-                                       child: Icon(Icons.person)),
-                                 ),
-                                 // Container(
-                                 //   height: screenHeight(context,dividedBy: 15),
-                                 //   width: screenHeight(context,dividedBy: 15),
-                                 //   decoration: BoxDecoration(
-                                 //       shape: BoxShape.circle,
-                                 //       image: DecorationImage(image: NetworkImage("${list[index]["image"]}"),fit: BoxFit.cover)
-                                 //   ),
-                                 // ),
-                                 SizedBox(width: screenWidth(context,dividedBy: 30),),
-                                 Padding(
-                                   padding: EdgeInsets.symmetric(vertical: screenWidth(context,dividedBy: 40)),
-                                   child: Column(
-                                     mainAxisAlignment: MainAxisAlignment.start,
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     children: [
-                                       SizedBox(
-                                         width: screenWidth(context,dividedBy: 1.46),
-                                         child: Row(
-                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: [
-                                             Text(userNotification.data?[index].sentBy.userName ?? '',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
-                                             Text(userNotification.data?[index].status ?? '',style: const TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 12,color: Color(0xffAAAAAA)),),
-                                           ],
-                                         ),
-                                       ),
-                                       SizedBox(height: screenHeight(context,dividedBy: 300),),
-                                       SizedBox(
-                                         width: screenWidth(context,dividedBy: 2.2),
-                                         child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
-                                       )
-                                     ],
-                                   ),
-                                 ),
-                               ],
-                             ),
-                           ),
-                         )
-                       );
-                     },
-                     separatorBuilder: (context, index) {
-                      return  const Divider(
-                         height: 0,
-                        thickness: 2,
-                        color: Color(0xffF5F5F5),
-                       // color: Colors.black12,
-                       );
-                     },
-                     itemCount: userNotification.data?.length ?? 0))
+                                   )
+                               );
+                             },
+                             separatorBuilder: (context, index) {
+                               return  const Divider(
+                                 height: 0,
+                                 thickness: 2,
+                                 color: Color(0xffF5F5F5),
+                                 // color: Colors.black12,
+                               );
+                             },
+                             itemCount: userNotification.data?.length ?? 0);
+                       }
+                       return Expanded(child: Center(child: customLoader()));
+                     },)
+                  )
                 ],
               ),
             )

@@ -19,7 +19,6 @@ class NotificationSuccess extends NotificationState {}
 class NotificationCubit extends Cubit<NotificationState> {
   NotificationCubit() : super(NotificationInitials());
   final dio = Dio();
-  UserNotification userNotification = UserNotification();
   Future<UserNotification?> GetNotification() async {
     emit(NotificationLoading());
     try {
@@ -40,7 +39,7 @@ class NotificationCubit extends Cubit<NotificationState> {
       print("you are fully fail my friend" + e.toString());
       // TODO
     }
-    return null;
+    return UserNotification();
   }
 
 }

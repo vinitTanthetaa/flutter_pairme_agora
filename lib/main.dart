@@ -17,10 +17,12 @@ import 'package:pair_me/cubits/adsress_drtails.dart';
 import 'package:pair_me/cubits/business_add_update.dart';
 import 'package:pair_me/cubits/business_address_cubit.dart';
 import 'package:pair_me/cubits/change_password.dart';
+import 'package:pair_me/cubits/clearAllNotification_cubit.dart';
 import 'package:pair_me/cubits/connect_user.dart';
 import 'package:pair_me/cubits/connect_with_cubit.dart';
 import 'package:pair_me/cubits/forggot_password.dart';
 import 'package:pair_me/cubits/login_cubit.dart';
+import 'package:pair_me/cubits/message_data_cubit.dart';
 import 'package:pair_me/cubits/notification_cubit.dart';
 import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/cubits/profile_update.dart';
@@ -87,6 +89,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UndoUsersCubit()),
         BlocProvider(create: (context) => ProfessionalDetailsUpdateCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
+        BlocProvider(create: (context) => MessageCubit()),
+        BlocProvider(create: (context) => ClearAllNotificationCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

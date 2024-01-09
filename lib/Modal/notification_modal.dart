@@ -28,59 +28,59 @@ class UserNotification {
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
-    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data?.map((x) => x.toJson()) ?? []),
   };
 }
 
 class Datum {
-  String id;
-  SentBy sentBy;
-  String receiveBy;
-  String status;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int v;
+  String? id;
+  SentBy? sentBy;
+  String? receiveBy;
+  String? message;
+  String? time;
+  String? status;
+  int? v;
 
   Datum({
-    required this.id,
-    required this.sentBy,
-    required this.receiveBy,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
+     this.id,
+    this.message,
+    this.time,
+     this.sentBy,
+     this.receiveBy,
+     this.status,
+     this.v,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["_id"],
     sentBy: SentBy.fromJson(json["sent_by"]),
     receiveBy: json["receive_by"],
+    message: json["message"],
+    time: json["time"],
     status: json["status"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
     v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "sent_by": sentBy.toJson(),
+    "sent_by": sentBy?.toJson(),
     "receive_by": receiveBy,
+    "message": message,
+    "time": time,
     "status": status,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
     "__v": v,
   };
 }
 
 class SentBy {
-  String id;
-  String userName;
-  Image image;
+  String? id;
+  String? userName;
+  Image? image;
 
   SentBy({
-    required this.id,
-    required this.userName,
-    required this.image,
+    this.id,
+    this.userName,
+    this.image,
   });
 
   factory SentBy.fromJson(Map<String, dynamic> json) => SentBy(
@@ -92,7 +92,7 @@ class SentBy {
   Map<String, dynamic> toJson() => {
     "_id": id,
     "userName": userName,
-    "image": image.toJson(),
+    "image": image?.toJson(),
   };
 }
 
