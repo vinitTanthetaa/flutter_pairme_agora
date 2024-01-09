@@ -182,28 +182,19 @@ class _Login_pageState extends State<Login_page> {
                                     return const Forget_Password();
                                   },));
                                 },
-                                child: Text('Forgot Password?'.tr(),style: TextStyle(fontFamily: 'Roboto',fontSize: 13,fontWeight: FontWeight.w500,color: Color(0xff437DFF)) ,),
+                                child: Text('Forgot Password?'.tr(),style: const TextStyle(fontFamily: 'Roboto',fontSize: 13,fontWeight: FontWeight.w500,color: Color(0xff437DFF)) ,),
                               ),
                             ]),
                       ),
                     Center(
                       child: Custom_botton(context, text: 'Login', onTap: () async {
-                        // Navigator.push(context,MaterialPageRoute(builder:(context) {
-                        //   return const Home_screen();
-                        // }, ));
-                        // if(_Email.text.isEmpty){
-                        //   flutterToast('Please Enter Valid Phone number', false);
-                        // } else if(_Password.text.isEmpty) {
-                        //   flutterToast('Please Enter Password', false);
-                        // } else {
-                           loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
-                        //   // showcase = true;
-                        //   // prefsService.setBoolData('showcase', showcase);
-                        //   // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
-                        //   // showcasetime++;
-                        //   // prefsService.setIntData("showcasetime", showcasetime);
-                        //
-                        // }
+                        if(_Email.text.isEmpty){
+                          flutterToast('Please Enter Valid Phone number', false);
+                        } else if(_Password.text.isEmpty) {
+                          flutterToast('Please Enter Password', false);
+                        } else {
+                          loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
+                        }
                       }, height: screenHeight(context,dividedBy: 13),),
                     ),
                     Row(children: <Widget>[

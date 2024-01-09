@@ -22,7 +22,6 @@ class _UsersDetailsState extends State<UsersDetails>
     with TickerProviderStateMixin {
   int pageViewIndex = 0;
   final TextEditingController _bio = TextEditingController();
-  List _type = [];
 
   List lookingFor = [
     'Investor',
@@ -60,8 +59,7 @@ class _UsersDetailsState extends State<UsersDetails>
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.list;
-
+    widget.list = widget.list.toSet().toList();
     setState(() {});
   }
 

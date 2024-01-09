@@ -22,12 +22,12 @@ class _SpleshScreenState extends State<SpleshScreen> {
     Splash_Timer();
   }
   Splash_Timer(){
-    Timer(Duration(seconds: 1), () async {
+    Timer(const Duration(seconds: 1), () async {
       prefsService.removeData('showcase');
       // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
       // showcasetime++;
       // prefsService.setIntData("showcasetime", showcasetime);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Language_Screen(),), (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Language_Screen(),), (route) => false);
     });
   }
   @override

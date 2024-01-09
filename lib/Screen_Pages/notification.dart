@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pair_me/Modal/notification_modal.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/notification_cubit.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -15,7 +19,9 @@ class Notification_page extends StatefulWidget {
 }
 
 class _Notification_pageState extends State<Notification_page> {
-List list = [
+  NotificationCubit notificationCubit = NotificationCubit();
+  UserNotification userNotification = UserNotification();
+  List list = [
   {
     "Name":"Jane Koblenz",
     "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU"
@@ -73,6 +79,17 @@ List list = [
     "image":"https://img.mensxp.com/media/content/2021/Jan/Lesser-Known-Facts-About-Yash-7_60056adf8c66e.jpeg?w=900&h=1200&cc=1"
   },
 ];
+  getData() async {
+    userNotification = await notificationCubit.GetNotification() ?? UserNotification();
+    setState(() {});
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    notificationCubit = BlocProvider.of<NotificationCubit>(context);
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +114,7 @@ List list = [
                     ),
                   ),
                   SizedBox(height: screenHeight(context,dividedBy: 70),),
-                 Expanded(
+                  Expanded(
                      child: ListView.separated(
                        physics: const ClampingScrollPhysics(),
                        padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100), ),
@@ -131,7 +148,7 @@ List list = [
                                crossAxisAlignment: CrossAxisAlignment.center,
                                children: [
                                  CachedNetworkImage(
-                                   imageUrl: list[index]["image"],
+                                   imageUrl: "${apis.baseurl}/${userNotification.data?[index].sentBy.image.photo1}",
                                    imageBuilder: (context, imageProvider) => Container(
                                      height: screenHeight(context,dividedBy: 15),
                                      width: screenHeight(context,dividedBy: 15),
@@ -170,8 +187,8 @@ List list = [
                                          child: Row(
                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                            children: [
-                                             Text("${list[index]["Name"]}",style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
-                                             const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 12,color: Color(0xffAAAAAA)),),
+                                             Text(userNotification.data?[index].sentBy.userName ?? '',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
+                                             Text(userNotification.data?[index].status ?? '',style: const TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 12,color: Color(0xffAAAAAA)),),
                                            ],
                                          ),
                                        ),
@@ -199,7 +216,7 @@ List list = [
                        // color: Colors.black12,
                        );
                      },
-                     itemCount: list.length))
+                     itemCount: userNotification.data?.length ?? 0))
                 ],
               ),
             )

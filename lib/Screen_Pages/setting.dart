@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/change_password.dart';
 import 'package:pair_me/Screen_Pages/payment.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
@@ -86,7 +87,14 @@ class _Setting_pageState extends State<Setting_page> {
       ],
     );
   }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // getImagesPath();
+    deleteUserCubit = BlocProvider.of<DeleteUserCubit>(context);
+    logoutUserCubit = BlocProvider.of<LogoutUserCubit>(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -17,6 +17,7 @@ Widget Custom_textfield(BuildContext context,
     required bool hidetext,
     required TextEditingController controller}) {
   return Container(
+    alignment: Alignment.center,
     margin: EdgeInsets.only(bottom: screenHeight(context, dividedBy: 70),top: screenHeight(context, dividedBy: 100)),
      height: screenHeight(context,dividedBy: 20),
     // width: screenWidth(context,dividedBy: 1),
@@ -34,62 +35,65 @@ Widget Custom_textfield(BuildContext context,
             spreadRadius: 0.0,
           ),
         ]),
-    child: Padding(
-      padding: EdgeInsets.only(
-          left: screenWidth(context, dividedBy: 25),
-          bottom: screenHeight(context,dividedBy: 400),
-          right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
-      child: Center(
-        child: TextField(
-          onTap: onTap,
-          maxLines: mxline ?? 1,
-          minLines: 1,
-          readOnly: readOnly,
-          keyboardType: number ? TextInputType.number : TextInputType.text,
-          controller: controller,
-          cursorColor: const Color(0xffB3B3B3),
-          style: const TextStyle(fontSize: 14),
-          textInputAction: TextInputAction.next,
-          obscureText: show_icon ? hidetext : false,
-          decoration: show_icon
-              ? InputDecoration(
-                  // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
-                  border: InputBorder.none,
-                  //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
-                  suffixIcon: IconButton(
-                    splashRadius: 1,
-                    style: const ButtonStyle(
-                        overlayColor:
-                            MaterialStatePropertyAll(Colors.transparent)),
-                    onPressed: () {
-                      onPress!();
-                    },
-                    icon: Image(image: AssetImage(image!),
-                    height: screenHeight(context,dividedBy: 40),
-                    width: screenHeight(context,dividedBy: 40),
-                  )
-                  ),
-                  // SvgPicture.asset(
-                  //     'assets/Images/hide.svg',height: 10,width: 10,
-                  //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
-                  //     //semanticsLabel: 'A red up arrow'
-                  // ),
-                  hintText: hint.tr(),
-                  hintStyle: const TextStyle(
-                      color: Color(0xffB3B3B3),
-                      fontFamily: 'Roboto',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400))
-              : InputDecoration(
-                  // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
-                  border: InputBorder.none,
-                  hintText: hint.tr(),
-                  hintStyle: const TextStyle(
-                      color: Color(0xffB3B3B3),
-                      fontFamily: 'Roboto',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400)),
-        ),
+    child: Center(
+      child: TextField(
+        onTap: onTap,
+        enabled: true,
+        maxLines: mxline ?? 1,
+        minLines: 1,
+        textAlign: TextAlign.justify,
+        readOnly: readOnly,
+        keyboardType: number ? TextInputType.number : TextInputType.text,
+        controller: controller,
+        cursorColor: const Color(0xffB3B3B3),
+        style: const TextStyle(fontSize: 14),
+        textInputAction: TextInputAction.next,
+        obscureText: show_icon ? hidetext : false,
+        decoration: show_icon
+            ? InputDecoration(
+                contentPadding: EdgeInsets.only(
+                    left: screenWidth(context, dividedBy: 25),
+                    top: screenHeight(context,dividedBy: 100),
+                    right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
+                border: InputBorder.none,
+
+                //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
+                suffixIcon: IconButton(
+                  splashRadius: 1,
+                  style: const ButtonStyle(
+                      overlayColor:
+                          MaterialStatePropertyAll(Colors.transparent)),
+                  onPressed: () {
+                    onPress!();
+                  },
+                  icon: Image(image: AssetImage(image!),
+                  height: screenHeight(context,dividedBy: 40),
+                  width: screenHeight(context,dividedBy: 40),
+                 )
+                ),
+                // SvgPicture.asset(
+                //     'assets/Images/hide.svg',height: 10,width: 10,
+                //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
+                //     //semanticsLabel: 'A red up arrow'
+                // ),
+                hintText: hint.tr(),
+                hintStyle: const TextStyle(
+                    color: Color(0xffB3B3B3),
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400))
+            : InputDecoration(
+                 contentPadding: EdgeInsets.only(
+                     left: screenWidth(context, dividedBy: 25),
+                     bottom: screenHeight(context,dividedBy: 150),
+                     right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
+                border: InputBorder.none,
+                hintText: hint.tr(),
+                hintStyle: const TextStyle(
+                    color: Color(0xffB3B3B3),
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400)),
       ),
     ),
   );

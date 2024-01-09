@@ -5,7 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
 import 'package:pair_me/cubits/Buisness_profile.dart';
 import 'package:pair_me/cubits/City&state.dart';
+import 'package:pair_me/cubits/Delete_logout_user.dart';
 import 'package:pair_me/cubits/Describe_yourself_cubit.dart';
+import 'package:pair_me/cubits/Filter_user.dart';
+import 'package:pair_me/cubits/Professional_details_update.dart';
 import 'package:pair_me/cubits/ReSend_Otp_cubit.dart';
 import 'package:pair_me/cubits/Reset_Password.dart';
 import 'package:pair_me/cubits/Verify.dart';
@@ -14,14 +17,19 @@ import 'package:pair_me/cubits/adsress_drtails.dart';
 import 'package:pair_me/cubits/business_add_update.dart';
 import 'package:pair_me/cubits/business_address_cubit.dart';
 import 'package:pair_me/cubits/change_password.dart';
+import 'package:pair_me/cubits/connect_user.dart';
 import 'package:pair_me/cubits/connect_with_cubit.dart';
 import 'package:pair_me/cubits/forggot_password.dart';
 import 'package:pair_me/cubits/login_cubit.dart';
+import 'package:pair_me/cubits/notification_cubit.dart';
 import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/cubits/profile_update.dart';
+import 'package:pair_me/cubits/reject_user.dart';
 import 'package:pair_me/cubits/show_all_users.dart';
 import 'package:pair_me/cubits/signup.dart';
+import 'package:pair_me/cubits/undo_users_cubit.dart';
 import 'package:pair_me/cubits/user_profile_cubit.dart';
+import 'package:pair_me/cubits/user_update_cubit.dart';
 import 'package:pair_me/cubits/verify_forgot_otp.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 
@@ -70,6 +78,15 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BusinessprofileupdateCubit()),
         BlocProvider(create: (context) => ChangePasswordCubit()),
         BlocProvider(create: (context) => AllUsersDetailsCubit()),
+        BlocProvider(create: (context) => RejectUserCubit()),
+        BlocProvider(create: (context) => ConnectUserCubit()),
+        BlocProvider(create: (context) => FilterUserCubit()),
+        BlocProvider(create: (context) => DeleteUserCubit()),
+        BlocProvider(create: (context) => LogoutUserCubit()),
+        BlocProvider(create: (context) => UserUpdateCubit()),
+        BlocProvider(create: (context) => UndoUsersCubit()),
+        BlocProvider(create: (context) => ProfessionalDetailsUpdateCubit()),
+        BlocProvider(create: (context) => NotificationCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

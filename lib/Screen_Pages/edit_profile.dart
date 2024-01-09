@@ -4,6 +4,7 @@ import 'package:bottom_picker/resources/arrays.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:pair_me/Screen_Pages/address_details.dart';
 import 'package:pair_me/Screen_Pages/business_address.dart';
@@ -29,7 +30,7 @@ class Edit_Profile extends StatefulWidget {
 }
 
 class _Edit_ProfileState extends State<Edit_Profile> {
-  DateTime _focusedDay = DateTime.now();
+  final DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDate;
   UserUpdateCubit userUpdateCubit = UserUpdateCubit();
   final TextEditingController _firstName = TextEditingController();
@@ -40,12 +41,13 @@ class _Edit_ProfileState extends State<Edit_Profile> {
   final TextEditingController _date = TextEditingController();
   String gender = 'Female';
   bool popup = false;
-
-  // bool popup1 = false;
   bool calendar = false;
-
-  // bool calendar1 = false;
-  // bool select = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userUpdateCubit = BlocProvider.of<UserUpdateCubit>(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

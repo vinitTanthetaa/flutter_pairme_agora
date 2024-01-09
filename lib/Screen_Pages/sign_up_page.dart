@@ -196,11 +196,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                     custom_textfield_header(text: 'Date of Birth'),
                     Custom_textfield(context,
                         show_icon: true,
-                        onTap: () {
-                          // setState(() {
-                          //   calendar = !calendar;
-                          // });
-                        },
+                        onTap: () {},
                         image: 'assets/Images/calendar.png',
                         onPress: () {
                           BottomPicker.date(
@@ -404,51 +400,51 @@ class _SignUp_pageState extends State<SignUp_page> {
                       child: Custom_botton(
                         context,
                         text: 'Next',
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return Set_Password(
-                                firstname: _firstName.text,
-                                lastname: _lastName.text,
-                                gender: gender,
-                                dob: _date.text,
-                                number: _phoneNumber.text,
-                                email: _eMail.text, T_C: select,
-                              );
-                            },
-                          ));
-                        },
                         // onTap: () {
-                        //   if (_firstName.text.isEmpty) {
-                        //     flutterToast("Please Enter FirstName", false);
-                        //   } else if (_lastName.text.isEmpty) {
-                        //     flutterToast("Please Enter LastName", false);
-                        //   } else if (gender.isEmpty) {
-                        //     flutterToast("Please Enter Gender", false);
-                        //   } else if (_date.text.isEmpty) {
-                        //     flutterToast("Please Enter Date of Birth", false);
-                        //   } else if (_phoneNumber.text.isEmpty) {
-                        //     flutterToast(
-                        //         "Please Enter Your Phonenumber", false);
-                        //   } else if (_eMail.text.isEmpty) {
-                        //     flutterToast("Please Enter your email", false);
-                        //   } else if (select == false) {
-                        //     flutterToast("Please Agree to the terms & conditions ", false);
-                        //   } else {
-                        //     Navigator.push(context, MaterialPageRoute(
-                        //       builder: (context) {
-                        //         return Set_Password(
-                        //           firstname: _firstName.text,
-                        //           lastname: _lastName.text,
-                        //           gender: gender,
-                        //           dob: _date.text,
-                        //           number: _phoneNumber.text,
-                        //           email: _eMail.text, T_C: select,
-                        //         );
-                        //       },
-                        //     ));
-                        //   }
+                        //   Navigator.push(context, MaterialPageRoute(
+                        //     builder: (context) {
+                        //       return Set_Password(
+                        //         firstname: _firstName.text,
+                        //         lastname: _lastName.text,
+                        //         gender: gender,
+                        //         dob: _date.text,
+                        //         number: _phoneNumber.text,
+                        //         email: _eMail.text, T_C: select,
+                        //       );
+                        //     },
+                        //   ));
                         // },
+                        onTap: () {
+                          if (_firstName.text.isEmpty) {
+                            flutterToast("Please Enter FirstName", false);
+                          } else if (_lastName.text.isEmpty) {
+                            flutterToast("Please Enter LastName", false);
+                          } else if (gender.isEmpty) {
+                            flutterToast("Please Enter Gender", false);
+                          } else if (_date.text.isEmpty) {
+                            flutterToast("Please Enter Date of Birth", false);
+                          } else if (_phoneNumber.text.isEmpty) {
+                            flutterToast(
+                                "Please Enter Your Phonenumber", false);
+                          } else if (_eMail.text.isEmpty) {
+                            flutterToast("Please Enter your email", false);
+                          } else if (select == false) {
+                            flutterToast("Please Agree to the terms & conditions ", false);
+                          } else {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return Set_Password(
+                                  firstname: _firstName.text,
+                                  lastname: _lastName.text,
+                                  gender: gender,
+                                  dob: _date.text,
+                                  number: _phoneNumber.text,
+                                  email: _eMail.text, T_C: select,
+                                );
+                              },
+                            ));
+                          }
+                        },
                         height: screenHeight(context, dividedBy: 570),
                       ),
                     ),

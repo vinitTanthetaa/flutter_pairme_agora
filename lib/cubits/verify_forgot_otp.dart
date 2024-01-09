@@ -46,7 +46,7 @@ class VerifyForgotOtpCubit extends Cubit<VerifyForgotOtpState> {
         Authtoken = "Bearer ${hello['Token']}";
         prefsService.setStringData("Authtoken", Authtoken);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return forget ? Create_New_Password(Phonenumber: phoneNumber,) : const StepScreen();
+          return  Create_New_Password(Phonenumber: phoneNumber,);
         },));
         flutterToast(hello['message'], true);
       } else {

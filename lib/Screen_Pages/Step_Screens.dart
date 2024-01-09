@@ -138,8 +138,7 @@ class _StepScreenState extends State<StepScreen> {
     'Software tester',
   ];
   List selectedlookingFor = [];
-  final List _type1 = [];
-  final List _type = [];
+  List selectedlookingFor1 = [];
   List filelist = [];
   bool _category = false;
   bool _experience = false;
@@ -282,42 +281,42 @@ class _StepScreenState extends State<StepScreen> {
                                       custom_header(text: "Address Details")),
                               skip_button(
                                 context,
-                                onTap: () {
-                                  setState(() {
-                                    ind++;
-                                  });
-                                },
                                 // onTap: () {
-                                //   if(_Address.text.isNotEmpty || _Address2.text.isNotEmpty ) {
-                                //     if(_Contry.text.isEmpty){
-                                //       flutterToast("Enter Your Country", false);
-                                //     } else if(_City.text.isEmpty) {
-                                //       flutterToast("Enter Your City", false);
-                                //     } else if(_State.text.isEmpty) {
-                                //       flutterToast("Enter Your State", false);
-                                //     } else if(_Zipcode.text.isEmpty) {
-                                //       flutterToast("Enter Your Zipcode", false);
-                                //     } else {
-                                //       adressDetailsCubit.AdressDetailsService(
-                                //           address: "${_Address.text}${_Address2
-                                //               .text}",
-                                //           country: _Contry.text,
-                                //           state: _State.text,
-                                //           city: _City.text,
-                                //           zipCode: _Zipcode.text,
-                                //           context: context).then((value) {
-                                //         setState(() {
-                                //           ind++;
-                                //         });
-                                //       });
-                                //     }
-                                //   } else {
-                                //     flutterToast("Please Enter Your Address", true);
-                                //   }
-                                //   // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                //   //   return Professional_Details(Name: '',);
-                                //   // },));
+                                //   setState(() {
+                                //     ind++;
+                                //   });
                                 // },
+                                onTap: () {
+                                  if(_Address.text.isNotEmpty || _Address2.text.isNotEmpty ) {
+                                    if(_Contry.text.isEmpty){
+                                      flutterToast("Enter Your Country", false);
+                                    } else if(_City.text.isEmpty) {
+                                      flutterToast("Enter Your City", false);
+                                    } else if(_State.text.isEmpty) {
+                                      flutterToast("Enter Your State", false);
+                                    } else if(_Zipcode.text.isEmpty) {
+                                      flutterToast("Enter Your Zipcode", false);
+                                    } else {
+                                      adressDetailsCubit.AdressDetailsService(
+                                          address: "${_Address.text}${_Address2
+                                              .text}",
+                                          country: _Contry.text,
+                                          state: _State.text,
+                                          city: _City.text,
+                                          zipCode: _Zipcode.text,
+                                          context: context).then((value) {
+                                        setState(() {
+                                          ind++;
+                                        });
+                                      });
+                                    }
+                                  } else {
+                                    flutterToast("Please Enter Your Address", true);
+                                  }
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  //   return Professional_Details(Name: '',);
+                                  // },));
+                                },
                               )
                             ],
                           ),
@@ -680,35 +679,35 @@ class _StepScreenState extends State<StepScreen> {
                                           text: "Professional Details")),
                                   skip_button(
                                     context,
-                                    // onTap: () {
-                                    //   if(_compnyName.text.isEmpty){
-                                    //     flutterToast("Please Enter Your Company Name", false);
-                                    //   } else
-                                    //   if(_jobTitle.text.isEmpty){
-                                    //     flutterToast("Please Enter Your Job Title/Add Role", false);
-                                    //   } else
-                                    //   if(_compnyDomain.text.isEmpty){
-                                    //     flutterToast("Please Enter Your Company Domain", false);
-                                    //   } else
-                                    //   if(_email.text.isEmpty){
-                                    //     flutterToast("Please Enter Email", false);
-                                    //   } else
-                                    //   if(_categorycontroller.text.isEmpty){
-                                    //     flutterToast("Please Enter Category", false);
-                                    //   } else {
-                                    //     professionalDetailsCubit.ProfessionalDetailsService(company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) {
-                                    //       setState(() {
-                                    //         ind++;
-                                    //       });
-                                    //     },);
-                                    //   }
-                                    //
-                                    // },
                                     onTap: () {
-                                      setState(() {
-                                        ind++;
-                                      });
+                                      if(_compnyName.text.isEmpty){
+                                        flutterToast("Please Enter Your Company Name", false);
+                                      } else
+                                      if(_jobTitle.text.isEmpty){
+                                        flutterToast("Please Enter Your Job Title/Add Role", false);
+                                      } else
+                                      if(_compnyDomain.text.isEmpty){
+                                        flutterToast("Please Enter Your Company Domain", false);
+                                      } else
+                                      if(_email.text.isEmpty){
+                                        flutterToast("Please Enter Email", false);
+                                      } else
+                                      if(_categorycontroller.text.isEmpty){
+                                        flutterToast("Please Enter Category", false);
+                                      } else {
+                                        professionalDetailsCubit.ProfessionalDetailsService(company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) {
+                                          setState(() {
+                                            ind++;
+                                          });
+                                        },);
+                                      }
+
                                     },
+                                    // onTap: () {
+                                    //   setState(() {
+                                    //     ind++;
+                                    //   });
+                                    // },
                                   )
                                 ],
                               ),
@@ -726,8 +725,7 @@ class _StepScreenState extends State<StepScreen> {
                                   controller: _compnyName,
                                   hidetext: false,
                                   readOnly: false),
-                              custom_textfield_header(
-                                  text: 'Add role / Job title', header: true),
+                              custom_textfield_header(text: 'Add role / Job title', header: true),
                               Custom_textfield(context,
                                   show_icon: false,
                                   onPress: () {},
@@ -743,8 +741,7 @@ class _StepScreenState extends State<StepScreen> {
                                   controller: _compnyDomain,
                                   hidetext: false,
                                   readOnly: false),
-                              custom_textfield_header(
-                                  text: 'Email', header: true),
+                              custom_textfield_header(text: 'Email', header: true),
                               Custom_textfield(context,
                                   show_icon: false,
                                   onPress: () {},
@@ -752,8 +749,7 @@ class _StepScreenState extends State<StepScreen> {
                                   controller: _email,
                                   hidetext: false,
                                   readOnly: false),
-                              custom_textfield_header(
-                                  text: 'Category', header: true),
+                              custom_textfield_header(text: 'Category', header: true),
                               Custom_textfield(context,
                                   show_icon: true,
                                   image: _category
@@ -830,8 +826,7 @@ class _StepScreenState extends State<StepScreen> {
                                           )),
                                     )
                                   : const SizedBox(),
-                              custom_textfield_header(
-                                  text: 'Business Experience'),
+                              custom_textfield_header(text: 'Business Experience'),
                               Custom_textfield(context,
                                   show_icon: true,
                                   image: _experience
@@ -1035,8 +1030,7 @@ class _StepScreenState extends State<StepScreen> {
                                   hint: "Select",
                                   hidetext: false,
                                   controller: _educationcontroller),
-                              _education
-                                  ? Container(
+                              _education ? Container(
                                 // height:
                                 //     screenHeight(context, dividedBy: 10),
                                 width: screenWidth(context),
@@ -1090,8 +1084,7 @@ class _StepScreenState extends State<StepScreen> {
                                     ],
                                   ),
                                 ),
-                              )
-                                  : const SizedBox(),
+                              ) : const SizedBox(),
                               custom_textfield_header(text: 'University'),
                               Custom_textfield(context,
                                   show_icon: true,
@@ -1220,9 +1213,26 @@ class _StepScreenState extends State<StepScreen> {
                                       skip_button(
                                         context,
                                         onTap: () {
-                                          setState(() {
-                                            ind++;
-                                          });
+                                          if(_Address1.text.isEmpty && _Address3.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal Address", false);
+                                          } else if(_Contry1.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal Contry", false);
+                                          } else if(_State1.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal State", false);
+                                          }else if(_City1.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal City", false);
+                                          }else if(_Zipcode1.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal Zipcode", false);
+                                          }else if(_date.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal Start date", false);
+                                          }else{
+                                            businessDetailsCubit.BusinessDetailsService(address: "${_Address1.text}${_Address3.text}", country: _Contry1.text, state: _State1.text, city: _City1.text, zipCode: _Zipcode1.text, context: context, startDate: _date.text).then((value) {
+                                              setState(() {
+                                                ind++;
+                                              });
+                                            },);
+                                          }
+
                                           // Navigator.push(context, MaterialPageRoute(builder: (context) {
                                           //   return Business_Profile(Name: '',);
                                           // },));
@@ -1516,8 +1526,7 @@ class _StepScreenState extends State<StepScreen> {
                                       )
                                     ],
                                   ),
-                                  custom_textfield_header(
-                                      text: 'Post code / Zip code'),
+                                  custom_textfield_header(text: 'Post code / Zip code'),
                                   Custom_textfield(context,
                                       show_icon: false,
                                       readOnly: false,
@@ -1576,17 +1585,24 @@ class _StepScreenState extends State<StepScreen> {
                                     context,
                                     text: 'Next',
                                     onTap: () {
-                                      // setState(() {
-                                      //   ind++;
-                                      // });
-                                      if(_Address1.text.isNotEmpty || _Address3.text.isNotEmpty){
+                                      if(_Address1.text.isEmpty && _Address3.text.isEmpty){
+                                        flutterToast("Please Enter Your Business or Professinoal Address", false);
+                                      } else if(_Contry1.text.isEmpty){
+                                        flutterToast("Please Enter Your Business or Professinoal Contry", false);
+                                      } else if(_State1.text.isEmpty){
+                                        flutterToast("Please Enter Your Business or Professinoal State", false);
+                                      }else if(_City1.text.isEmpty){
+                                        flutterToast("Please Enter Your Business or Professinoal City", false);
+                                      }else if(_Zipcode1.text.isEmpty){
+                                        flutterToast("Please Enter Your Business or Professinoal Zipcode", false);
+                                      }else if(_date.text.isEmpty){
+                                        flutterToast("Please Enter Your Business or Professinoal Start date", false);
+                                      }else{
                                         businessDetailsCubit.BusinessDetailsService(address: "${_Address1.text}${_Address3.text}", country: _Contry1.text, state: _State1.text, city: _City1.text, zipCode: _Zipcode1.text, context: context, startDate: _date.text).then((value) {
                                           setState(() {
                                             ind++;
                                           });
                                         },);
-                                      } else {
-                                        flutterToast("Please Enter", false);
                                       }
                                     },
                                     height:
@@ -1598,7 +1614,7 @@ class _StepScreenState extends State<StepScreen> {
                           )
                         : ind == 3
                             ? SingleChildScrollView(
-                                physics: ClampingScrollPhysics(),
+                                physics: const ClampingScrollPhysics(),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -1622,14 +1638,30 @@ class _StepScreenState extends State<StepScreen> {
                                           skip_button(
                                             context,
                                             onTap: () {
-                                              setState(() {
-                                                ind++;
-                                              });
-                                              // Navigator.push(context, MaterialPageRoute(
-                                              //   builder: (context) {
-                                              //     return const Describe_Yourself();
-                                              //   },
-                                              // ));
+                                              if(_selectedimag1 == null){
+                                                flutterToast("Please Enter atlest 2 image or video", false);
+                                              }else if(_selectedimag2 == null){
+                                                flutterToast("Please Enter 1 more image or video", false);
+                                              }else if(file1 == null){
+                                                flutterToast("Please Enter atlest 1 file like pdf,doc,etc", false);
+                                              }else {
+                                                businessProfileCubit.BusinessProfileService(
+                                                    photo_1: _selectedimag1?.selectedFile ?? File(''),
+                                                    bio: _bio.text,
+                                                    file_2: file2 ?? PlatformFile(name: "", size: 0) ,
+                                                    file_3: file3 ?? PlatformFile(name: "", size: 0),
+                                                    context: context,
+                                                    photo_2: _selectedimag2?.selectedFile ?? File(''),
+                                                    photo_3: _selectedimag3?.selectedFile ?? File(''),
+                                                    photo_4: _selectedimag4?.selectedFile ?? File(''),
+                                                    photo_5: _selectedimag5?.selectedFile ?? File(''),
+                                                    photo_6: _selectedimag6?.selectedFile ?? File(''),
+                                                    file_1: file1 ?? PlatformFile(name: "", size: 0)).then((value) {
+                                                  setState(() {
+                                                    ind++;
+                                                  });
+                                                },);
+                                              }
                                             },
                                           )
                                         ],
@@ -1661,12 +1693,12 @@ class _StepScreenState extends State<StepScreen> {
                                                     ),
                                                   ],
                                                   image:
-                                                  // _selectedimag1?.selectedFile != null
-                                                  //     ? DecorationImage(
-                                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                  //         image: FileImage(
-                                                  //             _selectedimag1!.selectedFile),
-                                                  //         fit: BoxFit.fill) :
+                                                  _selectedimag1?.selectedFile != null
+                                                      ? DecorationImage(
+                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                                          image: FileImage(
+                                                              _selectedimag1!.selectedFile),
+                                                          fit: BoxFit.fill) :
                                                   const DecorationImage(
                                                       image: AssetImage(
                                                           'assets/Images/placeHolderImage.jpg'),
@@ -2065,12 +2097,12 @@ class _StepScreenState extends State<StepScreen> {
                                                     ),
                                                   ],
                                                   image:
-                                                  // _selectedimag2?.selectedFile != null
-                                                  //     ? DecorationImage(
-                                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                  //         image: FileImage(
-                                                  //             _selectedimag2!.selectedFile),
-                                                  //         fit: BoxFit.fill) :
+                                                  _selectedimag2?.selectedFile != null
+                                                      ? DecorationImage(
+                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                                          image: FileImage(
+                                                              _selectedimag2!.selectedFile),
+                                                          fit: BoxFit.fill) :
                                                   const DecorationImage(
                                                       image: AssetImage(
                                                           'assets/Images/placeHolderImage.jpg'),
@@ -2469,12 +2501,12 @@ class _StepScreenState extends State<StepScreen> {
                                                     ),
                                                   ],
                                                   image:
-                                                  // _selectedimag3?.selectedFile != null
-                                                  //     ? DecorationImage(
-                                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                  //         image: FileImage(
-                                                  //             _selectedimag3!.selectedFile),
-                                                  //         fit: BoxFit.fill) :
+                                                  _selectedimag3?.selectedFile != null
+                                                      ? DecorationImage(
+                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                                          image: FileImage(
+                                                              _selectedimag3!.selectedFile),
+                                                          fit: BoxFit.fill) :
                                                   const DecorationImage(
                                                       image: AssetImage(
                                                           'assets/Images/placeHolderImage.jpg'),
@@ -2882,12 +2914,12 @@ class _StepScreenState extends State<StepScreen> {
                                                     ),
                                                   ],
                                                   image:
-                                                  // _selectedimag4?.selectedFile != null
-                                                  //     ? DecorationImage(
-                                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                  //         image: FileImage(
-                                                  //             _selectedimag4!.selectedFile),
-                                                  //         fit: BoxFit.fill) :
+                                                  _selectedimag4?.selectedFile != null
+                                                      ? DecorationImage(
+                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                                          image: FileImage(
+                                                              _selectedimag4!.selectedFile),
+                                                          fit: BoxFit.fill) :
                                                   const DecorationImage(
                                                       image: AssetImage(
                                                           'assets/Images/placeHolderImage.jpg'),
@@ -3286,12 +3318,12 @@ class _StepScreenState extends State<StepScreen> {
                                                     ),
                                                   ],
                                                   image:
-                                                  // _selectedimag5?.selectedFile != null
-                                                  //     ? DecorationImage(
-                                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                  //         image: FileImage(
-                                                  //             _selectedimag5!.selectedFile),
-                                                  //         fit: BoxFit.fill) :
+                                                  _selectedimag5?.selectedFile != null
+                                                      ? DecorationImage(
+                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                                          image: FileImage(
+                                                              _selectedimag5!.selectedFile),
+                                                          fit: BoxFit.fill) :
                                                   const DecorationImage(
                                                       image: AssetImage(
                                                           'assets/Images/placeHolderImage.jpg'),
@@ -3690,12 +3722,12 @@ class _StepScreenState extends State<StepScreen> {
                                                     ),
                                                   ],
                                                   image:
-                                                  // _selectedimag6?.selectedFile != null
-                                                  //     ? DecorationImage(
-                                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                  //         image: FileImage(
-                                                  //             _selectedimag6!.selectedFile),
-                                                  //         fit: BoxFit.fill) :
+                                                  _selectedimag6?.selectedFile != null
+                                                      ? DecorationImage(
+                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                                          image: FileImage(
+                                                              _selectedimag6!.selectedFile),
+                                                          fit: BoxFit.fill) :
                                                   const DecorationImage(
                                                       image: AssetImage(
                                                           'assets/Images/placeHolderImage.jpg'),
@@ -4962,28 +4994,30 @@ class _StepScreenState extends State<StepScreen> {
                                         context,
                                         text: 'Next',
                                         onTap: () {
-                                          businessProfileCubit.BusinessProfileService(
-                                              photo_1: _selectedimag1?.selectedFile ?? File(''),
-                                              bio: _bio.text,
-                                              file_2: file2 ?? PlatformFile(name: "", size: 0) ,
-                                              file_3: file3 ?? PlatformFile(name: "", size: 0),
-                                              context: context,
-                                              photo_2: _selectedimag2?.selectedFile ?? File(''),
-                                              photo_3: _selectedimag3?.selectedFile ?? File(''),
-                                              photo_4: _selectedimag4?.selectedFile ?? File(''),
-                                              photo_5: _selectedimag5?.selectedFile ?? File(''),
-                                              photo_6: _selectedimag6?.selectedFile ?? File(''),
-                                              file_1: file1 ?? PlatformFile(name: "", size: 0)).then((value) {
-                                                    setState(() {
-                                                      ind++;
-                                                    });
-                                              },);
-
-                                          // Navigator.push(context, MaterialPageRoute(
-                                          //   builder: (context) {
-                                          //     return const Describe_Yourself();
-                                          //   },
-                                          // ));
+                                          if(_selectedimag1 == null){
+                                            flutterToast("Please Enter atlest 2 image or video", false);
+                                          }else if(_selectedimag2 == null){
+                                            flutterToast("Please Enter 1 more image or video", false);
+                                          }else if(file1 == null){
+                                            flutterToast("Please Enter atlest 1 file like pdf,doc,etc", false);
+                                          }else {
+                                            businessProfileCubit.BusinessProfileService(
+                                                photo_1: _selectedimag1?.selectedFile ?? File(''),
+                                                bio: _bio.text,
+                                                file_2: file2 ?? PlatformFile(name: "", size: 0) ,
+                                                file_3: file3 ?? PlatformFile(name: "", size: 0),
+                                                context: context,
+                                                photo_2: _selectedimag2?.selectedFile ?? File(''),
+                                                photo_3: _selectedimag3?.selectedFile ?? File(''),
+                                                photo_4: _selectedimag4?.selectedFile ?? File(''),
+                                                photo_5: _selectedimag5?.selectedFile ?? File(''),
+                                                photo_6: _selectedimag6?.selectedFile ?? File(''),
+                                                file_1: file1 ?? PlatformFile(name: "", size: 0)).then((value) {
+                                              setState(() {
+                                                ind++;
+                                              });
+                                            },);
+                                          }
                                         },
                                         height: screenHeight(context,
                                             dividedBy: 20),
@@ -5021,6 +5055,15 @@ class _StepScreenState extends State<StepScreen> {
                                               skip_button(
                                                 context,
                                                 onTap: () {
+                                                  if(selectedlookingFor.isEmpty){
+                                                    flutterToast("Please Enter select a atlest 1 tag", false);
+                                                  }else {
+                                                    describeYourSelfCubit.DescribeYourSelfService(array: selectedlookingFor, context: context).then((value) {
+                                                      setState(() {
+                                                        ind++;
+                                                      });
+                                                    });
+                                                  }
                                                   setState(() {
                                                     ind++;
                                                   });
@@ -5096,12 +5139,15 @@ class _StepScreenState extends State<StepScreen> {
                                           ),
                                           Custom_botton(context, text: 'Done',
                                               onTap: () {
-                                                 describeYourSelfCubit.DescribeYourSelfService(array: selectedlookingFor, context: context).then((value) {
-                                                  setState(() {
-                                                    ind++;
+                                                if(selectedlookingFor.isEmpty){
+                                                  flutterToast("Please Enter select a atlest 1 tag", false);
+                                                }else {
+                                                  describeYourSelfCubit.DescribeYourSelfService(array: selectedlookingFor, context: context).then((value) {
+                                                    setState(() {
+                                                      ind++;
+                                                    });
                                                   });
-                                                });
-
+                                                }
                                               },
 
                                               height: screenHeight(context,
@@ -5138,28 +5184,28 @@ class _StepScreenState extends State<StepScreen> {
                                                           "Who are you looking to connect with? Select up to 3 of the following:")),
                                               skip_button(
                                                 context,
-                                                onTap: () {
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return const Home_screen();
-                                                    },
-                                                  ));
-                                                },
                                                 // onTap: () {
-                                                //   if(selectedlookingFor.length <= 0){
-                                                //     flutterToast("Select atlist 1 describe your self", false);
-                                                //   } else {
-                                                //     connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
-                                                //       Navigator.push(context,
-                                                //           MaterialPageRoute(
-                                                //             builder: (context) {
-                                                //               return const Home_screen();
-                                                //             },
-                                                //           ));
-                                                //     },);
-                                                //   }
+                                                //   Navigator.push(context,
+                                                //       MaterialPageRoute(
+                                                //     builder: (context) {
+                                                //       return const Home_screen();
+                                                //     },
+                                                //   ));
                                                 // },
+                                                onTap: () {
+                                                  if(selectedlookingFor1.length <= 0){
+                                                    flutterToast("Select atlist 1 looking for tag", false);
+                                                  } else {
+                                                    connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) {
+                                                              return const Home_screen();
+                                                            },
+                                                          ));
+                                                    },);
+                                                  }
+                                                },
                                               )
                                             ],
                                           ),
@@ -5181,7 +5227,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                         .white),
                                                             onTap: () {
                                                               setState(() {
-                                                                selectedlookingFor.contains(e) ? selectedlookingFor.remove(e) :selectedlookingFor.length < 3 ?  selectedlookingFor.add(e) : selectedlookingFor.remove(e);
+                                                                selectedlookingFor1.contains(e) ? selectedlookingFor1.remove(e) :selectedlookingFor1.length < 3 ?  selectedlookingFor1.add(e) : selectedlookingFor1.remove(e);
                                                               });
                                                             },
                                                             child: Container(
@@ -5232,8 +5278,8 @@ class _StepScreenState extends State<StepScreen> {
                                           ),
                                           Custom_botton(context, text: 'Done',
                                               onTap: () {
-                                                if(selectedlookingFor.length <= 0){
-                                                  flutterToast("Select atlist 1 describe your self", false);
+                                                if(selectedlookingFor1.length <= 0){
+                                                  flutterToast("Select atlist 1 looking for tag", false);
                                                 } else {
                                                   connectwithCubit.ConnectwithService(array: selectedlookingFor, context: context).then((value) {
                                                     Navigator.push(context,

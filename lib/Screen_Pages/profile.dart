@@ -9,6 +9,7 @@ import 'package:pair_me/Screen_Pages/premium_membership.dart';
 import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/cubits/user_profile_cubit.dart';
 import 'package:pair_me/helper/Apis.dart';
@@ -76,7 +77,7 @@ class _Profile_pageState extends State<Profile_page> {
               builder: (context, state) {
                 print("stste  ===> $state");
                 if(state is UserDetailsLoading){
-                  return const Center(child: Text("Please wait ..."),);
+                  return customLoader();
                 }
                 if(state is UserDetailsSuccess){
                   return SingleChildScrollView(
@@ -277,7 +278,7 @@ class _Profile_pageState extends State<Profile_page> {
                             child: LinearPercentIndicator(
                                 width: screenWidth(context, dividedBy: 1.25),
                                 lineHeight: 7.0,
-                                percent:userProfile.data?.first.score == 5 ?1 :0.5 ,
+                                percent:userProfile.data?.first.score == 1 ? 0.2 : userProfile.data?.first.score == 2 ? 0.4 : userProfile.data?.first.score == 3 ? 0.6 : userProfile.data?.first.score == 4 ? 0.8 : 1 ,
                                 barRadius: const Radius.circular(20),
                                 backgroundColor: Colors.grey.shade200,
                                 trailing:custom_text(text: "${userProfile.data?.first.score}/5", color: const Color(0xff434343)),

@@ -53,6 +53,7 @@ class _Filter_pageState extends State<Filter_page> {
     // TODO: implement initState
     super.initState();
     cityStateCubit = BlocProvider.of<CityStateCubit>(context);
+    filterUserCubit = BlocProvider.of<FilterUserCubit>(context);
   }
   @override
   Widget build(BuildContext context) {

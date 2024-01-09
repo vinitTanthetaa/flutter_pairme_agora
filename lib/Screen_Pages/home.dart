@@ -12,6 +12,7 @@ import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/cubits/connect_user.dart';
 import 'package:pair_me/cubits/reject_user.dart';
@@ -161,7 +162,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     setState(() {});
   }
   getImage(int index){
-
     if (allUsersdetails.data?[index].last.image != null) {
       if (allUsersdetails.data?[index].last.image?.photo1 == null && image.contains(allUsersdetails.data?[index].last.image?.photo1) ) {
         image = image;
@@ -188,6 +188,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   void initState() {
    // allUsersDetailsCubit.GetAllUsersDetails();
     allUsersDetailsCubit = BlocProvider.of<AllUsersDetailsCubit>(context);
+    rejectUserCubit = BlocProvider.of<RejectUserCubit>(context);
+    connectUserCubit = BlocProvider.of<ConnectUserCubit>(context);
+    undoUsersCubit = BlocProvider.of<UndoUsersCubit>(context);
     createTutorial();
     getData();
     _controller = AnimationController(vsync: this);
@@ -669,7 +672,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           dividedBy:
                                                                           45),
                                                                       decoration:
-                                                                      BoxDecoration(
+                                                                      const BoxDecoration(
                                                                           image:
                                                                           DecorationImage(image: AssetImage("assets/Images/verified.png"))),
                                                                     )
@@ -713,13 +716,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             Colors.white),
                                                                       ),
                                                                       Text(
-                                                                        allUsersdetails
-                                                                            .data?[index]
-                                                                            .first
-                                                                            .professionalDetails
-                                                                            ?.addRole ??
-                                                                            '',
-                                                                        style: TextStyle(
+                                                                         13 >= allUsersdetails.data![index].first.professionalDetails!.addRole!.length ?
+                                                                        "${allUsersdetails.data?[index].first.professionalDetails?.addRole ?? ''}" :
+                                                                        "${allUsersdetails.data?[index].first.professionalDetails?.addRole?.substring(0,13) ?? ''}...",
+                                                                        style: const TextStyle(
+                                                                          overflow: TextOverflow.ellipsis,
                                                                             fontSize:
                                                                             14,
                                                                             fontFamily:
@@ -759,12 +760,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             Colors.white),
                                                                       ),
                                                                       Text(
-                                                                        allUsersdetails
-                                                                            .data?[index]
-                                                                            .first
-                                                                            .businessaddress
-                                                                            ?.country ??
-                                                                            '',
+                                                                        10 <= allUsersdetails.data![index].first.businessaddress!.country!.length ?
+                                                                        "${allUsersdetails.data?[index].first.businessaddress?.country?.substring(0,10) ?? ''}..." :
+                                                                      "${allUsersdetails.data?[index].first.businessaddress?.country ?? ''}",
                                                                         style: const TextStyle(
                                                                             fontSize:
                                                                             14,
@@ -805,12 +803,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             Colors.white),
                                                                       ),
                                                                       Text(
-                                                                        allUsersdetails
-                                                                            .data?[index]
-                                                                            .first
-                                                                            .professionalDetails
-                                                                            ?.companyName ??
-                                                                            '',
+                                                                        15 <= allUsersdetails.data![index].first.professionalDetails!.companyName!.length?
+                                                                        "${allUsersdetails.data?[index].first.professionalDetails?.companyName?.substring(0,13) ?? ''}..." :
+                                                                      "${allUsersdetails.data?[index].first.professionalDetails?.companyName ?? ''}",
                                                                         style: TextStyle(
                                                                             fontSize:
                                                                             14,
@@ -1025,8 +1020,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                     img:
                                                     "assets/Images/button3.svg",
                                                     onTap: () {
-                                                      controller
-                                                          .swipeUp();
+                                                      controller.swipeUp();
                                                     },
                                                     buttonName: "Skip",
                                                     bool: month),
@@ -1200,38 +1194,46 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 ));
                           }
                           if(state is AllUsersDetailsLoading){
-                            return Center(child: Text("Loading ...."),);
+                            return Expanded(child: Center(child: customLoader()));
                           }
                           if(state is AllUsersDetailsError){
                             return Center(child: Text("Somthing went wrong ...."),);
                           }
                           return Center(child: Text("Somthing went wrong ...."),);
                         },)
-
                       ],
                     ),
                   ),
-                  UsersDetails(
-                    list: image,
-                    onTap: () {
-                      _pageController.animateToPage(
-                        0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.ease,
+                  BlocBuilder<AllUsersDetailsCubit,AllUsersDetailsState>(builder: (context, state) {
+                    if(state is AllUsersDetailsSuccess){
+                      return  UsersDetails(
+                        list: image,
+                        onTap: () {
+                          _pageController.animateToPage(
+                            0,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.ease,
+                          );
+                        },
+                        country: allUsersdetails.data?[ind].first.businessaddress?.country ?? '',
+                        file1: allUsersdetails.data?[ind].last.file?.file1 ?? '',
+                        file3: allUsersdetails.data?[ind].last.file?.file3 ?? '',
+                        file2: allUsersdetails.data?[ind].last.file?.file2 ?? '',
+                        bio: allUsersdetails.data?[ind].last.bio ?? '',
+                        Company: allUsersdetails.data?[ind].first.professionalDetails?.companyName ?? '',
+                        looking_for: allUsersdetails.data?[ind].last.lookingfor ?? [],
+                        Name: allUsersdetails.data?[ind].first.name ?? '',
+                        role: allUsersdetails.data?[ind].first.professionalDetails?.addRole ?? '',
                       );
-                    },
-                    country: allUsersdetails
-                            .data?[ind].first.businessaddress?.country ??
-                        '',
-                    file1: allUsersdetails.data?[ind].last.file?.file1 ?? '',
-                    file3: allUsersdetails.data?[ind].last.file?.file3 ?? '',
-                    file2: allUsersdetails.data?[ind].last.file?.file2 ?? '',
-                    bio: allUsersdetails.data?[ind].last.bio ?? '',
-                    Company: allUsersdetails.data?[ind].first.professionalDetails?.companyName ?? '',
-                    looking_for: allUsersdetails.data?[ind].last.lookingfor ?? [],
-                    Name: allUsersdetails.data?[ind].first.name ?? '',
-                    role: allUsersdetails.data?[ind].first.professionalDetails?.addRole ?? '',
-                  )
+                    }
+                    if(state is AllUsersDetailsLoading){
+                      return customLoader();
+                    }
+                    if(state is AllUsersDetailsError){
+                      return Center(child: Text("Somthing went wrong ...."),);
+                    }
+                    return Center(child: Text("Somthing went wrong ...."),);
+                  },)
                 ],
               )
             ],
