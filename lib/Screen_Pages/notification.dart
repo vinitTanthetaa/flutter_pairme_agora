@@ -200,8 +200,6 @@ class _Notification_pageState extends State<Notification_page> {
                                      ],
                                    ),
                                  ),
-
-
                                ],
                              ),
                            ),
