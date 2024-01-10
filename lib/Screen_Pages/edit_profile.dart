@@ -1,11 +1,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:pair_me/Screen_Pages/address_details.dart';
 import 'package:pair_me/Screen_Pages/business_address.dart';
 import 'package:pair_me/Screen_Pages/business_profile.dart';
@@ -14,15 +15,16 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/textfield.dart';
+import 'package:pair_me/cubits/user_profile_cubit.dart';
 import 'package:pair_me/cubits/user_update_cubit.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 import 'login_page.dart';
 
 class Edit_Profile extends StatefulWidget {
-  String id;
-  Edit_Profile({super.key,required this.id});
+  Edit_Profile({super.key});
   // String firstname,lastname,gendar,dob,pnumber,email;
   // Edit_Profile({super.key,this.firstname,this.lastname,this.dob,this.email,this.gendar,this.pnumber});
   @override
@@ -31,8 +33,8 @@ class Edit_Profile extends StatefulWidget {
 
 class _Edit_ProfileState extends State<Edit_Profile> {
   final DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDate;
   UserUpdateCubit userUpdateCubit = UserUpdateCubit();
+  UserDetailsCubit userDetailsCubit = UserDetailsCubit();
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
   final TextEditingController _phoneNumber = TextEditingController();
@@ -42,11 +44,29 @@ class _Edit_ProfileState extends State<Edit_Profile> {
   String gender = 'Female';
   bool popup = false;
   bool calendar = false;
+  getdata(){
+    // Split the full name into parts using space as a delimiter
+    List<String> nameParts = userDetailsCubit.userProfile.data?.first.name?.split(" ") ?? [];
+
+    // Assuming the first part is the first name and the last part is the last name
+    String firstName = nameParts[0];
+    String lastName = nameParts.length > 1 ? nameParts.last : '';
+    _firstName.text = firstName;
+    _lastName.text = lastName;
+    _phoneNumber.text = userDetailsCubit.userProfile.data?.first.phoneNumber.toString() ?? '';
+    _gender.text = userDetailsCubit.userProfile.data?.first.gender ?? '';
+    _eMail.text = userDetailsCubit.userProfile.data?.first.email ?? '';
+    _date.text = userDetailsCubit.userProfile.data?.first.dateOfBirth ?? '';
+    setState(() {});
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     userUpdateCubit = BlocProvider.of<UserUpdateCubit>(context);
+    userDetailsCubit = BlocProvider.of<UserDetailsCubit>(context);
+    userDetailsCubit.GetUserdetails();
+    getdata();
   }
   @override
   Widget build(BuildContext context) {
@@ -87,10 +107,9 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         child: Container(
                           height: screenHeight(context, dividedBy: 7.5),
                           width: screenHeight(context, dividedBy: 7.5),
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(
-                                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU'),
+                                  image:  NetworkImage('${apis.baseurl}/${userDetailsCubit.userProfile.data?.first.image?.photo1}'),
                                   fit: BoxFit.cover),
                               shape: BoxShape.circle,
                               color: Colors.grey),
@@ -106,7 +125,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                       shape: BoxShape.circle,
                                       color: AppColor.white),
                                   child: Center(
-                                    child: Image(
+                                    child:
+                                    Image(
                                       image: const AssetImage(
                                           'assets/Images/camera.png'),
                                       height:
@@ -417,7 +437,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Professional_Details(id: widget.id,);
+                              return Professional_Details();
                             },
                           ));
                         },

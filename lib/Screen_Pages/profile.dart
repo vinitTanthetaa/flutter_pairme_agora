@@ -185,7 +185,7 @@ class _Profile_pageState extends State<Profile_page> {
                                       onTap: () {
                                         Navigator.push(context, MaterialPageRoute(
                                           builder: (context) {
-                                            return Edit_Profile(id: userProfile.data?.first.id ??'',);
+                                            return Edit_Profile();
                                           },
                                         ));
                                       },

@@ -9,8 +9,8 @@
 		<string>en</string>
 		<string>hi</string>
 		<string>sp</string>
-		<string>can</string>
-		<string>man</string>
+		<string>zh_CN</string>
+		<string>zh_TW</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

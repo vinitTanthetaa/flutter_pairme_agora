@@ -93,6 +93,8 @@ class _Notification_pageState extends State<Notification_page> {
     // TODO: implement initState
     super.initState();
     notificationCubit = BlocProvider.of<NotificationCubit>(context);
+    acceptorRejectCubit = BlocProvider.of<AcceptorRejectCubit>(context);
+    clearAllNotificationCubit = BlocProvider.of<ClearAllNotificationCubit>(context);
     getData();
   }
   @override

@@ -1,3 +1,4 @@
+import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,36 @@ class Chatting_Page extends StatefulWidget {
 }
 
 class _Chatting_PageState extends State<Chatting_Page> {
+  ScrollController scrollController = ScrollController();
+  String? _messageContent, _chatId;
+  final List<String> _logText = [];
   TextEditingController messageController = TextEditingController();
   bool showCard = false;
-bool emojiShowing = false;
+  bool emojiShowing = false;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initSDK();
+    _addChatListener();
+  }
+  void _initSDK() async {
+    ChatOptions options = ChatOptions(
+      appKey: AgoraAppid,
+      autoLogin: true,
+    );
+    print(options);
+    await ChatClient.getInstance.init(options);
+    await ChatClient.getInstance.startCallback();
+  }
+  @override
+  void dispose() {
+    ChatClient.getInstance.chatManager.removeEventHandler('UNIQUE_HANDLER_ID');
+    ChatClient.getInstance.chatManager.removeMessageEvent('UNIQUE_HANDLER_ID');
+    super.dispose();
+  }
+  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -235,126 +262,137 @@ bool emojiShowing = false;
                     ),
                   ),
                 ),
-                Expanded(child: SingleChildScrollView(
-                 child: Padding(
-                   padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       Container(
-                         margin: EdgeInsets.only(
-                             top: screenHeight(context,dividedBy: 100)),
-                         width: screenWidth(context, dividedBy: 1.5),
-                         decoration: const BoxDecoration(
-                             borderRadius: BorderRadius.only(
-                                 bottomRight: Radius.circular(16),
-                                 topRight: Radius.circular(16),
-                                 topLeft: Radius.circular(16)),
-                             color: Color(0xffE8E8E8)),
-                         child: Padding(
-                           padding:
-                           EdgeInsets.all(screenWidth(context, dividedBy: 30)),
-                           child: const Column(
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             children: [
-                               Text(
-                                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore',
-                                 style: TextStyle(
-                                     fontSize: 15,
-                                     fontWeight: FontWeight.w500,
-                                     fontFamily: 'Roboto',
-                                     color: Color(0xff606164)),
-                               ),
-                               Text(
-                                 '01:32 PM',
-                                 style: TextStyle(
-                                     fontFamily: 'Roboto',
-                                     fontWeight: FontWeight.w500,
-                                     fontSize: 10,
-                                     color: Color(0xff4A4A4A)),
-                               )
-                             ],
-                           ),
-                         ),
-                       ),
-                       Container(
-                         margin: EdgeInsets.only(
-                           left: screenWidth(context,dividedBy: 1.82),
-                             top: screenHeight(context,dividedBy: 100)),
-                        // width: screenWidth(context, dividedBy: 2),
-                         decoration: const BoxDecoration(
-                             borderRadius: BorderRadius.only(
-                                 bottomLeft: Radius.circular(16),
-                                 topRight: Radius.circular(16),
-                                 topLeft: Radius.circular(16)),
-                             color: Color(0xff437DFF)),
-                         child: Padding(
-                           padding:
-                           EdgeInsets.all(screenWidth(context, dividedBy: 30)),
-                           child: const Column(
-                             crossAxisAlignment: CrossAxisAlignment.end,
-                             children: [
-                               Text(
-                                 'Hey, how are you?',
-                                 style: TextStyle(
-                                     fontSize: 15,
-                                     fontWeight: FontWeight.w500,
-                                     fontFamily: 'Roboto',
-                                     color: AppColor.white),
-                               ),
-                               Text(
-                                 '01:32 PM',
-                                 style: TextStyle(
-                                     fontFamily: 'Roboto',
-                                     fontWeight: FontWeight.w500,
-                                     fontSize: 10,
-                                     color: AppColor.white),
-                               )
-                             ],
-                           ),
-                         ),
-                       ),
-                       Container(
-                         margin: EdgeInsets.only(
-                             top: screenHeight(context,dividedBy: 100)),
-                         width: screenWidth(context, dividedBy: 1.5),
-                         decoration: const BoxDecoration(
-                             borderRadius: BorderRadius.only(
-                                 bottomRight: Radius.circular(16),
-                                 topRight: Radius.circular(16),
-                                 topLeft: Radius.circular(16)),
-                             color: Color(0xffE8E8E8)),
-                         child: Padding(
-                           padding:
-                           EdgeInsets.all(screenWidth(context, dividedBy: 30)),
-                           child: const Column(
-                             crossAxisAlignment: CrossAxisAlignment.end,
-                             children: [
-                               Text(
-                                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore',
-                                 style: TextStyle(
-                                     fontSize: 15,
-                                     fontWeight: FontWeight.w500,
-                                     fontFamily: 'Roboto',
-                                     color: Color(0xff606164)),
-                               ),
-                               Text(
-                                 '01:32 PM',
-                                 textAlign: TextAlign.end,
-                                 style: TextStyle(
-                                     fontFamily: 'Roboto',
-                                     fontWeight: FontWeight.w500,
-                                     fontSize: 10,
-                                     color: Color(0xff4A4A4A)),
-                               )
-                             ],
-                           ),
-                         ),
-                       ),
-                     ],
-                   ),
-                 ),
-               )),
+                Expanded(child: ListView.builder(
+                  controller: scrollController,
+                  itemBuilder: (_, index) {
+                    return Text(_logText[index]);
+                  },
+                  itemCount: _logText.length,
+                ),
+               //      // ListView.builder(itemBuilder: (context, index) {
+               //      //
+               //      // },),
+               //  SingleChildScrollView(
+               //   child: Padding(
+               //     padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
+               //     child: Column(
+               //       crossAxisAlignment: CrossAxisAlignment.start,
+               //       children: [
+               //         Container(
+               //           margin: EdgeInsets.only(
+               //               top: screenHeight(context,dividedBy: 100)),
+               //           width: screenWidth(context, dividedBy: 1.5),
+               //           decoration: const BoxDecoration(
+               //               borderRadius: BorderRadius.only(
+               //                   bottomRight: Radius.circular(16),
+               //                   topRight: Radius.circular(16),
+               //                   topLeft: Radius.circular(16)),
+               //               color: Color(0xffE8E8E8)),
+               //           child: Padding(
+               //             padding:
+               //             EdgeInsets.all(screenWidth(context, dividedBy: 30)),
+               //             child: const Column(
+               //               crossAxisAlignment: CrossAxisAlignment.start,
+               //               children: [
+               //                 Text(
+               //                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore',
+               //                   style: TextStyle(
+               //                       fontSize: 15,
+               //                       fontWeight: FontWeight.w500,
+               //                       fontFamily: 'Roboto',
+               //                       color: Color(0xff606164)),
+               //                 ),
+               //                 Text(
+               //                   '01:32 PM',
+               //                   style: TextStyle(
+               //                       fontFamily: 'Roboto',
+               //                       fontWeight: FontWeight.w500,
+               //                       fontSize: 10,
+               //                       color: Color(0xff4A4A4A)),
+               //                 )
+               //               ],
+               //             ),
+               //           ),
+               //         ),
+               //         Container(
+               //           margin: EdgeInsets.only(
+               //             left: screenWidth(context,dividedBy: 1.82),
+               //               top: screenHeight(context,dividedBy: 100)),
+               //          // width: screenWidth(context, dividedBy: 2),
+               //           decoration: const BoxDecoration(
+               //               borderRadius: BorderRadius.only(
+               //                   bottomLeft: Radius.circular(16),
+               //                   topRight: Radius.circular(16),
+               //                   topLeft: Radius.circular(16)),
+               //               color: Color(0xff437DFF)),
+               //           child: Padding(
+               //             padding:
+               //             EdgeInsets.all(screenWidth(context, dividedBy: 30)),
+               //             child: const Column(
+               //               crossAxisAlignment: CrossAxisAlignment.end,
+               //               children: [
+               //                 Text(
+               //                   'Hey, how are you?',
+               //                   style: TextStyle(
+               //                       fontSize: 15,
+               //                       fontWeight: FontWeight.w500,
+               //                       fontFamily: 'Roboto',
+               //                       color: AppColor.white),
+               //                 ),
+               //                 Text(
+               //                   '01:32 PM',
+               //                   style: TextStyle(
+               //                       fontFamily: 'Roboto',
+               //                       fontWeight: FontWeight.w500,
+               //                       fontSize: 10,
+               //                       color: AppColor.white),
+               //                 )
+               //               ],
+               //             ),
+               //           ),
+               //         ),
+               //         Container(
+               //           margin: EdgeInsets.only(
+               //               top: screenHeight(context,dividedBy: 100)),
+               //           width: screenWidth(context, dividedBy: 1.5),
+               //           decoration: const BoxDecoration(
+               //               borderRadius: BorderRadius.only(
+               //                   bottomRight: Radius.circular(16),
+               //                   topRight: Radius.circular(16),
+               //                   topLeft: Radius.circular(16)),
+               //               color: Color(0xffE8E8E8)),
+               //           child: Padding(
+               //             padding:
+               //             EdgeInsets.all(screenWidth(context, dividedBy: 30)),
+               //             child: const Column(
+               //               crossAxisAlignment: CrossAxisAlignment.end,
+               //               children: [
+               //                 Text(
+               //                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore',
+               //                   style: TextStyle(
+               //                       fontSize: 15,
+               //                       fontWeight: FontWeight.w500,
+               //                       fontFamily: 'Roboto',
+               //                       color: Color(0xff606164)),
+               //                 ),
+               //                 Text(
+               //                   '01:32 PM',
+               //                   textAlign: TextAlign.end,
+               //                   style: TextStyle(
+               //                       fontFamily: 'Roboto',
+               //                       fontWeight: FontWeight.w500,
+               //                       fontSize: 10,
+               //                       color: Color(0xff4A4A4A)),
+               //                 )
+               //               ],
+               //             ),
+               //           ),
+               //         ),
+               //       ],
+               //     ),
+               //   ),
+               // )
+                ),
                 showCard ? Container(
                   margin: EdgeInsets.symmetric(horizontal: screenWidth(context, dividedBy: 15),),
                   width: screenWidth(context),
@@ -496,7 +534,7 @@ bool emojiShowing = false;
                           style: const ButtonStyle(
                               overlayColor:
                                   MaterialStatePropertyAll(Colors.transparent)),
-                          onPressed: () {},
+                          onPressed: _sendMessage,
                           icon: Container(
                             height: screenHeight(context, dividedBy: 30),
                             width: screenWidth(context, dividedBy: 20),
@@ -603,5 +641,112 @@ bool emojiShowing = false;
         ),
       ),
     );
+  }
+  void _sendMessage() async {
+    // if (_chatId == null || _messageContent == null) {
+    //   _addLogToConsole("single chat id or message content is null");
+    //   return;
+    // }
+
+    var msg = ChatMessage.createTxtSendMessage(
+      targetId: "jhone wick",
+      content: messageController.text,
+    );
+    ChatClient.getInstance.chatManager.sendMessage(msg);
+    messageController.clear();
+  }
+  void onMessagesReceived(List<ChatMessage> messages) {
+    for (var msg in messages) {
+      switch (msg.body.type) {
+        case MessageType.TXT:
+          {
+            ChatTextMessageBody body = msg.body as ChatTextMessageBody;
+            _addLogToConsole(
+              "receive text message: ${body.content}, from: ${msg.from}",
+            );
+          }
+          break;
+        case MessageType.IMAGE:
+          {
+            _addLogToConsole(
+              "receive image message, from: ${msg.from}",
+            );
+          }
+          break;
+        case MessageType.VIDEO:
+          {
+            _addLogToConsole(
+              "receive video message, from: ${msg.from}",
+            );
+          }
+          break;
+        case MessageType.LOCATION:
+          {
+            _addLogToConsole(
+              "receive location message, from: ${msg.from}",
+            );
+          }
+          break;
+        case MessageType.VOICE:
+          {
+            _addLogToConsole(
+              "receive voice message, from: ${msg.from}",
+            );
+          }
+          break;
+        case MessageType.FILE:
+          {
+            _addLogToConsole(
+              "receive image message, from: ${msg.from}",
+            );
+          }
+          break;
+        case MessageType.CUSTOM:
+          {
+            _addLogToConsole(
+              "receive custom message, from: ${msg.from}",
+            );
+          }
+          break;
+        case MessageType.CMD:
+          {
+            // Receiving command messages does not trigger the `onMessagesReceived` event, but triggers the `onCmdMessagesReceived` event instead.
+          }
+          break;
+        case MessageType.COMBINE:
+          // TODO: Handle this case.
+      }
+    }
+  }
+  void _addChatListener() {
+    ChatClient.getInstance.chatManager.addMessageEvent(
+        "UNIQUE_HANDLER_ID",
+        ChatMessageEvent(
+          onSuccess: (msgId, msg) {
+            _addLogToConsole("send message succeed");
+          },
+          onProgress: (msgId, progress) {
+            _addLogToConsole("send message succeed");
+          },
+          onError: (msgId, msg, error) {
+            _addLogToConsole(
+              "send message failed, code: ${error.code}, desc: ${error.description}",
+            );
+          },
+        ));
+
+    ChatClient.getInstance.chatManager.addEventHandler(
+      "UNIQUE_HANDLER_ID",
+      ChatEventHandler(onMessagesReceived: onMessagesReceived),
+    );
+  }
+  void _addLogToConsole(String log) {
+    _logText.add(_timeString + ": " + log);
+    setState(() {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    });
+  }
+  String get _timeString {
+    return DateTime.now().toString().split(".").first;
   }
 }

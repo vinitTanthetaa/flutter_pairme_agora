@@ -155,10 +155,10 @@ class _Language_ScreenState extends State<Language_Screen> {
                                      context.setLocale(const Locale('hi'));
                                    }
                                    if(_selected_language == 'Cantonese') {
-                                     context.setLocale(const Locale('can'));
+                                     context.setLocale(const Locale('zh', 'TW'));
                                    }
                                    if(_selected_language == 'Mandarin') {
-                                     context.setLocale(const Locale('man'));
+                                     context.setLocale(const Locale('zh', 'CN'));
                                    }
                                   // _selected_language == 'English' ? context.setLocale(const Locale('en')) :_selected_language == 'Spanish' ? context.setLocale(Locale('sp')) : context.setLocale(Locale('man'));
                                    Timer(const Duration(milliseconds: 600), () {

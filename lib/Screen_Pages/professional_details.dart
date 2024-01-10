@@ -11,8 +11,7 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:steps_indicator/steps_indicator.dart';
 
 class Professional_Details extends StatefulWidget {
-  String id;
-  Professional_Details({super.key,required this.id});
+  Professional_Details({super.key});
 
   @override
   State<Professional_Details> createState() => _Professional_DetailsState();

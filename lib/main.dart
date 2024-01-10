@@ -100,13 +100,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppColor.skyBlue),
           useMaterial3: true,
         ),
-        supportedLocales: const [
-          Locale('en'),
-          Locale('es'),
-          Locale('hi'),
-          Locale('zh', 'CN'), // Simplified Chinese
-          Locale('zh', 'TW'),
-        ],
+        supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
         home: const SpleshScreen(),
       ),

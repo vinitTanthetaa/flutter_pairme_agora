@@ -39,8 +39,11 @@ class Datum {
   String? password;
   String? gender;
   String? dateOfBirth;
+  String? role;
   int? phoneNumber;
   bool? teamsAndCondition;
+  List<dynamic>? connectedUser;
+  List<dynamic>? rejectedUser;
   int? score;
   int? v;
   String? verified;
@@ -59,7 +62,10 @@ class Datum {
      this.gender,
      this.dateOfBirth,
      this.phoneNumber,
+     this.role,
      this.teamsAndCondition,
+     this.connectedUser,
+     this.rejectedUser,
      this.score,
      this.v,
      this.verified,
@@ -79,7 +85,10 @@ class Datum {
     gender: json["gender"],
     dateOfBirth: json["dateOfBirth"],
     phoneNumber: json["phoneNumber"],
+    role: json["role"],
     teamsAndCondition: json["teamsAndCondition"],
+    connectedUser: List<dynamic>.from(json["connectedUser"].map((x) => x)),
+    rejectedUser: List<dynamic>.from(json["rejectedUser"].map((x) => x)),
     score: json["score"],
     v: json["__v"],
     verified: json["verified"],
@@ -99,8 +108,11 @@ class Datum {
     "gender": gender,
     "dateOfBirth": dateOfBirth,
     "phoneNumber": phoneNumber,
+    "role": role,
     "teamsAndCondition": teamsAndCondition,
     "score": score,
+    "connectedUser": List<dynamic>.from(connectedUser?.map((x) => x) ?? []),
+    "rejectedUser": List<dynamic>.from(rejectedUser?.map((x) => x) ?? []),
     "__v": v,
     "verified": verified,
     "address": address?.toJson(),

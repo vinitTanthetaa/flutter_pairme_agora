@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/city&state.dart';
@@ -18,6 +20,7 @@ class UserDetailsSuccess extends UserDetailsState {}
 
 class UserDetailsCubit extends Cubit<UserDetailsState> {
   UserDetailsCubit() : super(UserDetailsInitials());
+  UserProfile userProfile = UserProfile();
   final dio = Dio();
   Future<UserProfile?> GetUserdetails() async {
     emit(UserDetailsLoading());
@@ -26,20 +29,21 @@ class UserDetailsCubit extends Cubit<UserDetailsState> {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }));
-      print(response);
+      log("response ===>$response");
       if(response.statusCode == 200 && response.data != null)
       {
         emit(UserDetailsSuccess());
-        print("passs");
+        userProfile = UserProfile.fromJson(response.data);
 
+        print("passs ==> ${userProfile.data?.first.bio}");
       }
-      return UserProfile.fromJson(response.data);
+      return userProfile;
     } on Exception catch (e) {
       emit(UserDetailsError());
       print("you are fully fail my friend" + e.toString());
       // TODO
     }
-    return null;
+    return userProfile;
   }
 
 }

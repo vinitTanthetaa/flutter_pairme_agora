@@ -124,9 +124,6 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
       ]);
     }
     try {
-      print("frodata ==> ${formData.fields}");
-      print("frodata ==> ${formData.files}");
-      print("bio ==> $bio");
       Response response = await dio.post(
         apis.business_profile,
         data: formData,
