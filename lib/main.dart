@@ -41,11 +41,11 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]).then((_) async {
     runApp(EasyLocalization(
         supportedLocales: const [
-          Locale('en'),
-          Locale('es'),
-          Locale('hi'),
-          Locale('can'),
-          Locale('man'),
+          Locale('en'), // English
+          Locale('hi'), // Hindi
+          Locale('es'), // Spanish
+          Locale('zh', 'CN'), // Simplified Chinese mandarin
+          Locale('zh', 'TW'), // Traditional Chinese cantesos
         ],
         fallbackLocale: const Locale('en'),
         path: 'assets/Language',
@@ -104,8 +104,8 @@ class MyApp extends StatelessWidget {
           Locale('en'),
           Locale('es'),
           Locale('hi'),
-          Locale('can'),
-          Locale('man'),
+          Locale('zh', 'CN'), // Simplified Chinese
+          Locale('zh', 'TW'),
         ],
         localizationsDelegates: context.localizationDelegates,
         home: const SpleshScreen(),
