@@ -122,7 +122,7 @@ class _Message_pageState extends State<Message_page> {
                                Text('Requests'.tr(),style: const TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
                                const Text('(2)',style: TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
                              ],
-                           )),
+                           ),),
                      ],
                    ),
                  ),

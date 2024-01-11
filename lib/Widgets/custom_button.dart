@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
-Widget Custom_botton (BuildContext context ,{required String text,required Function() onTap,required double height}){
+Widget Custom_botton (BuildContext context ,{required String text,Color? color,required Function() onTap,required double height}){
   return InkWell(
     overlayColor: MaterialStatePropertyAll(Colors.white),
     onTap: onTap,
@@ -16,7 +16,7 @@ Widget Custom_botton (BuildContext context ,{required String text,required Funct
         width: text.length <=12 ? screenWidth(context,dividedBy: 2.5) : screenWidth(context,dividedBy: 1.5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: AppColor.Blue
+          color: color != null ? color :AppColor.Blue
           // gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
           // boxShadow: const [
           //   BoxShadow(
