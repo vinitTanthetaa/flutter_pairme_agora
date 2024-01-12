@@ -36,9 +36,29 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
         required BuildContext context}) async {
     emit(BusinessProfileLoading());
     final dio = Dio();
-    FormData formData = FormData();
-    formData.fields.add(MapEntry("bio", bio??''));
-    // Adding photo files
+   FormData formData = FormData();
+   formData.fields.add(MapEntry("bio", bio??''));
+    dio.options.maxRedirects = 200 * 1024 * 1024; // 200 MB
+    //  String? fileName = photo_1.path.split('/').last ;
+   //  String? fileName1 = photo_2.path.split('/').last;
+   //  String? fileName2 = photo_3.path.split('/').last;
+   //  String? fileName3 = photo_4.path.split('/').last;
+   //  String? fileName4 = photo_5.path.split('/').last;
+   //  String? fileName5 = photo_6.path.split('/').last;
+   //  FormData formData = FormData.fromMap({
+   //    'photo_1': await MultipartFile.fromFile(photo_1.path, filename: fileName),
+   //    'photo_2': await MultipartFile.fromFile(photo_2.path, filename: fileName1),
+   //    'photo_3': await MultipartFile.fromFile(photo_3.path, filename: fileName2),
+   //    'photo_4': await MultipartFile.fromFile(photo_4.path, filename: fileName3),
+   //    'photo_5': await MultipartFile.fromFile(photo_5.path, filename: fileName4),
+   //    'photo_6': await MultipartFile.fromFile(photo_6.path, filename: fileName5),
+   //    // Add more files as needed
+   //    'file_1': await MultipartFile.fromFile(file_1.path!),
+   //    // 'file_2': await MultipartFile.fromFile(file_2.path!),
+   //    // 'file_3': await MultipartFile.fromFile(file_3.path!),
+   //    'bio': bio,
+   //  });
+  //  Adding photo files
     if (photo_1.path.isNotEmpty && photo_2.path.isNotEmpty && photo_3.path.isNotEmpty && photo_4.path.isNotEmpty && photo_5.path.isNotEmpty && photo_6.path.isNotEmpty)
     {
       String? fileName = photo_1.path.split('/').last ;
@@ -133,9 +153,14 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
         apis.business_profile,
         data: formData,
         options: Options(
-          method: "POST",
+           maxRedirects:  200 * 1024 * 1024, // 200 MB
+            validateStatus: (status) {
+            print("status === > $status");
+            return status != null && (status < 500 || status == 413);
+          },
           headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': Authtoken,
           }
         ),

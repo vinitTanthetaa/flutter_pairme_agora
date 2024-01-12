@@ -1,6 +1,7 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -43,5 +44,9 @@ Widget skip_button (BuildContext context,{required Function() onTap}){
       return const LinearGradient(colors: [AppColor.skyBlue, AppColor.whiteskyBlue]).createShader(bounds);
     },child: Text("Skip".tr()),),
   );
+}
+
+Widget CustomBottonLoader (){
+  return Center(child: customLoader(),);
 }
 

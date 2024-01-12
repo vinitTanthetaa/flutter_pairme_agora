@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
         ),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
-        home: const Connection_Page(),
+        home: const SpleshScreen                                                                               (),
       ),
     );
   }

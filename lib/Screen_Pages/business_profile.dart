@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -40,6 +42,12 @@ class _Business_ProfileState extends State<Business_Profile> {
   BusinessprofileupdateCubit businessprofileupdateCubit = BusinessprofileupdateCubit();
   BusinessProfileCubit businessProfileCubit = BusinessProfileCubit();
   final TextEditingController _bio = TextEditingController();
+  File? image;
+  File? image1;
+  File? image2;
+  File? image3;
+  File? image4;
+  File? image5;
   var _selectedimag1;
   var _selectedimag2;
   var _selectedimag3;
@@ -205,16 +213,15 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  _selectedimag1?.selectedFile != null
+                                  image != null
                                       ? DecorationImage(
-                                          //  image: AssetImage('assets/Images/vincenzo.png'),
-                                          image: FileImage(
-                                              _selectedimag1!.selectedFile),
-                                          fit: BoxFit.fill) :
+                                    //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      image: FileImage(image!),
+                                      fit: BoxFit.fill) :
                                   const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
+                                      image: AssetImage(
+                                          'assets/Images/placeHolderImage.jpg'),
+                                      fit: BoxFit.fill)),
                               child: Stack(
                                 children: [
                                   Positioned(
@@ -231,37 +238,37 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               decoration: const BoxDecoration(
                                                   color: AppColor.white,
                                                   borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
+                                                  BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          15),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          16))),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        70)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            70)),
                                                     child: const Text(
                                                       'Add Media',
                                                       style: TextStyle(
                                                           fontFamily: 'Roboto',
                                                           fontSize: 25,
                                                           fontWeight:
-                                                              FontWeight.w600),
+                                                          FontWeight.w600),
                                                     ),
                                                   ),
                                                   const Divider(
@@ -269,17 +276,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -290,39 +297,39 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               context,
                                                               dividedBy: 2),
                                                           child:
-                                                              GestureDetector(
+                                                          GestureDetector(
                                                             // onTap: () async {
                                                             //   // final ImagePicker picker = ImagePicker();
                                                             //   // final image = picker.pickImage(source: ImageSource.gallery);
                                                             //   // print("image ===> $image");
                                                             //   ImagePickerPlus
-                                                            //       picker =
-                                                            //       ImagePickerPlus(
-                                                            //           context);
+                                                            //   picker =
+                                                            //   ImagePickerPlus(
+                                                            //       context);
                                                             //   SelectedImagesDetails?
-                                                            //       details =
-                                                            //       await picker
-                                                            //           .pickBoth(
+                                                            //   details =
+                                                            //   await picker
+                                                            //       .pickBoth(
                                                             //     source:
-                                                            //         ImageSource
-                                                            //             .camera,
+                                                            //     ImageSource
+                                                            //         .camera,
                                                             //
                                                             //     /// On long tap, it will be available.
                                                             //     multiSelection:
-                                                            //         true,
+                                                            //     true,
                                                             //     galleryDisplaySettings:
-                                                            //         GalleryDisplaySettings(
+                                                            //     GalleryDisplaySettings(
                                                             //       appTheme: AppTheme(
                                                             //           focusColor:
-                                                            //               Colors
-                                                            //                   .white,
+                                                            //           Colors
+                                                            //               .white,
                                                             //           primaryColor:
-                                                            //               Colors
-                                                            //                   .black),
+                                                            //           Colors
+                                                            //               .black),
                                                             //       cropImage:
-                                                            //           true,
+                                                            //       true,
                                                             //       showImagePreview:
-                                                            //           true,
+                                                            //       true,
                                                             //     ),
                                                             //   );
                                                             //   print(
@@ -331,8 +338,8 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             //       null) {
                                                             //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
                                                             //     _selectedimag1 =
-                                                            //         details
-                                                            //             .selectedFiles[0];
+                                                            //     details
+                                                            //         .selectedFiles[0];
                                                             //     Navigator.pop(
                                                             //         context);
                                                             //     setState(() {});
@@ -341,40 +348,55 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             //   }
                                                             //   // if (details != null) await displayDetails(details);
                                                             // },
+                                                            onTap: () async {
+                                                              final ImagePicker picker =
+                                                              ImagePicker();
+                                                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                                                              print("pickedfile ==> ${pickedFile?.path}");
+                                                              var result = await FlutterImageCompress
+                                                                  .compressAndGetFile(
+                                                                pickedFile!.path,
+                                                                pickedFile.path + '_compressed.jpg',
+                                                                quality: 10, // Adjust the quality as needed
+                                                              );
+                                                              image = File(result!.path);
+                                                              setState(() {});
+                                                              Navigator.pop(context);
+                                                            },
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/camera.png'))),
+                                                                          AssetImage('assets/Images/camera.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Camera',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -390,43 +412,59 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: GestureDetector(
+                                                      onTap: () async {
+                                                        final ImagePicker picker =
+                                                        ImagePicker();
+                                                        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                                                        print("pickedfile ==> ${pickedFile?.path}");
+                                                        var result = await FlutterImageCompress
+                                                            .compressAndGetFile(
+                                                          pickedFile!.path,
+                                                          pickedFile.path + '_compressed.jpg',
+                                                          quality:
+                                                          10, // Adjust the quality as needed
+                                                        );
+                                                        image = File(result!.path);
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
                                                       // onTap: () async {
                                                       //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
+                                                      //   ImagePickerPlus(
+                                                      //       context);
                                                       //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
+                                                      //   details =
+                                                      //   await picker
+                                                      //       .pickBoth(
                                                       //     source: ImageSource
                                                       //         .gallery,
                                                       //
                                                       //     /// On long tap, it will be available.
                                                       //     multiSelection: true,
                                                       //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
+                                                      //     GalleryDisplaySettings(
                                                       //       appTheme: AppTheme(
                                                       //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
+                                                      //           Colors
+                                                      //               .white,
                                                       //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
+                                                      //           Colors
+                                                      //               .black),
                                                       //       cropImage: true,
                                                       //       showImagePreview:
-                                                      //           true,
+                                                      //       true,
                                                       //     ),
                                                       //   );
                                                       //   print(
@@ -447,47 +485,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         children: [
                                                           SizedBox(
                                                             height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
+                                                            screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                17),
                                                             width: screenWidth(
                                                                 context,
                                                                 dividedBy: 2),
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
+                                                                          AssetImage('assets/Images/placeholder.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Photos',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -503,17 +541,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -525,25 +563,25 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               dividedBy: 2),
                                                           child: Row(
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
+                                                            CrossAxisAlignment
+                                                                .center,
                                                             children: [
                                                               Container(
                                                                 margin: EdgeInsets.only(
                                                                     right: screenWidth(
                                                                         context,
                                                                         dividedBy:
-                                                                            40)),
+                                                                        40)),
                                                                 height:
-                                                                    screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40),
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    40),
                                                                 width:
-                                                                    screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            15),
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    15),
                                                                 decoration: const BoxDecoration(
                                                                     image: DecorationImage(
                                                                         image: AssetImage(
@@ -553,12 +591,12 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                 'Videos',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
+                                                                    'Roboto',
                                                                     fontSize:
-                                                                        17,
+                                                                    17,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                    FontWeight
+                                                                        .w500,
                                                                     color: AppColor
                                                                         .dropdownfont),
                                                               ),
@@ -582,7 +620,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
-                                                    Radius.circular(12)),
+                                                Radius.circular(12)),
                                             image: DecorationImage(
                                                 image: AssetImage(
                                                     'assets/Images/add.png'),
@@ -609,16 +647,16 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  _selectedimag2?.selectedFile != null
+                                  image1 != null
                                       ? DecorationImage(
-                                          //  image: AssetImage('assets/Images/vincenzo.png'),
-                                          image: FileImage(
-                                              _selectedimag2!.selectedFile),
-                                          fit: BoxFit.fill) :
+                                    //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      image: FileImage(
+                                          image1!),
+                                      fit: BoxFit.fill) :
                                   const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
+                                      image: AssetImage(
+                                          'assets/Images/placeHolderImage.jpg'),
+                                      fit: BoxFit.fill)),
                               child: Stack(
                                 children: [
                                   Positioned(
@@ -635,37 +673,37 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               decoration: const BoxDecoration(
                                                   color: AppColor.white,
                                                   borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
+                                                  BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          15),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          16))),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        70)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            70)),
                                                     child: const Text(
                                                       'Add Media',
                                                       style: TextStyle(
                                                           fontFamily: 'Roboto',
                                                           fontSize: 25,
                                                           fontWeight:
-                                                              FontWeight.w600),
+                                                          FontWeight.w600),
                                                     ),
                                                   ),
                                                   const Divider(
@@ -673,17 +711,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -694,7 +732,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               context,
                                                               dividedBy: 2),
                                                           child:
-                                                              GestureDetector(
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              final ImagePicker picker =
+                                                              ImagePicker();
+                                                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                                                              print("pickedfile ==> ${pickedFile?.path}");
+                                                              var result = await FlutterImageCompress
+                                                                  .compressAndGetFile(
+                                                                pickedFile!.path,
+                                                                pickedFile.path + '_compressed.jpg',
+                                                                quality:
+                                                                10, // Adjust the quality as needed
+                                                              );
+                                                              image1 = File(result!.path);
+                                                              setState(() {});
+                                                              Navigator.pop(context);
+                                                            },
                                                             // onTap: () async {
                                                             //   // final ImagePicker picker = ImagePicker();
                                                             //   // final image = picker.pickImage(source: ImageSource.gallery);
@@ -747,38 +801,38 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             // },
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/camera.png'))),
+                                                                          AssetImage('assets/Images/camera.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Camera',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -794,43 +848,59 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: GestureDetector(
+                                                      onTap: () async {
+                                                        final ImagePicker picker =
+                                                        ImagePicker();
+                                                        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                                                        print("pickedfile ==> ${pickedFile?.path}");
+                                                        var result = await FlutterImageCompress
+                                                            .compressAndGetFile(
+                                                          pickedFile!.path,
+                                                          pickedFile.path + '_compressed.jpg',
+                                                          quality:
+                                                          10, // Adjust the quality as needed
+                                                        );
+                                                        image1 = File(result!.path);
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
                                                       // onTap: () async {
                                                       //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
+                                                      //   ImagePickerPlus(
+                                                      //       context);
                                                       //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
+                                                      //   details =
+                                                      //   await picker
+                                                      //       .pickBoth(
                                                       //     source: ImageSource
                                                       //         .gallery,
                                                       //
                                                       //     /// On long tap, it will be available.
                                                       //     multiSelection: true,
                                                       //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
+                                                      //     GalleryDisplaySettings(
                                                       //       appTheme: AppTheme(
                                                       //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
+                                                      //           Colors
+                                                      //               .white,
                                                       //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
+                                                      //           Colors
+                                                      //               .black),
                                                       //       cropImage: true,
                                                       //       showImagePreview:
-                                                      //           true,
+                                                      //       true,
                                                       //     ),
                                                       //   );
                                                       //   print(
@@ -851,47 +921,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         children: [
                                                           SizedBox(
                                                             height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
+                                                            screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                17),
                                                             width: screenWidth(
                                                                 context,
                                                                 dividedBy: 2),
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
+                                                                          AssetImage('assets/Images/placeholder.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Photos',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -907,17 +977,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -929,25 +999,25 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               dividedBy: 2),
                                                           child: Row(
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
+                                                            CrossAxisAlignment
+                                                                .center,
                                                             children: [
                                                               Container(
                                                                 margin: EdgeInsets.only(
                                                                     right: screenWidth(
                                                                         context,
                                                                         dividedBy:
-                                                                            40)),
+                                                                        40)),
                                                                 height:
-                                                                    screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40),
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    40),
                                                                 width:
-                                                                    screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            15),
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    15),
                                                                 decoration: const BoxDecoration(
                                                                     image: DecorationImage(
                                                                         image: AssetImage(
@@ -957,12 +1027,12 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                 'Videos',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
+                                                                    'Roboto',
                                                                     fontSize:
-                                                                        17,
+                                                                    17,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                    FontWeight
+                                                                        .w500,
                                                                     color: AppColor
                                                                         .dropdownfont),
                                                               ),
@@ -986,7 +1056,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
-                                                    Radius.circular(12)),
+                                                Radius.circular(12)),
                                             image: DecorationImage(
                                                 image: AssetImage(
                                                     'assets/Images/add.png'),
@@ -1013,16 +1083,16 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag3?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag3!.selectedFile),
-                                  //         fit: BoxFit.fill) :
+                                  image2 != null
+                                      ? DecorationImage(
+                                    //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      image: FileImage(
+                                          image2!),
+                                      fit: BoxFit.fill) :
                                   const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
+                                      image: AssetImage(
+                                          'assets/Images/placeHolderImage.jpg'),
+                                      fit: BoxFit.fill)),
                               child: Stack(
                                 children: [
                                   Positioned(
@@ -1039,37 +1109,37 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               decoration: const BoxDecoration(
                                                   color: AppColor.white,
                                                   borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
+                                                  BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          15),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          16))),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        70)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            70)),
                                                     child: const Text(
                                                       'Add Media',
                                                       style: TextStyle(
                                                           fontFamily: 'Roboto',
                                                           fontSize: 25,
                                                           fontWeight:
-                                                              FontWeight.w600),
+                                                          FontWeight.w600),
                                                     ),
                                                   ),
                                                   const Divider(
@@ -1077,17 +1147,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -1098,7 +1168,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               context,
                                                               dividedBy: 2),
                                                           child:
-                                                              GestureDetector(
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              final ImagePicker picker =
+                                                              ImagePicker();
+                                                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                                                              print("pickedfile ==> ${pickedFile?.path}");
+                                                              var result = await FlutterImageCompress
+                                                                  .compressAndGetFile(
+                                                                pickedFile!.path,
+                                                                pickedFile.path + '_compressed.jpg',
+                                                                quality:
+                                                                10, // Adjust the quality as needed
+                                                              );
+                                                              image2 = File(result!.path);
+                                                              setState(() {});
+                                                              Navigator.pop(context);
+                                                            },
                                                             // onTap: () async {
                                                             //   // final ImagePicker picker = ImagePicker();
                                                             //   // final image = picker.pickImage(source: ImageSource.gallery);
@@ -1151,38 +1237,38 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             // },
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/camera.png'))),
+                                                                          AssetImage('assets/Images/camera.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Camera',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -1198,43 +1284,59 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: GestureDetector(
+                                                      onTap: () async {
+                                                        final ImagePicker picker =
+                                                        ImagePicker();
+                                                        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                                                        print("pickedfile ==> ${pickedFile?.path}");
+                                                        var result = await FlutterImageCompress
+                                                            .compressAndGetFile(
+                                                          pickedFile!.path,
+                                                          pickedFile.path + '_compressed.jpg',
+                                                          quality:
+                                                          10, // Adjust the quality as needed
+                                                        );
+                                                        image2 = File(result!.path);
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
                                                       // onTap: () async {
                                                       //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
+                                                      //   ImagePickerPlus(
+                                                      //       context);
                                                       //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
+                                                      //   details =
+                                                      //   await picker
+                                                      //       .pickBoth(
                                                       //     source: ImageSource
                                                       //         .gallery,
                                                       //
                                                       //     /// On long tap, it will be available.
                                                       //     multiSelection: true,
                                                       //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
+                                                      //     GalleryDisplaySettings(
                                                       //       appTheme: AppTheme(
                                                       //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
+                                                      //           Colors
+                                                      //               .white,
                                                       //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
+                                                      //           Colors
+                                                      //               .black),
                                                       //       cropImage: true,
                                                       //       showImagePreview:
-                                                      //           true,
+                                                      //       true,
                                                       //     ),
                                                       //   );
                                                       //   print(
@@ -1255,47 +1357,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         children: [
                                                           SizedBox(
                                                             height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
+                                                            screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                17),
                                                             width: screenWidth(
                                                                 context,
                                                                 dividedBy: 2),
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
+                                                                          AssetImage('assets/Images/placeholder.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Photos',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -1311,17 +1413,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -1333,25 +1435,25 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               dividedBy: 2),
                                                           child: Row(
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
+                                                            CrossAxisAlignment
+                                                                .center,
                                                             children: [
                                                               Container(
                                                                 margin: EdgeInsets.only(
                                                                     right: screenWidth(
                                                                         context,
                                                                         dividedBy:
-                                                                            40)),
+                                                                        40)),
                                                                 height:
-                                                                    screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40),
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    40),
                                                                 width:
-                                                                    screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            15),
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    15),
                                                                 decoration: const BoxDecoration(
                                                                     image: DecorationImage(
                                                                         image: AssetImage(
@@ -1361,12 +1463,12 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                 'Videos',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
+                                                                    'Roboto',
                                                                     fontSize:
-                                                                        17,
+                                                                    17,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                    FontWeight
+                                                                        .w500,
                                                                     color: AppColor
                                                                         .dropdownfont),
                                                               ),
@@ -1390,7 +1492,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
-                                                    Radius.circular(12)),
+                                                Radius.circular(12)),
                                             image: DecorationImage(
                                                 image: AssetImage(
                                                     'assets/Images/add.png'),
@@ -1425,16 +1527,16 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag4?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag4!.selectedFile),
-                                  //         fit: BoxFit.fill) :
+                                  image3 != null
+                                      ? DecorationImage(
+                                    //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      image: FileImage(
+                                          image3!),
+                                      fit: BoxFit.fill) :
                                   const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
+                                      image: AssetImage(
+                                          'assets/Images/placeHolderImage.jpg'),
+                                      fit: BoxFit.fill)),
                               child: Stack(
                                 children: [
                                   Positioned(
@@ -1451,37 +1553,37 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               decoration: const BoxDecoration(
                                                   color: AppColor.white,
                                                   borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
+                                                  BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          15),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          16))),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        70)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            70)),
                                                     child: const Text(
                                                       'Add Media',
                                                       style: TextStyle(
                                                           fontFamily: 'Roboto',
                                                           fontSize: 25,
                                                           fontWeight:
-                                                              FontWeight.w600),
+                                                          FontWeight.w600),
                                                     ),
                                                   ),
                                                   const Divider(
@@ -1489,17 +1591,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -1510,7 +1612,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               context,
                                                               dividedBy: 2),
                                                           child:
-                                                              GestureDetector(
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              final ImagePicker picker =
+                                                              ImagePicker();
+                                                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                                                              print("pickedfile ==> ${pickedFile?.path}");
+                                                              var result = await FlutterImageCompress
+                                                                  .compressAndGetFile(
+                                                                pickedFile!.path,
+                                                                pickedFile.path + '_compressed.jpg',
+                                                                quality:
+                                                                10, // Adjust the quality as needed
+                                                              );
+                                                              image3 = File(result!.path);
+                                                              setState(() {});
+                                                              Navigator.pop(context);
+                                                            },
                                                             // onTap: () async {
                                                             //   // final ImagePicker picker = ImagePicker();
                                                             //   // final image = picker.pickImage(source: ImageSource.gallery);
@@ -1563,38 +1681,38 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             // },
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/camera.png'))),
+                                                                          AssetImage('assets/Images/camera.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Camera',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -1610,43 +1728,59 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: GestureDetector(
+                                                      onTap: () async {
+                                                        final ImagePicker picker =
+                                                        ImagePicker();
+                                                        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                                                        print("pickedfile ==> ${pickedFile?.path}");
+                                                        var result = await FlutterImageCompress
+                                                            .compressAndGetFile(
+                                                          pickedFile!.path,
+                                                          pickedFile.path + '_compressed.jpg',
+                                                          quality:
+                                                          10, // Adjust the quality as needed
+                                                        );
+                                                        image3 = File(result!.path);
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
                                                       // onTap: () async {
                                                       //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
+                                                      //   ImagePickerPlus(
+                                                      //       context);
                                                       //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
+                                                      //   details =
+                                                      //   await picker
+                                                      //       .pickBoth(
                                                       //     source: ImageSource
                                                       //         .gallery,
                                                       //
                                                       //     /// On long tap, it will be available.
                                                       //     multiSelection: true,
                                                       //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
+                                                      //     GalleryDisplaySettings(
                                                       //       appTheme: AppTheme(
                                                       //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
+                                                      //           Colors
+                                                      //               .white,
                                                       //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
+                                                      //           Colors
+                                                      //               .black),
                                                       //       cropImage: true,
                                                       //       showImagePreview:
-                                                      //           true,
+                                                      //       true,
                                                       //     ),
                                                       //   );
                                                       //   print(
@@ -1667,47 +1801,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         children: [
                                                           SizedBox(
                                                             height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
+                                                            screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                17),
                                                             width: screenWidth(
                                                                 context,
                                                                 dividedBy: 2),
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
+                                                                          AssetImage('assets/Images/placeholder.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Photos',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -1723,17 +1857,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -1745,25 +1879,25 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               dividedBy: 2),
                                                           child: Row(
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
+                                                            CrossAxisAlignment
+                                                                .center,
                                                             children: [
                                                               Container(
                                                                 margin: EdgeInsets.only(
                                                                     right: screenWidth(
                                                                         context,
                                                                         dividedBy:
-                                                                            40)),
+                                                                        40)),
                                                                 height:
-                                                                    screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40),
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    40),
                                                                 width:
-                                                                    screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            15),
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    15),
                                                                 decoration: const BoxDecoration(
                                                                     image: DecorationImage(
                                                                         image: AssetImage(
@@ -1773,12 +1907,12 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                 'Videos',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
+                                                                    'Roboto',
                                                                     fontSize:
-                                                                        17,
+                                                                    17,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                    FontWeight
+                                                                        .w500,
                                                                     color: AppColor
                                                                         .dropdownfont),
                                                               ),
@@ -1802,7 +1936,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
-                                                    Radius.circular(12)),
+                                                Radius.circular(12)),
                                             image: DecorationImage(
                                                 image: AssetImage(
                                                     'assets/Images/add.png'),
@@ -1829,16 +1963,16 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag5?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag5!.selectedFile),
-                                  //         fit: BoxFit.fill) :
+                                  image4 != null
+                                      ? DecorationImage(
+                                    //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      image: FileImage(
+                                          image4!),
+                                      fit: BoxFit.fill) :
                                   const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
+                                      image: AssetImage(
+                                          'assets/Images/placeHolderImage.jpg'),
+                                      fit: BoxFit.fill)),
                               child: Stack(
                                 children: [
                                   Positioned(
@@ -1855,37 +1989,37 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               decoration: const BoxDecoration(
                                                   color: AppColor.white,
                                                   borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
+                                                  BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          15),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          16))),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        70)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            70)),
                                                     child: const Text(
                                                       'Add Media',
                                                       style: TextStyle(
                                                           fontFamily: 'Roboto',
                                                           fontSize: 25,
                                                           fontWeight:
-                                                              FontWeight.w600),
+                                                          FontWeight.w600),
                                                     ),
                                                   ),
                                                   const Divider(
@@ -1893,17 +2027,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -1914,7 +2048,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               context,
                                                               dividedBy: 2),
                                                           child:
-                                                              GestureDetector(
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              final ImagePicker picker =
+                                                              ImagePicker();
+                                                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                                                              print("pickedfile ==> ${pickedFile?.path}");
+                                                              var result = await FlutterImageCompress
+                                                                  .compressAndGetFile(
+                                                                pickedFile!.path,
+                                                                pickedFile.path + '_compressed.jpg',
+                                                                quality:
+                                                                10, // Adjust the quality as needed
+                                                              );
+                                                              image4 = File(result!.path);
+                                                              setState(() {});
+                                                              Navigator.pop(context);
+                                                            },
                                                             // onTap: () async {
                                                             //   // final ImagePicker picker = ImagePicker();
                                                             //   // final image = picker.pickImage(source: ImageSource.gallery);
@@ -1967,38 +2117,38 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             // },
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/camera.png'))),
+                                                                          AssetImage('assets/Images/camera.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Camera',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -2014,43 +2164,59 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: GestureDetector(
+                                                      onTap: () async {
+                                                        final ImagePicker picker =
+                                                        ImagePicker();
+                                                        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                                                        print("pickedfile ==> ${pickedFile?.path}");
+                                                        var result = await FlutterImageCompress
+                                                            .compressAndGetFile(
+                                                          pickedFile!.path,
+                                                          pickedFile.path + '_compressed.jpg',
+                                                          quality:
+                                                          10, // Adjust the quality as needed
+                                                        );
+                                                        image4 = File(result!.path);
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
                                                       // onTap: () async {
                                                       //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
+                                                      //   ImagePickerPlus(
+                                                      //       context);
                                                       //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
+                                                      //   details =
+                                                      //   await picker
+                                                      //       .pickBoth(
                                                       //     source: ImageSource
                                                       //         .gallery,
                                                       //
                                                       //     /// On long tap, it will be available.
                                                       //     multiSelection: true,
                                                       //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
+                                                      //     GalleryDisplaySettings(
                                                       //       appTheme: AppTheme(
                                                       //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
+                                                      //           Colors
+                                                      //               .white,
                                                       //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
+                                                      //           Colors
+                                                      //               .black),
                                                       //       cropImage: true,
                                                       //       showImagePreview:
-                                                      //           true,
+                                                      //       true,
                                                       //     ),
                                                       //   );
                                                       //   print(
@@ -2071,47 +2237,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         children: [
                                                           SizedBox(
                                                             height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
+                                                            screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                17),
                                                             width: screenWidth(
                                                                 context,
                                                                 dividedBy: 2),
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
+                                                                          AssetImage('assets/Images/placeholder.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Photos',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -2127,17 +2293,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -2149,25 +2315,25 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               dividedBy: 2),
                                                           child: Row(
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
+                                                            CrossAxisAlignment
+                                                                .center,
                                                             children: [
                                                               Container(
                                                                 margin: EdgeInsets.only(
                                                                     right: screenWidth(
                                                                         context,
                                                                         dividedBy:
-                                                                            40)),
+                                                                        40)),
                                                                 height:
-                                                                    screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40),
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    40),
                                                                 width:
-                                                                    screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            15),
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    15),
                                                                 decoration: const BoxDecoration(
                                                                     image: DecorationImage(
                                                                         image: AssetImage(
@@ -2177,12 +2343,12 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                 'Videos',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
+                                                                    'Roboto',
                                                                     fontSize:
-                                                                        17,
+                                                                    17,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                    FontWeight
+                                                                        .w500,
                                                                     color: AppColor
                                                                         .dropdownfont),
                                                               ),
@@ -2206,7 +2372,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
-                                                    Radius.circular(12)),
+                                                Radius.circular(12)),
                                             image: DecorationImage(
                                                 image: AssetImage(
                                                     'assets/Images/add.png'),
@@ -2233,16 +2399,16 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag6?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag6!.selectedFile),
-                                  //         fit: BoxFit.fill) :
+                                  image5 != null
+                                      ? DecorationImage(
+                                    //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      image: FileImage(
+                                          image5!),
+                                      fit: BoxFit.fill) :
                                   const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
+                                      image: AssetImage(
+                                          'assets/Images/placeHolderImage.jpg'),
+                                      fit: BoxFit.fill)),
                               child: Stack(
                                 children: [
                                   // Container(
@@ -2294,37 +2460,37 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               decoration: const BoxDecoration(
                                                   color: AppColor.white,
                                                   borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
+                                                  BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          15),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          16))),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        70)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            70)),
                                                     child: const Text(
                                                       'Add Media',
                                                       style: TextStyle(
                                                           fontFamily: 'Roboto',
                                                           fontSize: 25,
                                                           fontWeight:
-                                                              FontWeight.w600),
+                                                          FontWeight.w600),
                                                     ),
                                                   ),
                                                   const Divider(
@@ -2332,17 +2498,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -2353,7 +2519,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               context,
                                                               dividedBy: 2),
                                                           child:
-                                                              GestureDetector(
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              final ImagePicker picker =
+                                                              ImagePicker();
+                                                              final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                                                              print("pickedfile ==> ${pickedFile?.path}");
+                                                              var result = await FlutterImageCompress
+                                                                  .compressAndGetFile(
+                                                                pickedFile!.path,
+                                                                pickedFile.path + '_compressed.jpg',
+                                                                quality:
+                                                                100, // Adjust the quality as needed
+                                                              );
+                                                              image5 = File(result!.path);
+                                                              setState(() {});
+                                                              Navigator.pop(context);
+                                                            },
                                                             // onTap: () async {
                                                             //   // final ImagePicker picker = ImagePicker();
                                                             //   // final image = picker.pickImage(source: ImageSource.gallery);
@@ -2406,38 +2588,38 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             // },
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/camera.png'))),
+                                                                          AssetImage('assets/Images/camera.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Camera',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -2453,43 +2635,58 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: GestureDetector(
+                                                      onTap: () async {
+                                                        final ImagePicker picker =
+                                                        ImagePicker();
+                                                        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                                                        print("pickedfile ==> ${pickedFile?.path}");
+                                                        var result = await FlutterImageCompress
+                                                            .compressAndGetFile(
+                                                          pickedFile!.path,
+                                                          pickedFile.path + '_compressed.jpg',
+                                                          quality: 100, // Adjust the quality as needed
+                                                        );
+                                                        image5 = File(result!.path);
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
                                                       // onTap: () async {
                                                       //   ImagePickerPlus picker =
-                                                      //       ImagePickerPlus(
-                                                      //           context);
+                                                      //   ImagePickerPlus(
+                                                      //       context);
                                                       //   SelectedImagesDetails?
-                                                      //       details =
-                                                      //       await picker
-                                                      //           .pickBoth(
+                                                      //   details =
+                                                      //   await picker
+                                                      //       .pickBoth(
                                                       //     source: ImageSource
                                                       //         .gallery,
                                                       //
                                                       //     /// On long tap, it will be available.
                                                       //     multiSelection: true,
                                                       //     galleryDisplaySettings:
-                                                      //         GalleryDisplaySettings(
+                                                      //     GalleryDisplaySettings(
                                                       //       appTheme: AppTheme(
                                                       //           focusColor:
-                                                      //               Colors
-                                                      //                   .white,
+                                                      //           Colors
+                                                      //               .white,
                                                       //           primaryColor:
-                                                      //               Colors
-                                                      //                   .black),
+                                                      //           Colors
+                                                      //               .black),
                                                       //       cropImage: true,
                                                       //       showImagePreview:
-                                                      //           true,
+                                                      //       true,
                                                       //     ),
                                                       //   );
                                                       //   print(
@@ -2510,47 +2707,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         children: [
                                                           SizedBox(
                                                             height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
+                                                            screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                17),
                                                             width: screenWidth(
                                                                 context,
                                                                 dividedBy: 2),
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                               children: [
                                                                 Container(
                                                                   margin: EdgeInsets.only(
                                                                       right: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
+                                                                          40)),
                                                                   height: screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          40),
+                                                                      40),
                                                                   width: screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
+                                                                      15),
                                                                   decoration: const BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
+                                                                          AssetImage('assets/Images/placeholder.png'))),
                                                                 ),
                                                                 const Text(
                                                                   'Photos',
                                                                   style: TextStyle(
                                                                       fontFamily:
-                                                                          'Roboto',
+                                                                      'Roboto',
                                                                       fontSize:
-                                                                          17,
+                                                                      17,
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                                                      FontWeight
+                                                                          .w500,
                                                                       color: AppColor
                                                                           .dropdownfont),
                                                                 ),
@@ -2566,17 +2763,17 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
+                                                    EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            15),
+                                                        vertical:
+                                                        screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            100)),
                                                     child: Row(
                                                       children: [
                                                         SizedBox(
@@ -2588,25 +2785,25 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               dividedBy: 2),
                                                           child: Row(
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
+                                                            CrossAxisAlignment
+                                                                .center,
                                                             children: [
                                                               Container(
                                                                 margin: EdgeInsets.only(
                                                                     right: screenWidth(
                                                                         context,
                                                                         dividedBy:
-                                                                            40)),
+                                                                        40)),
                                                                 height:
-                                                                    screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40),
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    40),
                                                                 width:
-                                                                    screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            15),
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    15),
                                                                 decoration: const BoxDecoration(
                                                                     image: DecorationImage(
                                                                         image: AssetImage(
@@ -2616,12 +2813,12 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                 'Videos',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
+                                                                    'Roboto',
                                                                     fontSize:
-                                                                        17,
+                                                                    17,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                    FontWeight
+                                                                        .w500,
                                                                     color: AppColor
                                                                         .dropdownfont),
                                                               ),
@@ -2645,7 +2842,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
-                                                    Radius.circular(12)),
+                                                Radius.circular(12)),
                                             image: DecorationImage(
                                                 image: AssetImage(
                                                     'assets/Images/add.png'),

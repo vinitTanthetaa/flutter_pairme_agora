@@ -417,137 +417,151 @@ class _Profile_pageState extends State<Profile_page> {
                               ),
                             ),
                           ) : const SizedBox(),
-                          file2 ? Container(
-                            margin: EdgeInsets.symmetric(
-                                vertical:
-                                screenHeight(context, dividedBy: 190)),
-                            height: screenHeight(context, dividedBy: 15),
-                            width: screenWidth(context),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: AppColor.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: AppColor.fontgray,
-                                  offset: Offset(
-                                    1,
-                                    1,
-                                  ),
-                                  blurRadius: 4,
-                                  // spreadRadius: 1.0,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
+                          file2 ? InkWell(
+                            onTap: () async {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return Pdfview( pdfUrl: '${apis.baseurl}/${userProfile.data?.first.file?.file2}',);
+                              },));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
                                   vertical:
-                                  screenHeight(context, dividedBy: 150),
-                                  horizontal:
-                                  screenWidth(context, dividedBy: 70)),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width:
-                                    screenWidth(context, dividedBy: 13),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/Images/uploadedfile.png'))),
+                                  screenHeight(context, dividedBy: 190)),
+                              height: screenHeight(context, dividedBy: 15),
+                              width: screenWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: AppColor.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+                                    // spreadRadius: 1.0,
                                   ),
-                                  SizedBox(
-                                    width:
-                                    screenWidth(context, dividedBy: 50),
-                                  ),
-                                  const Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'image_03.PDF ',
-                                        style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        '96.47 KB ',
-                                        style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  )
                                 ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                    screenHeight(context, dividedBy: 150),
+                                    horizontal:
+                                    screenWidth(context, dividedBy: 70)),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width:
+                                      screenWidth(context, dividedBy: 13),
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/uploadedfile.png'))),
+                                    ),
+                                    SizedBox(
+                                      width:
+                                      screenWidth(context, dividedBy: 50),
+                                    ),
+                                    const Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'image_03.PDF ',
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          '96.47 KB ',
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ) : const SizedBox(),
-                          file3 ? Container(
-                            margin: EdgeInsets.symmetric(
-                                vertical:
-                                screenHeight(context, dividedBy: 190)),
-                            height: screenHeight(context, dividedBy: 15),
-                            width: screenWidth(context),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: AppColor.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: AppColor.fontgray,
-                                  offset: Offset(
-                                    1,
-                                    1,
-                                  ),
-                                  blurRadius: 4,
-                                  // spreadRadius: 1.0,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
+                          file3 ? InkWell(
+                            onTap: () async {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return Pdfview( pdfUrl: '${apis.baseurl}/${userProfile.data?.first.file?.file3}',);
+                              },));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
                                   vertical:
-                                  screenHeight(context, dividedBy: 150),
-                                  horizontal:
-                                  screenWidth(context, dividedBy: 70)),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width:
-                                    screenWidth(context, dividedBy: 13),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/Images/uploadedfile.png'))),
+                                  screenHeight(context, dividedBy: 190)),
+                              height: screenHeight(context, dividedBy: 15),
+                              width: screenWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: AppColor.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+                                    // spreadRadius: 1.0,
                                   ),
-                                  SizedBox(
-                                    width:
-                                    screenWidth(context, dividedBy: 50),
-                                  ),
-                                  const Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'image_03.PDF ',
-                                        style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        '96.47 KB ',
-                                        style: TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  )
                                 ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                    screenHeight(context, dividedBy: 150),
+                                    horizontal:
+                                    screenWidth(context, dividedBy: 70)),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width:
+                                      screenWidth(context, dividedBy: 13),
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/uploadedfile.png'))),
+                                    ),
+                                    SizedBox(
+                                      width:
+                                      screenWidth(context, dividedBy: 50),
+                                    ),
+                                    const Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'image_03.PDF ',
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          '96.47 KB ',
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ) : const SizedBox(),
