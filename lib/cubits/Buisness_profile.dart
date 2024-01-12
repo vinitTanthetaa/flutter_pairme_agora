@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:http_parser/http_parser.dart';
 
 
 abstract class BusinessProfileState {}
@@ -46,90 +47,94 @@ class BusinessProfileCubit extends Cubit<BusinessProfileState> {
       String? fileName3 = photo_4.path.split('/').last;
       String? fileName4 = photo_5.path.split('/').last;
       String? fileName5 = photo_6.path.split('/').last;
-      print("6");
+      print("img 6");
       formData.files.addAll([
-        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
-        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
-        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2)),
-        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3)),
-        MapEntry('photo_5', await MultipartFile.fromFile(photo_5.path, filename: fileName4)),
-        MapEntry('photo_6', await MultipartFile.fromFile(photo_6.path, filename: fileName5)),
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_5', await MultipartFile.fromFile(photo_5.path, filename: fileName4,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_6', await MultipartFile.fromFile(photo_6.path, filename: fileName5,contentType: MediaType("image", "jpeg"))),
       ]);
     } else if(photo_1.path.isNotEmpty && photo_2.path.isNotEmpty && photo_3.path.isNotEmpty && photo_4.path.isNotEmpty && photo_5.path.isNotEmpty){
-      print("5");
+      print("img 5");
       String? fileName = photo_1.path.split('/').last ;
       String? fileName1 = photo_2.path.split('/').last;
       String? fileName2 = photo_3.path.split('/').last;
       String? fileName3 = photo_4.path.split('/').last;
       String? fileName4 = photo_5.path.split('/').last;
       formData.files.addAll([
-        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
-        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
-        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2)),
-        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3)),
-        MapEntry('photo_5', await MultipartFile.fromFile(photo_5.path, filename: fileName4)),
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_5', await MultipartFile.fromFile(photo_5.path, filename: fileName4,contentType: MediaType("image", "jpeg"))),
       ]);
     }else if(photo_1.path.isNotEmpty && photo_2.path.isNotEmpty && photo_3.path.isNotEmpty && photo_4.path.isNotEmpty ){
-      print("4");
+      print("img 4");
       String? fileName = photo_1.path.split('/').last ;
       String? fileName1 = photo_2.path.split('/').last;
       String? fileName2 = photo_3.path.split('/').last;
       String? fileName3 = photo_4.path.split('/').last;
       formData.files.addAll([
-        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
-        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
-        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2)),
-        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3)),
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_4', await MultipartFile.fromFile(photo_4.path, filename: fileName3,contentType: MediaType("image", "jpeg"))),
       ]);
     }else if(photo_1.path.isNotEmpty && photo_2.path.isNotEmpty && photo_3.path.isNotEmpty){
-      print("3");
+      print(" img 3");
       String? fileName = photo_1.path.split('/').last ;
       String? fileName1 = photo_2.path.split('/').last;
       String? fileName2 = photo_3.path.split('/').last;
       formData.files.addAll([
-        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
-        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
-        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2)),
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_3', await MultipartFile.fromFile(photo_3.path, filename: fileName2,contentType: MediaType("image", "jpeg"))),
       ]);
     }else if(photo_1.path.isNotEmpty && photo_2.path.isNotEmpty){
-      print("2");
+      print("img 2");
       String? fileName = photo_1.path.split('/').last ;
       String? fileName1 = photo_2.path.split('/').last;
       formData.files.addAll([
-        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName)),
-        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1)),
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path, filename: fileName,contentType: MediaType("image", "jpeg"))),
+        MapEntry('photo_2', await MultipartFile.fromFile(photo_2.path, filename: fileName1,contentType: MediaType("image", "jpeg"))),
       ]);
     }else if(photo_1.path.isNotEmpty ){
-      print("1");
+      print("img 1");
       String? fileName = photo_1.path.split('/').last ;
-      formData.files.addAll([
-        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path ?? "", filename: fileName)),
-      ]);
+      formData.files.add(
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path ?? "", filename: fileName,contentType: MediaType("image", "jpeg"))),
+      );
     }
     // Adding file files
     if(file_1.name.isNotEmpty && file_2.name.isNotEmpty && file_3.name.isNotEmpty ){
+      print("file 3");
       formData.files.addAll([
         MapEntry('file_1', await MultipartFile.fromFile(file_1.path!, filename: file_1.name)),
         MapEntry('file_2', await MultipartFile.fromFile(file_2.path!, filename: file_2.name)),
         MapEntry('file_3', await MultipartFile.fromFile(file_3.path!, filename: file_3.name)),
       ]);
     } else if(file_1.name.isNotEmpty && file_2.name.isNotEmpty){
+      print("file 2");
       formData.files.addAll([
         MapEntry('file_1', await MultipartFile.fromFile(file_1.path!, filename: file_1.name)),
         MapEntry('file_2', await MultipartFile.fromFile(file_2.path!, filename: file_2.name)),
       ]);
     }else if(file_1.name.isNotEmpty){
-      formData.files.addAll([
+      print("file 1");
+      formData.files.add(
         MapEntry('file_1', await MultipartFile.fromFile(file_1.path!, filename: file_1.name)),
-      ]);
+      );
     }
     try {
+      print("Response ===> ${formData.files}");
       Response response = await dio.post(
         apis.business_profile,
         data: formData,
         options: Options(
+          method: "POST",
           headers: {
-            'Content-Type': 'multipart/form-data',
             'Accept': 'application/json',
             'Authorization': Authtoken,
           }

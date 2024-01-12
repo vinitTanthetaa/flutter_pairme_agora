@@ -99,8 +99,7 @@ class _Location_pageState extends State<Location_page> {
                 height: screenHeight(context,dividedBy: 1.5),
                 width: screenWidth(context),
                 child: GoogleMap(
-
-                  mapType: MapType.hybrid,
+                  mapType: MapType.terrain,
                   initialCameraPosition: _kGooglePlex,
                   onMapCreated: (GoogleMapController controller) {
                     _controller.complete(controller);
