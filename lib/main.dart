@@ -36,13 +36,16 @@ import 'package:pair_me/cubits/user_update_cubit.dart';
 import 'package:pair_me/cubits/verify_forgot_otp.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 
+import 'Screen_Pages/Step_Screens.dart';
 import 'Screen_Pages/connections_page.dart';
 import 'Screen_Pages/invitation_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]).then((_) async {
+  SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+      .then((_) async {
     runApp(EasyLocalization(
         supportedLocales: const [
           Locale('en'), // English
@@ -107,7 +110,7 @@ class MyApp extends StatelessWidget {
         ),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
-        home: const SpleshScreen                                                                               (),
+        home: const StepScreen(),
       ),
     );
   }
