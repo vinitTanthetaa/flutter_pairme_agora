@@ -16,6 +16,7 @@ import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:path/path.dart' as path;
 
 class Profile_page extends StatefulWidget {
   const Profile_page({super.key});
@@ -32,6 +33,36 @@ class _Profile_pageState extends State<Profile_page> {
   bool file1 = false;
   bool file2 = false;
   bool file3 = false;
+  String _file1 = '';
+  String _file2 = '';
+  String _file3 = '';
+  getpath(var filePath){
+    String fileName = path.basename(filePath);
+
+    // Splitting the name using '-' as a separator
+    List<String> nameParts = fileName.split('-');
+
+    // Assuming the desired part is always at index 1
+    _file1 = nameParts.length > 1 ? nameParts[1] : fileName;
+  }
+  getpath1(var filePath){
+    String fileName = path.basename(filePath);
+
+    // Splitting the name using '-' as a separator
+    List<String> nameParts = fileName.split('-');
+
+    // Assuming the desired part is always at index 1
+    _file2 = nameParts.length > 1 ? nameParts[1] : fileName;
+  }
+  getpath2(var filePath){
+    String fileName = path.basename(filePath);
+
+    // Splitting the name using '-' as a separator
+    List<String> nameParts = fileName.split('-');
+
+    // Assuming the desired part is always at index 1
+    _file3 = nameParts.length > 1 ? nameParts[1] : fileName;
+  }
   GetData() async {
     userProfile = await userDetailsCubit.GetUserdetails() ?? UserProfile();
     print("user profile ===> $userProfile");
@@ -40,6 +71,15 @@ class _Profile_pageState extends State<Profile_page> {
      file1 = userProfile.data?.first.file?.file1?.isNotEmpty ?? false;
      file2 = userProfile.data?.first.file?.file2?.isNotEmpty ?? false;
      file3 = userProfile.data?.first.file?.file3?.isNotEmpty ?? false;
+     if(file1){
+       getpath(userProfile.data?.first.file?.file1 ?? '');
+     }
+     if(file2){
+       getpath(userProfile.data?.first.file?.file2 ?? '');
+     }
+     if(file3){
+       getpath(userProfile.data?.first.file?.file3 ?? '');
+     }
     setState(() {});
   }
 
@@ -390,14 +430,14 @@ class _Profile_pageState extends State<Profile_page> {
                                       width:
                                       screenWidth(context, dividedBy: 50),
                                     ),
-                                    const Column(
+                                     Column(
                                       mainAxisAlignment:
                                       MainAxisAlignment.center,
                                       crossAxisAlignment:
                                       CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'image_03.PDF ',
+                                          _file1,
                                           style: TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 13,
@@ -464,14 +504,14 @@ class _Profile_pageState extends State<Profile_page> {
                                       width:
                                       screenWidth(context, dividedBy: 50),
                                     ),
-                                    const Column(
+                                     Column(
                                       mainAxisAlignment:
                                       MainAxisAlignment.center,
                                       crossAxisAlignment:
                                       CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'image_03.PDF ',
+                                          _file2,
                                           style: TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 13,
@@ -538,14 +578,14 @@ class _Profile_pageState extends State<Profile_page> {
                                       width:
                                       screenWidth(context, dividedBy: 50),
                                     ),
-                                    const Column(
+                                     Column(
                                       mainAxisAlignment:
                                       MainAxisAlignment.center,
                                       crossAxisAlignment:
                                       CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'image_03.PDF ',
+                                          _file3,
                                           style: TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 13,

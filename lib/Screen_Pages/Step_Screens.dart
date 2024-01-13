@@ -14,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
+import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
@@ -29,7 +30,6 @@ import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
-import 'package:pair_me/zxc.dart';
 import '../Widgets/custom_button.dart';
 
 class StepScreen extends StatefulWidget {
@@ -106,6 +106,8 @@ class _StepScreenState extends State<StepScreen> {
   PlatformFile? file3;
   String img = '';
   String Uname = '';
+  RegExp regExp =  RegExp('\b*@abc\.net\$');
+  RegExp regExp1 =  RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   final List _categorys = [
     'Entrepreneurship',
     'Leadership',
@@ -298,41 +300,36 @@ class _StepScreenState extends State<StepScreen> {
                               skip_button(
                                 context,
                                 onTap: () {
-                                  setState(() {
-                                    ind++;
-                                  });
-                                },
-                                // onTap: () {
-                                //   if(_Address.text.isNotEmpty || _Address2.text.isNotEmpty ) {
-                                //     if(_Contry.text.isEmpty){
-                                //       flutterToast("Enter Your Country", false);
-                                //     } else if(_City.text.isEmpty) {
-                                //       flutterToast("Enter Your City", false);
-                                //     } else if(_State.text.isEmpty) {
-                                //       flutterToast("Enter Your State", false);
-                                //     } else if(_Zipcode.text.isEmpty) {
-                                //       flutterToast("Enter Your Zipcode", false);
-                                //     } else {
-                                //       adressDetailsCubit.AdressDetailsService(
-                                //           address: "${_Address.text}${_Address2
-                                //               .text}",
-                                //           country: _Contry.text,
-                                //           state: _State.text,
-                                //           city: _City.text,
-                                //           zipCode: _Zipcode.text,
-                                //           context: context).then((value) {
-                                //         setState(() {
-                                //           ind++;
-                                //         });
-                                //       });
-                                //     }
-                                //   } else {
-                                //     flutterToast("Please Enter Your Address", true);
-                                //   }
-                                // //   // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                // //   //   return Professional_Details(Name: '',);
-                                // //   // },));
-                                //  },
+                                  if(_Address.text.isNotEmpty || _Address2.text.isNotEmpty ) {
+                                    if(_Contry.text.isEmpty){
+                                      flutterToast("Enter Your Country", false);
+                                    } else if(_City.text.isEmpty) {
+                                      flutterToast("Enter Your City", false);
+                                    } else if(_State.text.isEmpty) {
+                                      flutterToast("Enter Your State", false);
+                                    } else if(_Zipcode.text.isEmpty) {
+                                      flutterToast("Enter Your Zipcode", false);
+                                    } else {
+                                      adressDetailsCubit.AdressDetailsService(
+                                          address: "${_Address.text}${_Address2
+                                              .text}",
+                                          country: _Contry.text,
+                                          state: _State.text,
+                                          city: _City.text,
+                                          zipCode: _Zipcode.text,
+                                          context: context).then((value) {
+                                        setState(() {
+                                          ind++;
+                                        });
+                                      });
+                                    }
+                                  } else {
+                                    flutterToast("Please Enter Your Address", true);
+                                  }
+                                //   // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                //   //   return Professional_Details(Name: '',);
+                                //   // },));
+                                 },
                               )
                             ],
                           ),
@@ -698,30 +695,27 @@ class _StepScreenState extends State<StepScreen> {
                                   skip_button(
                                     context,
                                     onTap: () {
-                                      setState(() {
-                                        ind++;
-                                      });
-                                      // if(_compnyName.text.isEmpty){
-                                      //   flutterToast("Please Enter Your Company Name", false);
-                                      // } else
-                                      // if(_jobTitle.text.isEmpty){
-                                      //   flutterToast("Please Enter Your Job Title/Add Role", false);
-                                      // } else
-                                      // if(_compnyDomain.text.isEmpty){
-                                      //   flutterToast("Please Enter Your Company Domain", false);
-                                      // } else
-                                      // if(_email.text.isEmpty){
-                                      //   flutterToast("Please Enter Email", false);
-                                      // } else
-                                      // if(_categorycontroller.text.isEmpty){
-                                      //   flutterToast("Please Enter Category", false);
-                                      // } else {
-                                      //   professionalDetailsCubit.ProfessionalDetailsService(company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) {
-                                      //     setState(() {
-                                      //       ind++;
-                                      //     });
-                                      //   },);
-                                      // }
+                                      if(_compnyName.text.isEmpty){
+                                        flutterToast("Please Enter Your Company Name", false);
+                                      } else
+                                      if(_jobTitle.text.isEmpty){
+                                        flutterToast("Please Enter Your Job Title/Add Role", false);
+                                      } else
+                                      if(_compnyDomain.text.isEmpty){
+                                        flutterToast("Please Enter Your Company Domain", false);
+                                      } else
+                                      if(_email.text.isEmpty){
+                                        flutterToast("Please Enter Email", false);
+                                      } else
+                                      if(_categorycontroller.text.isEmpty){
+                                        flutterToast("Please Enter Category", false);
+                                      } else {
+                                        professionalDetailsCubit.ProfessionalDetailsService(company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) {
+                                          setState(() {
+                                            ind++;
+                                          });
+                                        },);
+                                      }
                                     },
                                     // onTap: () {
                                     //   setState(() {
@@ -1183,43 +1177,49 @@ class _StepScreenState extends State<StepScreen> {
                                           "Please Enter Your Job Title/Add Role",
                                           false);
                                     } else if (_compnyDomain.text.isEmpty) {
-                                      flutterToast(
-                                          "Please Enter Your Company Domain",
-                                          false);
-                                    } else if (_email.text.isEmpty) {
-                                      flutterToast("Please Enter Email", false);
-                                    } else if (_categorycontroller
-                                        .text.isEmpty) {
-                                      flutterToast(
-                                          "Please Enter Category", false);
-                                    } else {
-                                      professionalDetailsCubit
+                                      flutterToast("Please Enter Your Company Domain", false);
+                                    } else if(regExp.hasMatch(_compnyDomain.text)){
+                                      if (_email.text.isEmpty) {
+                                        flutterToast("Please Enter Email", false);
+                                      } else if(regExp1.hasMatch(_email.text)){
+                                        if (_categorycontroller
+                                            .text.isEmpty) {
+                                          flutterToast(
+                                              "Please Enter Category", false);
+                                        } else {
+                                          professionalDetailsCubit
                                               .ProfessionalDetailsService(
-                                                  company_name:
-                                                      _compnyName.text,
-                                                  add_role: _jobTitle.text,
-                                                  company_domain:
-                                                      _compnyDomain.text,
-                                                  email: _email.text,
-                                                  category:
-                                                      _categorycontroller.text,
-                                                  business_experience:
-                                                      _experiencecontroller
-                                                          .text,
-                                                  skills: _skillcontroller.text,
-                                                  education:
-                                                      _educationcontroller.text,
-                                                  university:
-                                                      _univercitycontroller
-                                                          .text,
-                                                  context: context)
-                                          .then(
-                                        (value) {
-                                          setState(() {
-                                            ind++;
-                                          });
-                                        },
-                                      );
+                                              company_name:
+                                              _compnyName.text,
+                                              add_role: _jobTitle.text,
+                                              company_domain:
+                                              _compnyDomain.text,
+                                              email: _email.text,
+                                              category:
+                                              _categorycontroller.text,
+                                              business_experience:
+                                              _experiencecontroller
+                                                  .text,
+                                              skills: _skillcontroller.text,
+                                              education:
+                                              _educationcontroller.text,
+                                              university:
+                                              _univercitycontroller
+                                                  .text,
+                                              context: context)
+                                              .then(
+                                                (value) {
+                                              setState(() {
+                                                ind++;
+                                              });
+                                            },
+                                          );
+                                        }
+                                      } else {
+                                        flutterToast("Please Enter valid Email", false);
+                                      }
+                                    } else {
+                                      flutterToast("Please Enter valid company domain", false);
                                     }
                                   },
                                   // onTap: () {
@@ -1258,28 +1258,25 @@ class _StepScreenState extends State<StepScreen> {
                                       skip_button(
                                         context,
                                         onTap: () {
-                                          setState(() {
-                                            ind++;
-                                          });
-                                          // if(_Address1.text.isEmpty && _Address3.text.isEmpty){
-                                          //   flutterToast("Please Enter Your Business or Professinoal Address", false);
-                                          // } else if(_Contry1.text.isEmpty){
-                                          //   flutterToast("Please Enter Your Business or Professinoal Contry", false);
-                                          // } else if(_State1.text.isEmpty){
-                                          //   flutterToast("Please Enter Your Business or Professinoal State", false);
-                                          // }else if(_City1.text.isEmpty){
-                                          //   flutterToast("Please Enter Your Business or Professinoal City", false);
-                                          // }else if(_Zipcode1.text.isEmpty){
-                                          //   flutterToast("Please Enter Your Business or Professinoal Zipcode", false);
-                                          // }else if(_date.text.isEmpty){
-                                          //   flutterToast("Please Enter Your Business or Professinoal Start date", false);
-                                          // }else{
-                                          //   businessDetailsCubit.BusinessDetailsService(address: "${_Address1.text}${_Address3.text}", country: _Contry1.text, state: _State1.text, city: _City1.text, zipCode: _Zipcode1.text, context: context, startDate: _date.text).then((value) {
-                                          //     setState(() {
-                                          //       ind++;
-                                          //     });
-                                          //   },);
-                                          // }
+                                          if(_Address1.text.isEmpty && _Address3.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal Address", false);
+                                          } else if(_Contry1.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal Contry", false);
+                                          } else if(_State1.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal State", false);
+                                          }else if(_City1.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal City", false);
+                                          }else if(_Zipcode1.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal Zipcode", false);
+                                          }else if(_date.text.isEmpty){
+                                            flutterToast("Please Enter Your Business or Professinoal Start date", false);
+                                          }else{
+                                            businessDetailsCubit.BusinessDetailsService(address: "${_Address1.text}${_Address3.text}", country: _Contry1.text, state: _State1.text, city: _City1.text, zipCode: _Zipcode1.text, context: context, startDate: _date.text).then((value) {
+                                              setState(() {
+                                                ind++;
+                                              });
+                                            },);
+                                          }
 
                                           // Navigator.push(context, MaterialPageRoute(builder: (context) {
                                           //   return Business_Profile(Name: '',);

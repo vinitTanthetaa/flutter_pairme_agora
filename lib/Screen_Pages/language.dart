@@ -52,9 +52,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                      custom_header(text: 'Language'),
                     // custom_header(text: AppLocalization.of(context).getTranslatedValue("Language").toString()),
                      skip_button(context, onTap: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                         return const Login_page();
-                       },));
+                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Login_page(),), (route) => false);
                      },)
                    ],
                  ),
@@ -212,9 +210,7 @@ class _Language_ScreenState extends State<Language_Screen> {
                  ) : const SizedBox(),
                  const Spacer(),
                  Custom_botton(context, text: "Next", onTap: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                     return const Login_page();
-                   },));
+                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Login_page(),), (route) => false);
                  }, height: screenHeight(context,dividedBy: 20))
                ],),
              ),

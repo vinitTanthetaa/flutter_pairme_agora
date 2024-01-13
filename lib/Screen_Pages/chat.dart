@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:pair_me/Screen_Pages/videocall.dart';
 import 'package:pair_me/Screen_Pages/voice_call.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -20,14 +21,19 @@ class Chatting_Page extends StatefulWidget {
 class _Chatting_PageState extends State<Chatting_Page> {
   ScrollController scrollController = ScrollController();
   String? _messageContent, _chatId;
-  final List<String> _logText = [];
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+  GlobalKey<ScaffoldMessengerState>();
   TextEditingController messageController = TextEditingController();
+  late ChatClient agoraChatClient;
+  String messageContent = "", recipientId = "";
+  final List<Widget> messageList = [];
   bool showCard = false;
   bool emojiShowing = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setupChatClient();
     _initSDK();
     _addChatListener();
   }
@@ -175,13 +181,13 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                 width: screenHeight(context, dividedBy: 20),
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: NetworkImage(widget.image),
+                                        image: NetworkImage("${apis.baseurl}/${widget.image}"),
                                         fit: BoxFit.cover,filterQuality: FilterQuality.high),
                                     border: Border.all(
                                         color: AppColor.white, width: 1),
                                     shape: BoxShape.circle),
                               ),
-                             widget.name == 'Request' ? SizedBox() : Positioned(
+                             widget.name == 'Request' ? const SizedBox() : Positioned(
                                   bottom: 3.0,
                                   left: 3.0,
                                   child: Container(
@@ -265,9 +271,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
                 Expanded(child: ListView.builder(
                   controller: scrollController,
                   itemBuilder: (_, index) {
-                    return Text(_logText[index]);
+                    return messageList[index];
                   },
-                  itemCount: _logText.length,
+                  itemCount: messageList.length,
                 ),
                //      // ListView.builder(itemBuilder: (context, index) {
                //      //
@@ -521,6 +527,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                       emojiShowing = false;
                       setState(() {});
                     },
+                    onChanged: (msg) => messageContent = msg,
                     controller: messageController,
                     decoration: InputDecoration(
                         border: InputBorder.none,
@@ -534,7 +541,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                           style: const ButtonStyle(
                               overlayColor:
                                   MaterialStatePropertyAll(Colors.transparent)),
-                          onPressed: _sendMessage,
+                          onPressed: sendMessage,
                           icon: Container(
                             height: screenHeight(context, dividedBy: 30),
                             width: screenWidth(context, dividedBy: 20),
@@ -640,21 +647,77 @@ class _Chatting_PageState extends State<Chatting_Page> {
       ),
     );
   }
-  void _sendMessage() async {
-    // if (_chatId == null || _messageContent == null) {
-    //   _addLogToConsole("single chat id or message content is null");
+  void setupChatClient() async {
+    ChatOptions options = ChatOptions(
+      appKey: '611031492#1211760',
+      autoLogin: false,
+    );
+    agoraChatClient = ChatClient.getInstance;
+    await agoraChatClient.init(options);
+    await ChatClient.getInstance.startCallback();
+    try {
+      await agoraChatClient.loginWithAgoraToken("Virat_kohli", "007eJxTYHhX3q2jdnx//GPOVUqMruXbCh33b/89mWPOZ07lAok+hkMKDAYWxobmaWapqYbJSSZJpgYWRqaphqmm5kbJxgZAcSNl8UWpDYGMDH8dqpkYGVgZGIEQxFdhMLNIMrRISTLQTTJMTtU1NExN1QVyzXQtjY1NzUwMTC0sDc0A2hYlJQ==");
+      showLog("Logged in successfully as Virat_kohli");
+      print("================ successfully ================");
+    } on ChatError catch (e) {
+      if (e.code == 200) { // Already logged in
+      } else {
+        showLog("Login failed, code: ${e.code}, desc: ${e.description}");
+        print("================ Failed ================");
+      }
+    }
+// Notify the SDK that the Ul is ready. After the following method is executed, callbacks within ChatRoomEventHandler and ChatGroupEventHandler can be triggered.
+  }
+
+  showLog(String message) {
+    scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+      content: Text(message),
+    ));
+  }
+  void sendMessage() async {
+    // if (recipientId.isEmpty || messageContent.isEmpty) {
+    //   showLog("Enter recipient user ID and type a message");
     //   return;
     // }
 
     var msg = ChatMessage.createTxtSendMessage(
-      targetId: "Jhon wick",
-      content: messageController.text,
-      chatType: ChatType.Chat
+      targetId: "Virat_Kohli",
+      content: messageContent,
     );
-    print("msg ===> $msg");
-    ChatClient.getInstance.chatManager.sendMessage(msg,);
-    messageController.clear();
+    ChatClient.getInstance.chatManager.addMessageEvent(
+      "UNIQUE_HANDLER_ID",
+      ChatMessageEvent(
+        onSuccess: (msgId, msg) {
+          _addLogToConsole("on message succeed");
+        },
+        onProgress: (msgId, progress) {
+          _addLogToConsole("on message progress");
+        },
+        onError: (msgId, msg, error) {
+          _addLogToConsole(
+            "on message failed, code: ${error.code}, desc: ${error.description}",
+          );
+        },
+      ),
+    );
+    ChatClient.getInstance.chatManager.removeMessageEvent("UNIQUE_HANDLER_ID");
+    agoraChatClient.chatManager.sendMessage(msg);
   }
+  // void _sendMessage() async {
+  //   // if (_chatId == null || _messageContent == null) {
+  //   //   _addLogToConsole("single chat id or message content is null");
+  //   //   return;
+  //   // }
+  //
+  //   var msg = ChatMessage.createTxtSendMessage(
+  //     targetId: "Jhon wick",
+  //     content: messageController.text,
+  //     chatType: ChatType.Chat
+  //   );
+  //   print("msg ===> $msg");
+  //   ChatClient.getInstance.chatManager.sendMessage(msg,);
+  //   messageController.clear();
+  // }
   void onMessagesReceived(List<ChatMessage> messages) {
     for (var msg in messages) {
       switch (msg.body.type) {
@@ -741,7 +804,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
     );
   }
   void _addLogToConsole(String log) {
-    _logText.add(_timeString + ": " + log);
+   // _logText.add(_timeString + ": " + log);
     setState(() {
       scrollController.jumpTo(scrollController.position.maxScrollExtent);
     });

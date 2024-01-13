@@ -48,7 +48,7 @@ class _Forget_PasswordState extends State<Forget_Password> {
                   ),
                   custom_header(text: "Forgot Password"),
                   custom_discription(
-                      text: "Enter the E-mail associated with your account"),
+                      text: "Enter the Number associated with your account"),
                   SizedBox(
                     height: screenHeight(context, dividedBy: 50),
                   ),

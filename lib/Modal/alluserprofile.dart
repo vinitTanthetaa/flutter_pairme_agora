@@ -33,22 +33,24 @@ class AllUsersdetails {
 }
 
 class Datum {
-  List<dynamic>? connectedUser;
-  List<dynamic>? rejectedUser;
-  String id;
+  String? id;
   String? name;
   String? email;
   String? password;
   String? gender;
   String? dateOfBirth;
   int? phoneNumber;
+  String? role;
   bool? teamsAndCondition;
   int? score;
-  int v;
+  List<dynamic>? connectedUser;
+  List<dynamic>? rejectedUser;
+  int? v;
   String? verified;
   Address? address;
   ProfessionalDetails? professionalDetails;
   Address? businessaddress;
+  String? profileImage;
   List<String>? yourself;
   List<String>? lookingfor;
   Image? image;
@@ -57,22 +59,24 @@ class Datum {
   String? bio;
 
   Datum({
-    this.connectedUser,
-    this.rejectedUser,
-    required this.id,
+     this.id,
     this.name,
     this.email,
     this.password,
     this.gender,
     this.dateOfBirth,
     this.phoneNumber,
+    this.role,
     this.teamsAndCondition,
     this.score,
-    required this.v,
+    this.connectedUser,
+    this.rejectedUser,
+     this.v,
     this.verified,
     this.address,
     this.professionalDetails,
     this.businessaddress,
+    this.profileImage,
     this.yourself,
     this.lookingfor,
     this.image,
@@ -82,8 +86,6 @@ class Datum {
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    connectedUser: json["connectedUser"] == null ? [] : List<dynamic>.from(json["connectedUser"]!.map((x) => x)),
-    rejectedUser: json["rejectedUser"] == null ? [] : List<dynamic>.from(json["rejectedUser"]!.map((x) => x)),
     id: json["_id"],
     name: json["name"],
     email: json["email"],
@@ -91,13 +93,17 @@ class Datum {
     gender: json["gender"],
     dateOfBirth: json["dateOfBirth"],
     phoneNumber: json["phoneNumber"],
+    role: json["role"],
     teamsAndCondition: json["teamsAndCondition"],
     score: json["score"],
+    connectedUser: json["connectedUser"] == null ? [] : List<dynamic>.from(json["connectedUser"]!.map((x) => x)),
+    rejectedUser: json["rejectedUser"] == null ? [] : List<dynamic>.from(json["rejectedUser"]!.map((x) => x)),
     v: json["__v"],
     verified: json["verified"],
     address: json["address"] == null ? null : Address.fromJson(json["address"]),
     professionalDetails: json["professionalDetails"] == null ? null : ProfessionalDetails.fromJson(json["professionalDetails"]),
     businessaddress: json["businessaddress"] == null ? null : Address.fromJson(json["businessaddress"]),
+    profileImage: json["profileImage"],
     yourself: json["yourself"] == null ? [] : List<String>.from(json["yourself"]!.map((x) => x)),
     lookingfor: json["lookingfor"] == null ? [] : List<String>.from(json["lookingfor"]!.map((x) => x)),
     image: json["image"] == null ? null : Image.fromJson(json["image"]),
@@ -107,8 +113,6 @@ class Datum {
   );
 
   Map<String, dynamic> toJson() => {
-    "connectedUser": connectedUser == null ? [] : List<dynamic>.from(connectedUser!.map((x) => x)),
-    "rejectedUser": rejectedUser == null ? [] : List<dynamic>.from(rejectedUser!.map((x) => x)),
     "_id": id,
     "name": name,
     "email": email,
@@ -116,13 +120,17 @@ class Datum {
     "gender": gender,
     "dateOfBirth": dateOfBirth,
     "phoneNumber": phoneNumber,
+    "role": role,
     "teamsAndCondition": teamsAndCondition,
     "score": score,
+    "connectedUser": connectedUser == null ? [] : List<dynamic>.from(connectedUser!.map((x) => x)),
+    "rejectedUser": rejectedUser == null ? [] : List<dynamic>.from(rejectedUser!.map((x) => x)),
     "__v": v,
     "verified": verified,
     "address": address?.toJson(),
     "professionalDetails": professionalDetails?.toJson(),
     "businessaddress": businessaddress?.toJson(),
+    "profileImage": profileImage,
     "yourself": yourself == null ? [] : List<dynamic>.from(yourself!.map((x) => x)),
     "lookingfor": lookingfor == null ? [] : List<dynamic>.from(lookingfor!.map((x) => x)),
     "image": image?.toJson(),
@@ -140,7 +148,7 @@ class Address {
   String? zipCode;
   double? latitude;
   double? longitude;
-  dynamic startdate;
+  String? startdate;
 
   Address({
      this.address,
@@ -181,11 +189,10 @@ class FileClass {
   String? file2;
   String? file3;
 
-
   FileClass({
-     this.file1,
-     this.file2,
-     this.file3,
+   this.file1,
+   this.file2,
+   this.file3,
   });
 
   factory FileClass.fromJson(Map<String, dynamic> json) => FileClass(
@@ -208,7 +215,6 @@ class Image {
   String? photo4;
   String? photo5;
   String? photo6;
-
 
   Image({
      this.photo1,
@@ -248,7 +254,7 @@ class ProfessionalDetails {
   String? businessExperience;
   String? skills;
   String? education;
-  dynamic university;
+  String? university;
 
   ProfessionalDetails({
      this.userId,
@@ -289,129 +295,3 @@ class ProfessionalDetails {
     "university": university,
   };
 }
-
-
-
-
-
-// class GridItem extends StatefulWidget {
-//   const GridItem({super.key});
-//   @override
-//   State<GridItem> createState() => _GridItemState();
-// }
-// class _GridItemState extends State<GridItem> {
-//   final List<String> gridItems = [
-//     'assets/img.png',
-//     'assets/img_1.png',
-//     'assets/img_2.png',
-//     'assets/img_3.png',
-//     'assets/img_4.png',
-//     'assets/img_5.png',
-//     'assets/img_6.png',
-//     'assets_trip/img.png',
-//     'assets_trip/img_1.png',
-//     'assets_trip/img_2.png',
-//     'assets_trip/img_2.png',
-//   ];
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('GridView Example'),
-//       ),
-//       body: GridView.builder(
-//         itemCount: gridItems.length + 1, // Add 1 item for the grid widget
-//         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//           crossAxisCount: 2, // Number of columns in the grid
-//         ),
-//         itemBuilder: (context, index) {
-//           if (index == 0) {
-// // First grid item: a widget grid item
-//             return const Padding(
-//               padding: EdgeInsets.all(8.0),
-//               child: Card(
-//                 child: Center(
-//                     child: Column(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         Icon(Icons.add, size: 40),
-//                         SizedBox(
-//                           height: 10,
-//                         ),
-//                         Text(
-//                           "Add Story",
-//                           style: TextStyle(fontWeight: FontWeight.bold),
-//                         ),
-//                       ],
-//                     )),
-//               ),
-//             );
-//           } else {
-//             return Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Card(
-//                 color: Colors.blueGrey,
-//                 child: Center(
-//                     child: Image(
-//                       image: AssetImage(gridItems[index - 1]),
-//                       fit: BoxFit.cover,
-//                     )),
-//               ),
-//             );
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-
-
-// import 'package:flutter/material.dart';
-// class SliverGrids extends StatefulWidget {
-//   const SliverGrids({super.key});
-//   @override
-//   _HomePageState createState() => _HomePageState();
-// }
-// class _HomePageState extends State<SliverGrids> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-// //1
-//       body: CustomScrollView(
-//         slivers: <Widget>[
-//           SliverAppBar(
-//             expandedHeight: 400,
-//             flexibleSpace: FlexibleSpaceBar(
-//               title: const Text(
-//                 'Goa',
-//                 textScaleFactor: 2,
-//                 style: TextStyle(fontWeight: FontWeight.bold),
-//               ),
-//               background: Image.asset(
-//                 'assets_trip/img_1.png',
-//                 fit: BoxFit.fill,
-//               ),
-//             ),
-//           ),
-//           SliverList(
-//             delegate: SliverChildBuilderDelegate(
-//                   (_, int index) {
-//                 return ListTile(
-//                   leading: Container(
-//                       padding: const EdgeInsets.all(5),
-//                       width: 100,
-//                       child: const Image(
-//                         image: AssetImage("assets_trip/img_2.png"),
-//                         fit: BoxFit.fill,
-//                       )),
-//                   title: Text('Place ${index + 1}', textScaleFactor: 1.5),
-//                 );
-//               },
-//               childCount: 20,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

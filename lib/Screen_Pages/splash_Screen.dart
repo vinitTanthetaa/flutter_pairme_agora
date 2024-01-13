@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/language.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
@@ -21,13 +22,20 @@ class _SpleshScreenState extends State<SpleshScreen> {
     super.initState();
     Splash_Timer();
   }
-  Splash_Timer(){
+  Splash_Timer() async {
+    Authtoken = (await prefsService.getStringData("Authtoken"))!;
     Timer(const Duration(seconds: 1), () async {
-      prefsService.removeData('showcase');
-      // showcasetime = await prefsService.getIntData("showcasetime") ?? 0;
-      // showcasetime++;
-      // prefsService.setIntData("showcasetime", showcasetime);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Language_Screen(),), (route) => false);
+      if (Authtoken.length > 1) {
+        setState(() {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const Home_screen()),
+                  (route) => false);
+        });
+      } else {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Language_Screen(),), (route) => false);
+      }
+
     });
   }
   @override
