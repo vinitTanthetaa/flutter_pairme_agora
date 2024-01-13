@@ -38,7 +38,8 @@ class _Business_ProfileState extends State<Business_Profile> {
   //     _highQualityImage = uint8List;
   //   });
   // }
-  BusinessprofileupdateCubit businessprofileupdateCubit = BusinessprofileupdateCubit();
+  BusinessprofileupdateCubit businessprofileupdateCubit =
+      BusinessprofileupdateCubit();
   BusinessProfileCubit businessProfileCubit = BusinessProfileCubit();
   final TextEditingController _bio = TextEditingController();
   SelectedByte? _selectedimag1;
@@ -52,6 +53,7 @@ class _Business_ProfileState extends State<Business_Profile> {
   PlatformFile? file3;
   bool _hello = false;
   List filelist = [];
+
   addFolderNameDialog(String delete) {
     return SimpleDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 60),
@@ -138,13 +140,15 @@ class _Business_ProfileState extends State<Business_Profile> {
       ],
     );
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    businessprofileupdateCubit = BlocProvider.of<BusinessprofileupdateCubit>(context);
-
+    businessprofileupdateCubit =
+        BlocProvider.of<BusinessprofileupdateCubit>(context);
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
@@ -205,14 +209,13 @@ class _Business_ProfileState extends State<Business_Profile> {
                                       // spreadRadius: 1.0,
                                     ),
                                   ],
-                                  image:
-                                  _selectedimag1?.selectedFile != null
+                                  image: _selectedimag1?.selectedFile != null
                                       ? DecorationImage(
                                           //  image: AssetImage('assets/Images/vincenzo.png'),
                                           image: FileImage(
                                               _selectedimag1!.selectedFile),
-                                          fit: BoxFit.fill) :
-                                  const DecorationImage(
+                                          fit: BoxFit.fill)
+                                      : const DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/placeHolderImage.jpg'),
                                           fit: BoxFit.fill)),
@@ -609,14 +612,13 @@ class _Business_ProfileState extends State<Business_Profile> {
                                       // spreadRadius: 1.0,
                                     ),
                                   ],
-                                  image:
-                                  _selectedimag2?.selectedFile != null
+                                  image: _selectedimag2?.selectedFile != null
                                       ? DecorationImage(
                                           //  image: AssetImage('assets/Images/vincenzo.png'),
                                           image: FileImage(
                                               _selectedimag2!.selectedFile),
-                                          fit: BoxFit.fill) :
-                                  const DecorationImage(
+                                          fit: BoxFit.fill)
+                                      : const DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/placeHolderImage.jpg'),
                                           fit: BoxFit.fill)),
@@ -1014,13 +1016,13 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag3?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag3!.selectedFile),
-                                  //         fit: BoxFit.fill) :
-                                  const DecorationImage(
+                                      // _selectedimag3?.selectedFile != null
+                                      //     ? DecorationImage(
+                                      //         //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      //         image: FileImage(
+                                      //             _selectedimag3!.selectedFile),
+                                      //         fit: BoxFit.fill) :
+                                      const DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/placeHolderImage.jpg'),
                                           fit: BoxFit.fill)),
@@ -1426,13 +1428,13 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag4?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag4!.selectedFile),
-                                  //         fit: BoxFit.fill) :
-                                  const DecorationImage(
+                                      // _selectedimag4?.selectedFile != null
+                                      //     ? DecorationImage(
+                                      //         //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      //         image: FileImage(
+                                      //             _selectedimag4!.selectedFile),
+                                      //         fit: BoxFit.fill) :
+                                      const DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/placeHolderImage.jpg'),
                                           fit: BoxFit.fill)),
@@ -1830,13 +1832,13 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag5?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag5!.selectedFile),
-                                  //         fit: BoxFit.fill) :
-                                  const DecorationImage(
+                                      // _selectedimag5?.selectedFile != null
+                                      //     ? DecorationImage(
+                                      //         //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      //         image: FileImage(
+                                      //             _selectedimag5!.selectedFile),
+                                      //         fit: BoxFit.fill) :
+                                      const DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/placeHolderImage.jpg'),
                                           fit: BoxFit.fill)),
@@ -2234,13 +2236,13 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     ),
                                   ],
                                   image:
-                                  // _selectedimag6?.selectedFile != null
-                                  //     ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //         image: FileImage(
-                                  //             _selectedimag6!.selectedFile),
-                                  //         fit: BoxFit.fill) :
-                                  const DecorationImage(
+                                      // _selectedimag6?.selectedFile != null
+                                      //     ? DecorationImage(
+                                      //         //  image: AssetImage('assets/Images/vincenzo.png'),
+                                      //         image: FileImage(
+                                      //             _selectedimag6!.selectedFile),
+                                      //         fit: BoxFit.fill) :
+                                      const DecorationImage(
                                           image: AssetImage(
                                               'assets/Images/placeHolderImage.jpg'),
                                           fit: BoxFit.fill)),
@@ -2706,7 +2708,8 @@ class _Business_ProfileState extends State<Business_Profile> {
                                       // allowMultiple: true,
                                       allowedExtensions: ['jpg', 'pdf', 'doc'],
                                     );
-                                    print("result === >"+ result!.names.toString());
+                                    print("result === >" +
+                                        result!.names.toString());
                                     // if (filelist.length < 3) {
                                     //   filelist.add(result!.files.toString());
                                     //   if (filelist.length == 1) {
@@ -2736,7 +2739,6 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     //   file3 = result!.files.first;
                                     //   print("fille3 ======> " + file3.toString());
                                     // }
-
                                     setState(() {});
                                   },
                                   child: SizedBox(
@@ -2803,7 +2805,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               decoration: const BoxDecoration(
                                                   image: DecorationImage(
                                                       image: AssetImage(
-                                                          'assets/Images/file.png'))),
+                                                          'assets/ImagesImages/file.png'))),
                                             ),
                                             SizedBox(
                                               height: screenHeight(context,
@@ -3500,36 +3502,47 @@ class _Business_ProfileState extends State<Business_Profile> {
                         context,
                         text: 'SAVE',
                         onTap: () {
-                         // Navigator.pop(context);
-                         //  if(_selectedimag1 != null){
-                         //    print("hello");
-                         //    Navigator.pop(context);
-                         //  } else {
-                         //    print("try again");
-                         //  }
-                         //  businessProfileCubit.BusinessProfileService(
-                         //      photo_1: _selectedimag1?.selectedFile ?? File(''),
-                         //      bio: _bio.text,
-                         //      file_2: file2 ?? PlatformFile(name: "", size: 0) ,
-                         //      file_3: file3 ?? PlatformFile(name: "", size: 0),
-                         //      context: context,
-                         //      photo_2: _selectedimag2?.selectedFile ?? File(''),
-                         //      photo_3: _selectedimag3?.selectedFile ?? File(''),
-                         //      photo_4: _selectedimag4?.selectedFile ?? File(''),
-                         //      photo_5: _selectedimag5?.selectedFile ?? File(''),
-                         //      photo_6: _selectedimag6?.selectedFile ?? File(''),
-                         //      file_1: file1 ?? PlatformFile(name: "", size: 0));
-                          businessprofileupdateCubit.BusinessprofileupdateService(photo_1: _selectedimag1?.selectedFile ?? File(''),
-                              bio: _bio.text,
-                              file_2: file2 ?? PlatformFile(name: "", size: 0) ,
-                              file_3: file3 ?? PlatformFile(name: "", size: 0),
-                              context: context,
-                              photo_2: _selectedimag2?.selectedFile ?? File(''),
-                              photo_3: _selectedimag3?.selectedFile ?? File(''),
-                              photo_4: _selectedimag4?.selectedFile ?? File(''),
-                              photo_5: _selectedimag5?.selectedFile ?? File(''),
-                              photo_6: _selectedimag6?.selectedFile ?? File(''),
-                              file_1: file1 ?? PlatformFile(name: "", size: 0));
+                          // Navigator.pop(context);
+                          //  if(_selectedimag1 != null){
+                          //    print("hello");
+                          //    Navigator.pop(context);
+                          //  } else {
+                          //    print("try again");
+                          //  }
+                          //  businessProfileCubit.BusinessProfileService(
+                          //      photo_1: _selectedimag1?.selectedFile ?? File(''),
+                          //      bio: _bio.text,
+                          //      file_2: file2 ?? PlatformFile(name: "", size: 0) ,
+                          //      file_3: file3 ?? PlatformFile(name: "", size: 0),
+                          //      context: context,
+                          //      photo_2: _selectedimag2?.selectedFile ?? File(''),
+                          //      photo_3: _selectedimag3?.selectedFile ?? File(''),
+                          //      photo_4: _selectedimag4?.selectedFile ?? File(''),
+                          //      photo_5: _selectedimag5?.selectedFile ?? File(''),
+                          //      photo_6: _selectedimag6?.selectedFile ?? File(''),
+                          //      file_1: file1 ?? PlatformFile(name: "", size: 0));
+                          businessprofileupdateCubit
+                              .BusinessprofileupdateService(
+                                  photo_1:
+                                      _selectedimag1?.selectedFile ?? File(''),
+                                  bio: _bio.text,
+                                  file_2:
+                                      file2 ?? PlatformFile(name: "", size: 0),
+                                  file_3:
+                                      file3 ?? PlatformFile(name: "", size: 0),
+                                  context: context,
+                                  photo_2:
+                                      _selectedimag2?.selectedFile ?? File(''),
+                                  photo_3:
+                                      _selectedimag3?.selectedFile ?? File(''),
+                                  photo_4:
+                                      _selectedimag4?.selectedFile ?? File(''),
+                                  photo_5:
+                                      _selectedimag5?.selectedFile ?? File(''),
+                                  photo_6:
+                                      _selectedimag6?.selectedFile ?? File(''),
+                                  file_1:
+                                      file1 ?? PlatformFile(name: "", size: 0));
                         },
                         height: screenHeight(context, dividedBy: 20),
                       )

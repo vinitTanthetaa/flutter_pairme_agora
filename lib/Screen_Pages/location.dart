@@ -95,11 +95,10 @@ class _Location_pageState extends State<Location_page> {
           children: [
             Positioned(
               top: 0.0,
-              child: Container(
+              child:  Container(
                 height: screenHeight(context,dividedBy: 1.5),
                 width: screenWidth(context),
                 child: GoogleMap(
-
                   mapType: MapType.hybrid,
                   initialCameraPosition: _kGooglePlex,
                   onMapCreated: (GoogleMapController controller) {

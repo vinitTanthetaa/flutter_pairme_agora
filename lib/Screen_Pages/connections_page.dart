@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
-import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
+import '../helper/App_Colors.dart';
 import 'chat.dart';
 
 class Connection_Page extends StatefulWidget {
@@ -125,22 +126,27 @@ class _Connection_PageState extends State<Connection_Page> {
                         horizontal: screenWidth(context, dividedBy: 30),
                         vertical: screenHeight(context, dividedBy: 200),
                       ),
-                      child: TextField(
-                        decoration: InputDecoration(
+                      child: Container(
+                        height: 35,
+                        decoration: BoxDecoration(
+                            // color: Colors.red,
+                            border: Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: TextField(
+                          decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 9, horizontal: 5),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5)),
+                            contentPadding: const EdgeInsets.only(top: 3.5),
                             hintText: "Search...",
+                            hintStyle: TextStyle(fontSize: 15),
+                            border: InputBorder.none,
                             prefixIcon: Padding(
-                              padding: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(7),
                               child: SvgPicture.asset(
                                 "assets/Images/search.svg",
-                                // width: screenWidth(context, dividedBy: 30),
-                                // height: screenHeight(context, dividedBy: 70),
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     Padding(
@@ -161,7 +167,6 @@ class _Connection_PageState extends State<Connection_Page> {
                     const SizedBox(
                       height: 5,
                     ),
-
                     Expanded(
                         child: ListView.separated(
                             physics: const ClampingScrollPhysics(),
@@ -169,190 +174,208 @@ class _Connection_PageState extends State<Connection_Page> {
                               bottom: screenHeight(context, dividedBy: 100),
                             ),
                             itemBuilder: (context, index) {
-                              return Dismissible(
-                                  // direction: DismissDirection.endToStart,
-                                  key: UniqueKey(),
-                                  background: Container(
-                                    padding: EdgeInsets.only(
-                                        right: screenWidth(context,
-                                            dividedBy: 10)),
-                                    color: AppColor.skyBlue,
-                                    alignment: Alignment.centerRight,
-                                    child: Container(
-                                      height:
-                                          screenHeight(context, dividedBy: 35),
-                                      width:
-                                          screenWidth(context, dividedBy: 15),
-                                      decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/Images/delete.png'))),
-                                    ),
+                              return SizedBox(
+                                // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
+                                height: screenHeight(context, dividedBy: 8),
+                                width: screenHeight(context),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        screenWidth(context, dividedBy: 30),
                                   ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return Chatting_Page(
-                                            name: 'Request',
-                                            Username: list[index]['Name'],
-                                            image: list[index]['image'],
-                                          );
-                                        },
-                                      ));
-                                    },
-                                    child: SizedBox(
-                                      // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                                      height:
-                                          screenHeight(context, dividedBy: 8),
-                                      width: screenHeight(context),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: screenWidth(context,
-                                              dividedBy: 30),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CachedNetworkImage(
+                                        imageUrl: list[index]["image"],
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 15),
+                                          width: screenHeight(context,
+                                              dividedBy: 15),
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+
+                                              // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                            ),
+                                            shape: BoxShape.circle,
+                                          ),
                                         ),
-                                        child: Row(
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            CircleAvatar(
+                                                radius: screenHeight(context,
+                                                    dividedBy: 30),
+                                                child:
+                                                    const Icon(Icons.person)),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            screenWidth(context, dividedBy: 30),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: screenWidth(context,
+                                                dividedBy: 40)),
+                                        child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            CachedNetworkImage(
-                                              imageUrl: list[index]["image"],
-                                              imageBuilder:
-                                                  (context, imageProvider) =>
-                                                      Container(
-                                                height: screenHeight(context,
-                                                    dividedBy: 15),
-                                                width: screenHeight(context,
-                                                    dividedBy: 15),
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: imageProvider,
-                                                    fit: BoxFit.cover,
-
-                                                    // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
-                                                  ),
-                                                  shape: BoxShape.circle,
-                                                ),
-                                              ),
-                                              placeholder: (context, url) =>
-                                                  const CircularProgressIndicator(),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      CircleAvatar(
-                                                          radius: screenHeight(
-                                                              context,
-                                                              dividedBy: 30),
-                                                          child: const Icon(
-                                                              Icons.person)),
+                                            Text(
+                                              "${list[index]["Name"]}",
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: 'Roboto'),
+                                            ),
+                                            SizedBox(
+                                              height: screenHeight(context,
+                                                  dividedBy: 300),
                                             ),
                                             SizedBox(
                                               width: screenWidth(context,
-                                                  dividedBy: 30),
+                                                  dividedBy: 2.2),
+                                              child: const Text(
+                                                  'Dis promethium, vei maximus gulag......',
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                      color: Color(0xffAAAAAA),
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Roboto')),
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: screenWidth(context,
-                                                      dividedBy: 40)),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                            SizedBox(
+                                              height: screenHeight(context,
+                                                  dividedBy: 70),
+                                            ),
+                                            SizedBox(
+                                              width: screenWidth(context,
+                                                  dividedBy: 2.2),
+                                              child: Row(
                                                 children: [
-                                                  Text(
-                                                    "${list[index]["Name"]}",
-                                                    style: const TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily: 'Roboto'),
+                                                  Image.asset(
+                                                      "assets/Images/calendar.png",
+                                                      width: screenWidth(
+                                                          context,
+                                                          dividedBy: 40)),
+                                                  const SizedBox(
+                                                    width: 3,
                                                   ),
-                                                  SizedBox(
-                                                    height: screenHeight(
-                                                        context,
-                                                        dividedBy: 300),
-                                                  ),
-                                                  SizedBox(
-                                                    width: screenWidth(context,
-                                                        dividedBy: 2.2),
-                                                    child: const Text(
-                                                        'Duis protium gravida denim, vei maximus ligula......',
-                                                        maxLines: 2,
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xffAAAAAA),
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontFamily:
-                                                                'Roboto')),
-                                                  ),
-                                                  SizedBox(
-                                                    height: screenHeight(
-                                                        context,
-                                                        dividedBy: 70),
-                                                  ),
-                                                  SizedBox(
-                                                    width: screenWidth(context,
-                                                        dividedBy: 2.2),
-                                                    child: Row(
-                                                      children: [
-                                                        Image.asset(
-                                                            "assets/Images/calendar.png",
-                                                            width: screenWidth(
-                                                                context,
-                                                                dividedBy: 40)),
-                                                        const SizedBox(
-                                                          width: 3,
-                                                        ),
-                                                        const Text("01/11/2024",
-                                                            style: TextStyle(
-                                                                color: Color(
-                                                                    0xffAAAAAA),
-                                                                fontSize: 10,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontFamily:
-                                                                    'Roboto'))
-                                                      ],
-                                                    ),
-                                                  ),
+                                                  const Text("01/11/2024",
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xffAAAAAA),
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontFamily: 'Roboto'))
                                                 ],
                                               ),
                                             ),
-                                            const Spacer(),
-                                            Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: screenWidth(
-                                                        context,
-                                                        dividedBy: 40)),
-                                                child: Row(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                        "assets/Images/message.svg",
-                                                        width: screenWidth(
-                                                            context,
-                                                            dividedBy: 25)),
-                                                    SizedBox(
-                                                      width: screenWidth(
-                                                          context,
-                                                          dividedBy: 20),
-                                                    ),
-                                                    SvgPicture.asset(
-                                                        "assets/Images/more.svg",
-                                                        width: screenWidth(
-                                                            context,
-                                                            dividedBy: 100)),
-                                                  ],
-                                                ))
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  ));
+                                      const Spacer(),
+                                      Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: screenWidth(context,
+                                                  dividedBy: 40)),
+                                          child: Row(
+                                            children: [
+                                              InkWell(
+                                                child: SvgPicture.asset(
+                                                    "assets/Images/more.svg",
+                                                    width: screenWidth(context,
+                                                        dividedBy: 100)),
+                                                onTap: () {
+                                                  showModalBottomSheet(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Container(
+                                                        height: screenHeight(
+                                                            context,
+                                                            dividedBy: 7.5),
+                                                        child: Column(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Container(
+                                                                width:
+                                                                    screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                height: 7,
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                    color: Colors
+                                                                        .grey),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: double
+                                                                  .infinity,
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          10),
+                                                              decoration: const BoxDecoration(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  borderRadius: BorderRadius.only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              15),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              16))),
+                                                              child:
+                                                                  const Center(
+                                                                      child:
+                                                                          ListTile(
+                                                                title: Text(
+                                                                    "Remove Connection"),
+                                                                leading: Icon(
+                                                                    Icons
+                                                                        .delete),
+                                                              )),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                              SizedBox(
+                                                width: screenWidth(context,
+                                                    dividedBy: 20),
+                                              ),
+                                              SvgPicture.asset(
+                                                  "assets/Images/message.svg",
+                                                  width: screenWidth(context,
+                                                      dividedBy: 25)),
+                                            ],
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              );
                             },
                             separatorBuilder: (context, index) {
                               return const Divider(
@@ -362,99 +385,72 @@ class _Connection_PageState extends State<Connection_Page> {
                                 // color: Colors.black12,
                               );
                             },
-                            itemCount: list.length))
-                    // Expanded(
-                    //   child: ListView.separated(
-                    //     itemCount: list.length,
-                    //     separatorBuilder: (BuildContext context, int index) =>
-                    //         const Divider(),
-                    //     itemBuilder: (BuildContext context, int index) {
-                    //       return ListTile(
-                    //         leading:  CircleAvatar(
-                    //           radius: 25,
-                    //           backgroundImage: NetworkImage(
-                    //             list[index]["image"],),
-                    //         ),
-                    //         title: Column(
-                    //             crossAxisAlignment: CrossAxisAlignment.start,
-                    //             children: [
-                    //               const Text("Jane Kobold"),
-                    //               const Text("sdfsd fsd fdsf "),
-                    //               Row(
-                    //                 children: [
-                    //                   SvgPicture.asset(
-                    //                     "assets/Images/calendar.png",
-                    //                     width: 50,
-                    //                     height: 50,
-                    //                   )
-                    //                 ],
-                    //               )
-                    //             ]),
-                    //       );
-                    //     },
-                    //   ),
-                    // )
+                            itemCount: list.length)),
                   ],
                 ),
-              )
-              // Column(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Center(
-              //       child: SvgPicture.asset(
-              //         "assets/Images/connection.svg",
-              //         width: screenWidth(context, dividedBy: 4),
-              //         height: screenHeight(context, dividedBy: 8),
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       height: screenHeight(context, dividedBy: 12),
-              //     ),
-              //     InkWell(
-              //       overlayColor:
-              //           const MaterialStatePropertyAll(Colors.transparent),
-              //       onTap: () {},
-              //       child: Center(
-              //         child: Container(
-              //           // margin: EdgeInsets.symmetric(
-              //           //     horizontal: screenWidth(context, dividedBy: 5),
-              //           //     vertical: 30),
-              //           alignment: Alignment.center,
-              //           height: screenHeight(context, dividedBy: 18),
-              //           width: screenWidth(context, dividedBy: 1.7),
-              //           decoration: BoxDecoration(
-              //               borderRadius: BorderRadius.circular(50),
-              //               color: const Color.fromRGBO(250, 250, 250, 1),
-              //               // gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
-              //               boxShadow: [
-              //                 BoxShadow(
-              //                   blurStyle: BlurStyle.normal,
-              //                   color: Colors.black.withOpacity(0.25),
-              //                   // color: Colors.transparent,
-              //                   offset: const Offset(
-              //                     1,
-              //                     1,
-              //                   ),
-              //                   blurRadius: 10,
-              //                   spreadRadius: 0.0,
-              //                 ),
-              //               ]),
-              //           child: const Text(
-              //             "Browse More Profile",
-              //             style: TextStyle(
-              //                 fontWeight: FontWeight.w500,
-              //                 fontSize: 16,
-              //                 fontFamily: 'Roboto',
-              //                 color: AppColor.black),
-              //           ),
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // ),
-              )
+              ))
         ],
       ),
     ));
   }
+}
+
+Widget NoMessage(BuildContext context) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Center(
+        child: SvgPicture.asset(
+          "assets/Images/connection.svg",
+          width: screenWidth(context, dividedBy: 5),
+          height: screenHeight(context, dividedBy: 10),
+        ),
+      ),
+      SizedBox(
+        height: screenHeight(context, dividedBy: 14),
+      ),
+      InkWell(
+        overlayColor: const MaterialStatePropertyAll(Colors.transparent),
+        onTap: () {},
+        child: Center(
+          child: Container(
+            // margin: EdgeInsets.symmetric(
+            //     horizontal: screenWidth(context, dividedBy: 5),
+            //     vertical: 30),
+            alignment: Alignment.center,
+            height: screenHeight(context, dividedBy: 18),
+            width: screenWidth(context, dividedBy: 1.7),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: const Color.fromRGBO(250, 250, 250, 1),
+                // gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+                boxShadow: [
+                  BoxShadow(
+                    blurStyle: BlurStyle.normal,
+                    color: Colors.black.withOpacity(0.15),
+                    // color: Colors.transparent,
+                    offset: const Offset(
+                      1,
+                      1,
+                    ),
+                    blurRadius: 10,
+                    spreadRadius: 0.0,
+                  ),
+                ]),
+            child: Text(
+              "Browse More Profile",
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  fontFamily: 'Roboto',
+                  color: Colors.black87.withOpacity(0.8)),
+            ),
+          ),
+        ),
+      ),
+      // Custom_botton(context, text:"Browse More Profile", onTap:() {
+      //
+      // }, height: screenHeight(context, dividedBy: 20))
+    ],
+  );
 }
