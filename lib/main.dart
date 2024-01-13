@@ -12,6 +12,7 @@ import 'package:pair_me/cubits/Professional_details_update.dart';
 import 'package:pair_me/cubits/ReSend_Otp_cubit.dart';
 import 'package:pair_me/cubits/Reset_Password.dart';
 import 'package:pair_me/cubits/Verify.dart';
+import 'package:pair_me/cubits/acceptORrejectnotification.dart';
 import 'package:pair_me/cubits/address_update.dart';
 import 'package:pair_me/cubits/adsress_drtails.dart';
 import 'package:pair_me/cubits/business_add_update.dart';
@@ -94,6 +95,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => NotificationCubit()),
         BlocProvider(create: (context) => MessageCubit()),
         BlocProvider(create: (context) => ClearAllNotificationCubit()),
+        BlocProvider(create: (context) => AcceptorRejectCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -105,7 +107,7 @@ class MyApp extends StatelessWidget {
         ),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
-        home: const SpleshScreen(),
+        home: const SpleshScreen                                                                               (),
       ),
     );
   }

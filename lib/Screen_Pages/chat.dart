@@ -206,7 +206,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                           children: [
                              Text(
                               widget.Username,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: AppColor.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -577,8 +577,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                 width: screenWidth(context, dividedBy: 20),
                                 decoration: const BoxDecoration(
                                     image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/Images/pin.png'))),
+                                        image: AssetImage('assets/Images/pin.png'))),
                               ),
                             ),
                             Container(
@@ -589,8 +588,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                               width: screenWidth(context, dividedBy: 30),
                               decoration: const BoxDecoration(
                                   image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/Images/mic.png'))),
+                                      image: AssetImage('assets/Images/mic.png'))),
                             ),
                           ],
                         )),
@@ -649,10 +647,12 @@ class _Chatting_PageState extends State<Chatting_Page> {
     // }
 
     var msg = ChatMessage.createTxtSendMessage(
-      targetId: "jhone wick",
+      targetId: "Jhon wick",
       content: messageController.text,
+      chatType: ChatType.Chat
     );
-    ChatClient.getInstance.chatManager.sendMessage(msg);
+    print("msg ===> $msg");
+    ChatClient.getInstance.chatManager.sendMessage(msg,);
     messageController.clear();
   }
   void onMessagesReceived(List<ChatMessage> messages) {
@@ -730,7 +730,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
           },
           onError: (msgId, msg, error) {
             _addLogToConsole(
-              "send message failed, code: ${error.code}, desc: ${error.description}",
+              "send message failed, code: ${error.code}, desc: $error , msg : $msg , id : $msgId",
             );
           },
         ));

@@ -355,7 +355,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       child: Stack(
                                                         children: [
                                                           CachedNetworkImage(
-                                                            imageUrl: image[pageViewIndex],
+                                                            imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
                                                             imageBuilder: (context,
                                                                 imageProvider) =>
                                                                 Container(
@@ -449,7 +449,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               )
                                                                   : Center(
                                                                 child: Text(
-                                                                  "Connect",
+                                                                  "Connect".tr(),
                                                                   style: TextStyle(
                                                                       fontSize: fontsize,
                                                                       fontFamily: 'Roboto',
@@ -917,8 +917,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             image: DecorationImage(
                                                                 image: AssetImage(
                                                                     users[index]
-                                                                    [
-                                                                    'premium']),
+                                                                    ['premium']),
                                                                 fit: BoxFit
                                                                     .cover,
                                                                 filterQuality:
@@ -967,7 +966,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 ),
                                               ),
                                           errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                                              const Icon(Icons.error),
                                         );
                                       },
                                     ),
