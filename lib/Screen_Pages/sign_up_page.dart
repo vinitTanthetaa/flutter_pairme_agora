@@ -32,6 +32,8 @@ class _SignUp_pageState extends State<SignUp_page> {
   final TextEditingController _eMail = TextEditingController();
   final TextEditingController _gender = TextEditingController();
   final TextEditingController _date = TextEditingController();
+  RegExp regExp =  RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+
   String gender = '';
   bool popup = false;
   bool popup1 = false;
@@ -196,7 +198,39 @@ class _SignUp_pageState extends State<SignUp_page> {
                     custom_textfield_header(text: 'Date of Birth'),
                     Custom_textfield(context,
                         show_icon: true,
-                        onTap: () {},
+                        onTap: () {
+                          BottomPicker.date(
+                            title: 'Set your Birthday',
+                            dateOrder: DatePickerDateOrder.dmy,
+                            initialDateTime: _focusedDay,
+                            gradientColors: [AppColor.skyBlue,AppColor.whiteskyBlue],
+                            titlePadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 100)),
+                            height: screenHeight(context,dividedBy: 3),
+                            dismissable: true,
+                            displayCloseIcon: false,
+                            maxDateTime: DateTime(2050),
+                            minDateTime: DateTime(1980),
+                            pickerTextStyle: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                            titleStyle: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: AppColor.black),
+                            titleAlignment: CrossAxisAlignment.center,
+                            onChange: (index) {
+
+                            },
+                            onSubmit: (index) {
+                              _date.text = DateFormat('dd MMMM yyyy').format(index);
+                            },
+                            bottomPickerTheme: BottomPickerTheme.plumPlate,
+                          ).show(context);
+                        },
                         image: 'assets/Images/calendar.png',
                         onPress: () {
                           BottomPicker.date(
@@ -415,6 +449,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                         //   ));
                         // },
                         onTap: () {
+
                           if (_firstName.text.isEmpty) {
                             flutterToast("Please Enter FirstName", false);
                           } else if (_lastName.text.isEmpty) {
@@ -424,13 +459,14 @@ class _SignUp_pageState extends State<SignUp_page> {
                           } else if (_date.text.isEmpty) {
                             flutterToast("Please Enter Date of Birth", false);
                           } else if (_phoneNumber.text.isEmpty) {
-                            flutterToast(
-                                "Please Enter Your Phonenumber", false);
-                          } else if (_eMail.text.isEmpty) {
+                            flutterToast("Please Enter Your Phonenumber", false);
+                          } else if(10 > _phoneNumber.text.length){
+                            flutterToast("Please Enter valid number", false);
+                          }else if (_eMail.text.isEmpty) {
                             flutterToast("Please Enter your email", false);
-                          } else if (select == false) {
+                          } else  if (select == false) {
                             flutterToast("Please Agree to the terms & conditions ", false);
-                          } else {
+                          } else if(regExp.hasMatch(_eMail.text)){
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return Set_Password(
@@ -443,6 +479,8 @@ class _SignUp_pageState extends State<SignUp_page> {
                                 );
                               },
                             ));
+                          } else {
+                            flutterToast("Please Enter valid Email ", false);
                           }
                         },
                         height: screenHeight(context, dividedBy: 570),

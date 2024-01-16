@@ -23,6 +23,7 @@ class _Set_PasswordState extends State<Set_Password> {
   SignUpCubit signUpCubit = SignUpCubit();
   final TextEditingController _Password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
+  RegExp regExp =  RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   bool hidePassword = false;
   bool hideconfirmPassword = false;
   @override
@@ -71,12 +72,16 @@ class _Set_PasswordState extends State<Set_Password> {
                     onTap: () {
                     if(_Password.text.isEmpty){
                       flutterToast("Please Enter Your Password", false);
-                    }else if (_confirmPassword.text.isEmpty){
-                      flutterToast("Please Enter Your Confirm Password", false);
-                    }else if (_confirmPassword.text != _Password.text){
-                      flutterToast("Please Enter Password And Confirm Password are same", false);
+                    }else if(regExp.hasMatch(_Password.text)){
+                      if (_confirmPassword.text.isEmpty){
+                        flutterToast("Please Enter Your Confirm Password", false);
+                      }else if (_confirmPassword.text != _Password.text){
+                        flutterToast("Please Enter Password And Confirm Password are same", false);
+                      }else {
+                        signUpCubit.signUpService(email: widget.email, firstname: widget.firstname, lastname: widget.lastname, phoneNumber: widget.number, password: _Password.text, confirmPassword: _confirmPassword.text, context: context, gender: widget.gender, dob: widget.dob, terms: widget.T_C);
+                      }
                     }else {
-                      signUpCubit.signUpService(email: widget.email, firstname: widget.firstname, lastname: widget.lastname, phoneNumber: widget.number, password: _Password.text, confirmPassword: _confirmPassword.text, context: context, gender: widget.gender, dob: widget.dob, terms: widget.T_C);
+                      flutterToast("please enter at lest 1 upper case and 1 lower case and 1 digit and 1 special carecter and at least 8 characters", false);
                     }
                   },
                     height: screenHeight(context,dividedBy: 20),)

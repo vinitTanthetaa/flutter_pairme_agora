@@ -65,6 +65,7 @@ dependencies:
   flutter_svg: ^2.0.9
   flutter_spinkit: ^5.2.0
   photo_manager: ^2.8.1
+  path:
 #  image_picker: ^1.0.7
   agora_chat_sdk: ^1.2.0
   flutter_image_compress: ^2.1.0

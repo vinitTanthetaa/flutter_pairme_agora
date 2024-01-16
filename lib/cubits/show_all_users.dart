@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/alluserprofile.dart';
@@ -26,7 +28,7 @@ class AllUsersDetailsCubit extends Cubit<AllUsersDetailsState> {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }));
-      print(response);
+      log("response ====> $response");
       if(response.statusCode == 200 && response.data != null)
       {
         emit(AllUsersDetailsSuccess());

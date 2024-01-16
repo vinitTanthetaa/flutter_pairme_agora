@@ -45,9 +45,7 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginSuccess());
         Authtoken = "Bearer ${hello['Token']}";
         prefsService.setStringData("Authtoken", Authtoken);
-        Navigator.push(context,MaterialPageRoute(builder:(context) {
-          return const Home_screen();
-        }, ));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Home_screen(),), (route) => false);
         flutterToast(hello['message'], true);
       } else {
         emit(LoginError());

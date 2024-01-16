@@ -40,6 +40,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final GlobalKey _key1 = GlobalKey();
   final GlobalKey _key3 = GlobalKey();
   String undoid = '';
+  String bottonname = '';
   int pageViewIndex = 0;
   double height = 0;
   double height1 = 1.2;
@@ -277,11 +278,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             swipeDown = true;
                                             height = height + 20;
                                             swipeUp = false;
+                                            bottonname = "Connect";
                                           });
                                         }
                                         if (position.offset.direction < 0) {
                                           setState(() {
                                             swipeUp = true;
+                                            bottonname = "Reject";
                                             height1 = height1 >= 1.60
                                                 ? height1 + 0.001
                                                 : height1 + 0.004;
@@ -298,6 +301,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         }
                                       },
                                       onSwipeCancelled: (activity) {
+                                        bottonname = '';
                                         setState(() {
                                           image.clear();
                                           swipeUp = false;
@@ -1008,131 +1012,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   buttonName: "Connect",
                                                   bool: month),
                                             )
-                                                : ind == 3
+                                                : bottonname == "Connect"
                                                 ? Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceAround,
-                                              children: [
-                                                buttons(
-                                                    context: context,
-                                                    img:
-                                                    "assets/Images/button3.svg",
-                                                    onTap: () {
-                                                      controller.swipeUp();
-                                                    },
-                                                    buttonName: "Skip",
-                                                    bool: month),
-                                                buttons(
-                                                    context: context,
-                                                    img:
-                                                    "assets/Images/button1.svg",
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder:
-                                                                (context) {
-                                                              return Chatting_Page(
-                                                                name:
-                                                                'chatting',
-                                                                Username: users[
-                                                                ind]
-                                                                ['Name'],
-                                                                image: users[
-                                                                ind]
-                                                                [
-                                                                'images']
-                                                                [
-                                                                pageViewIndex],
-                                                              );
-                                                            },
-                                                          ));
-                                                    },
-                                                    buttonName: "Chat",
-                                                    bool: month),
-                                                buttons(
-                                                    context: context,
-                                                    img:
-                                                    "assets/Images/button2.svg",
-                                                    onTap: () {
-                                                      controller
-                                                          .swipeDown();
-                                                    },
-                                                    buttonName: "Connect",
-                                                    bool: month),
-                                              ],
-                                            )
-                                                : ind == 1 || ind == 0 ||
-                                                ind == 3 ||
-                                                ind == 5
-                                                ? Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceAround,
-                                              children: [
-
-                                                buttons(
-                                                    context: context,
-                                                    img:
-                                                    "assets/Images/button4.svg",
-                                                    onTap: () {
-                                                      undoUsersCubit.GetUndoUsers(id: undoid).then((value) async {
-                                                        setState(() {
-                                                          image=image;
-                                                        });
-                                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                                                            return const Home_screen();
-                                                          },));
-                                                        setState(() { });
-                                                      },);
-                                                    },
-                                                    buttonName:
-                                                    "Undo",
-                                                    bool: month),
-                                                buttons(
-                                                    context: context,
-                                                    img:
-                                                    "assets/Images/button1.svg",
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder:
-                                                                (context) {
-                                                              return Chatting_Page(
-                                                                name:
-                                                                'chatting',
-                                                                Username:
-                                                                users[ind]
-                                                                [
-                                                                'Name'],
-                                                                image: users[ind]
-                                                                [
-                                                                'images']
-                                                                [
-                                                                pageViewIndex],
-                                                              );
-                                                            },
-                                                          ));
-                                                    },
-                                                    buttonName:
-                                                    "Chat",
-                                                    bool: month),
-                                                buttons(
-                                                    context: context,
-                                                    img:
-                                                    "assets/Images/button2.svg",
-                                                    onTap: () {
-
-                                                      controller.swipeDown();
-                                                    },
-                                                    buttonName:
-                                                    "Connect",
-                                                    bool: month),
-                                              ],
-                                            )
-                                                : Row(
                                               mainAxisAlignment:
                                               MainAxisAlignment
                                                   .spaceAround,
@@ -1182,9 +1063,127 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                     context: context,
                                                     img:
                                                     "assets/Images/button4.svg",
-                                                    onTap: () {},
+                                                      onTap: () {
+                                                        undoUsersCubit.GetUndoUsers(id: undoid).then((value) async {
+                                                          setState(() {
+                                                            image=image;
+                                                          });
+                                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                                            return const Home_screen();
+                                                          },));
+                                                          setState(() {
+
+                                                          });
+                                                        },);
+                                                      },
                                                     buttonName:
                                                     "Undo",
+                                                    bool: month),
+                                              ],
+                                            )
+                                                : bottonname == "Reject" ? Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceAround,
+                                              children: [
+
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button4.svg",
+                                                    onTap: () {
+                                                      undoUsersCubit.GetUndoUsers(id: undoid).then((value) async {
+                                                        setState(() {
+                                                          image=image;
+                                                        });
+                                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                                          return const Home_screen();
+                                                        },));
+                                                        setState(() { });
+                                                      },);
+                                                    },
+                                                    buttonName:
+                                                    "Undo",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button1.svg",
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) {
+                                                              return Chatting_Page(
+                                                                name:
+                                                                'chatting',
+                                                                Username: allUsersdetails.data?[ind].first.name ?? '',
+                                                                image: allUsersdetails.data?[ind].first.profileImage ?? '',
+                                                              );
+                                                            },
+                                                          ));
+                                                    },
+                                                    buttonName:
+                                                    "Chat",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button2.svg",
+                                                    onTap: () {
+                                                      connectUserCubit.GetConnectUser(id: allUsersdetails.data?[ind].first.id ?? '').then((value) {
+                                                        controller.swipeDown();
+                                                      },);
+                                                    },
+                                                    buttonName:
+                                                    "Connect",
+                                                    bool: month),
+                                              ],
+                                            ) : Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceAround,
+                                              children: [
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button3.svg",
+                                                    onTap: () {
+                                                      controller.swipeUp();
+                                                    },
+                                                    buttonName: "Skip",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button1.svg",
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) {
+                                                              return Chatting_Page(
+                                                                name:
+                                                                'chatting',
+                                                                Username: allUsersdetails.data?[ind].first.name ?? '',
+                                                                image: allUsersdetails.data?[ind].first.profileImage ?? '',
+                                                              );
+                                                            },
+                                                          ));
+                                                    },
+                                                    buttonName: "Chat",
+                                                    bool: month),
+                                                buttons(
+                                                    context: context,
+                                                    img:
+                                                    "assets/Images/button2.svg",
+                                                    onTap: () {
+                                                      controller
+                                                          .swipeDown();
+                                                    },
+                                                    buttonName: "Connect",
                                                     bool: month),
                                               ],
                                             )
