@@ -132,10 +132,26 @@ class _Notification_pageState extends State<Notification_page> {
                          return Expanded(child: Center(child: customLoader()));
                        }
                        if(state is NotificationError){
-                         return Center();
+                         return Center(
+                           child: Container(
+                             height: screenHeight(context,dividedBy: 5),
+                             width: screenHeight(context,dividedBy: 5),
+                             decoration: const BoxDecoration(
+                                 image: DecorationImage(image: AssetImage('assets/Images/Nonotification.png'))
+                             ),
+                           ),
+                         );
                        }
                        if(state is NotificationSuccess){
-                         return ListView.separated(
+                         return userNotification.data == null || userNotification.data?.length == 0 ? Center(
+                           child: Container(
+                             height: screenHeight(context,dividedBy: 5),
+                             width: screenHeight(context,dividedBy: 5),
+                             decoration: const BoxDecoration(
+                                 image: DecorationImage(image: AssetImage('assets/Images/Nonotification.png'))
+                             ),
+                           ),
+                         ) : ListView.separated(
                              physics: const ClampingScrollPhysics(),
                              padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100), ),
                              itemBuilder: (context, index) {

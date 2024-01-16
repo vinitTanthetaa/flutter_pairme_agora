@@ -1025,6 +1025,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                     onTap: () {
                                                       rejectUserCubit.GetRejectUser(id: allUsersdetails.data?[ind].first.id ?? '').then((value) {
                                                         controller.swipeUp();
+                                                        setState(() {
+                                                          bottonname = "Reject";
+                                                        });
                                                       },);
                                                     },
                                                     buttonName:
@@ -1040,19 +1043,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           MaterialPageRoute(
                                                             builder:
                                                                 (context) {
-                                                              return Chatting_Page(
-                                                                name:
-                                                                'chatting',
-                                                                Username:
-                                                                users[ind]
-                                                                [
-                                                                'Name'],
-                                                                image: users[ind]
-                                                                [
-                                                                'images']
-                                                                [
-                                                                pageViewIndex],
-                                                              );
+                                                                  return Chatting_Page(
+                                                                    name:
+                                                                    'chatting',
+                                                                    Username: allUsersdetails.data?[ind].first.name ?? '',
+                                                                    image: allUsersdetails.data?[ind].first.profileImage ?? '',
+                                                                  );
                                                             },
                                                           ));
                                                     },
@@ -1134,6 +1130,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                     onTap: () {
                                                       connectUserCubit.GetConnectUser(id: allUsersdetails.data?[ind].first.id ?? '').then((value) {
                                                         controller.swipeDown();
+                                                        setState(() {
+                                                          bottonname = "Connect";
+                                                        });
                                                       },);
                                                     },
                                                     buttonName:
@@ -1150,7 +1149,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                     img:
                                                     "assets/Images/button3.svg",
                                                     onTap: () {
-                                                      controller.swipeUp();
+                                                      rejectUserCubit.GetRejectUser(id: allUsersdetails.data?[ind].first.id ?? '').then((value) {
+                                                        controller.swipeUp();
+                                                        setState(() {
+                                                          bottonname = "Reject";
+                                                        });
+                                                      },);
                                                     },
                                                     buttonName: "Skip",
                                                     bool: month),
@@ -1180,8 +1184,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                     img:
                                                     "assets/Images/button2.svg",
                                                     onTap: () {
-                                                      controller
-                                                          .swipeDown();
+                                                      connectUserCubit.GetConnectUser(id: allUsersdetails.data?[ind].first.id ?? '').then((value) {
+                                                        controller.swipeDown();
+                                                        setState(() {
+                                                          bottonname = "Connect";
+                                                        });
+                                                      },);
                                                     },
                                                     buttonName: "Connect",
                                                     bool: month),

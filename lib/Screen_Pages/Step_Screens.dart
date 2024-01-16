@@ -1760,11 +1760,11 @@ class _StepScreenState extends State<StepScreen> {
                                           skip_button(
                                             context,
                                             onTap: () {
-                                              if (image == null) {
+                                              if (_selectedimag1 == null) {
                                                 flutterToast(
                                                     "Please Enter atlest 2 image or video",
                                                     false);
-                                              } else if (image1 == null) {
+                                              } else if (_selectedimag2 == null) {
                                                 flutterToast(
                                                     "Please Enter 1 more image or video",
                                                     false);
@@ -1775,8 +1775,7 @@ class _StepScreenState extends State<StepScreen> {
                                               } else {
                                                 businessProfileCubit
                                                         .BusinessProfileService(
-                                                            photo_1: image ??
-                                                                File(''),
+                                                            photo_1: _selectedimag1?.selectedFile ?? File(''),
                                                             bio: _bio.text,
                                                             file_2: file2 ??
                                                                 PlatformFile(
@@ -1787,15 +1786,15 @@ class _StepScreenState extends State<StepScreen> {
                                                                     name: "",
                                                                     size: 0),
                                                             context: context,
-                                                            photo_2: image1 ??
+                                                            photo_2: _selectedimag2?.selectedFile ??
                                                                 File(''),
-                                                            photo_3: image2 ??
+                                                            photo_3: _selectedimag3?.selectedFile ??
                                                                 File(''),
-                                                            photo_4: image3 ??
+                                                            photo_4: _selectedimag4?.selectedFile ??
                                                                 File(''),
-                                                            photo_5: image4 ??
+                                                            photo_5: _selectedimag5?.selectedFile ??
                                                                 File(''),
-                                                            photo_6: image5 ??
+                                                            photo_6: _selectedimag6?.selectedFile ??
                                                                 File(''),
                                                             file_1: file1 ??
                                                                 PlatformFile(
@@ -4176,31 +4175,33 @@ class _StepScreenState extends State<StepScreen> {
                                                                       MainAxisAlignment
                                                                           .spaceBetween,
                                                                   children: [
-                                                                    Column(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Text(
-                                                                          files1,
-                                                                          style: const TextStyle(
-                                                                              fontFamily: 'Roboto',
-                                                                              fontSize: 12,
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: AppColor.dropdownfont),
-                                                                        ),
-                                                                        const Text(
-                                                                          '96.47 KB',
-                                                                          style: TextStyle(
-                                                                              fontFamily: 'Roboto',
-                                                                              fontSize: 8,
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: Color(0xff838383)),
-                                                                        ),
-                                                                      ],
+                                                                    Expanded(
+                                                                      child: Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment
+                                                                                .start,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment
+                                                                                .center,
+                                                                        children: [
+                                                                          Text(
+                                                                            files1,
+                                                                            style: const TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 12,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                          const Text(
+                                                                            '96.47 KB',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 8,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: Color(0xff838383)),
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                     InkWell(
                                                                       onTap:
@@ -4836,17 +4837,21 @@ class _StepScreenState extends State<StepScreen> {
                                           BusinessProfileState>(
                                         builder: (context, state) {
                                           if (state is BusinessProfileLoading) {
-                                            return CustomBottonLoader();
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(vertical: screenHeight(context,
+                                                  dividedBy: 20)),
+                                              child: CustomBottonLoader(),
+                                            );
                                           }
                                           return Custom_botton(
                                             context,
                                             text: 'Next',
                                             onTap: () {
-                                              if (image == null) {
+                                              if (_selectedimag1 == null) {
                                                 flutterToast(
                                                     "Please Enter atlest 2 image or video",
                                                     false);
-                                              } else if (image1 == null) {
+                                              } else if (_selectedimag2 == null) {
                                                 flutterToast(
                                                     "Please Enter 1 more image or video",
                                                     false);
@@ -4857,7 +4862,7 @@ class _StepScreenState extends State<StepScreen> {
                                               } else {
                                                 businessProfileCubit
                                                         .BusinessProfileService(
-                                                            photo_1: image ??
+                                                            photo_1: _selectedimag1?.selectedFile ??
                                                                 File(''),
                                                             bio: _bio.text,
                                                             file_2: file2 ??
@@ -4869,15 +4874,15 @@ class _StepScreenState extends State<StepScreen> {
                                                                     name: "",
                                                                     size: 0),
                                                             context: context,
-                                                            photo_2: image1 ??
+                                                            photo_2: _selectedimag2?.selectedFile ??
                                                                 File(''),
-                                                            photo_3: image2 ??
+                                                            photo_3: _selectedimag3?.selectedFile ??
                                                                 File(''),
-                                                            photo_4: image3 ??
+                                                            photo_4: _selectedimag4?.selectedFile ??
                                                                 File(''),
-                                                            photo_5: image4 ??
+                                                            photo_5: _selectedimag5?.selectedFile ??
                                                                 File(''),
-                                                            photo_6: image5 ??
+                                                            photo_6: _selectedimag6?.selectedFile ??
                                                                 File(''),
                                                             file_1: file1 ??
                                                                 PlatformFile(

@@ -1,12 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/image_page.dart';
+import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:video_player/video_player.dart';
+import 'package:path/path.dart' as path;
 
 class UsersDetails extends StatefulWidget {
   String Name,role,country,Company,bio,file1,file2,file3;
@@ -22,6 +24,12 @@ class _UsersDetailsState extends State<UsersDetails>
     with TickerProviderStateMixin {
   int pageViewIndex = 0;
   final TextEditingController _bio = TextEditingController();
+  bool file1 = false;
+  bool file2 = false;
+  bool file3 = false;
+  String _file1 = '';
+  String _file2 = '';
+  String _file3 = '';
 
   List lookingFor = [
     'Investor',
@@ -39,20 +47,48 @@ class _UsersDetailsState extends State<UsersDetails>
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
   ];
 
-  getlist() {
-    print("object");
-    List<String> images = [];
-    List<String> videos = [];
+  getpath(var filePath){
+    String fileName = path.basename(filePath);
 
-    list.forEach((url) {
-      if (url.endsWith('.mp4')) {
-        videos.add(url);
-      } else {
-        images.add(url);
-      }
-    });
-    print(videos);
-    print(images);
+    // Splitting the name using '-' as a separator
+    List<String> nameParts = fileName.split('-');
+
+    // Assuming the desired part is always at index 1
+    _file1 = nameParts.length > 1 ? nameParts[1] : fileName;
+  }
+  getpath1(var filePath){
+    String fileName = path.basename(filePath);
+
+    // Splitting the name using '-' as a separator
+    List<String> nameParts = fileName.split('-');
+
+    // Assuming the desired part is always at index 1
+    _file2 = nameParts.length > 1 ? nameParts[1] : fileName;
+  }
+  getpath2(var filePath){
+    String fileName = path.basename(filePath);
+
+    // Splitting the name using '-' as a separator
+    List<String> nameParts = fileName.split('-');
+
+    // Assuming the desired part is always at index 1
+    _file3 = nameParts.length > 1 ? nameParts[1] : fileName;
+  }
+  GetData() async {
+
+    file1 = widget.file1.isNotEmpty ? true : false;
+    file2 = widget.file2.isNotEmpty ? true : false;
+    file3 = widget.file3.isNotEmpty ? true : false;
+    if(file1){
+      getpath(widget.file1);
+    }
+    if(file2){
+      getpath(widget.file2);
+    }
+    if(file3){
+      getpath(widget.file3);
+    }
+    setState(() {});
   }
 
   @override
@@ -60,12 +96,14 @@ class _UsersDetailsState extends State<UsersDetails>
     // TODO: implement initState
     super.initState();
     widget.list = widget.list.toSet().toList();
+    GetData();
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     _bio.text = widget.bio;
+    GetData();
     return Scaffold(
       body: SizedBox(
         height: screenHeight(context),
@@ -364,87 +402,228 @@ class _UsersDetailsState extends State<UsersDetails>
                             height: screenHeight(context, dividedBy: 50),
                           ),
                           custom_textfield_header(text: 'Documents'),
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                                vertical:
-                                screenHeight(context, dividedBy: 150)),
-                            height: screenHeight(context, dividedBy: 4.3),
-                            width: screenWidth(context),
-                            child: ListView.builder(
-                              physics: const ClampingScrollPhysics(),
-                              //padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 100)),
-                              itemCount: 3,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: screenHeight(context,
-                                          dividedBy: 200)),
-                                  height: screenHeight(context, dividedBy: 15),
-                                  width: screenWidth(context),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color: AppColor.white,
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: AppColor.fontgray,
-                                        offset: Offset(
-                                          0,
-                                          0,
-                                        ),
-                                        blurRadius: 8,
-                                        // spreadRadius: 1.0,
-                                      ),
-                                    ],
+                          file1 ? InkWell(
+                            onTap: () async {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return Pdfview( pdfUrl: '${apis.baseurl}/${widget.file1}',);
+                              },));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical:
+                                  screenHeight(context, dividedBy: 190)),
+                              height: screenHeight(context, dividedBy: 15),
+                              width: screenWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: AppColor.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+                                    // spreadRadius: 1.0,
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: screenHeight(context,
-                                            dividedBy: 150),
-                                        horizontal: screenWidth(context,
-                                            dividedBy: 70)),
-                                    child: Row(
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                    screenHeight(context, dividedBy: 150),
+                                    horizontal:
+                                    screenWidth(context, dividedBy: 70)),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width:
+                                      screenWidth(context, dividedBy: 13),
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/uploadedfile.png'))),
+                                    ),
+                                    SizedBox(
+                                      width:
+                                      screenWidth(context, dividedBy: 50),
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                       children: [
-                                        Container(
-                                          width: screenWidth(context,
-                                              dividedBy: 14),
-                                          decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/Images/uploadedfile.png'))),
+                                        Text(
+                                          _file1,
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                        SizedBox(
-                                          width: screenWidth(context,
-                                              dividedBy: 50),
-                                        ),
-                                        const Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'image_03.PDF ',
-                                              style: TextStyle(
-                                                  fontFamily: 'Roboto',
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Text(
-                                              '96.47 KB ',
-                                              style: TextStyle(
-                                                  fontFamily: 'Roboto',
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
+                                        Text(
+                                          '96.47 KB ',
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w500),
                                         )
                                       ],
-                                    ),
-                                  ),
-                                );
-                              },
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
+                          ) : const SizedBox(),
+                          file2 ? InkWell(
+                            onTap: () async {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return Pdfview( pdfUrl: '${apis.baseurl}/${widget.file2}',);
+                              },));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical:
+                                  screenHeight(context, dividedBy: 190)),
+                              height: screenHeight(context, dividedBy: 15),
+                              width: screenWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: AppColor.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+                                    // spreadRadius: 1.0,
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                    screenHeight(context, dividedBy: 150),
+                                    horizontal:
+                                    screenWidth(context, dividedBy: 70)),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width:
+                                      screenWidth(context, dividedBy: 13),
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/uploadedfile.png'))),
+                                    ),
+                                    SizedBox(
+                                      width:
+                                      screenWidth(context, dividedBy: 50),
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _file2,
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          '96.47 KB ',
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ) : const SizedBox(),
+                          file3 ? InkWell(
+                            onTap: () async {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return Pdfview( pdfUrl: '${apis.baseurl}/${widget.file3}',);
+                              },));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical:
+                                  screenHeight(context, dividedBy: 190)),
+                              height: screenHeight(context, dividedBy: 15),
+                              width: screenWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: AppColor.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      1,
+                                      1,
+                                    ),
+                                    blurRadius: 4,
+                                    // spreadRadius: 1.0,
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical:
+                                    screenHeight(context, dividedBy: 150),
+                                    horizontal:
+                                    screenWidth(context, dividedBy: 70)),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width:
+                                      screenWidth(context, dividedBy: 13),
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/uploadedfile.png'))),
+                                    ),
+                                    SizedBox(
+                                      width:
+                                      screenWidth(context, dividedBy: 50),
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _file3,
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          '96.47 KB ',
+                                          style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ) : const SizedBox(),
                         ],
                       ),
                     )
