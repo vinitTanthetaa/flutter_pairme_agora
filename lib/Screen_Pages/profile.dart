@@ -43,25 +43,7 @@ class _Profile_pageState extends State<Profile_page> {
     List<String> nameParts = fileName.split('-');
 
     // Assuming the desired part is always at index 1
-    _file1 = nameParts.length > 1 ? nameParts[1] : fileName;
-  }
-  getpath1(var filePath){
-    String fileName = path.basename(filePath);
-
-    // Splitting the name using '-' as a separator
-    List<String> nameParts = fileName.split('-');
-
-    // Assuming the desired part is always at index 1
-    _file2 = nameParts.length > 1 ? nameParts[1] : fileName;
-  }
-  getpath2(var filePath){
-    String fileName = path.basename(filePath);
-
-    // Splitting the name using '-' as a separator
-    List<String> nameParts = fileName.split('-');
-
-    // Assuming the desired part is always at index 1
-    _file3 = nameParts.length > 1 ? nameParts[1] : fileName;
+    return nameParts.length > 1 ? nameParts[1] : fileName;
   }
   GetData() async {
     userProfile = await userDetailsCubit.GetUserdetails() ?? UserProfile();
@@ -72,13 +54,13 @@ class _Profile_pageState extends State<Profile_page> {
      file2 = userProfile.data?.first.file?.file2?.isNotEmpty ?? false;
      file3 = userProfile.data?.first.file?.file3?.isNotEmpty ?? false;
      if(file1){
-       getpath(userProfile.data?.first.file?.file1 ?? '');
+      _file1 =  getpath(userProfile.data?.first.file?.file1 ?? '');
      }
      if(file2){
-       getpath(userProfile.data?.first.file?.file2 ?? '');
+       _file2 =  getpath(userProfile.data?.first.file?.file2 ?? '');
      }
      if(file3){
-       getpath(userProfile.data?.first.file?.file3 ?? '');
+       _file3 = getpath(userProfile.data?.first.file?.file3 ?? '');
      }
     setState(() {});
   }
@@ -512,12 +494,12 @@ class _Profile_pageState extends State<Profile_page> {
                                       children: [
                                         Text(
                                           _file2,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 13,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        Text(
+                                        const Text(
                                           '96.47 KB ',
                                           style: TextStyle(
                                               fontFamily: 'Roboto',
@@ -586,12 +568,12 @@ class _Profile_pageState extends State<Profile_page> {
                                       children: [
                                         Text(
                                           _file3,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 13,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        Text(
+                                        const Text(
                                           '96.47 KB ',
                                           style: TextStyle(
                                               fontFamily: 'Roboto',

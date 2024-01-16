@@ -5,11 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/cubits/City&state.dart';
 import 'package:pair_me/cubits/Filter_user.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:pair_me/helper/pref_Service.dart';
 
 class Filter_page extends StatefulWidget {
   const Filter_page({super.key});
@@ -23,18 +25,9 @@ class _Filter_pageState extends State<Filter_page> {
   final TextEditingController _Contry = TextEditingController();
   final TextEditingController _State = TextEditingController();
   final TextEditingController _City = TextEditingController();
-  List _type =[];
-
-  List lookingFor = [
-    'Investor',
-    'Startup founder',
-    'Corporate executive',
-    'Manufacturer',
-    'Distributor',
-    'Channel partner',
-    'Business partner',
-    'Translator',
-  ];
+  SharedPrefsService prefsService = SharedPrefsService();
+  List<String> _type =[];
+  List lookingFor = ['Investor', 'Startup founder', 'Corporate executive', 'Manufacturer', 'Distributor', 'Channel partner', 'Business partner', 'Translator',];
   bool _state = false;
   bool _city = false;
   double _slider = 10;
@@ -48,12 +41,24 @@ class _Filter_pageState extends State<Filter_page> {
     cityandState = (await cityStateCubit.getcalendarEvents(country: country))!;
     setState(() {});
   }
+  getPreData() async {
+    _gender.text = (await prefsService.getStringData("gender"))!;
+    _slider = (await prefsService.getDoubleData("slider"))!;
+    _Contry.text = (await prefsService.getStringData("contry"))!;
+    _State.text = (await prefsService.getStringData("state"))!;
+    _City.text = (await prefsService.getStringData("city"))!;
+    setState(() {});
+    _type = (await prefsService.getStringlistData("type"))!;
+   setState(() {});
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     cityStateCubit = BlocProvider.of<CityStateCubit>(context);
     filterUserCubit = BlocProvider.of<FilterUserCubit>(context);
+    getPreData();
+    setState(() {});
   }
   @override
   Widget build(BuildContext context) {
@@ -71,10 +76,14 @@ class _Filter_pageState extends State<Filter_page> {
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 automaticallyImplyLeading: false,
+                actions: [
+                  TextButton(onPressed: () {
+                    filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text, state: _State.text, city: _City.text, gender: gender, looking_for: _type, context: context);
+                  }, child: const Text("Apply",style: TextStyle(color: AppColor.skyBlue),))
+                ],
                 leading: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
-                     // filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text, state: _State.text, city: _City.text, gender: gender, looking_for: _type, context: context);
+                      Navigator.pop(context,'refresh');
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 8.0),
@@ -136,6 +145,7 @@ class _Filter_pageState extends State<Filter_page> {
                                     onChanged: (value) {
                                     setState(() {
                                       _slider = value;
+                                      prefsService.setDoubleData("slider", _slider);
                                     });
                                   },)
                                 // GradientSlider(
@@ -236,6 +246,8 @@ class _Filter_pageState extends State<Filter_page> {
                                       setState(() {
                                         gender = value!;
                                         _gender.text =gender;
+                                        popup = !popup;
+                                        prefsService.setStringData("gender", _gender.text);
                                         print("value :$value");
                                       });
                                     },),),
@@ -248,6 +260,8 @@ class _Filter_pageState extends State<Filter_page> {
                                       setState(() {
                                         gender = value!;
                                         _gender.text =gender;
+                                        popup = !popup;
+                                        prefsService.setStringData("gender", _gender.text);
                                         print("value :$value");
                                       });
                                     },),),
@@ -265,12 +279,22 @@ class _Filter_pageState extends State<Filter_page> {
                             showPhoneCode: true,
                             onSelect: (Country country) {
                               _Contry.text = country.name;
+                              prefsService.setStringData("contry",_Contry.text);
                               GetData(_Contry.text);
                               setState(() {});
                             },
                           );
                         },show_icon: true,image:  'assets/Images/right_arrow.png', readOnly: true, onPress: () {
-
+                          showCountryPicker(
+                            context: context,
+                            showPhoneCode: true,
+                            onSelect: (Country country) {
+                              _Contry.text = country.name;
+                              prefsService.setStringData("contry",_Contry.text);
+                              GetData(_Contry.text);
+                              setState(() {});
+                            },
+                          );
                         }, hint: "Select", hidetext: false, controller: _Contry),
                         Row(
                           children: [
@@ -352,6 +376,7 @@ class _Filter_pageState extends State<Filter_page> {
                                                     index]
                                                         .name ??
                                                         '';
+                                                    prefsService.setStringData("state", _State.text);
                                                     _state = !_state;
                                                     setState(() {
 
@@ -463,6 +488,7 @@ class _Filter_pageState extends State<Filter_page> {
                                                         ?.cities[
                                                     index] ??
                                                         '';
+                                                    prefsService.setStringData("city", _City.text);
                                                     _city = !_city;
                                                     setState(() {});
                                                   },
@@ -522,7 +548,8 @@ class _Filter_pageState extends State<Filter_page> {
                                 overlayColor: const MaterialStatePropertyAll(Colors.white),
                                 onTap: () {
                                   setState(() {
-                                    _type.contains(e) ? _type.remove(e) :_type.add(e);
+                                    _type.contains(e) ? _type.remove(e) : _type.length >= 3 ?flutterToast("only 3 tags select", false) :_type.add(e);
+                                    prefsService.setStringlistData("type", _type);
                                   });
                                 },
                                 child: Container(

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsService {
@@ -19,6 +21,16 @@ class SharedPrefsService {
   Future<int?> getIntData(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getInt(key) ?? 0;
+  }
+
+  setDoubleData(String key, double data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setDouble(key, data);
+  }
+
+  Future<double?> getDoubleData(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble(key) ?? 0.0;
   }
 
   setStringData(String key, String data) async {

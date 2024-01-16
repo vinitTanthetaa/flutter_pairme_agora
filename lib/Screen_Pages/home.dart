@@ -9,11 +9,13 @@ import 'package:lottie/lottie.dart';
 import 'package:pair_me/Modal/alluserprofile.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
+import 'package:pair_me/Screen_Pages/connections_page.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/Filter_user.dart';
 import 'package:pair_me/cubits/connect_user.dart';
 import 'package:pair_me/cubits/reject_user.dart';
 import 'package:pair_me/cubits/show_all_users.dart';
@@ -51,9 +53,16 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   ConnectUserCubit connectUserCubit = ConnectUserCubit();
   RejectUserCubit rejectUserCubit = RejectUserCubit();
   UndoUsersCubit undoUsersCubit = UndoUsersCubit();
+  FilterUserCubit filterUserCubit = FilterUserCubit();
+  final TextEditingController _gender = TextEditingController();
+  final TextEditingController _Contry = TextEditingController();
+  final TextEditingController _State = TextEditingController();
+  final TextEditingController _City = TextEditingController();
   late AppinioSwiperController controller = AppinioSwiperController();
   final TextEditingController bio = TextEditingController();
   AnimationController? _controller;
+  double _slider = 10;
+  List _type =[];
   List users = [
     {
       'Name': 'Virat Kohli',
@@ -155,15 +164,18 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
 
   getData() async {
     allUsersdetails = (await allUsersDetailsCubit.GetAllUsersDetails())!;
-    print(
-        "==============================================>>${allUsersdetails.data?.first.length}");
-    print(
-        "==============================================>>${allUsersdetails.data?.length}");
-    print(
-        "==============================================>>${allUsersdetails.data?[0].length}");
     setState(() {});
   }
-
+  getPreData() async {
+    _gender.text = (await prefsService.getStringData("gender"))!;
+    _slider = (await prefsService.getDoubleData("slider"))!;
+    _Contry.text = (await prefsService.getStringData("contry"))!;
+    _State.text = (await prefsService.getStringData("state"))!;
+    _City.text = (await prefsService.getStringData("city"))!;
+    setState(() {});
+    _type = (await prefsService.getStringlistData("type"))!;
+    setState(() {});
+  }
   getImage(int index) {
     if (allUsersdetails.data?[index].last.image != null) {
       if (allUsersdetails.data?[index].last.image?.photo1 == null &&
@@ -213,6 +225,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     rejectUserCubit = BlocProvider.of<RejectUserCubit>(context);
     connectUserCubit = BlocProvider.of<ConnectUserCubit>(context);
     undoUsersCubit = BlocProvider.of<UndoUsersCubit>(context);
+    filterUserCubit = BlocProvider.of<FilterUserCubit>(context);
     createTutorial();
     getData();
     _controller = AnimationController(vsync: this);
@@ -248,7 +261,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                             height: screenHeight(context, dividedBy: 20),
                             width: screenWidth(context),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
                                   height: screenHeight(context, dividedBy: 30),
@@ -258,13 +270,37 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           image: AssetImage(
                                               'assets/Images/pairme.png'))),
                                 ),
+                                const Spacer(),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      return const Connection_Page();
+                                    },));
+                                  },
+                                  child: SvgPicture.asset(
+                                      "assets/Images/Vector.svg",
+                                    height: screenHeight(context, dividedBy: 40),
+                                    width: screenHeight(context, dividedBy: 40),
+                                  ),
+                                ),
+                                SizedBox(width: screenWidth(context,dividedBy: 20),),
+                                InkWell(
+                                  onTap: () async {
+                                   String refresh = await Navigator.push(context, MaterialPageRoute(
                                       builder: (context) {
                                         return const Filter_page();
                                       },
                                     ));
+                                   if(refresh == "refresh"){
+                                     print("hello");
+                                     getPreData();
+                                     print("hello");
+                                     if(_Contry.text.isNotEmpty || _gender.text.isNotEmpty || _State.text.isNotEmpty || _City.text.isNotEmpty || _type.isNotEmpty){
+                                       filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text, state: _State.text, city: _City.text, gender: _gender.text, looking_for: _type, context: context).then((value) {
+                                         print("api colled");
+                                       });
+                                     }
+                                   }
                                   },
                                   child: Container(
                                     key: _key,
@@ -1300,19 +1336,19 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button2.svg",
                                                                     onTap: () {
-                                                                      connectUserCubit.GetConnectUser(
-                                                                              id: allUsersdetails.data?[ind].first.id ?? '')
-                                                                          .then(
-                                                                        (value) {
-                                                                          controller
-                                                                              .swipeDown();
-                                                                          setState(
+                                                                      controller.swipeDown();
+                                                                      setState(
                                                                               () {
                                                                             bottonname =
-                                                                                "Connect";
+                                                                            "Connect";
                                                                           });
-                                                                        },
-                                                                      );
+                                                                      // connectUserCubit.GetConnectUser(
+                                                                      //         id: allUsersdetails.data?[ind].first.id ?? '')
+                                                                      //     .then(
+                                                                      //   (value) {
+                                                                      //
+                                                                      //   },
+                                                                      // );
                                                                     },
                                                                     buttonName:
                                                                         "Connect",

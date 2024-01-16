@@ -54,39 +54,21 @@ class _UsersDetailsState extends State<UsersDetails>
     List<String> nameParts = fileName.split('-');
 
     // Assuming the desired part is always at index 1
-    _file1 = nameParts.length > 1 ? nameParts[1] : fileName;
-  }
-  getpath1(var filePath){
-    String fileName = path.basename(filePath);
-
-    // Splitting the name using '-' as a separator
-    List<String> nameParts = fileName.split('-');
-
-    // Assuming the desired part is always at index 1
-    _file2 = nameParts.length > 1 ? nameParts[1] : fileName;
-  }
-  getpath2(var filePath){
-    String fileName = path.basename(filePath);
-
-    // Splitting the name using '-' as a separator
-    List<String> nameParts = fileName.split('-');
-
-    // Assuming the desired part is always at index 1
-    _file3 = nameParts.length > 1 ? nameParts[1] : fileName;
+    return nameParts.length > 1 ? nameParts[1] : fileName;
   }
   GetData() async {
 
-    file1 = widget.file1.isNotEmpty ? true : false;
-    file2 = widget.file2.isNotEmpty ? true : false;
-    file3 = widget.file3.isNotEmpty ? true : false;
+    file1 = widget.file1.isNotEmpty ? true : false ;
+    file2 = widget.file2.isNotEmpty ? true : false ;
+    file3 = widget.file3.isNotEmpty ? true : false ;
     if(file1){
-      getpath(widget.file1);
+     _file1 = getpath(widget.file1);
     }
     if(file2){
-      getpath(widget.file2);
+      _file2 =  getpath(widget.file2);
     }
     if(file3){
-      getpath(widget.file3);
+      _file3 =  getpath(widget.file3);
     }
     setState(() {});
   }
@@ -102,8 +84,10 @@ class _UsersDetailsState extends State<UsersDetails>
 
   @override
   Widget build(BuildContext context) {
-    _bio.text = widget.bio;
-    GetData();
+    setState(() {
+      _bio.text = widget.bio;
+      GetData();
+    });
     return Scaffold(
       body: SizedBox(
         height: screenHeight(context),

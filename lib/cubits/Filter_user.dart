@@ -26,23 +26,22 @@ class FilterUserCubit extends Cubit<FilterUserState> {
   FilterUserCubit() : super(FilterUserInitials());
 
   Future<void> FilterUserService(
-      {required String distance,
-        required String country,
-        required String state,
-        required String city,
-        required String gender,
-        required List looking_for,
+      { String? distance,
+         String? country,
+         String? state,
+         String? city,
+         String? gender,
+         List? looking_for,
         required BuildContext context}) async {
     emit(FilterUserLoading());
     final dio = Dio();
     Map<String, dynamic> body = {
-      "distance": distance,
-      "gender": gender,
-      "looking_for": looking_for,
-      "country":country,
-      "city": city,
-      "state": state,
-
+       "distance": distance,
+      "gender": gender  ,
+      "looking_for": looking_for ,
+       "country":country,
+       "city": city,
+       "state": state,
     };
     print("Body is $body");
     try {
