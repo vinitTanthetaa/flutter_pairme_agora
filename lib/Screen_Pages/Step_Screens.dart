@@ -108,8 +108,9 @@ class _StepScreenState extends State<StepScreen> {
   PlatformFile? file3;
   String img = '';
   String Uname = '';
-  RegExp regExp =  RegExp('\b*@abc\.net\$');
-  RegExp regExp1 =  RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+  RegExp regExp = RegExp('\b*@abc\.net\$');
+  RegExp regExp1 = RegExp(
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   final List _categorys = [
     'Entrepreneurship',
     'Leadership',
@@ -302,36 +303,39 @@ class _StepScreenState extends State<StepScreen> {
                               skip_button(
                                 context,
                                 onTap: () {
-                                  if(_Address.text.isNotEmpty || _Address2.text.isNotEmpty ) {
-                                    if(_Contry.text.isEmpty){
+                                  if (_Address.text.isNotEmpty ||
+                                      _Address2.text.isNotEmpty) {
+                                    if (_Contry.text.isEmpty) {
                                       flutterToast("Enter Your Country", false);
-                                    } else if(_City.text.isEmpty) {
+                                    } else if (_City.text.isEmpty) {
                                       flutterToast("Enter Your City", false);
-                                    } else if(_State.text.isEmpty) {
+                                    } else if (_State.text.isEmpty) {
                                       flutterToast("Enter Your State", false);
-                                    } else if(_Zipcode.text.isEmpty) {
+                                    } else if (_Zipcode.text.isEmpty) {
                                       flutterToast("Enter Your Zipcode", false);
                                     } else {
                                       adressDetailsCubit.AdressDetailsService(
-                                          address: "${_Address.text}${_Address2
-                                              .text}",
-                                          country: _Contry.text,
-                                          state: _State.text,
-                                          city: _City.text,
-                                          zipCode: _Zipcode.text,
-                                          context: context).then((value) {
+                                              address:
+                                                  "${_Address.text}${_Address2.text}",
+                                              country: _Contry.text,
+                                              state: _State.text,
+                                              city: _City.text,
+                                              zipCode: _Zipcode.text,
+                                              context: context)
+                                          .then((value) {
                                         setState(() {
                                           ind++;
                                         });
                                       });
                                     }
                                   } else {
-                                    flutterToast("Please Enter Your Address", true);
+                                    flutterToast(
+                                        "Please Enter Your Address", true);
                                   }
-                                //   // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                //   //   return Professional_Details(Name: '',);
-                                //   // },));
-                                 },
+                                  //   // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  //   //   return Professional_Details(Name: '',);
+                                  //   // },));
+                                },
                               )
                             ],
                           ),
@@ -697,26 +701,56 @@ class _StepScreenState extends State<StepScreen> {
                                   skip_button(
                                     context,
                                     onTap: () {
-                                      if(_compnyName.text.isEmpty){
-                                        flutterToast("Please Enter Your Company Name", false);
-                                      } else
-                                      if(_jobTitle.text.isEmpty){
-                                        flutterToast("Please Enter Your Job Title/Add Role", false);
-                                      } else
-                                      if(_compnyDomain.text.isEmpty){
-                                        flutterToast("Please Enter Your Company Domain", false);
-                                      } else
-                                      if(_email.text.isEmpty){
-                                        flutterToast("Please Enter Email", false);
-                                      } else
-                                      if(_categorycontroller.text.isEmpty){
-                                        flutterToast("Please Enter Category", false);
+                                      if (_compnyName.text.isEmpty) {
+                                        flutterToast(
+                                            "Please Enter Your Company Name",
+                                            false);
+                                      } else if (_jobTitle.text.isEmpty) {
+                                        flutterToast(
+                                            "Please Enter Your Job Title/Add Role",
+                                            false);
+                                      } else if (_compnyDomain.text.isEmpty) {
+                                        flutterToast(
+                                            "Please Enter Your Company Domain",
+                                            false);
+                                      } else if (_email.text.isEmpty) {
+                                        flutterToast(
+                                            "Please Enter Email", false);
+                                      } else if (_categorycontroller
+                                          .text.isEmpty) {
+                                        flutterToast(
+                                            "Please Enter Category", false);
                                       } else {
-                                        professionalDetailsCubit.ProfessionalDetailsService(company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) {
-                                          setState(() {
-                                            ind++;
-                                          });
-                                        },);
+                                        professionalDetailsCubit
+                                                .ProfessionalDetailsService(
+                                                    company_name:
+                                                        _compnyName.text,
+                                                    add_role: _jobTitle.text,
+                                                    company_domain:
+                                                        _compnyDomain.text,
+                                                    email: _email.text,
+                                                    category:
+                                                        _categorycontroller
+                                                            .text,
+                                                    business_experience:
+                                                        _experiencecontroller
+                                                            .text,
+                                                    skills:
+                                                        _skillcontroller.text,
+                                                    education:
+                                                        _educationcontroller
+                                                            .text,
+                                                    university:
+                                                        _univercitycontroller
+                                                            .text,
+                                                    context: context)
+                                            .then(
+                                          (value) {
+                                            setState(() {
+                                              ind++;
+                                            });
+                                          },
+                                        );
                                       }
                                     },
                                     // onTap: () {
@@ -1179,38 +1213,45 @@ class _StepScreenState extends State<StepScreen> {
                                           "Please Enter Your Job Title/Add Role",
                                           false);
                                     } else if (_compnyDomain.text.isEmpty) {
-                                      flutterToast("Please Enter Your Company Domain", false);
-                                    } else if(regExp.hasMatch(_compnyDomain.text)){
+                                      flutterToast(
+                                          "Please Enter Your Company Domain",
+                                          false);
+                                    } else if (regExp
+                                        .hasMatch(_compnyDomain.text)) {
                                       if (_email.text.isEmpty) {
-                                        flutterToast("Please Enter Email", false);
-                                      } else if(regExp1.hasMatch(_email.text)){
-                                        if (_categorycontroller
-                                            .text.isEmpty) {
+                                        flutterToast(
+                                            "Please Enter Email", false);
+                                      } else if (regExp1
+                                          .hasMatch(_email.text)) {
+                                        if (_categorycontroller.text.isEmpty) {
                                           flutterToast(
                                               "Please Enter Category", false);
                                         } else {
                                           professionalDetailsCubit
-                                              .ProfessionalDetailsService(
-                                              company_name:
-                                              _compnyName.text,
-                                              add_role: _jobTitle.text,
-                                              company_domain:
-                                              _compnyDomain.text,
-                                              email: _email.text,
-                                              category:
-                                              _categorycontroller.text,
-                                              business_experience:
-                                              _experiencecontroller
-                                                  .text,
-                                              skills: _skillcontroller.text,
-                                              education:
-                                              _educationcontroller.text,
-                                              university:
-                                              _univercitycontroller
-                                                  .text,
-                                              context: context)
+                                                  .ProfessionalDetailsService(
+                                                      company_name:
+                                                          _compnyName.text,
+                                                      add_role: _jobTitle.text,
+                                                      company_domain:
+                                                          _compnyDomain.text,
+                                                      email: _email.text,
+                                                      category:
+                                                          _categorycontroller
+                                                              .text,
+                                                      business_experience:
+                                                          _experiencecontroller
+                                                              .text,
+                                                      skills:
+                                                          _skillcontroller.text,
+                                                      education:
+                                                          _educationcontroller
+                                                              .text,
+                                                      university:
+                                                          _univercitycontroller
+                                                              .text,
+                                                      context: context)
                                               .then(
-                                                (value) {
+                                            (value) {
                                               setState(() {
                                                 ind++;
                                               });
@@ -1218,10 +1259,13 @@ class _StepScreenState extends State<StepScreen> {
                                           );
                                         }
                                       } else {
-                                        flutterToast("Please Enter valid Email", false);
+                                        flutterToast(
+                                            "Please Enter valid Email", false);
                                       }
                                     } else {
-                                      flutterToast("Please Enter valid company domain", false);
+                                      flutterToast(
+                                          "Please Enter valid company domain",
+                                          false);
                                     }
                                   },
                                   // onTap: () {
@@ -1260,24 +1304,49 @@ class _StepScreenState extends State<StepScreen> {
                                       skip_button(
                                         context,
                                         onTap: () {
-                                          if(_Address1.text.isEmpty && _Address3.text.isEmpty){
-                                            flutterToast("Please Enter Your Business or Professinoal Address", false);
-                                          } else if(_Contry1.text.isEmpty){
-                                            flutterToast("Please Enter Your Business or Professinoal Contry", false);
-                                          } else if(_State1.text.isEmpty){
-                                            flutterToast("Please Enter Your Business or Professinoal State", false);
-                                          }else if(_City1.text.isEmpty){
-                                            flutterToast("Please Enter Your Business or Professinoal City", false);
-                                          }else if(_Zipcode1.text.isEmpty){
-                                            flutterToast("Please Enter Your Business or Professinoal Zipcode", false);
-                                          }else if(_date.text.isEmpty){
-                                            flutterToast("Please Enter Your Business or Professinoal Start date", false);
-                                          }else{
-                                            businessDetailsCubit.BusinessDetailsService(address: "${_Address1.text}${_Address3.text}", country: _Contry1.text, state: _State1.text, city: _City1.text, zipCode: _Zipcode1.text, context: context, startDate: _date.text).then((value) {
-                                              setState(() {
-                                                ind++;
-                                              });
-                                            },);
+                                          if (_Address1.text.isEmpty &&
+                                              _Address3.text.isEmpty) {
+                                            flutterToast(
+                                                "Please Enter Your Business or Professinoal Address",
+                                                false);
+                                          } else if (_Contry1.text.isEmpty) {
+                                            flutterToast(
+                                                "Please Enter Your Business or Professinoal Contry",
+                                                false);
+                                          } else if (_State1.text.isEmpty) {
+                                            flutterToast(
+                                                "Please Enter Your Business or Professinoal State",
+                                                false);
+                                          } else if (_City1.text.isEmpty) {
+                                            flutterToast(
+                                                "Please Enter Your Business or Professinoal City",
+                                                false);
+                                          } else if (_Zipcode1.text.isEmpty) {
+                                            flutterToast(
+                                                "Please Enter Your Business or Professinoal Zipcode",
+                                                false);
+                                          } else if (_date.text.isEmpty) {
+                                            flutterToast(
+                                                "Please Enter Your Business or Professinoal Start date",
+                                                false);
+                                          } else {
+                                            businessDetailsCubit
+                                                    .BusinessDetailsService(
+                                                        address:
+                                                            "${_Address1.text}${_Address3.text}",
+                                                        country: _Contry1.text,
+                                                        state: _State1.text,
+                                                        city: _City1.text,
+                                                        zipCode: _Zipcode1.text,
+                                                        context: context,
+                                                        startDate: _date.text)
+                                                .then(
+                                              (value) {
+                                                setState(() {
+                                                  ind++;
+                                                });
+                                              },
+                                            );
                                           }
 
                                           // Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -1764,7 +1833,8 @@ class _StepScreenState extends State<StepScreen> {
                                                 flutterToast(
                                                     "Please Enter atlest 2 image or video",
                                                     false);
-                                              } else if (_selectedimag2 == null) {
+                                              } else if (_selectedimag2 ==
+                                                  null) {
                                                 flutterToast(
                                                     "Please Enter 1 more image or video",
                                                     false);
@@ -1773,33 +1843,39 @@ class _StepScreenState extends State<StepScreen> {
                                                     "Please Enter atlest 1 file like pdf,doc,etc",
                                                     false);
                                               } else {
-                                                businessProfileCubit
-                                                        .BusinessProfileService(
-                                                            photo_1: _selectedimag1?.selectedFile ?? File(''),
-                                                            bio: _bio.text,
-                                                            file_2: file2 ??
-                                                                PlatformFile(
-                                                                    name: "",
-                                                                    size: 0),
-                                                            file_3: file3 ??
-                                                                PlatformFile(
-                                                                    name: "",
-                                                                    size: 0),
-                                                            context: context,
-                                                            photo_2: _selectedimag2?.selectedFile ??
-                                                                File(''),
-                                                            photo_3: _selectedimag3?.selectedFile ??
-                                                                File(''),
-                                                            photo_4: _selectedimag4?.selectedFile ??
-                                                                File(''),
-                                                            photo_5: _selectedimag5?.selectedFile ??
-                                                                File(''),
-                                                            photo_6: _selectedimag6?.selectedFile ??
-                                                                File(''),
-                                                            file_1: file1 ??
-                                                                PlatformFile(
-                                                                    name: "",
-                                                                    size: 0))
+                                                businessProfileCubit.BusinessProfileService(
+                                                        photo_1: _selectedimag1
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        bio: _bio.text,
+                                                        file_2: file2 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0),
+                                                        file_3: file3 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0),
+                                                        context: context,
+                                                        photo_2: _selectedimag2
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_3: _selectedimag3
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_4: _selectedimag4
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_5: _selectedimag5
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_6: _selectedimag6
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        file_1: file1 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0))
                                                     .then(
                                                   (value) {
                                                     setState(() {
@@ -4103,13 +4179,14 @@ class _StepScreenState extends State<StepScreen> {
                                                         print(
                                                             "data:-......${openFile1.toString()}");
                                                         Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  pdfviewshow(
-                                                                      pdfUrl:
-                                                                          openFile1),
-                                                            ),);
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                pdfviewshow(
+                                                                    pdfUrl:
+                                                                        openFile1),
+                                                          ),
+                                                        );
                                                       },
                                                       child: Container(
                                                         margin: EdgeInsets.only(
@@ -4176,13 +4253,12 @@ class _StepScreenState extends State<StepScreen> {
                                                                           .spaceBetween,
                                                                   children: [
                                                                     Expanded(
-                                                                      child: Column(
+                                                                      child:
+                                                                          Column(
                                                                         crossAxisAlignment:
-                                                                            CrossAxisAlignment
-                                                                                .start,
+                                                                            CrossAxisAlignment.start,
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
+                                                                            MainAxisAlignment.center,
                                                                         children: [
                                                                           Text(
                                                                             files1,
@@ -4241,10 +4317,12 @@ class _StepScreenState extends State<StepScreen> {
                                                                 Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
-                                                                    builder: (context) => pdfviewshow(
+                                                                    builder: (context) =>
+                                                                        pdfviewshow(
                                                                             pdfUrl:
-                                                                            openFile1),
-                                                                  ),);
+                                                                                openFile1),
+                                                                  ),
+                                                                );
                                                               },
                                                               child: Container(
                                                                 margin: EdgeInsets.only(
@@ -4257,18 +4335,16 @@ class _StepScreenState extends State<StepScreen> {
                                                                         context,
                                                                         dividedBy:
                                                                             15),
-                                                                width:
-                                                                    screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            1.3),
+                                                                width: screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        1.3),
                                                                 decoration: BoxDecoration(
                                                                     color: const Color(
                                                                         0xffEFF4FF),
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                6)),
+                                                                        BorderRadius.circular(
+                                                                            6)),
                                                                 child: Padding(
                                                                   padding: EdgeInsets.symmetric(
                                                                       horizontal: screenWidth(
@@ -4279,9 +4355,8 @@ class _StepScreenState extends State<StepScreen> {
                                                                     children: [
                                                                       Container(
                                                                         margin: EdgeInsets.only(
-                                                                            right: screenWidth(
-                                                                                context,
-                                                                                dividedBy: 90)),
+                                                                            right:
+                                                                                screenWidth(context, dividedBy: 90)),
                                                                         height: screenHeight(
                                                                             context,
                                                                             dividedBy:
@@ -4291,8 +4366,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                             dividedBy:
                                                                                 15),
                                                                         decoration:
-                                                                            const BoxDecoration(
-                                                                                image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
+                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                       ),
                                                                       SizedBox(
                                                                         height: screenHeight(
@@ -4309,10 +4383,8 @@ class _StepScreenState extends State<StepScreen> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Column(
-                                                                              crossAxisAlignment:
-                                                                                  CrossAxisAlignment.start,
-                                                                              mainAxisAlignment:
-                                                                                  MainAxisAlignment.center,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
                                                                               children: [
                                                                                 Text(
                                                                                   files1,
@@ -4325,15 +4397,13 @@ class _StepScreenState extends State<StepScreen> {
                                                                               ],
                                                                             ),
                                                                             InkWell(
-                                                                              onTap:
-                                                                                  () {
+                                                                              onTap: () {
                                                                                 showDialog(
                                                                                   context: context,
                                                                                   builder: (context) => addFolderNameDialog(filelist[0]),
                                                                                 );
                                                                               },
-                                                                              child:
-                                                                                  const Icon(
+                                                                              child: const Icon(
                                                                                 Icons.close,
                                                                                 color: AppColor.skyBlue,
                                                                                 size: 15,
@@ -4357,8 +4427,9 @@ class _StepScreenState extends State<StepScreen> {
                                                                     builder: (context) =>
                                                                         pdfviewshow(
                                                                             pdfUrl:
-                                                                            openFile2),
-                                                                  ),);
+                                                                                openFile2),
+                                                                  ),
+                                                                );
                                                               },
                                                               child: Container(
                                                                 margin: EdgeInsets.only(
@@ -4371,18 +4442,16 @@ class _StepScreenState extends State<StepScreen> {
                                                                         context,
                                                                         dividedBy:
                                                                             15),
-                                                                width:
-                                                                    screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            1.3),
+                                                                width: screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        1.3),
                                                                 decoration: BoxDecoration(
                                                                     color: const Color(
                                                                         0xffEFF4FF),
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                6)),
+                                                                        BorderRadius.circular(
+                                                                            6)),
                                                                 child: Padding(
                                                                   padding: EdgeInsets.symmetric(
                                                                       horizontal: screenWidth(
@@ -4393,9 +4462,8 @@ class _StepScreenState extends State<StepScreen> {
                                                                     children: [
                                                                       Container(
                                                                         margin: EdgeInsets.only(
-                                                                            right: screenWidth(
-                                                                                context,
-                                                                                dividedBy: 90)),
+                                                                            right:
+                                                                                screenWidth(context, dividedBy: 90)),
                                                                         height: screenHeight(
                                                                             context,
                                                                             dividedBy:
@@ -4405,8 +4473,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                             dividedBy:
                                                                                 15),
                                                                         decoration:
-                                                                            const BoxDecoration(
-                                                                                image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
+                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                       ),
                                                                       SizedBox(
                                                                         height: screenHeight(
@@ -4423,10 +4490,8 @@ class _StepScreenState extends State<StepScreen> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Column(
-                                                                              crossAxisAlignment:
-                                                                                  CrossAxisAlignment.start,
-                                                                              mainAxisAlignment:
-                                                                                  MainAxisAlignment.center,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
                                                                               children: [
                                                                                 Text(
                                                                                   files2,
@@ -4439,15 +4504,13 @@ class _StepScreenState extends State<StepScreen> {
                                                                               ],
                                                                             ),
                                                                             InkWell(
-                                                                              onTap:
-                                                                                  () {
+                                                                              onTap: () {
                                                                                 showDialog(
                                                                                   context: context,
                                                                                   builder: (context) => addFolderNameDialog(filelist[1]),
                                                                                 );
                                                                               },
-                                                                              child:
-                                                                                  const Icon(
+                                                                              child: const Icon(
                                                                                 Icons.close,
                                                                                 color: AppColor.skyBlue,
                                                                                 size: 15,
@@ -4470,16 +4533,18 @@ class _StepScreenState extends State<StepScreen> {
                                                                   onTap: () {
                                                                     print(
                                                                         "data:-......${openFile1.toString()}");
-                                                                    Navigator.push(
+                                                                    Navigator
+                                                                        .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            pdfviewshow(
-                                                                                pdfUrl:
-                                                                                openFile1),
-                                                                      ),);
+                                                                        builder:
+                                                                            (context) =>
+                                                                                pdfviewshow(pdfUrl: openFile1),
+                                                                      ),
+                                                                    );
                                                                   },
-                                                                  child: Container(
+                                                                  child:
+                                                                      Container(
                                                                     margin: EdgeInsets.only(
                                                                         top: screenHeight(
                                                                             context,
@@ -4497,40 +4562,34 @@ class _StepScreenState extends State<StepScreen> {
                                                                         color: const Color(
                                                                             0xffEFF4FF),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                6)),
+                                                                            BorderRadius.circular(6)),
                                                                     child:
                                                                         Padding(
                                                                       padding: EdgeInsets.symmetric(
                                                                           horizontal: screenWidth(
                                                                               context,
-                                                                              dividedBy:
-                                                                                  55)),
-                                                                      child: Row(
+                                                                              dividedBy: 55)),
+                                                                      child:
+                                                                          Row(
                                                                         children: [
                                                                           Container(
                                                                             margin:
                                                                                 EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
-                                                                            height: screenHeight(
-                                                                                context,
-                                                                                dividedBy: 27),
-                                                                            width: screenWidth(
-                                                                                context,
-                                                                                dividedBy: 15),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 27),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
                                                                             decoration:
                                                                                 const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                           ),
                                                                           SizedBox(
-                                                                            height: screenHeight(
-                                                                                context,
-                                                                                dividedBy: 23),
-                                                                            width: screenWidth(
-                                                                                context,
-                                                                                dividedBy: 1.55),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 23),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 1.55),
                                                                             child:
                                                                                 Row(
-                                                                              mainAxisAlignment:
-                                                                                  MainAxisAlignment.spaceBetween,
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
                                                                                 Column(
                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -4571,16 +4630,18 @@ class _StepScreenState extends State<StepScreen> {
                                                                   onTap: () {
                                                                     print(
                                                                         "data:-......${openFile1.toString()}");
-                                                                    Navigator.push(
+                                                                    Navigator
+                                                                        .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            pdfviewshow(
-                                                                                pdfUrl:
-                                                                                openFile2),
-                                                                      ),);
+                                                                        builder:
+                                                                            (context) =>
+                                                                                pdfviewshow(pdfUrl: openFile2),
+                                                                      ),
+                                                                    );
                                                                   },
-                                                                  child: Container(
+                                                                  child:
+                                                                      Container(
                                                                     margin: EdgeInsets.only(
                                                                         top: screenHeight(
                                                                             context,
@@ -4598,40 +4659,34 @@ class _StepScreenState extends State<StepScreen> {
                                                                         color: const Color(
                                                                             0xffEFF4FF),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                6)),
+                                                                            BorderRadius.circular(6)),
                                                                     child:
                                                                         Padding(
                                                                       padding: EdgeInsets.symmetric(
                                                                           horizontal: screenWidth(
                                                                               context,
-                                                                              dividedBy:
-                                                                                  55)),
-                                                                      child: Row(
+                                                                              dividedBy: 55)),
+                                                                      child:
+                                                                          Row(
                                                                         children: [
                                                                           Container(
                                                                             margin:
                                                                                 EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
-                                                                            height: screenHeight(
-                                                                                context,
-                                                                                dividedBy: 27),
-                                                                            width: screenWidth(
-                                                                                context,
-                                                                                dividedBy: 15),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 27),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
                                                                             decoration:
                                                                                 const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                           ),
                                                                           SizedBox(
-                                                                            height: screenHeight(
-                                                                                context,
-                                                                                dividedBy: 23),
-                                                                            width: screenWidth(
-                                                                                context,
-                                                                                dividedBy: 1.55),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 23),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 1.55),
                                                                             child:
                                                                                 Row(
-                                                                              mainAxisAlignment:
-                                                                                  MainAxisAlignment.spaceBetween,
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
                                                                                 Column(
                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -4672,16 +4727,18 @@ class _StepScreenState extends State<StepScreen> {
                                                                   onTap: () {
                                                                     print(
                                                                         "data:-......${openFile1.toString()}");
-                                                                    Navigator.push(
+                                                                    Navigator
+                                                                        .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            pdfviewshow(
-                                                                                pdfUrl:
-                                                                                openFile3),
-                                                                      ),);
+                                                                        builder:
+                                                                            (context) =>
+                                                                                pdfviewshow(pdfUrl: openFile3),
+                                                                      ),
+                                                                    );
                                                                   },
-                                                                  child: Container(
+                                                                  child:
+                                                                      Container(
                                                                     margin: EdgeInsets.only(
                                                                         top: screenHeight(
                                                                             context,
@@ -4699,40 +4756,34 @@ class _StepScreenState extends State<StepScreen> {
                                                                         color: const Color(
                                                                             0xffEFF4FF),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                6)),
+                                                                            BorderRadius.circular(6)),
                                                                     child:
                                                                         Padding(
                                                                       padding: EdgeInsets.symmetric(
                                                                           horizontal: screenWidth(
                                                                               context,
-                                                                              dividedBy:
-                                                                                  55)),
-                                                                      child: Row(
+                                                                              dividedBy: 55)),
+                                                                      child:
+                                                                          Row(
                                                                         children: [
                                                                           Container(
                                                                             margin:
                                                                                 EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
-                                                                            height: screenHeight(
-                                                                                context,
-                                                                                dividedBy: 27),
-                                                                            width: screenWidth(
-                                                                                context,
-                                                                                dividedBy: 15),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 27),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
                                                                             decoration:
                                                                                 const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                           ),
                                                                           SizedBox(
-                                                                            height: screenHeight(
-                                                                                context,
-                                                                                dividedBy: 23),
-                                                                            width: screenWidth(
-                                                                                context,
-                                                                                dividedBy: 1.55),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 23),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 1.55),
                                                                             child:
                                                                                 Row(
-                                                                              mainAxisAlignment:
-                                                                                  MainAxisAlignment.spaceBetween,
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
                                                                                 Column(
                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -4838,8 +4889,10 @@ class _StepScreenState extends State<StepScreen> {
                                         builder: (context, state) {
                                           if (state is BusinessProfileLoading) {
                                             return Padding(
-                                              padding: EdgeInsets.symmetric(vertical: screenHeight(context,
-                                                  dividedBy: 20)),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: screenHeight(
+                                                      context,
+                                                      dividedBy: 20)),
                                               child: CustomBottonLoader(),
                                             );
                                           }
@@ -4851,7 +4904,8 @@ class _StepScreenState extends State<StepScreen> {
                                                 flutterToast(
                                                     "Please Enter atlest 2 image or video",
                                                     false);
-                                              } else if (_selectedimag2 == null) {
+                                              } else if (_selectedimag2 ==
+                                                  null) {
                                                 flutterToast(
                                                     "Please Enter 1 more image or video",
                                                     false);
@@ -4860,34 +4914,39 @@ class _StepScreenState extends State<StepScreen> {
                                                     "Please Enter atlest 1 file like pdf,doc,etc",
                                                     false);
                                               } else {
-                                                businessProfileCubit
-                                                        .BusinessProfileService(
-                                                            photo_1: _selectedimag1?.selectedFile ??
-                                                                File(''),
-                                                            bio: _bio.text,
-                                                            file_2: file2 ??
-                                                                PlatformFile(
-                                                                    name: "",
-                                                                    size: 0),
-                                                            file_3: file3 ??
-                                                                PlatformFile(
-                                                                    name: "",
-                                                                    size: 0),
-                                                            context: context,
-                                                            photo_2: _selectedimag2?.selectedFile ??
-                                                                File(''),
-                                                            photo_3: _selectedimag3?.selectedFile ??
-                                                                File(''),
-                                                            photo_4: _selectedimag4?.selectedFile ??
-                                                                File(''),
-                                                            photo_5: _selectedimag5?.selectedFile ??
-                                                                File(''),
-                                                            photo_6: _selectedimag6?.selectedFile ??
-                                                                File(''),
-                                                            file_1: file1 ??
-                                                                PlatformFile(
-                                                                    name: "",
-                                                                    size: 0))
+                                                businessProfileCubit.BusinessProfileService(
+                                                        photo_1: _selectedimag1
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        bio: _bio.text,
+                                                        file_2: file2 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0),
+                                                        file_3: file3 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0),
+                                                        context: context,
+                                                        photo_2: _selectedimag2
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_3: _selectedimag3
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_4: _selectedimag4
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_5: _selectedimag5
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_6: _selectedimag6
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        file_1: file1 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0))
                                                     .then(
                                                   (value) {
                                                     setState(() {
