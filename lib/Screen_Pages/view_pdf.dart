@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -6,7 +8,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 class Pdfview extends StatefulWidget {
   final String pdfUrl;
 
-  const Pdfview({required this.pdfUrl});
+  const Pdfview({super.key, required this.pdfUrl});
 
   @override
   State<Pdfview> createState() => _PdfviewState();
@@ -41,7 +43,7 @@ class _PdfviewState extends State<Pdfview> {
 class pdfviewshow extends StatefulWidget {
   final String pdfUrl;
 
-  const pdfviewshow({required this.pdfUrl});
+  const pdfviewshow({super.key, required this.pdfUrl});
 
   @override
   State<pdfviewshow> createState() => _pdfviewshowState();
@@ -52,24 +54,20 @@ class _pdfviewshowState extends State<pdfviewshow> {
 
   @override
   Widget build(BuildContext context) {
-    print("Xyz:- ${widget.pdfUrl.toString()}");
     return Scaffold(
-      appBar: AppBar(
-        // automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        centerTitle: false,
-        titleSpacing: -10,
+        appBar: AppBar(
+          // automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          centerTitle: false,
+          titleSpacing: -10,
 
-        title: Padding(
-          padding: EdgeInsets.only(left: screenWidth(context, dividedBy: 30)),
-          child: custom_header(text: "Document"),
+          title: Padding(
+            padding: EdgeInsets.only(left: screenWidth(context, dividedBy: 30)),
+            child: custom_header(text: "Document"),
+          ),
         ),
-      ),
-      body: SfPdfViewer.asset(
-        widget.pdfUrl.toString(),
-        canShowPageLoadingIndicator: false,
-      ),
-    );
+        body: SfPdfViewer.file(File(widget.pdfUrl)));
+
   }
 }

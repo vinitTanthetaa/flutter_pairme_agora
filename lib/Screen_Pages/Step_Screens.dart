@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bottom_picker/bottom_picker.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
+import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
@@ -29,7 +29,6 @@ import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
-import 'package:pair_me/zxc.dart';
 import '../Widgets/custom_button.dart';
 
 class StepScreen extends StatefulWidget {
@@ -50,6 +49,9 @@ class _StepScreenState extends State<StepScreen> {
   String openFile1 = "";
   String openFile2 = "";
   String openFile3 = "";
+  int KB1 = 0;
+  int KB2 = 0;
+  int KB3 = 0;
   bool _contry = false;
   bool _state = false;
   bool _city = false;
@@ -3986,7 +3988,9 @@ class _StepScreenState extends State<StepScreen> {
                                                         'doc'
                                                       ],
                                                     );
-
+                                                    print("fille1 ======> " +
+                                                        result!.count
+                                                            .toString());
                                                     if (filelist.length < 3) {
                                                       filelist.add(result!.files
                                                           .toString());
@@ -3994,7 +3998,8 @@ class _StepScreenState extends State<StepScreen> {
                                                           1) {
                                                         file1 =
                                                             result.files.first;
-                                                        openFile1 = result.paths.first
+                                                        openFile1 = result
+                                                            .paths.first
                                                             .toString();
                                                         files1 = result
                                                             .names.first
@@ -4002,11 +4007,14 @@ class _StepScreenState extends State<StepScreen> {
                                                         print("fille1 ======> " +
                                                             file1.toString());
                                                         print("fille1 ======> " +
-                                                            result.names
+                                                            result.count
                                                                 .toString());
                                                       } else if (filelist
                                                               .length ==
                                                           2) {
+                                                        openFile2 = result
+                                                            .paths.first
+                                                            .toString();
                                                         files2 = result
                                                             .names.first
                                                             .toString();
@@ -4017,6 +4025,9 @@ class _StepScreenState extends State<StepScreen> {
                                                       } else if (filelist
                                                               .length ==
                                                           3) {
+                                                        openFile3 = result
+                                                            .paths.first
+                                                            .toString();
                                                         files3 = result
                                                             .names.first
                                                             .toString();
@@ -4102,7 +4113,7 @@ class _StepScreenState extends State<StepScreen> {
                                                                   pdfviewshow(
                                                                       pdfUrl:
                                                                           openFile1),
-                                                            ));
+                                                            ),);
                                                       },
                                                       child: Container(
                                                         margin: EdgeInsets.only(
@@ -4225,203 +4236,230 @@ class _StepScreenState extends State<StepScreen> {
                                                   : filelist.length == 2
                                                       ? Column(
                                                           children: [
-                                                            Container(
-                                                              margin: EdgeInsets.only(
-                                                                  top: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          100)),
-                                                              height:
-                                                                  screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                              width:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.3),
-                                                              decoration: BoxDecoration(
-                                                                  color: const Color(
-                                                                      0xffEFF4FF),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              6)),
-                                                              child: Padding(
-                                                                padding: EdgeInsets.symmetric(
-                                                                    horizontal: screenWidth(
+                                                            InkWell(
+                                                              onTap: () {
+                                                                print(
+                                                                    "data:-......${openFile1.toString()}");
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                    builder: (context) => pdfviewshow(
+                                                                            pdfUrl:
+                                                                            openFile1),
+                                                                  ),);
+                                                              },
+                                                              child: Container(
+                                                                margin: EdgeInsets.only(
+                                                                    top: screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            55)),
-                                                                child: Row(
-                                                                  children: [
-                                                                    Container(
-                                                                      margin: EdgeInsets.only(
-                                                                          right: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 90)),
-                                                                      height: screenHeight(
+                                                                            100)),
+                                                                height:
+                                                                    screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                width:
+                                                                    screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            1.3),
+                                                                decoration: BoxDecoration(
+                                                                    color: const Color(
+                                                                        0xffEFF4FF),
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                6)),
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                      horizontal: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              27),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              15),
-                                                                      decoration:
-                                                                          const BoxDecoration(
-                                                                              image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              23),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.55),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          Column(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            children: [
-                                                                              Text(
-                                                                                files1,
-                                                                                style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                              ),
-                                                                              const Text(
-                                                                                '96.47 KB',
-                                                                                style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          InkWell(
-                                                                            onTap:
-                                                                                () {
-                                                                              showDialog(
-                                                                                context: context,
-                                                                                builder: (context) => addFolderNameDialog(filelist[0]),
-                                                                              );
-                                                                            },
-                                                                            child:
-                                                                                const Icon(
-                                                                              Icons.close,
-                                                                              color: AppColor.skyBlue,
-                                                                              size: 15,
-                                                                            ),
-                                                                          )
-                                                                        ],
+                                                                              55)),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 90)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                27),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                15),
+                                                                        decoration:
+                                                                            const BoxDecoration(
+                                                                                image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                23),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                1.55),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Column(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.start,
+                                                                              mainAxisAlignment:
+                                                                                  MainAxisAlignment.center,
+                                                                              children: [
+                                                                                Text(
+                                                                                  files1,
+                                                                                  style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                ),
+                                                                                const Text(
+                                                                                  '96.47 KB',
+                                                                                  style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                            InkWell(
+                                                                              onTap:
+                                                                                  () {
+                                                                                showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => addFolderNameDialog(filelist[0]),
+                                                                                );
+                                                                              },
+                                                                              child:
+                                                                                  const Icon(
+                                                                                Icons.close,
+                                                                                color: AppColor.skyBlue,
+                                                                                size: 15,
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
-                                                            Container(
-                                                              margin: EdgeInsets.only(
-                                                                  top: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          100)),
-                                                              height:
-                                                                  screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                              width:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.3),
-                                                              decoration: BoxDecoration(
-                                                                  color: const Color(
-                                                                      0xffEFF4FF),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              6)),
-                                                              child: Padding(
-                                                                padding: EdgeInsets.symmetric(
-                                                                    horizontal: screenWidth(
+                                                            InkWell(
+                                                              onTap: () {
+                                                                print(
+                                                                    "data:-......${openFile1.toString()}");
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                    builder: (context) =>
+                                                                        pdfviewshow(
+                                                                            pdfUrl:
+                                                                            openFile2),
+                                                                  ),);
+                                                              },
+                                                              child: Container(
+                                                                margin: EdgeInsets.only(
+                                                                    top: screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            55)),
-                                                                child: Row(
-                                                                  children: [
-                                                                    Container(
-                                                                      margin: EdgeInsets.only(
-                                                                          right: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 90)),
-                                                                      height: screenHeight(
+                                                                            100)),
+                                                                height:
+                                                                    screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                width:
+                                                                    screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            1.3),
+                                                                decoration: BoxDecoration(
+                                                                    color: const Color(
+                                                                        0xffEFF4FF),
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                6)),
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                      horizontal: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              27),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              15),
-                                                                      decoration:
-                                                                          const BoxDecoration(
-                                                                              image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              23),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.55),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          Column(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            children: [
-                                                                              Text(
-                                                                                files2,
-                                                                                style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                              ),
-                                                                              const Text(
-                                                                                '96.47 KB',
-                                                                                style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          InkWell(
-                                                                            onTap:
-                                                                                () {
-                                                                              showDialog(
-                                                                                context: context,
-                                                                                builder: (context) => addFolderNameDialog(filelist[1]),
-                                                                              );
-                                                                            },
-                                                                            child:
-                                                                                const Icon(
-                                                                              Icons.close,
-                                                                              color: AppColor.skyBlue,
-                                                                              size: 15,
-                                                                            ),
-                                                                          )
-                                                                        ],
+                                                                              55)),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 90)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                27),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                15),
+                                                                        decoration:
+                                                                            const BoxDecoration(
+                                                                                image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                23),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                1.55),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Column(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.start,
+                                                                              mainAxisAlignment:
+                                                                                  MainAxisAlignment.center,
+                                                                              children: [
+                                                                                Text(
+                                                                                  files2,
+                                                                                  style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                ),
+                                                                                const Text(
+                                                                                  '96.47 KB',
+                                                                                  style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                            InkWell(
+                                                                              onTap:
+                                                                                  () {
+                                                                                showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => addFolderNameDialog(filelist[1]),
+                                                                                );
+                                                                              },
+                                                                              child:
+                                                                                  const Icon(
+                                                                                Icons.close,
+                                                                                color: AppColor.skyBlue,
+                                                                                size: 15,
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -4430,264 +4468,306 @@ class _StepScreenState extends State<StepScreen> {
                                                       : filelist.length == 3
                                                           ? Column(
                                                               children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      top: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              100)),
-                                                                  height: screenHeight(
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    print(
+                                                                        "data:-......${openFile1.toString()}");
+                                                                    Navigator.push(
                                                                       context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.3),
-                                                                  decoration: BoxDecoration(
-                                                                      color: const Color(
-                                                                          0xffEFF4FF),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              6)),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                        horizontal: screenWidth(
+                                                                      MaterialPageRoute(
+                                                                        builder: (context) =>
+                                                                            pdfviewshow(
+                                                                                pdfUrl:
+                                                                                openFile1),
+                                                                      ),);
+                                                                  },
+                                                                  child: Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        top: screenHeight(
                                                                             context,
                                                                             dividedBy:
-                                                                                55)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Container(
-                                                                          margin:
-                                                                              EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
-                                                                          height: screenHeight(
+                                                                                100)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            1.3),
+                                                                    decoration: BoxDecoration(
+                                                                        color: const Color(
+                                                                            0xffEFF4FF),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                6)),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal: screenWidth(
                                                                               context,
-                                                                              dividedBy: 27),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 15),
-                                                                          decoration:
-                                                                              const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 23),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 1.55),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Column(
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    files1,
-                                                                                    style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                                  ),
-                                                                                  const Text(
-                                                                                    '96.47 KB',
-                                                                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                              InkWell(
-                                                                                onTap: () {
-                                                                                  showDialog(
-                                                                                    context: context,
-                                                                                    builder: (context) => addFolderNameDialog(filelist[0]),
-                                                                                  );
-                                                                                },
-                                                                                child: const Icon(
-                                                                                  Icons.close,
-                                                                                  color: AppColor.skyBlue,
-                                                                                  size: 15,
-                                                                                ),
-                                                                              )
-                                                                            ],
+                                                                              dividedBy:
+                                                                                  55)),
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 27),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                           ),
-                                                                        ),
-                                                                      ],
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 23),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 1.55),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisAlignment:
+                                                                                  MainAxisAlignment.spaceBetween,
+                                                                              children: [
+                                                                                Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      files1,
+                                                                                      style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                    ),
+                                                                                    const Text(
+                                                                                      '96.47 KB',
+                                                                                      style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                InkWell(
+                                                                                  onTap: () {
+                                                                                    showDialog(
+                                                                                      context: context,
+                                                                                      builder: (context) => addFolderNameDialog(filelist[0]),
+                                                                                    );
+                                                                                  },
+                                                                                  child: const Icon(
+                                                                                    Icons.close,
+                                                                                    color: AppColor.skyBlue,
+                                                                                    size: 15,
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      top: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              100)),
-                                                                  height: screenHeight(
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    print(
+                                                                        "data:-......${openFile1.toString()}");
+                                                                    Navigator.push(
                                                                       context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.3),
-                                                                  decoration: BoxDecoration(
-                                                                      color: const Color(
-                                                                          0xffEFF4FF),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              6)),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                        horizontal: screenWidth(
+                                                                      MaterialPageRoute(
+                                                                        builder: (context) =>
+                                                                            pdfviewshow(
+                                                                                pdfUrl:
+                                                                                openFile2),
+                                                                      ),);
+                                                                  },
+                                                                  child: Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        top: screenHeight(
                                                                             context,
                                                                             dividedBy:
-                                                                                55)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Container(
-                                                                          margin:
-                                                                              EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
-                                                                          height: screenHeight(
+                                                                                100)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            1.3),
+                                                                    decoration: BoxDecoration(
+                                                                        color: const Color(
+                                                                            0xffEFF4FF),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                6)),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal: screenWidth(
                                                                               context,
-                                                                              dividedBy: 27),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 15),
-                                                                          decoration:
-                                                                              const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 23),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 1.55),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Column(
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    files2,
-                                                                                    style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                                  ),
-                                                                                  const Text(
-                                                                                    '96.47 KB',
-                                                                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                              InkWell(
-                                                                                onTap: () {
-                                                                                  showDialog(
-                                                                                    context: context,
-                                                                                    builder: (context) => addFolderNameDialog(filelist[1]),
-                                                                                  );
-                                                                                },
-                                                                                child: const Icon(
-                                                                                  Icons.close,
-                                                                                  color: AppColor.skyBlue,
-                                                                                  size: 15,
-                                                                                ),
-                                                                              )
-                                                                            ],
+                                                                              dividedBy:
+                                                                                  55)),
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 27),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                           ),
-                                                                        ),
-                                                                      ],
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 23),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 1.55),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisAlignment:
+                                                                                  MainAxisAlignment.spaceBetween,
+                                                                              children: [
+                                                                                Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      files2,
+                                                                                      style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                    ),
+                                                                                    const Text(
+                                                                                      '96.47 KB',
+                                                                                      style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                InkWell(
+                                                                                  onTap: () {
+                                                                                    showDialog(
+                                                                                      context: context,
+                                                                                      builder: (context) => addFolderNameDialog(filelist[1]),
+                                                                                    );
+                                                                                  },
+                                                                                  child: const Icon(
+                                                                                    Icons.close,
+                                                                                    color: AppColor.skyBlue,
+                                                                                    size: 15,
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      top: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              100)),
-                                                                  height: screenHeight(
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    print(
+                                                                        "data:-......${openFile1.toString()}");
+                                                                    Navigator.push(
                                                                       context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.3),
-                                                                  decoration: BoxDecoration(
-                                                                      color: const Color(
-                                                                          0xffEFF4FF),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              6)),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                        horizontal: screenWidth(
+                                                                      MaterialPageRoute(
+                                                                        builder: (context) =>
+                                                                            pdfviewshow(
+                                                                                pdfUrl:
+                                                                                openFile3),
+                                                                      ),);
+                                                                  },
+                                                                  child: Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        top: screenHeight(
                                                                             context,
                                                                             dividedBy:
-                                                                                55)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Container(
-                                                                          margin:
-                                                                              EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
-                                                                          height: screenHeight(
+                                                                                100)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            1.3),
+                                                                    decoration: BoxDecoration(
+                                                                        color: const Color(
+                                                                            0xffEFF4FF),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                6)),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal: screenWidth(
                                                                               context,
-                                                                              dividedBy: 27),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 15),
-                                                                          decoration:
-                                                                              const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 23),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 1.55),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Column(
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    files3,
-                                                                                    style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                                  ),
-                                                                                  const Text(
-                                                                                    '96.47 KB',
-                                                                                    style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                              InkWell(
-                                                                                onTap: () {
-                                                                                  showDialog(
-                                                                                    context: context,
-                                                                                    builder: (context) => addFolderNameDialog(filelist[2]),
-                                                                                  );
-                                                                                },
-                                                                                child: const Icon(
-                                                                                  Icons.close,
-                                                                                  color: AppColor.skyBlue,
-                                                                                  size: 15,
-                                                                                ),
-                                                                              )
-                                                                            ],
+                                                                              dividedBy:
+                                                                                  55)),
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 90)),
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 27),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/file.png'))),
                                                                           ),
-                                                                        ),
-                                                                      ],
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 23),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 1.55),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisAlignment:
+                                                                                  MainAxisAlignment.spaceBetween,
+                                                                              children: [
+                                                                                Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      files3,
+                                                                                      style: const TextStyle(fontFamily: 'Roboto', fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                    ),
+                                                                                    const Text(
+                                                                                      '96.47 KB',
+                                                                                      style: TextStyle(fontFamily: 'Roboto', fontSize: 8, fontWeight: FontWeight.w500, color: Color(0xff838383)),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                InkWell(
+                                                                                  onTap: () {
+                                                                                    showDialog(
+                                                                                      context: context,
+                                                                                      builder: (context) => addFolderNameDialog(filelist[2]),
+                                                                                    );
+                                                                                  },
+                                                                                  child: const Icon(
+                                                                                    Icons.close,
+                                                                                    color: AppColor.skyBlue,
+                                                                                    size: 15,
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
