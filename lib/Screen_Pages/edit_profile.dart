@@ -25,8 +25,7 @@ import 'login_page.dart';
 
 class Edit_Profile extends StatefulWidget {
   Edit_Profile({super.key});
-  // String firstname,lastname,gendar,dob,pnumber,email;
-  // Edit_Profile({super.key,this.firstname,this.lastname,this.dob,this.email,this.gendar,this.pnumber});
+
   @override
   State<Edit_Profile> createState() => _Edit_ProfileState();
 }
@@ -44,21 +43,24 @@ class _Edit_ProfileState extends State<Edit_Profile> {
   String gender = 'Female';
   bool popup = false;
   bool calendar = false;
-  getdata(){
+  getdata() {
     // Split the full name into parts using space as a delimiter
-    List<String> nameParts = userDetailsCubit.userProfile.data?.first.name?.split(" ") ?? [];
+    List<String> nameParts =
+        userDetailsCubit.userProfile.data?.first.name?.split(" ") ?? [];
 
     // Assuming the first part is the first name and the last part is the last name
     String firstName = nameParts[0];
     String lastName = nameParts.length > 1 ? nameParts.last : '';
     _firstName.text = firstName;
     _lastName.text = lastName;
-    _phoneNumber.text = userDetailsCubit.userProfile.data?.first.phoneNumber.toString() ?? '';
+    _phoneNumber.text =
+        userDetailsCubit.userProfile.data?.first.phoneNumber.toString() ?? '';
     _gender.text = userDetailsCubit.userProfile.data?.first.gender ?? '';
     _eMail.text = userDetailsCubit.userProfile.data?.first.email ?? '';
     _date.text = userDetailsCubit.userProfile.data?.first.dateOfBirth ?? '';
     setState(() {});
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -68,6 +70,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
     userDetailsCubit.GetUserdetails();
     getdata();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +112,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                           width: screenHeight(context, dividedBy: 7.5),
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image:  NetworkImage('${apis.baseurl}/${userDetailsCubit.userProfile.data?.first.image?.photo1}'),
+                                  image: NetworkImage(
+                                      '${apis.baseurl}/${userDetailsCubit.userProfile.data?.first.image?.photo1}'),
                                   fit: BoxFit.cover),
                               shape: BoxShape.circle,
                               color: Colors.grey),
@@ -125,8 +129,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                       shape: BoxShape.circle,
                                       color: AppColor.white),
                                   child: Center(
-                                    child:
-                                    Image(
+                                    child: Image(
                                       image: const AssetImage(
                                           'assets/Images/camera.png'),
                                       height:
@@ -281,9 +284,13 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                               title: 'Set your Birthday',
                               dateOrder: DatePickerDateOrder.dmy,
                               initialDateTime: _focusedDay,
-                              gradientColors: [AppColor.skyBlue,AppColor.whiteskyBlue],
-                              titlePadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 100)),
-                              height: screenHeight(context,dividedBy: 3),
+                              gradientColors: [
+                                AppColor.skyBlue,
+                                AppColor.whiteskyBlue
+                              ],
+                              titlePadding: EdgeInsets.only(
+                                  top: screenHeight(context, dividedBy: 100)),
+                              height: screenHeight(context, dividedBy: 3),
                               dismissable: true,
                               displayCloseIcon: false,
                               maxDateTime: DateTime(2050),
@@ -300,11 +307,10 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                   overflow: TextOverflow.ellipsis,
                                   color: AppColor.black),
                               titleAlignment: CrossAxisAlignment.center,
-                              onChange: (index) {
-
-                              },
+                              onChange: (index) {},
                               onSubmit: (index) {
-                                _date.text = DateFormat('dd MMMM yyyy').format(index);
+                                _date.text =
+                                    DateFormat('dd MMMM yyyy').format(index);
                               },
                               bottomPickerTheme: BottomPickerTheme.plumPlate,
                             ).show(context);
@@ -426,7 +432,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Address_Details();
+                              return Address_Details(line1: userDetailsCubit.userProfile.data?.first.address?.address ?? '', line2: '', country: userDetailsCubit.userProfile.data?.first.address?.country ?? '', state: userDetailsCubit.userProfile.data?.first.address?.state ?? '', city: userDetailsCubit.userProfile.data?.first.address?.city ?? '', code: userDetailsCubit.userProfile.data?.first.address?.zipCode ?? '',);
                             },
                           ));
                         },
@@ -437,7 +443,47 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Professional_Details();
+                              return Professional_Details(
+                                Name: userDetailsCubit.userProfile.data?.first
+                                        .professionalDetails?.companyName ??
+                                    '',
+                                job: userDetailsCubit.userProfile.data?.first
+                                        .professionalDetails?.addRole ??
+                                    '',
+                                domain: userDetailsCubit.userProfile.data?.first
+                                        .professionalDetails?.companyDomain ??
+                                    '',
+                                email: userDetailsCubit.userProfile.data?.first
+                                        .professionalDetails?.email ??
+                                    '',
+                                category: userDetailsCubit.userProfile.data
+                                        ?.first.professionalDetails?.category ??
+                                    '',
+                                expe: userDetailsCubit
+                                        .userProfile
+                                        .data
+                                        ?.first
+                                        .professionalDetails
+                                        ?.businessExperience ??
+                                    '',
+                                skill: userDetailsCubit.userProfile.data?.first
+                                        .professionalDetails?.skills ??
+                                    '',
+                                education: userDetailsCubit
+                                        .userProfile
+                                        .data
+                                        ?.first
+                                        .professionalDetails
+                                        ?.education ??
+                                    '',
+                                univercity: userDetailsCubit
+                                        .userProfile
+                                        .data
+                                        ?.first
+                                        .professionalDetails
+                                        ?.university ??
+                                    '',
+                              );
                             },
                           ));
                         },
@@ -448,7 +494,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Business_Address();
+                              return Business_Address(line1: userDetailsCubit.userProfile.data?.first.businessaddress?.address ?? '', line2: '', country:userDetailsCubit.userProfile.data?.first.businessaddress?.country ?? '', state: userDetailsCubit.userProfile.data?.first.businessaddress?.state ?? '', city: userDetailsCubit.userProfile.data?.first.businessaddress?.city ?? '', code: userDetailsCubit.userProfile.data?.first.businessaddress?.zipCode ?? '', date: userDetailsCubit.userProfile.data?.first.businessaddress?.startdate ?? '',);
                             },
                           ));
                         },
@@ -459,14 +505,32 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Business_Profile();
+                              return Business_Profile(
+                                image1: userDetailsCubit.userProfile.data?.first.image?.photo1 ?? '',
+                                image2: userDetailsCubit.userProfile.data?.first.image?.photo2 ?? '',
+                                image3: userDetailsCubit.userProfile.data?.first.image?.photo3 ?? '',
+                                image4: userDetailsCubit.userProfile.data?.first.image?.photo4 ?? '',
+                                image5: userDetailsCubit.userProfile.data?.first.image?.photo5 ?? '',
+                                image6: userDetailsCubit.userProfile.data?.first.image?.photo6 ?? '',
+                                file4: userDetailsCubit.userProfile.data?.first.file?.file1 ?? '',
+                                file5: userDetailsCubit.userProfile.data?.first.file?.file2 ?? '',
+                                file6: userDetailsCubit.userProfile.data?.first.file?.file3 ?? '',
+                                bio: userDetailsCubit.userProfile.data?.first.bio ?? '',
+                              );
                             },
                           ));
                         },
                       ),
                       Custom_botton(context, text: 'Save', onTap: () {
-                        userUpdateCubit.UserUpdateService(firstname: _firstName.text, lastname: _lastName.text, gendar: _gender.text, dateofbirth: _date.text, phonenumber: "${countryCodeSelect}${_phoneNumber.text}", email: _eMail.text, context: context);
-
+                        userUpdateCubit.UserUpdateService(
+                            firstname: _firstName.text,
+                            lastname: _lastName.text,
+                            gendar: _gender.text,
+                            dateofbirth: _date.text,
+                            phonenumber:
+                                "${countryCodeSelect}${_phoneNumber.text}",
+                            email: _eMail.text,
+                            context: context);
                         // Navigator.pop(context);
                       }, height: screenHeight(context, dividedBy: 30))
                     ],

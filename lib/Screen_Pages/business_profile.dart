@@ -1,47 +1,55 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
-import 'package:pair_me/Widgets/flutter_toast.dart';
+import 'package:path/path.dart' as path;
 import 'package:pair_me/cubits/Buisness_profile.dart';
 import 'package:pair_me/cubits/profile_update.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class Business_Profile extends StatefulWidget {
-  Business_Profile({super.key});
+  String image1,
+      image2,
+      image3,
+      image4,
+      image5,
+      image6,
+      file4,
+      file5,
+      file6,
+      bio;
+  Business_Profile(
+      {super.key,
+      required this.image1,
+      required this.image2,
+      required this.image3,
+      required this.image4,
+      required this.image5,
+      required this.image6,
+      required this.file4,
+      required this.file5,
+      required this.file6,
+      required this.bio});
 
   @override
   State<Business_Profile> createState() => _Business_ProfileState();
 }
 
 class _Business_ProfileState extends State<Business_Profile> {
-  Uint8List? _highQualityImage;
-
-  // Future<void> compressToHighQuality(File imagefile) async {
-  //   print('imsge ==> ' + imagefile.toString());
-  //   final File imageFile = imagefile; // Replace with your image file path
-  //
-  //   // Compressing the image to high quality (quality: 100)
-  //   final Uint8List? uint8List = await FlutterImageCompress.compressWithFile(
-  //     imageFile.absolute.path,
-  //     quality: 100, // Set the desired image quality (0 to 100)
-  //   );
-  //
-  //   setState(() {
-  //     _highQualityImage = uint8List;
-  //   });
-  // }
-  BusinessprofileupdateCubit businessprofileupdateCubit =
-      BusinessprofileupdateCubit();
+  BusinessprofileupdateCubit businessprofileupdateCubit = BusinessprofileupdateCubit();
   BusinessProfileCubit businessProfileCubit = BusinessProfileCubit();
   final TextEditingController _bio = TextEditingController();
+  String fileName1 = '';
+  String fileName2 = '';
+  String fileName3 = '';
   SelectedByte? _selectedimag1;
   SelectedByte? _selectedimag2;
   SelectedByte? _selectedimag3;
@@ -51,9 +59,15 @@ class _Business_ProfileState extends State<Business_Profile> {
   PlatformFile? file1;
   PlatformFile? file2;
   PlatformFile? file3;
-  bool _hello = false;
-  List filelist = [];
+  getpath(var filePath){
+    String fileName = path.basename(filePath);
 
+    // Splitting the name using '-' as a separator
+    List<String> nameParts = fileName.split('-');
+
+    // Assuming the desired part is always at index 1
+    return nameParts.length > 1 ? nameParts[1] : fileName;
+  }
   addFolderNameDialog(String delete) {
     return SimpleDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 60),
@@ -110,7 +124,7 @@ class _Business_ProfileState extends State<Business_Profile> {
               ),
               GestureDetector(
                 onTap: () {
-                  filelist.remove(delete);
+                  // filelist.remove(delete);
                   setState(() {});
                   Navigator.pop(context);
                 },
@@ -141,12 +155,27 @@ class _Business_ProfileState extends State<Business_Profile> {
     );
   }
 
+  getdata() {
+    _bio.text = widget.bio;
+    if(widget.file4.isNotEmpty){
+      fileName1 = getpath(widget.file4);
+    }
+    if(widget.file5.isNotEmpty){
+      fileName2 = getpath(widget.file5);
+    }
+    if(widget.file5.isNotEmpty){
+      fileName3 = getpath(widget.file5);
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     businessprofileupdateCubit =
         BlocProvider.of<BusinessprofileupdateCubit>(context);
+    getdata();
   }
 
   Widget build(BuildContext context) {
@@ -193,62 +222,63 @@ class _Business_ProfileState extends State<Business_Profile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                              height: screenHeight(context, dividedBy: 8),
-                              width: screenHeight(context, dividedBy: 8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: AppColor.fontgray,
-                                      offset: Offset(
-                                        1,
-                                        1,
-                                      ),
-                                      blurRadius: 5,
-                                      // spreadRadius: 1.0,
-                                    ),
-                                  ],
-                                  image: _selectedimag1?.selectedFile != null
-                                      ? DecorationImage(
-                                          //  image: AssetImage('assets/Images/vincenzo.png'),
-                                          image: FileImage(
-                                              _selectedimag1!.selectedFile),
-                                          fit: BoxFit.fill)
-                                      : const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: InkWell(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                              height: screenHeight(context,
-                                                  dividedBy: 3),
-                                              decoration: const BoxDecoration(
-                                                  color: AppColor.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                          _selectedimag1?.selectedFile != null
+                              ? Container(
+                                  height: screenHeight(context, dividedBy: 8),
+                                  width: screenHeight(context, dividedBy: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: AppColor.fontgray,
+                                          offset: Offset(
+                                            1,
+                                            1,
+                                          ),
+                                          blurRadius: 5,
+                                          // spreadRadius: 1.0,
+                                        ),
+                                      ],
+                                      image: _selectedimag1?.selectedFile !=
+                                              null
+                                          ? DecorationImage(
+                                              //  image: AssetImage('assets/Images/vincenzo.png'),
+                                              image: FileImage(
+                                                  _selectedimag1!.selectedFile),
+                                              fit: BoxFit.fill)
+                                          : const DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/placeHolderImage.jpg'),
+                                              fit: BoxFit.fill)),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        bottom: 0.0,
+                                        right: 0.0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 3),
+                                                  decoration: const BoxDecoration(
+                                                      color: AppColor.white,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(15),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      16))),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -259,21 +289,22 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         70)),
-                                                    child: const Text(
-                                                      'Add Media',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                        child: const Text(
+                                                          'Add Media',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontSize: 25,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -284,230 +315,116 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () async {
-                                                              // final ImagePicker picker = ImagePicker();
-                                                              // final image = picker.pickImage(source: ImageSource.gallery);
-                                                              // print("image ===> $image");
-                                                              ImagePickerPlus
-                                                                  picker =
-                                                                  ImagePickerPlus(
-                                                                      context);
-                                                              SelectedImagesDetails?
-                                                                  details =
-                                                                  await picker
-                                                                      .pickBoth(
-                                                                source:
-                                                                    ImageSource
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  // final ImagePicker picker = ImagePicker();
+                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                  // print("image ===> $image");
+                                                                  ImagePickerPlus
+                                                                      picker =
+                                                                      ImagePickerPlus(
+                                                                          context);
+                                                                  SelectedImagesDetails?
+                                                                      details =
+                                                                      await picker
+                                                                          .pickBoth(
+                                                                    source: ImageSource
                                                                         .camera,
 
-                                                                /// On long tap, it will be available.
-                                                                multiSelection:
-                                                                    true,
-                                                                galleryDisplaySettings:
-                                                                    GalleryDisplaySettings(
-                                                                  appTheme: AppTheme(
-                                                                      focusColor:
-                                                                          Colors
+                                                                    /// On long tap, it will be available.
+                                                                    multiSelection:
+                                                                        true,
+                                                                    galleryDisplaySettings:
+                                                                        GalleryDisplaySettings(
+                                                                      appTheme: AppTheme(
+                                                                          focusColor: Colors
                                                                               .white,
-                                                                      primaryColor:
-                                                                          Colors
-                                                                              .black),
-                                                                  cropImage:
-                                                                      true,
-                                                                  showImagePreview:
-                                                                      true,
-                                                                ),
-                                                              );
-                                                              print(
-                                                                  'Details ===> ${details}');
-                                                              if (details !=
-                                                                  null) {
-                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                _selectedimag1 =
-                                                                    details
-                                                                        .selectedFiles[0];
-                                                                Navigator.pop(
-                                                                    context);
-                                                                setState(() {});
-                                                                print(
-                                                                    'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                              }
-                                                              // if (details != null) await displayDetails(details);
-                                                            },
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
+                                                                          primaryColor:
+                                                                              Colors.black),
+                                                                      cropImage:
+                                                                          true,
+                                                                      showImagePreview:
+                                                                          true,
+                                                                    ),
+                                                                  );
+                                                                  print(
+                                                                      'Details ===> ${details}');
+                                                                  if (details !=
+                                                                      null) {
+                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                    _selectedimag1 =
+                                                                        details
+                                                                            .selectedFiles[0];
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    setState(
+                                                                        () {});
+                                                                    print(
+                                                                        'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                                  }
+                                                                  // if (details != null) await displayDetails(details);
+                                                                },
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/camera.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Camera',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: GestureDetector(
-                                                      onTap: () async {
-                                                        ImagePickerPlus picker =
-                                                            ImagePickerPlus(
-                                                                context);
-                                                        SelectedImagesDetails?
-                                                            details =
-                                                            await picker
-                                                                .pickBoth(
-                                                          source: ImageSource
-                                                              .gallery,
-
-                                                          /// On long tap, it will be available.
-                                                          multiSelection: true,
-                                                          galleryDisplaySettings:
-                                                              GalleryDisplaySettings(
-                                                            appTheme: AppTheme(
-                                                                focusColor:
-                                                                    Colors
-                                                                        .white,
-                                                                primaryColor:
-                                                                    Colors
-                                                                        .black),
-                                                            cropImage: true,
-                                                            showImagePreview:
-                                                                true,
-                                                          ),
-                                                        );
-                                                        print(
-                                                            'Details ===> ${details}');
-                                                        if (details != null) {
-                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag1 = details
-                                                              .selectedFiles[0];
-                                                          Navigator.pop(
-                                                              context);
-                                                          setState(() {});
-                                                          print(
-                                                              'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                        }
-                                                        // if (details != null) await displayDetails(details);
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
-                                                            width: screenWidth(
-                                                                context,
-                                                                dividedBy: 2),
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
+                                                                              40),
+                                                                      width: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Photos',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Camera',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
                                                                               .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -518,140 +435,926 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
+                                                        child: GestureDetector(
+                                                          onTap: () async {
+                                                            ImagePickerPlus
+                                                                picker =
+                                                                ImagePickerPlus(
+                                                                    context);
+                                                            SelectedImagesDetails?
+                                                                details =
+                                                                await picker
+                                                                    .pickBoth(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery,
+
+                                                              /// On long tap, it will be available.
+                                                              multiSelection:
+                                                                  true,
+                                                              galleryDisplaySettings:
+                                                                  GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    primaryColor:
+                                                                        Colors
+                                                                            .black),
+                                                                cropImage: true,
+                                                                showImagePreview:
+                                                                    true,
+                                                              ),
+                                                            );
+                                                            print(
+                                                                'Details ===> ${details}');
+                                                            if (details !=
+                                                                null) {
+                                                              //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                              _selectedimag1 =
+                                                                  details
+                                                                      .selectedFiles[0];
+                                                              Navigator.pop(
+                                                                  context);
+                                                              setState(() {});
+                                                              print(
+                                                                  'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                            }
+                                                            // if (details != null) await displayDetails(details);
+                                                          },
                                                           child: Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
                                                             children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40)),
+                                                              SizedBox(
                                                                 height:
                                                                     screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            40),
+                                                                            17),
                                                                 width:
                                                                     screenWidth(
                                                                         context,
                                                                         dividedBy:
+                                                                            2),
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Photos',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        right: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                40)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            40),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
                                                                             15),
-                                                                decoration: const BoxDecoration(
-                                                                    image: DecorationImage(
-                                                                        image: AssetImage(
-                                                                            'assets/Images/video.png'))),
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                            image:
+                                                                                DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                  ),
+                                                                  const Text(
+                                                                    'Videos',
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        fontSize:
+                                                                            17,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: AppColor
+                                                                            .dropdownfont),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              const Text(
-                                                                'Videos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        17,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: AppColor
-                                                                        .dropdownfont),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            height: screenHeight(context,
+                                                dividedBy: 30),
+                                            width: screenHeight(context,
+                                                dividedBy: 30),
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(12)),
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/Images/add.png'),
+                                                    fit: BoxFit.fill)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ))
+                              : CachedNetworkImage(
+                                  imageUrl: "${apis.baseurl}/${widget.image1}",
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag1 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag1 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        height: screenHeight(context,
-                                            dividedBy: 30),
-                                        width: screenHeight(context,
-                                            dividedBy: 30),
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(12)),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/Images/add.png'),
-                                                fit: BoxFit.fill)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
-                          Container(
-                              height: screenHeight(context, dividedBy: 8),
-                              width: screenHeight(context, dividedBy: 8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: AppColor.fontgray,
-                                      offset: Offset(
-                                        1,
-                                        1,
-                                      ),
-                                      blurRadius: 5,
-                                      // spreadRadius: 1.0,
-                                    ),
-                                  ],
-                                  image: _selectedimag2?.selectedFile != null
-                                      ? DecorationImage(
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: const DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/placeHolderImage.jpg'),
+                                                  fit: BoxFit.fill)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag1 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag1 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                ),
+                          _selectedimag2?.selectedFile != null
+                              ? Container(
+                                  height: screenHeight(context, dividedBy: 8),
+                                  width: screenHeight(context, dividedBy: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: AppColor.fontgray,
+                                          offset: Offset(
+                                            1,
+                                            1,
+                                          ),
+                                          blurRadius: 5,
+                                          // spreadRadius: 1.0,
+                                        ),
+                                      ],
+                                      image: DecorationImage(
                                           //  image: AssetImage('assets/Images/vincenzo.png'),
                                           image: FileImage(
                                               _selectedimag2!.selectedFile),
-                                          fit: BoxFit.fill)
-                                      : const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
                                           fit: BoxFit.fill)),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: InkWell(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                              height: screenHeight(context,
-                                                  dividedBy: 3),
-                                              decoration: const BoxDecoration(
-                                                  color: AppColor.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        bottom: 0.0,
+                                        right: 0.0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 3),
+                                                  decoration: const BoxDecoration(
+                                                      color: AppColor.white,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(15),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      16))),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -662,21 +1365,22 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         70)),
-                                                    child: const Text(
-                                                      'Add Media',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                        child: const Text(
+                                                          'Add Media',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontSize: 25,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -687,230 +1391,116 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () async {
-                                                              // final ImagePicker picker = ImagePicker();
-                                                              // final image = picker.pickImage(source: ImageSource.gallery);
-                                                              // print("image ===> $image");
-                                                              ImagePickerPlus
-                                                                  picker =
-                                                                  ImagePickerPlus(
-                                                                      context);
-                                                              SelectedImagesDetails?
-                                                                  details =
-                                                                  await picker
-                                                                      .pickBoth(
-                                                                source:
-                                                                    ImageSource
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  // final ImagePicker picker = ImagePicker();
+                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                  // print("image ===> $image");
+                                                                  ImagePickerPlus
+                                                                      picker =
+                                                                      ImagePickerPlus(
+                                                                          context);
+                                                                  SelectedImagesDetails?
+                                                                      details =
+                                                                      await picker
+                                                                          .pickBoth(
+                                                                    source: ImageSource
                                                                         .camera,
 
-                                                                /// On long tap, it will be available.
-                                                                multiSelection:
-                                                                    true,
-                                                                galleryDisplaySettings:
-                                                                    GalleryDisplaySettings(
-                                                                  appTheme: AppTheme(
-                                                                      focusColor:
-                                                                          Colors
+                                                                    /// On long tap, it will be available.
+                                                                    multiSelection:
+                                                                        true,
+                                                                    galleryDisplaySettings:
+                                                                        GalleryDisplaySettings(
+                                                                      appTheme: AppTheme(
+                                                                          focusColor: Colors
                                                                               .white,
-                                                                      primaryColor:
-                                                                          Colors
-                                                                              .black),
-                                                                  cropImage:
-                                                                      true,
-                                                                  showImagePreview:
-                                                                      true,
-                                                                ),
-                                                              );
-                                                              print(
-                                                                  'Details ===> ${details}');
-                                                              if (details !=
-                                                                  null) {
-                                                                // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                _selectedimag2 =
-                                                                    details
-                                                                        .selectedFiles[0];
-                                                                Navigator.pop(
-                                                                    context);
-                                                                setState(() {});
-                                                                print(
-                                                                    'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                              }
-                                                              // if (details != null) await displayDetails(details);
-                                                            },
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
+                                                                          primaryColor:
+                                                                              Colors.black),
+                                                                      cropImage:
+                                                                          true,
+                                                                      showImagePreview:
+                                                                          true,
+                                                                    ),
+                                                                  );
+                                                                  print(
+                                                                      'Details ===> ${details}');
+                                                                  if (details !=
+                                                                      null) {
+                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                    _selectedimag2 =
+                                                                        details
+                                                                            .selectedFiles[0];
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    setState(
+                                                                        () {});
+                                                                    print(
+                                                                        'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                  }
+                                                                  // if (details != null) await displayDetails(details);
+                                                                },
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/camera.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Camera',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: GestureDetector(
-                                                      onTap: () async {
-                                                        ImagePickerPlus picker =
-                                                            ImagePickerPlus(
-                                                                context);
-                                                        SelectedImagesDetails?
-                                                            details =
-                                                            await picker
-                                                                .pickBoth(
-                                                          source: ImageSource
-                                                              .gallery,
-
-                                                          /// On long tap, it will be available.
-                                                          multiSelection: true,
-                                                          galleryDisplaySettings:
-                                                              GalleryDisplaySettings(
-                                                            appTheme: AppTheme(
-                                                                focusColor:
-                                                                    Colors
-                                                                        .white,
-                                                                primaryColor:
-                                                                    Colors
-                                                                        .black),
-                                                            cropImage: true,
-                                                            showImagePreview:
-                                                                true,
-                                                          ),
-                                                        );
-                                                        print(
-                                                            'Details ===> ${details}');
-                                                        if (details != null) {
-                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag2 = details
-                                                              .selectedFiles[0];
-                                                          Navigator.pop(
-                                                              context);
-                                                          setState(() {});
-                                                          print(
-                                                              'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                        }
-                                                        // if (details != null) await displayDetails(details);
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
-                                                            width: screenWidth(
-                                                                context,
-                                                                dividedBy: 2),
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
+                                                                              40),
+                                                                      width: screenWidth(
                                                                           context,
                                                                           dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Photos',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Camera',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
                                                                               .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -921,141 +1511,932 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
+                                                        child: GestureDetector(
+                                                          onTap: () async {
+                                                            ImagePickerPlus
+                                                                picker =
+                                                                ImagePickerPlus(
+                                                                    context);
+                                                            SelectedImagesDetails?
+                                                                details =
+                                                                await picker
+                                                                    .pickBoth(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery,
+
+                                                              /// On long tap, it will be available.
+                                                              multiSelection:
+                                                                  true,
+                                                              galleryDisplaySettings:
+                                                                  GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    primaryColor:
+                                                                        Colors
+                                                                            .black),
+                                                                cropImage: true,
+                                                                showImagePreview:
+                                                                    true,
+                                                              ),
+                                                            );
+                                                            print(
+                                                                'Details ===> ${details}');
+                                                            if (details !=
+                                                                null) {
+                                                              //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                              _selectedimag2 =
+                                                                  details
+                                                                      .selectedFiles[0];
+                                                              Navigator.pop(
+                                                                  context);
+                                                              setState(() {});
+                                                              print(
+                                                                  'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                            }
+                                                            // if (details != null) await displayDetails(details);
+                                                          },
                                                           child: Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
                                                             children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40)),
+                                                              SizedBox(
                                                                 height:
                                                                     screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            40),
+                                                                            17),
                                                                 width:
                                                                     screenWidth(
                                                                         context,
                                                                         dividedBy:
+                                                                            2),
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Photos',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        right: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                40)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            40),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
                                                                             15),
-                                                                decoration: const BoxDecoration(
-                                                                    image: DecorationImage(
-                                                                        image: AssetImage(
-                                                                            'assets/Images/video.png'))),
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                            image:
+                                                                                DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                  ),
+                                                                  const Text(
+                                                                    'Videos',
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        fontSize:
+                                                                            17,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: AppColor
+                                                                            .dropdownfont),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              const Text(
-                                                                'Videos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        17,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: AppColor
-                                                                        .dropdownfont),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            height: screenHeight(context,
+                                                dividedBy: 30),
+                                            width: screenHeight(context,
+                                                dividedBy: 30),
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(12)),
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/Images/add.png'),
+                                                    fit: BoxFit.fill)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ))
+                              : CachedNetworkImage(
+                                  imageUrl: "${apis.baseurl}/${widget.image2}",
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag2 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag2 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        height: screenHeight(context,
-                                            dividedBy: 30),
-                                        width: screenHeight(context,
-                                            dividedBy: 30),
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(12)),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/Images/add.png'),
-                                                fit: BoxFit.fill)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
-                          Container(
-                              height: screenHeight(context, dividedBy: 8),
-                              width: screenHeight(context, dividedBy: 8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: AppColor.fontgray,
-                                      offset: Offset(
-                                        1,
-                                        1,
-                                      ),
-                                      blurRadius: 5,
-                                      // spreadRadius: 1.0,
-                                    ),
-                                  ],
-                                  image:
-                                      // _selectedimag3?.selectedFile != null
-                                      //     ? DecorationImage(
-                                      //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                      //         image: FileImage(
-                                      //             _selectedimag3!.selectedFile),
-                                      //         fit: BoxFit.fill) :
-                                      const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: InkWell(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                              height: screenHeight(context,
-                                                  dividedBy: 3),
-                                              decoration: const BoxDecoration(
-                                                  color: AppColor.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: const DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/placeHolderImage.jpg'),
+                                                  fit: BoxFit.fill)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag2 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag2 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                ),
+                          _selectedimag3?.selectedFile != null
+                              ? Container(
+                                  height: screenHeight(context, dividedBy: 8),
+                                  width: screenHeight(context, dividedBy: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: AppColor.fontgray,
+                                          offset: Offset(
+                                            1,
+                                            1,
+                                          ),
+                                          blurRadius: 5,
+                                          // spreadRadius: 1.0,
+                                        ),
+                                      ],
+                                      image: _selectedimag3?.selectedFile !=
+                                              null
+                                          ? DecorationImage(
+                                              //  image: AssetImage('assets/Images/vincenzo.png'),
+                                              image: FileImage(
+                                                  _selectedimag3!.selectedFile),
+                                              fit: BoxFit.fill)
+                                          : const DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/placeHolderImage.jpg'),
+                                              fit: BoxFit.fill)),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        bottom: 0.0,
+                                        right: 0.0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 3),
+                                                  decoration: const BoxDecoration(
+                                                      color: AppColor.white,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(15),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      16))),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -1066,255 +2447,22 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         70)),
-                                                    child: const Text(
-                                                      'Add Media',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
-                                                          child:
-                                                              GestureDetector(
-                                                            // onTap: () async {
-                                                            //   // final ImagePicker picker = ImagePicker();
-                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
-                                                            //   // print("image ===> $image");
-                                                            //   ImagePickerPlus
-                                                            //       picker =
-                                                            //       ImagePickerPlus(
-                                                            //           context);
-                                                            //   SelectedImagesDetails?
-                                                            //       details =
-                                                            //       await picker
-                                                            //           .pickBoth(
-                                                            //     source:
-                                                            //         ImageSource
-                                                            //             .camera,
-                                                            //
-                                                            //     /// On long tap, it will be available.
-                                                            //     multiSelection:
-                                                            //         true,
-                                                            //     galleryDisplaySettings:
-                                                            //         GalleryDisplaySettings(
-                                                            //       appTheme: AppTheme(
-                                                            //           focusColor:
-                                                            //               Colors
-                                                            //                   .white,
-                                                            //           primaryColor:
-                                                            //               Colors
-                                                            //                   .black),
-                                                            //       cropImage:
-                                                            //           true,
-                                                            //       showImagePreview:
-                                                            //           true,
-                                                            //     ),
-                                                            //   );
-                                                            //   print(
-                                                            //       'Details ===> ${details}');
-                                                            //   if (details !=
-                                                            //       null) {
-                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                            //     _selectedimag3 =
-                                                            //         details
-                                                            //             .selectedFiles[0];
-                                                            //     Navigator.pop(
-                                                            //         context);
-                                                            //     setState(() {});
-                                                            //     print(
-                                                            //         'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                            //   }
-                                                            //   // if (details != null) await displayDetails(details);
-                                                            // },
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/camera.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Camera',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: GestureDetector(
-                                                      onTap: () async {
-                                                        ImagePickerPlus picker =
-                                                            ImagePickerPlus(
-                                                                context);
-                                                        SelectedImagesDetails?
-                                                            details =
-                                                            await picker
-                                                                .pickBoth(
-                                                          source: ImageSource
-                                                              .gallery,
-
-                                                          /// On long tap, it will be available.
-                                                          multiSelection: true,
-                                                          galleryDisplaySettings:
-                                                              GalleryDisplaySettings(
-                                                            appTheme: AppTheme(
-                                                                focusColor:
-                                                                    Colors
-                                                                        .white,
-                                                                primaryColor:
-                                                                    Colors
-                                                                        .black),
-                                                            cropImage: true,
-                                                            showImagePreview:
-                                                                true,
-                                                          ),
-                                                        );
-                                                        print(
-                                                            'Details ===> ${details}');
-                                                        if (details != null) {
-                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag3 = details
-                                                              .selectedFiles[0];
-                                                          Navigator.pop(
-                                                              context);
-                                                          setState(() {});
-                                                          print(
-                                                              'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                        }
-                                                        // if (details != null) await displayDetails(details);
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
-                                                            width: screenWidth(
-                                                                context,
-                                                                dividedBy: 2),
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Photos',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
+                                                        child: const Text(
+                                                          'Add Media',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontSize: 25,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -1325,84 +2473,995 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  // final ImagePicker picker = ImagePicker();
+                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                  // print("image ===> $image");
+                                                                  ImagePickerPlus
+                                                                      picker =
+                                                                      ImagePickerPlus(
+                                                                          context);
+                                                                  SelectedImagesDetails?
+                                                                      details =
+                                                                      await picker
+                                                                          .pickBoth(
+                                                                    source: ImageSource
+                                                                        .camera,
+
+                                                                    /// On long tap, it will be available.
+                                                                    multiSelection:
+                                                                        true,
+                                                                    galleryDisplaySettings:
+                                                                        GalleryDisplaySettings(
+                                                                      appTheme: AppTheme(
+                                                                          focusColor: Colors
+                                                                              .white,
+                                                                          primaryColor:
+                                                                              Colors.black),
+                                                                      cropImage:
+                                                                          true,
+                                                                      showImagePreview:
+                                                                          true,
+                                                                    ),
+                                                                  );
+                                                                  print(
+                                                                      'Details ===> ${details}');
+                                                                  if (details !=
+                                                                      null) {
+                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                    _selectedimag3 =
+                                                                        details
+                                                                            .selectedFiles[0];
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    setState(
+                                                                        () {});
+                                                                    print(
+                                                                        'selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                                  }
+                                                                  // if (details != null) await displayDetails(details);
+                                                                },
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Camera',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: GestureDetector(
+                                                          onTap: () async {
+                                                            ImagePickerPlus
+                                                                picker =
+                                                                ImagePickerPlus(
+                                                                    context);
+                                                            SelectedImagesDetails?
+                                                                details =
+                                                                await picker
+                                                                    .pickBoth(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery,
+
+                                                              /// On long tap, it will be available.
+                                                              multiSelection:
+                                                                  true,
+                                                              galleryDisplaySettings:
+                                                                  GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    primaryColor:
+                                                                        Colors
+                                                                            .black),
+                                                                cropImage: true,
+                                                                showImagePreview:
+                                                                    true,
+                                                              ),
+                                                            );
+                                                            print(
+                                                                'Details ===> ${details}');
+                                                            if (details !=
+                                                                null) {
+                                                              //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                              _selectedimag3 =
+                                                                  details
+                                                                      .selectedFiles[0];
+                                                              Navigator.pop(
+                                                                  context);
+                                                              setState(() {});
+                                                              print(
+                                                                  'selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                            }
+                                                            // if (details != null) await displayDetails(details);
+                                                          },
                                                           child: Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
                                                             children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40)),
+                                                              SizedBox(
                                                                 height:
                                                                     screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            40),
+                                                                            17),
                                                                 width:
                                                                     screenWidth(
                                                                         context,
                                                                         dividedBy:
+                                                                            2),
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Photos',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        right: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                40)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            40),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
                                                                             15),
-                                                                decoration: const BoxDecoration(
-                                                                    image: DecorationImage(
-                                                                        image: AssetImage(
-                                                                            'assets/Images/video.png'))),
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                            image:
+                                                                                DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                  ),
+                                                                  const Text(
+                                                                    'Videos',
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        fontSize:
+                                                                            17,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: AppColor
+                                                                            .dropdownfont),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              const Text(
-                                                                'Videos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        17,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: AppColor
-                                                                        .dropdownfont),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            height: screenHeight(context,
+                                                dividedBy: 30),
+                                            width: screenHeight(context,
+                                                dividedBy: 30),
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(12)),
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/Images/add.png'),
+                                                    fit: BoxFit.fill)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ))
+                              : CachedNetworkImage(
+                                  imageUrl: "${apis.baseurl}/${widget.image3}",
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag3 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag3 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        height: screenHeight(context,
-                                            dividedBy: 30),
-                                        width: screenHeight(context,
-                                            dividedBy: 30),
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(12)),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/Images/add.png'),
-                                                fit: BoxFit.fill)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: const DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/placeHolderImage.jpg'),
+                                                  fit: BoxFit.fill)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag3 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag3 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                ),
                         ],
                       ),
                       SizedBox(
@@ -1411,63 +3470,63 @@ class _Business_ProfileState extends State<Business_Profile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                              height: screenHeight(context, dividedBy: 8),
-                              width: screenHeight(context, dividedBy: 8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: AppColor.fontgray,
-                                      offset: Offset(
-                                        1,
-                                        1,
-                                      ),
-                                      blurRadius: 5,
-                                      // spreadRadius: 1.0,
-                                    ),
-                                  ],
-                                  image:
-                                      // _selectedimag4?.selectedFile != null
-                                      //     ? DecorationImage(
-                                      //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                      //         image: FileImage(
-                                      //             _selectedimag4!.selectedFile),
-                                      //         fit: BoxFit.fill) :
-                                      const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: InkWell(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                              height: screenHeight(context,
-                                                  dividedBy: 3),
-                                              decoration: const BoxDecoration(
-                                                  color: AppColor.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                          _selectedimag4?.selectedFile != null
+                              ? Container(
+                                  height: screenHeight(context, dividedBy: 8),
+                                  width: screenHeight(context, dividedBy: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: AppColor.fontgray,
+                                          offset: Offset(
+                                            1,
+                                            1,
+                                          ),
+                                          blurRadius: 5,
+                                          // spreadRadius: 1.0,
+                                        ),
+                                      ],
+                                      image: _selectedimag4?.selectedFile !=
+                                              null
+                                          ? DecorationImage(
+                                              //  image: AssetImage('assets/Images/vincenzo.png'),
+                                              image: FileImage(
+                                                  _selectedimag4!.selectedFile),
+                                              fit: BoxFit.fill)
+                                          : const DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/placeHolderImage.jpg'),
+                                              fit: BoxFit.fill)),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        bottom: 0.0,
+                                        right: 0.0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 3),
+                                                  decoration: const BoxDecoration(
+                                                      color: AppColor.white,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(15),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      16))),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -1478,255 +3537,22 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         70)),
-                                                    child: const Text(
-                                                      'Add Media',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
-                                                          child:
-                                                              GestureDetector(
-                                                            // onTap: () async {
-                                                            //   // final ImagePicker picker = ImagePicker();
-                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
-                                                            //   // print("image ===> $image");
-                                                            //   ImagePickerPlus
-                                                            //       picker =
-                                                            //       ImagePickerPlus(
-                                                            //           context);
-                                                            //   SelectedImagesDetails?
-                                                            //       details =
-                                                            //       await picker
-                                                            //           .pickBoth(
-                                                            //     source:
-                                                            //         ImageSource
-                                                            //             .camera,
-                                                            //
-                                                            //     /// On long tap, it will be available.
-                                                            //     multiSelection:
-                                                            //         true,
-                                                            //     galleryDisplaySettings:
-                                                            //         GalleryDisplaySettings(
-                                                            //       appTheme: AppTheme(
-                                                            //           focusColor:
-                                                            //               Colors
-                                                            //                   .white,
-                                                            //           primaryColor:
-                                                            //               Colors
-                                                            //                   .black),
-                                                            //       cropImage:
-                                                            //           true,
-                                                            //       showImagePreview:
-                                                            //           true,
-                                                            //     ),
-                                                            //   );
-                                                            //   print(
-                                                            //       'Details ===> ${details}');
-                                                            //   if (details !=
-                                                            //       null) {
-                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                            //     _selectedimag4 =
-                                                            //         details
-                                                            //             .selectedFiles[0];
-                                                            //     Navigator.pop(
-                                                            //         context);
-                                                            //     setState(() {});
-                                                            //     print(
-                                                            //         'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                            //   }
-                                                            //   // if (details != null) await displayDetails(details);
-                                                            // },
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/camera.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Camera',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: GestureDetector(
-                                                      onTap: () async {
-                                                        ImagePickerPlus picker =
-                                                            ImagePickerPlus(
-                                                                context);
-                                                        SelectedImagesDetails?
-                                                            details =
-                                                            await picker
-                                                                .pickBoth(
-                                                          source: ImageSource
-                                                              .gallery,
-
-                                                          /// On long tap, it will be available.
-                                                          multiSelection: true,
-                                                          galleryDisplaySettings:
-                                                              GalleryDisplaySettings(
-                                                            appTheme: AppTheme(
-                                                                focusColor:
-                                                                    Colors
-                                                                        .white,
-                                                                primaryColor:
-                                                                    Colors
-                                                                        .black),
-                                                            cropImage: true,
-                                                            showImagePreview:
-                                                                true,
-                                                          ),
-                                                        );
-                                                        print(
-                                                            'Details ===> ${details}');
-                                                        if (details != null) {
-                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag4 = details
-                                                              .selectedFiles[0];
-                                                          Navigator.pop(
-                                                              context);
-                                                          setState(() {});
-                                                          print(
-                                                              'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                        }
-                                                        // if (details != null) await displayDetails(details);
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
-                                                            width: screenWidth(
-                                                                context,
-                                                                dividedBy: 2),
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Photos',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
+                                                        child: const Text(
+                                                          'Add Media',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontSize: 25,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -1737,141 +3563,1046 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  // final ImagePicker picker = ImagePicker();
+                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                  // print("image ===> $image");
+                                                                  ImagePickerPlus
+                                                                      picker =
+                                                                      ImagePickerPlus(
+                                                                          context);
+                                                                  SelectedImagesDetails?
+                                                                      details =
+                                                                      await picker
+                                                                          .pickBoth(
+                                                                    source: ImageSource
+                                                                        .camera,
+
+                                                                    /// On long tap, it will be available.
+                                                                    multiSelection:
+                                                                        true,
+                                                                    galleryDisplaySettings:
+                                                                        GalleryDisplaySettings(
+                                                                      appTheme: AppTheme(
+                                                                          focusColor: Colors
+                                                                              .white,
+                                                                          primaryColor:
+                                                                              Colors.black),
+                                                                      cropImage:
+                                                                          true,
+                                                                      showImagePreview:
+                                                                          true,
+                                                                    ),
+                                                                  );
+                                                                  print(
+                                                                      'Details ===> ${details}');
+                                                                  if (details !=
+                                                                      null) {
+                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                    _selectedimag4 =
+                                                                        details
+                                                                            .selectedFiles[0];
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    setState(
+                                                                        () {});
+                                                                    print(
+                                                                        'selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                                  }
+                                                                  // if (details != null) await displayDetails(details);
+                                                                },
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Camera',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: GestureDetector(
+                                                          onTap: () async {
+                                                            ImagePickerPlus
+                                                                picker =
+                                                                ImagePickerPlus(
+                                                                    context);
+                                                            SelectedImagesDetails?
+                                                                details =
+                                                                await picker
+                                                                    .pickBoth(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery,
+
+                                                              /// On long tap, it will be available.
+                                                              multiSelection:
+                                                                  true,
+                                                              galleryDisplaySettings:
+                                                                  GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    primaryColor:
+                                                                        Colors
+                                                                            .black),
+                                                                cropImage: true,
+                                                                showImagePreview:
+                                                                    true,
+                                                              ),
+                                                            );
+                                                            print(
+                                                                'Details ===> ${details}');
+                                                            if (details !=
+                                                                null) {
+                                                              //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                              _selectedimag4 =
+                                                                  details
+                                                                      .selectedFiles[0];
+                                                              Navigator.pop(
+                                                                  context);
+                                                              setState(() {});
+                                                              print(
+                                                                  'selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                            }
+                                                            // if (details != null) await displayDetails(details);
+                                                          },
                                                           child: Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
                                                             children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40)),
+                                                              SizedBox(
                                                                 height:
                                                                     screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            40),
+                                                                            17),
                                                                 width:
                                                                     screenWidth(
                                                                         context,
                                                                         dividedBy:
+                                                                            2),
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Photos',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        right: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                40)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            40),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
                                                                             15),
-                                                                decoration: const BoxDecoration(
-                                                                    image: DecorationImage(
-                                                                        image: AssetImage(
-                                                                            'assets/Images/video.png'))),
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                            image:
+                                                                                DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                  ),
+                                                                  const Text(
+                                                                    'Videos',
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        fontSize:
+                                                                            17,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: AppColor
+                                                                            .dropdownfont),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              const Text(
-                                                                'Videos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        17,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: AppColor
-                                                                        .dropdownfont),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            height: screenHeight(context,
+                                                dividedBy: 30),
+                                            width: screenHeight(context,
+                                                dividedBy: 30),
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(12)),
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/Images/add.png'),
+                                                    fit: BoxFit.fill)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ))
+                              : CachedNetworkImage(
+                                  imageUrl: "${apis.baseurl}/${widget.image4}",
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag4 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag4 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        height: screenHeight(context,
-                                            dividedBy: 30),
-                                        width: screenHeight(context,
-                                            dividedBy: 30),
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(12)),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/Images/add.png'),
-                                                fit: BoxFit.fill)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
-                          Container(
-                              height: screenHeight(context, dividedBy: 8),
-                              width: screenHeight(context, dividedBy: 8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: AppColor.fontgray,
-                                      offset: Offset(
-                                        1,
-                                        1,
-                                      ),
-                                      blurRadius: 5,
-                                      // spreadRadius: 1.0,
-                                    ),
-                                  ],
-                                  image:
-                                      // _selectedimag5?.selectedFile != null
-                                      //     ? DecorationImage(
-                                      //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                      //         image: FileImage(
-                                      //             _selectedimag5!.selectedFile),
-                                      //         fit: BoxFit.fill) :
-                                      const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: const DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/placeHolderImage.jpg'),
+                                                  fit: BoxFit.fill)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag4 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag4 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                ),
+                          _selectedimag5?.selectedFile != null
+                              ? Container(
+                                  height: screenHeight(context, dividedBy: 8),
+                                  width: screenHeight(context, dividedBy: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: AppColor.fontgray,
+                                          offset: Offset(
+                                            1,
+                                            1,
+                                          ),
+                                          blurRadius: 5,
+                                          // spreadRadius: 1.0,
+                                        ),
+                                      ],
+                                      image: DecorationImage(
+                                          //  image: AssetImage('assets/Images/vincenzo.png'),
+                                          image: FileImage(
+                                              _selectedimag5!.selectedFile),
                                           fit: BoxFit.fill)),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: InkWell(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                              height: screenHeight(context,
-                                                  dividedBy: 3),
-                                              decoration: const BoxDecoration(
-                                                  color: AppColor.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        bottom: 0.0,
+                                        right: 0.0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 3),
+                                                  decoration: const BoxDecoration(
+                                                      color: AppColor.white,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(15),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      16))),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -1882,255 +4613,22 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         70)),
-                                                    child: const Text(
-                                                      'Add Media',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
-                                                          child:
-                                                              GestureDetector(
-                                                            // onTap: () async {
-                                                            //   // final ImagePicker picker = ImagePicker();
-                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
-                                                            //   // print("image ===> $image");
-                                                            //   ImagePickerPlus
-                                                            //       picker =
-                                                            //       ImagePickerPlus(
-                                                            //           context);
-                                                            //   SelectedImagesDetails?
-                                                            //       details =
-                                                            //       await picker
-                                                            //           .pickBoth(
-                                                            //     source:
-                                                            //         ImageSource
-                                                            //             .camera,
-                                                            //
-                                                            //     /// On long tap, it will be available.
-                                                            //     multiSelection:
-                                                            //         true,
-                                                            //     galleryDisplaySettings:
-                                                            //         GalleryDisplaySettings(
-                                                            //       appTheme: AppTheme(
-                                                            //           focusColor:
-                                                            //               Colors
-                                                            //                   .white,
-                                                            //           primaryColor:
-                                                            //               Colors
-                                                            //                   .black),
-                                                            //       cropImage:
-                                                            //           true,
-                                                            //       showImagePreview:
-                                                            //           true,
-                                                            //     ),
-                                                            //   );
-                                                            //   print(
-                                                            //       'Details ===> ${details}');
-                                                            //   if (details !=
-                                                            //       null) {
-                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                            //     _selectedimag5 =
-                                                            //         details
-                                                            //             .selectedFiles[0];
-                                                            //     Navigator.pop(
-                                                            //         context);
-                                                            //     setState(() {});
-                                                            //     print(
-                                                            //         'selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                            //   }
-                                                            //   // if (details != null) await displayDetails(details);
-                                                            // },
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/camera.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Camera',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: GestureDetector(
-                                                      onTap: () async {
-                                                        ImagePickerPlus picker =
-                                                            ImagePickerPlus(
-                                                                context);
-                                                        SelectedImagesDetails?
-                                                            details =
-                                                            await picker
-                                                                .pickBoth(
-                                                          source: ImageSource
-                                                              .gallery,
-
-                                                          /// On long tap, it will be available.
-                                                          multiSelection: true,
-                                                          galleryDisplaySettings:
-                                                              GalleryDisplaySettings(
-                                                            appTheme: AppTheme(
-                                                                focusColor:
-                                                                    Colors
-                                                                        .white,
-                                                                primaryColor:
-                                                                    Colors
-                                                                        .black),
-                                                            cropImage: true,
-                                                            showImagePreview:
-                                                                true,
-                                                          ),
-                                                        );
-                                                        print(
-                                                            'Details ===> ${details}');
-                                                        if (details != null) {
-                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag5 = details
-                                                              .selectedFiles[0];
-                                                          Navigator.pop(
-                                                              context);
-                                                          setState(() {});
-                                                          print(
-                                                              'selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                        }
-                                                        // if (details != null) await displayDetails(details);
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
-                                                            width: screenWidth(
-                                                                context,
-                                                                dividedBy: 2),
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Photos',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
+                                                        child: const Text(
+                                                          'Add Media',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontSize: 25,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -2141,176 +4639,1052 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  // final ImagePicker picker = ImagePicker();
+                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                  // print("image ===> $image");
+                                                                  ImagePickerPlus
+                                                                      picker =
+                                                                      ImagePickerPlus(
+                                                                          context);
+                                                                  SelectedImagesDetails?
+                                                                      details =
+                                                                      await picker
+                                                                          .pickBoth(
+                                                                    source: ImageSource
+                                                                        .camera,
+
+                                                                    /// On long tap, it will be available.
+                                                                    multiSelection:
+                                                                        true,
+                                                                    galleryDisplaySettings:
+                                                                        GalleryDisplaySettings(
+                                                                      appTheme: AppTheme(
+                                                                          focusColor: Colors
+                                                                              .white,
+                                                                          primaryColor:
+                                                                              Colors.black),
+                                                                      cropImage:
+                                                                          true,
+                                                                      showImagePreview:
+                                                                          true,
+                                                                    ),
+                                                                  );
+                                                                  print(
+                                                                      'Details ===> ${details}');
+                                                                  if (details !=
+                                                                      null) {
+                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                    _selectedimag5 =
+                                                                        details
+                                                                            .selectedFiles[0];
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    setState(
+                                                                        () {});
+                                                                    print(
+                                                                        'selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                                  }
+                                                                  // if (details != null) await displayDetails(details);
+                                                                },
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Camera',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: GestureDetector(
+                                                          onTap: () async {
+                                                            ImagePickerPlus
+                                                                picker =
+                                                                ImagePickerPlus(
+                                                                    context);
+                                                            SelectedImagesDetails?
+                                                                details =
+                                                                await picker
+                                                                    .pickBoth(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery,
+
+                                                              /// On long tap, it will be available.
+                                                              multiSelection:
+                                                                  true,
+                                                              galleryDisplaySettings:
+                                                                  GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    primaryColor:
+                                                                        Colors
+                                                                            .black),
+                                                                cropImage: true,
+                                                                showImagePreview:
+                                                                    true,
+                                                              ),
+                                                            );
+                                                            print(
+                                                                'Details ===> ${details}');
+                                                            if (details !=
+                                                                null) {
+                                                              //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                              _selectedimag5 =
+                                                                  details
+                                                                      .selectedFiles[0];
+                                                              Navigator.pop(
+                                                                  context);
+                                                              setState(() {});
+                                                              print(
+                                                                  'selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                            }
+                                                            // if (details != null) await displayDetails(details);
+                                                          },
                                                           child: Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
                                                             children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40)),
+                                                              SizedBox(
                                                                 height:
                                                                     screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            40),
+                                                                            17),
                                                                 width:
                                                                     screenWidth(
                                                                         context,
                                                                         dividedBy:
+                                                                            2),
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Photos',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        right: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                40)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            40),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
                                                                             15),
-                                                                decoration: const BoxDecoration(
-                                                                    image: DecorationImage(
-                                                                        image: AssetImage(
-                                                                            'assets/Images/video.png'))),
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                            image:
+                                                                                DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                  ),
+                                                                  const Text(
+                                                                    'Videos',
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        fontSize:
+                                                                            17,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: AppColor
+                                                                            .dropdownfont),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              const Text(
-                                                                'Videos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        17,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: AppColor
-                                                                        .dropdownfont),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            height: screenHeight(context,
+                                                dividedBy: 30),
+                                            width: screenHeight(context,
+                                                dividedBy: 30),
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(12)),
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/Images/add.png'),
+                                                    fit: BoxFit.fill)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ))
+                              : CachedNetworkImage(
+                                  imageUrl: "${apis.baseurl}/${widget.image5}",
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag5 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag5 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        height: screenHeight(context,
-                                            dividedBy: 30),
-                                        width: screenHeight(context,
-                                            dividedBy: 30),
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(12)),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/Images/add.png'),
-                                                fit: BoxFit.fill)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
-                          Container(
-                              height: screenHeight(context, dividedBy: 8),
-                              width: screenHeight(context, dividedBy: 8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: AppColor.fontgray,
-                                      offset: Offset(
-                                        1,
-                                        1,
-                                      ),
-                                      blurRadius: 5,
-                                      // spreadRadius: 1.0,
-                                    ),
-                                  ],
-                                  image:
-                                      // _selectedimag6?.selectedFile != null
-                                      //     ? DecorationImage(
-                                      //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                      //         image: FileImage(
-                                      //             _selectedimag6!.selectedFile),
-                                      //         fit: BoxFit.fill) :
-                                      const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/Images/placeHolderImage.jpg'),
-                                          fit: BoxFit.fill)),
-                              child: Stack(
-                                children: [
-                                  // Container(
-                                  //   height: screenHeight(context,
-                                  //       dividedBy: 8),
-                                  //   width: screenHeight(context,
-                                  //       dividedBy: 8),
-                                  //   decoration: BoxDecoration(
-                                  //       borderRadius:
-                                  //       BorderRadius.circular(15),
-                                  //       boxShadow: const [
-                                  //         BoxShadow(
-                                  //           color: AppColor.fontgray,
-                                  //           offset: Offset(
-                                  //             1,
-                                  //             1,
-                                  //           ),
-                                  //           blurRadius: 5,
-                                  //           // spreadRadius: 1.0,
-                                  //         ),
-                                  //       ],
-                                  //       image:
-                                  //       _selectedimag6
-                                  //           ?.selectedFile !=
-                                  //           null
-                                  //           ? DecorationImage(
-                                  //         //  image: AssetImage('assets/Images/vincenzo.png'),
-                                  //           image: FileImage(
-                                  //               _selectedimag6!
-                                  //                   .selectedFile),
-                                  //           fit: BoxFit.fill) :
-                                  //       const DecorationImage(
-                                  //           image: AssetImage(
-                                  //               'assets/Images/placeHolderImage.jpg'),
-                                  //           fit: BoxFit.fill)
-                                  //   ),
-                                  // ),
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: InkWell(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                              height: screenHeight(context,
-                                                  dividedBy: 3),
-                                              decoration: const BoxDecoration(
-                                                  color: AppColor.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  16))),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: const DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/placeHolderImage.jpg'),
+                                                  fit: BoxFit.fill)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag5 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag5 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag5?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                ),
+                          _selectedimag6?.selectedFile != null
+                              ? Container(
+                                  height: screenHeight(context, dividedBy: 8),
+                                  width: screenHeight(context, dividedBy: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: AppColor.fontgray,
+                                          offset: Offset(
+                                            1,
+                                            1,
+                                          ),
+                                          blurRadius: 5,
+                                          // spreadRadius: 1.0,
+                                        ),
+                                      ],
+                                      image: _selectedimag6?.selectedFile !=
+                                              null
+                                          ? DecorationImage(
+                                              //  image: AssetImage('assets/Images/vincenzo.png'),
+                                              image: FileImage(
+                                                  _selectedimag6!.selectedFile),
+                                              fit: BoxFit.fill)
+                                          : const DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Images/placeHolderImage.jpg'),
+                                              fit: BoxFit.fill)),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        bottom: 0.0,
+                                        right: 0.0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 3),
+                                                  decoration: const BoxDecoration(
+                                                      color: AppColor.white,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(15),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      16))),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -2321,255 +5695,22 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         70)),
-                                                    child: const Text(
-                                                      'Add Media',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
-                                                          child:
-                                                              GestureDetector(
-                                                            // onTap: () async {
-                                                            //   // final ImagePicker picker = ImagePicker();
-                                                            //   // final image = picker.pickImage(source: ImageSource.gallery);
-                                                            //   // print("image ===> $image");
-                                                            //   ImagePickerPlus
-                                                            //       picker =
-                                                            //       ImagePickerPlus(
-                                                            //           context);
-                                                            //   SelectedImagesDetails?
-                                                            //       details =
-                                                            //       await picker
-                                                            //           .pickBoth(
-                                                            //     source:
-                                                            //         ImageSource
-                                                            //             .camera,
-                                                            //
-                                                            //     /// On long tap, it will be available.
-                                                            //     multiSelection:
-                                                            //         true,
-                                                            //     galleryDisplaySettings:
-                                                            //         GalleryDisplaySettings(
-                                                            //       appTheme: AppTheme(
-                                                            //           focusColor:
-                                                            //               Colors
-                                                            //                   .white,
-                                                            //           primaryColor:
-                                                            //               Colors
-                                                            //                   .black),
-                                                            //       cropImage:
-                                                            //           true,
-                                                            //       showImagePreview:
-                                                            //           true,
-                                                            //     ),
-                                                            //   );
-                                                            //   print(
-                                                            //       'Details ===> ${details}');
-                                                            //   if (details !=
-                                                            //       null) {
-                                                            //     // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                            //     _selectedimag6 =
-                                                            //         details
-                                                            //             .selectedFiles[0];
-                                                            //     Navigator.pop(
-                                                            //         context);
-                                                            //     setState(() {});
-                                                            //     print(
-                                                            //         'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                            //   }
-                                                            //   // if (details != null) await displayDetails(details);
-                                                            // },
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/camera.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Camera',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        15),
-                                                            vertical:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        100)),
-                                                    child: GestureDetector(
-                                                      onTap: () async {
-                                                        ImagePickerPlus picker =
-                                                            ImagePickerPlus(
-                                                                context);
-                                                        SelectedImagesDetails?
-                                                            details =
-                                                            await picker
-                                                                .pickBoth(
-                                                          source: ImageSource
-                                                              .gallery,
-
-                                                          /// On long tap, it will be available.
-                                                          multiSelection: true,
-                                                          galleryDisplaySettings:
-                                                              GalleryDisplaySettings(
-                                                            appTheme: AppTheme(
-                                                                focusColor:
-                                                                    Colors
-                                                                        .white,
-                                                                primaryColor:
-                                                                    Colors
-                                                                        .black),
-                                                            cropImage: true,
-                                                            showImagePreview:
-                                                                true,
-                                                          ),
-                                                        );
-                                                        print(
-                                                            'Details ===> ${details}');
-                                                        if (details != null) {
-                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag6 = details
-                                                              .selectedFiles[0];
-                                                          Navigator.pop(
-                                                              context);
-                                                          setState(() {});
-                                                          print(
-                                                              'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                        }
-                                                        // if (details != null) await displayDetails(details);
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        17),
-                                                            width: screenWidth(
-                                                                context,
-                                                                dividedBy: 2),
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      right: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              40)),
-                                                                  height: screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          40),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          15),
-                                                                  decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                          image:
-                                                                              AssetImage('assets/Images/placeholder.png'))),
-                                                                ),
-                                                                const Text(
-                                                                  'Photos',
-                                                                  style: TextStyle(
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontSize:
-                                                                          17,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColor
-                                                                          .dropdownfont),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
+                                                        child: const Text(
+                                                          'Add Media',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontSize: 25,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
                                                             horizontal:
                                                                 screenWidth(
                                                                     context,
@@ -2580,84 +5721,995 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     context,
                                                                     dividedBy:
                                                                         100)),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 17),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 2),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  // final ImagePicker picker = ImagePicker();
+                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                  // print("image ===> $image");
+                                                                  ImagePickerPlus
+                                                                      picker =
+                                                                      ImagePickerPlus(
+                                                                          context);
+                                                                  SelectedImagesDetails?
+                                                                      details =
+                                                                      await picker
+                                                                          .pickBoth(
+                                                                    source: ImageSource
+                                                                        .camera,
+
+                                                                    /// On long tap, it will be available.
+                                                                    multiSelection:
+                                                                        true,
+                                                                    galleryDisplaySettings:
+                                                                        GalleryDisplaySettings(
+                                                                      appTheme: AppTheme(
+                                                                          focusColor: Colors
+                                                                              .white,
+                                                                          primaryColor:
+                                                                              Colors.black),
+                                                                      cropImage:
+                                                                          true,
+                                                                      showImagePreview:
+                                                                          true,
+                                                                    ),
+                                                                  );
+                                                                  print(
+                                                                      'Details ===> ${details}');
+                                                                  if (details !=
+                                                                      null) {
+                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                    _selectedimag6 =
+                                                                        details
+                                                                            .selectedFiles[0];
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    setState(
+                                                                        () {});
+                                                                    print(
+                                                                        'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                  }
+                                                                  // if (details != null) await displayDetails(details);
+                                                                },
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Camera',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: GestureDetector(
+                                                          onTap: () async {
+                                                            ImagePickerPlus
+                                                                picker =
+                                                                ImagePickerPlus(
+                                                                    context);
+                                                            SelectedImagesDetails?
+                                                                details =
+                                                                await picker
+                                                                    .pickBoth(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery,
+
+                                                              /// On long tap, it will be available.
+                                                              multiSelection:
+                                                                  true,
+                                                              galleryDisplaySettings:
+                                                                  GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    primaryColor:
+                                                                        Colors
+                                                                            .black),
+                                                                cropImage: true,
+                                                                showImagePreview:
+                                                                    true,
+                                                              ),
+                                                            );
+                                                            print(
+                                                                'Details ===> ${details}');
+                                                            if (details !=
+                                                                null) {
+                                                              //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                              _selectedimag6 =
+                                                                  details
+                                                                      .selectedFiles[0];
+                                                              Navigator.pop(
+                                                                  context);
+                                                              setState(() {});
+                                                              print(
+                                                                  'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                            }
+                                                            // if (details != null) await displayDetails(details);
+                                                          },
                                                           child: Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
                                                             children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            40)),
+                                                              SizedBox(
                                                                 height:
                                                                     screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            40),
+                                                                            17),
                                                                 width:
                                                                     screenWidth(
                                                                         context,
                                                                         dividedBy:
+                                                                            2),
+                                                                child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 40)),
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              40),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              15),
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                              image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                    ),
+                                                                    const Text(
+                                                                      'Photos',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Roboto',
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          color:
+                                                                              AppColor.dropdownfont),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        height: 0,
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        15),
+                                                            vertical:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        100)),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          17),
+                                                              width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          2),
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        right: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                40)),
+                                                                    height: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            40),
+                                                                    width: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
                                                                             15),
-                                                                decoration: const BoxDecoration(
-                                                                    image: DecorationImage(
-                                                                        image: AssetImage(
-                                                                            'assets/Images/video.png'))),
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                            image:
+                                                                                DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                  ),
+                                                                  const Text(
+                                                                    'Videos',
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        fontSize:
+                                                                            17,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: AppColor
+                                                                            .dropdownfont),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              const Text(
-                                                                'Videos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        17,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: AppColor
-                                                                        .dropdownfont),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            height: screenHeight(context,
+                                                dividedBy: 30),
+                                            width: screenHeight(context,
+                                                dividedBy: 30),
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(12)),
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/Images/add.png'),
+                                                    fit: BoxFit.fill)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ))
+                              : CachedNetworkImage(
+                                  imageUrl: "${apis.baseurl}/${widget.image6}",
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag6 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag6 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        height: screenHeight(context,
-                                            dividedBy: 30),
-                                        width: screenHeight(context,
-                                            dividedBy: 30),
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(12)),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/Images/add.png'),
-                                                fit: BoxFit.fill)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context,
+                                              dividedBy: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: AppColor.fontgray,
+                                                  offset: Offset(
+                                                    1,
+                                                    1,
+                                                  ),
+                                                  blurRadius: 5,
+                                                  // spreadRadius: 1.0,
+                                                ),
+                                              ],
+                                              image: const DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/Images/placeHolderImage.jpg'),
+                                                  fit: BoxFit.fill)),
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                bottom: 0.0,
+                                                right: 0.0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy: 3),
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16))),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            70)),
+                                                                child:
+                                                                    const Text(
+                                                                  'Add Media',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          // final ImagePicker picker = ImagePicker();
+                                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                                          // print("image ===> $image");
+                                                                          ImagePickerPlus
+                                                                              picker =
+                                                                              ImagePickerPlus(context);
+                                                                          SelectedImagesDetails?
+                                                                              details =
+                                                                              await picker.pickBoth(
+                                                                            source:
+                                                                                ImageSource.camera,
+
+                                                                            /// On long tap, it will be available.
+                                                                            multiSelection:
+                                                                                true,
+                                                                            galleryDisplaySettings:
+                                                                                GalleryDisplaySettings(
+                                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                              cropImage: true,
+                                                                              showImagePreview: true,
+                                                                            ),
+                                                                          );
+                                                                          print(
+                                                                              'Details ===> ${details}');
+                                                                          if (details !=
+                                                                              null) {
+                                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                            _selectedimag6 =
+                                                                                details.selectedFiles[0];
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                            print('selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                          }
+                                                                          // if (details != null) await displayDetails(details);
+                                                                        },
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Camera',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(
+                                                                            context);
+                                                                    SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker
+                                                                            .pickBoth(
+                                                                      source: ImageSource
+                                                                          .gallery,
+
+                                                                      /// On long tap, it will be available.
+                                                                      multiSelection:
+                                                                          true,
+                                                                      galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                        appTheme: AppTheme(
+                                                                            focusColor:
+                                                                                Colors.white,
+                                                                            primaryColor: Colors.black),
+                                                                        cropImage:
+                                                                            true,
+                                                                        showImagePreview:
+                                                                            true,
+                                                                      ),
+                                                                    );
+                                                                    print(
+                                                                        'Details ===> ${details}');
+                                                                    if (details !=
+                                                                        null) {
+                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                      _selectedimag6 =
+                                                                          details
+                                                                              .selectedFiles[0];
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      setState(
+                                                                          () {});
+                                                                      print(
+                                                                          'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                    }
+                                                                    // if (details != null) await displayDetails(details);
+                                                                  },
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                17),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                                2),
+                                                                        child:
+                                                                            Row(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                              height: screenHeight(context, dividedBy: 40),
+                                                                              width: screenWidth(context, dividedBy: 15),
+                                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                            ),
+                                                                            const Text(
+                                                                              'Photos',
+                                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            15),
+                                                                    vertical: screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: screenHeight(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              17),
+                                                                      width: screenWidth(
+                                                                          context,
+                                                                          dividedBy:
+                                                                              2),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Container(
+                                                                            margin:
+                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                            height:
+                                                                                screenHeight(context, dividedBy: 40),
+                                                                            width:
+                                                                                screenWidth(context, dividedBy: 15),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                          ),
+                                                                          const Text(
+                                                                            'Videos',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 17,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColor.dropdownfont),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        12)),
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/Images/add.png'),
+                                                            fit: BoxFit.fill)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                ),
                         ],
                       ),
                       SizedBox(
@@ -2710,35 +6762,6 @@ class _Business_ProfileState extends State<Business_Profile> {
                                     );
                                     print("result === >" +
                                         result!.names.toString());
-                                    // if (filelist.length < 3) {
-                                    //   filelist.add(result!.files.toString());
-                                    //   if (filelist.length == 1) {
-                                    //     file1 = result.files.first;
-                                    //     print("fille1 ======> " +
-                                    //         file1.toString());
-                                    //   } else if (filelist.length == 2) {
-                                    //     file2 = result.files.first;
-                                    //     print("fille2 ======> " +
-                                    //         file2.toString());
-                                    //   } else if (filelist.length == 3) {
-                                    //     file3 = result.files.first;
-                                    //     print("fille3 ======> " +
-                                    //         file3.toString());
-                                    //   }
-                                    // } else {
-                                    //   flutterToast('Only 3 items Add', false);
-                                    // }
-
-                                    // if(file1.bytes == null){
-                                    //   file1 = ;
-                                    //
-                                    // } else if(file2.bytes == null){
-                                    //   file2 = result!.files.first;
-                                    //   print("fille2 ======> " + file2.toString());
-                                    // } else {
-                                    //   file3 = result!.files.first;
-                                    //   print("fille3 ======> " + file3.toString());
-                                    // }
                                     setState(() {});
                                   },
                                   child: SizedBox(
@@ -2775,674 +6798,277 @@ class _Business_ProfileState extends State<Business_Profile> {
                                   ),
                                 ),
                               ),
-                              filelist.length == 1
-                                  ? Container(
-                                      margin: EdgeInsets.only(
-                                          top: screenHeight(context,
-                                              dividedBy: 100)),
-                                      height:
-                                          screenHeight(context, dividedBy: 15),
-                                      width:
-                                          screenWidth(context, dividedBy: 1.3),
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xffEFF4FF),
-                                          borderRadius:
-                                              BorderRadius.circular(6)),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: screenWidth(context,
-                                                dividedBy: 55)),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  right: screenWidth(context,
-                                                      dividedBy: 90)),
-                                              height: screenHeight(context,
-                                                  dividedBy: 27),
-                                              width: screenWidth(context,
-                                                  dividedBy: 15),
-                                              decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage(
-                                                          'assets/ImagesImages/file.png'))),
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight(context,
-                                                  dividedBy: 23),
-                                              width: screenWidth(context,
-                                                  dividedBy: 1.55),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        'image_01.jpg',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto',
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColor
-                                                                .dropdownfont),
-                                                      ),
-                                                      Text(
-                                                        '96.47 KB',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'Roboto',
-                                                            fontSize: 8,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: Color(
-                                                                0xff838383)),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            addFolderNameDialog(
-                                                                filelist[0]),
-                                                      );
-                                                    },
-                                                    child: const Icon(
-                                                      Icons.close,
-                                                      color: AppColor.skyBlue,
-                                                      size: 15,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : filelist.length == 2
-                                      ? Column(
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  top: screenHeight(context,
-                                                      dividedBy: 100)),
-                                              height: screenHeight(context,
-                                                  dividedBy: 15),
-                                              width: screenWidth(context,
-                                                  dividedBy: 1.3),
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xffEFF4FF),
-                                                  borderRadius:
-                                                      BorderRadius.circular(6)),
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: screenWidth(
-                                                        context,
-                                                        dividedBy: 55)),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: screenWidth(
-                                                              context,
-                                                              dividedBy: 90)),
-                                                      height: screenHeight(
-                                                          context,
-                                                          dividedBy: 27),
-                                                      width: screenWidth(
-                                                          context,
-                                                          dividedBy: 15),
-                                                      decoration: const BoxDecoration(
-                                                          image: DecorationImage(
-                                                              image: AssetImage(
-                                                                  'assets/Images/file.png'))),
-                                                    ),
-                                                    SizedBox(
-                                                      height: screenHeight(
-                                                          context,
-                                                          dividedBy: 23),
-                                                      width: screenWidth(
-                                                          context,
-                                                          dividedBy: 1.55),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                'image_01.jpg',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: AppColor
-                                                                        .dropdownfont),
-                                                              ),
-                                                              Text(
-                                                                '96.47 KB',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize: 8,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: Color(
-                                                                        0xff838383)),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          InkWell(
-                                                            onTap: () {
-                                                              showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (context) =>
-                                                                    addFolderNameDialog(
-                                                                        filelist[
-                                                                            0]),
-                                                              );
-                                                            },
-                                                            child: const Icon(
-                                                              Icons.close,
-                                                              color: AppColor
-                                                                  .skyBlue,
-                                                              size: 15,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  top: screenHeight(context,
-                                                      dividedBy: 100)),
-                                              height: screenHeight(context,
-                                                  dividedBy: 15),
-                                              width: screenWidth(context,
-                                                  dividedBy: 1.3),
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xffEFF4FF),
-                                                  borderRadius:
-                                                      BorderRadius.circular(6)),
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: screenWidth(
-                                                        context,
-                                                        dividedBy: 55)),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: screenWidth(
-                                                              context,
-                                                              dividedBy: 90)),
-                                                      height: screenHeight(
-                                                          context,
-                                                          dividedBy: 27),
-                                                      width: screenWidth(
-                                                          context,
-                                                          dividedBy: 15),
-                                                      decoration: const BoxDecoration(
-                                                          image: DecorationImage(
-                                                              image: AssetImage(
-                                                                  'assets/Images/file.png'))),
-                                                    ),
-                                                    SizedBox(
-                                                      height: screenHeight(
-                                                          context,
-                                                          dividedBy: 23),
-                                                      width: screenWidth(
-                                                          context,
-                                                          dividedBy: 1.55),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                'image_02.jpg',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: AppColor
-                                                                        .dropdownfont),
-                                                              ),
-                                                              Text(
-                                                                '96.47 KB',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize: 8,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: Color(
-                                                                        0xff838383)),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          InkWell(
-                                                            onTap: () {
-                                                              showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (context) =>
-                                                                    addFolderNameDialog(
-                                                                        filelist[
-                                                                            1]),
-                                                              );
-                                                            },
-                                                            child: const Icon(
-                                                              Icons.close,
-                                                              color: AppColor
-                                                                  .skyBlue,
-                                                              size: 15,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : filelist.length == 3
-                                          ? Column(
+                              Column(
+                                children: [
+                                 widget.file4.isNotEmpty ?   Container(
+                                    margin: EdgeInsets.only(
+                                        top: screenHeight(context,
+                                            dividedBy: 100)),
+                                    height:
+                                        screenHeight(context, dividedBy: 15),
+                                    width: screenWidth(context, dividedBy: 1.3),
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xffEFF4FF),
+                                        borderRadius: BorderRadius.circular(6)),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: screenWidth(context,
+                                              dividedBy: 55)),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                right: screenWidth(context,
+                                                    dividedBy: 90)),
+                                            height: screenHeight(context,
+                                                dividedBy: 27),
+                                            width: screenWidth(context,
+                                                dividedBy: 15),
+                                            decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        'assets/Images/file.png'))),
+                                          ),
+                                          SizedBox(
+                                            height: screenHeight(context,
+                                                dividedBy: 23),
+                                            width: screenWidth(context,
+                                                dividedBy: 1.55),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      top: screenHeight(context,
-                                                          dividedBy: 100)),
-                                                  height: screenHeight(context,
-                                                      dividedBy: 15),
-                                                  width: screenWidth(context,
-                                                      dividedBy: 1.3),
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xffEFF4FF),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6)),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        55)),
-                                                    child: Row(
-                                                      children: [
-                                                        Container(
-                                                          margin: EdgeInsets.only(
-                                                              right:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          90)),
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 27),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 15),
-                                                          decoration: const BoxDecoration(
-                                                              image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      'assets/Images/file.png'))),
-                                                        ),
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 23),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 1.55),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Text(
-                                                                    'image_01.jpg',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'Roboto',
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color: AppColor
-                                                                            .dropdownfont),
-                                                                  ),
-                                                                  Text(
-                                                                    '96.47 KB',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'Roboto',
-                                                                        fontSize:
-                                                                            8,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color: Color(
-                                                                            0xff838383)),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (context) =>
-                                                                        addFolderNameDialog(
-                                                                            filelist[0]),
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.close,
-                                                                  color: AppColor
-                                                                      .skyBlue,
-                                                                  size: 15,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
+                                                 Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      fileName1,
+                                                      style: const TextStyle(
+                                                          fontFamily: 'Roboto',
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColor
+                                                              .dropdownfont),
                                                     ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      top: screenHeight(context,
-                                                          dividedBy: 100)),
-                                                  height: screenHeight(context,
-                                                      dividedBy: 15),
-                                                  width: screenWidth(context,
-                                                      dividedBy: 1.3),
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xffEFF4FF),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6)),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        55)),
-                                                    child: Row(
-                                                      children: [
-                                                        Container(
-                                                          margin: EdgeInsets.only(
-                                                              right:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          90)),
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 27),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 15),
-                                                          decoration: const BoxDecoration(
-                                                              image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      'assets/Images/file.png'))),
-                                                        ),
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 23),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 1.55),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Text(
-                                                                    'image_02.jpg',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'Roboto',
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color: AppColor
-                                                                            .dropdownfont),
-                                                                  ),
-                                                                  Text(
-                                                                    '96.47 KB',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'Roboto',
-                                                                        fontSize:
-                                                                            8,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color: Color(
-                                                                            0xff838383)),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (context) =>
-                                                                        addFolderNameDialog(
-                                                                            filelist[1]),
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.close,
-                                                                  color: AppColor
-                                                                      .skyBlue,
-                                                                  size: 15,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
+                                                    const Text(
+                                                      '96.47 KB',
+                                                      style: TextStyle(
+                                                          fontFamily: 'Roboto',
+                                                          fontSize: 8,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Color(
+                                                              0xff838383)),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      top: screenHeight(context,
-                                                          dividedBy: 100)),
-                                                  height: screenHeight(context,
-                                                      dividedBy: 15),
-                                                  width: screenWidth(context,
-                                                      dividedBy: 1.3),
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xffEFF4FF),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6)),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        55)),
-                                                    child: Row(
-                                                      children: [
-                                                        Container(
-                                                          margin: EdgeInsets.only(
-                                                              right:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          90)),
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 27),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 15),
-                                                          decoration: const BoxDecoration(
-                                                              image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      'assets/Images/file.png'))),
-                                                        ),
-                                                        SizedBox(
-                                                          height: screenHeight(
-                                                              context,
-                                                              dividedBy: 23),
-                                                          width: screenWidth(
-                                                              context,
-                                                              dividedBy: 1.55),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Text(
-                                                                    'image_03.jpg',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'Roboto',
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color: AppColor
-                                                                            .dropdownfont),
-                                                                  ),
-                                                                  Text(
-                                                                    '96.47 KB',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'Roboto',
-                                                                        fontSize:
-                                                                            8,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color: Color(
-                                                                            0xff838383)),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (context) =>
-                                                                        addFolderNameDialog(
-                                                                            filelist[2]),
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.close,
-                                                                  color: AppColor
-                                                                      .skyBlue,
-                                                                  size: 15,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          addFolderNameDialog(
+                                                              ''),
+                                                    );
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.close,
+                                                    color: AppColor.skyBlue,
+                                                    size: 15,
                                                   ),
-                                                ),
+                                                )
                                               ],
-                                            )
-                                          : const SizedBox(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ) : SizedBox(),
+                                 widget.file5.isNotEmpty ?    Container(
+                                   margin: EdgeInsets.only(
+                                       top: screenHeight(context,
+                                           dividedBy: 100)),
+                                   height:
+                                   screenHeight(context, dividedBy: 15),
+                                   width: screenWidth(context, dividedBy: 1.3),
+                                   decoration: BoxDecoration(
+                                       color: const Color(0xffEFF4FF),
+                                       borderRadius: BorderRadius.circular(6)),
+                                   child: Padding(
+                                     padding: EdgeInsets.symmetric(
+                                         horizontal: screenWidth(context,
+                                             dividedBy: 55)),
+                                     child: Row(
+                                       children: [
+                                         Container(
+                                           margin: EdgeInsets.only(
+                                               right: screenWidth(context,
+                                                   dividedBy: 90)),
+                                           height: screenHeight(context,
+                                               dividedBy: 27),
+                                           width: screenWidth(context,
+                                               dividedBy: 15),
+                                           decoration: const BoxDecoration(
+                                               image: DecorationImage(
+                                                   image: AssetImage(
+                                                       'assets/Images/file.png'))),
+                                         ),
+                                         SizedBox(
+                                           height: screenHeight(context,
+                                               dividedBy: 23),
+                                           width: screenWidth(context,
+                                               dividedBy: 1.55),
+                                           child: Row(
+                                             mainAxisAlignment:
+                                             MainAxisAlignment
+                                                 .spaceBetween,
+                                             children: [
+                                               Column(
+                                                 crossAxisAlignment:
+                                                 CrossAxisAlignment.start,
+                                                 mainAxisAlignment:
+                                                 MainAxisAlignment.center,
+                                                 children: [
+                                                   Text(
+                                                     fileName2,
+                                                     style: const TextStyle(
+                                                         fontFamily: 'Roboto',
+                                                         fontSize: 12,
+                                                         fontWeight:
+                                                         FontWeight.w500,
+                                                         color: AppColor
+                                                             .dropdownfont),
+                                                   ),
+                                                   const Text(
+                                                     '96.47 KB',
+                                                     style: TextStyle(
+                                                         fontFamily: 'Roboto',
+                                                         fontSize: 8,
+                                                         fontWeight:
+                                                         FontWeight.w500,
+                                                         color: Color(
+                                                             0xff838383)),
+                                                   ),
+                                                 ],
+                                               ),
+                                               InkWell(
+                                                 onTap: () {
+                                                   showDialog(
+                                                     context: context,
+                                                     builder: (context) =>
+                                                         addFolderNameDialog(
+                                                             ''),
+                                                   );
+                                                 },
+                                                 child: const Icon(
+                                                   Icons.close,
+                                                   color: AppColor.skyBlue,
+                                                   size: 15,
+                                                 ),
+                                               )
+                                             ],
+                                           ),
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 ) : SizedBox(),
+                                 widget.file6.isNotEmpty ?   Container(
+                                   margin: EdgeInsets.only(
+                                       top: screenHeight(context,
+                                           dividedBy: 100)),
+                                   height:
+                                   screenHeight(context, dividedBy: 15),
+                                   width: screenWidth(context, dividedBy: 1.3),
+                                   decoration: BoxDecoration(
+                                       color: const Color(0xffEFF4FF),
+                                       borderRadius: BorderRadius.circular(6)),
+                                   child: Padding(
+                                     padding: EdgeInsets.symmetric(
+                                         horizontal: screenWidth(context,
+                                             dividedBy: 55)),
+                                     child: Row(
+                                       children: [
+                                         Container(
+                                           margin: EdgeInsets.only(
+                                               right: screenWidth(context,
+                                                   dividedBy: 90)),
+                                           height: screenHeight(context,
+                                               dividedBy: 27),
+                                           width: screenWidth(context,
+                                               dividedBy: 15),
+                                           decoration: const BoxDecoration(
+                                               image: DecorationImage(
+                                                   image: AssetImage(
+                                                       'assets/Images/file.png'))),
+                                         ),
+                                         SizedBox(
+                                           height: screenHeight(context,
+                                               dividedBy: 23),
+                                           width: screenWidth(context,
+                                               dividedBy: 1.55),
+                                           child: Row(
+                                             mainAxisAlignment:
+                                             MainAxisAlignment
+                                                 .spaceBetween,
+                                             children: [
+                                               Column(
+                                                 crossAxisAlignment:
+                                                 CrossAxisAlignment.start,
+                                                 mainAxisAlignment:
+                                                 MainAxisAlignment.center,
+                                                 children: [
+                                                   Text(
+                                                     fileName3,
+                                                     style: const TextStyle(
+                                                         fontFamily: 'Roboto',
+                                                         fontSize: 12,
+                                                         fontWeight:
+                                                         FontWeight.w500,
+                                                         color: AppColor
+                                                             .dropdownfont),
+                                                   ),
+                                                   const Text(
+                                                     '96.47 KB',
+                                                     style: TextStyle(
+                                                         fontFamily: 'Roboto',
+                                                         fontSize: 8,
+                                                         fontWeight:
+                                                         FontWeight.w500,
+                                                         color: Color(
+                                                             0xff838383)),
+                                                   ),
+                                                 ],
+                                               ),
+                                               InkWell(
+                                                 onTap: () {
+                                                   showDialog(
+                                                     context: context,
+                                                     builder: (context) =>
+                                                         addFolderNameDialog(
+                                                             ''),
+                                                   );
+                                                 },
+                                                 child: const Icon(
+                                                   Icons.close,
+                                                   color: AppColor.skyBlue,
+                                                   size: 15,
+                                                 ),
+                                               )
+                                             ],
+                                           ),
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 ): SizedBox(),
+                                ],
+                              )
                             ],
                           ),
                         ),
@@ -3502,25 +7128,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                         context,
                         text: 'SAVE',
                         onTap: () {
-                          // Navigator.pop(context);
-                          //  if(_selectedimag1 != null){
-                          //    print("hello");
-                          //    Navigator.pop(context);
-                          //  } else {
-                          //    print("try again");
-                          //  }
-                          //  businessProfileCubit.BusinessProfileService(
-                          //      photo_1: _selectedimag1?.selectedFile ?? File(''),
-                          //      bio: _bio.text,
-                          //      file_2: file2 ?? PlatformFile(name: "", size: 0) ,
-                          //      file_3: file3 ?? PlatformFile(name: "", size: 0),
-                          //      context: context,
-                          //      photo_2: _selectedimag2?.selectedFile ?? File(''),
-                          //      photo_3: _selectedimag3?.selectedFile ?? File(''),
-                          //      photo_4: _selectedimag4?.selectedFile ?? File(''),
-                          //      photo_5: _selectedimag5?.selectedFile ?? File(''),
-                          //      photo_6: _selectedimag6?.selectedFile ?? File(''),
-                          //      file_1: file1 ?? PlatformFile(name: "", size: 0));
+
                           businessprofileupdateCubit
                               .BusinessprofileupdateService(
                                   photo_1:

@@ -139,7 +139,7 @@ class _Filter_pageState extends State<Filter_page> {
                                 width: screenWidth(context),
                                 child:
                                   Slider(value: _slider,
-                                    max: 100,
+                                    max: 500,
                                     inactiveColor:AppColor.gray,
                                     activeColor: AppColor.skyBlue,
                                     onChanged: (value) {

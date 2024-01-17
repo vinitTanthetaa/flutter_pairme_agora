@@ -1,9 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/cubits/connected_user_data.dart';
+import 'package:pair_me/cubits/remove_connect_user.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 import '../helper/App_Colors.dart';
@@ -17,6 +22,8 @@ class Connection_Page extends StatefulWidget {
 }
 
 class _Connection_PageState extends State<Connection_Page> {
+  ConnectedUsersCubit connectedUsersCubit = ConnectedUsersCubit();
+  RemoveUserCubit removeUserCubit = RemoveUserCubit();
   List list = [
     {
       "Name": "Jane Koblenz",
@@ -87,7 +94,14 @@ class _Connection_PageState extends State<Connection_Page> {
           "https://img.mensxp.com/media/content/2021/Jan/Lesser-Known-Facts-About-Yash-7_60056adf8c66e.jpeg?w=900&h=1200&cc=1"
     },
   ];
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    connectedUsersCubit = BlocProvider.of<ConnectedUsersCubit>(context);
+    removeUserCubit = BlocProvider.of<RemoveUserCubit>(context);
+    connectedUsersCubit.GetConnectedUsers();
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,8 +167,8 @@ class _Connection_PageState extends State<Connection_Page> {
                       padding: EdgeInsets.symmetric(
                           horizontal: screenWidth(context, dividedBy: 30),
                           vertical: screenHeight(context, dividedBy: 70)),
-                      child: const Text(
-                        "4 Connection",
+                      child: Text(
+                        "${connectedUsersCubit.connectedUsers.data?.length} Connection",
                         style: TextStyle(
                             fontSize: 17,
                             fontFamily: 'Roboto',
@@ -189,7 +203,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       CachedNetworkImage(
-                                        imageUrl: list[index]["image"],
+                                        imageUrl: '${apis.baseurl}/${connectedUsersCubit.connectedUsers.data?[index].profileImage ?? ''}',
                                         imageBuilder:
                                             (context, imageProvider) =>
                                                 Container(
@@ -231,7 +245,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "${list[index]["Name"]}",
+                                              connectedUsersCubit.connectedUsers.data?[index].name ?? '',
                                               style: const TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w500,
@@ -271,7 +285,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                                   const SizedBox(
                                                     width: 3,
                                                   ),
-                                                  const Text("01/11/2024",
+                                                   Text(DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data![index].time),
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xffAAAAAA),
@@ -309,8 +323,8 @@ class _Connection_PageState extends State<Connection_Page> {
                                                           children: [
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
+                                                                   EdgeInsets
+                                                                      .only(top: screenHeight(context,dividedBy: 50)),
                                                               child: Container(
                                                                 width:
                                                                     screenHeight(
@@ -323,37 +337,42 @@ class _Connection_PageState extends State<Connection_Page> {
                                                                         BorderRadius.circular(
                                                                             10),
                                                                     color: Colors
-                                                                        .grey),
+                                                                        .black54),
                                                               ),
                                                             ),
-                                                            Container(
-                                                              width: double
-                                                                  .infinity,
-                                                              height:
-                                                                  screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          10),
-                                                              decoration: const BoxDecoration(
-                                                                  color: Colors
-                                                                      .transparent,
-                                                                  borderRadius: BorderRadius.only(
-                                                                      topLeft: Radius
-                                                                          .circular(
-                                                                              15),
-                                                                      topRight:
-                                                                          Radius.circular(
-                                                                              16))),
-                                                              child:
-                                                                  const Center(
-                                                                      child:
-                                                                          ListTile(
-                                                                title: Text(
-                                                                    "Remove Connection"),
-                                                                leading: Icon(
-                                                                    Icons
-                                                                        .delete),
-                                                              )),
+                                                            InkWell(
+                                                              onTap: () {
+                                                               // removeUserCubit.AcceptNotification(id: id)
+                                                              },
+                                                              child: Container(
+                                                                margin: EdgeInsets.only(left: screenWidth(context,dividedBy: 50)),
+                                                                width: screenWidth(context),
+                                                                height:
+                                                                    screenHeight(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            10),
+                                                                decoration: const BoxDecoration(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    borderRadius: BorderRadius.only(
+                                                                        topLeft: Radius
+                                                                            .circular(
+                                                                                15),
+                                                                        topRight:
+                                                                            Radius.circular(
+                                                                                16))),
+                                                                child:
+                                                                    const Center(
+                                                                        child:
+                                                                            ListTile(
+                                                                  title: Text(
+                                                                      "Remove Connection"),
+                                                                  leading: Icon(
+                                                                      Icons
+                                                                          .delete),
+                                                                )),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -385,7 +404,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                 // color: Colors.black12,
                               );
                             },
-                            itemCount: list.length)),
+                            itemCount: connectedUsersCubit.connectedUsers.data?.length ?? 0)),
                   ],
                 ),
               ))

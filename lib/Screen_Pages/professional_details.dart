@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pair_me/Modal/user_profile_modal.dart';
 import 'package:pair_me/Screen_Pages/business_address.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
@@ -11,7 +12,8 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:steps_indicator/steps_indicator.dart';
 
 class Professional_Details extends StatefulWidget {
-  Professional_Details({super.key});
+  String Name,job,domain,email,category,expe,skill,education,univercity;
+  Professional_Details({super.key,required this.Name,required this.job,required this.domain,required this.email,required this.category,required this.expe,required this.skill,required this.education,required this.univercity,});
 
   @override
   State<Professional_Details> createState() => _Professional_DetailsState();
@@ -68,6 +70,24 @@ class _Professional_DetailsState extends State<Professional_Details> {
   bool _experience = false;
   bool _skill = false;
   bool _education = false;
+  getData(){
+    _compnyName.text = widget.Name;
+    _jobTitle.text = widget.job;
+    _compnyDomain.text = widget.domain;
+    _email.text = widget.email;
+    _categorycontroller.text = widget.category;
+    _experiencecontroller.text = widget.expe;
+    _skillcontroller.text = widget.skill;
+    _educationcontroller.text = widget.education;
+    _univercitycontroller.text = widget.univercity;
+    setState(() {});
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -282,73 +302,73 @@ class _Professional_DetailsState extends State<Professional_Details> {
                           hint: "Select",
                           hidetext: false,
                           controller: _skillcontroller),
-                      _skill
-                          ? Container(
-
-                        height: screenHeight(context, dividedBy: 7.5),
-                        width: screenWidth(context),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                offset: Offset(
-                                  1,
-                                  1,
-                                ),
-                                blurRadius: 4,
-                                // spreadRadius: 1.0,
-                              ),
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: screenHeight(context,dividedBy: 85),),
-                            Padding(
-                              padding: const EdgeInsets.symmetric( horizontal: 10),
-                              child: custom_text(
-                                  text: _skills[0],
-                                  color: const Color(0xff303030)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric( horizontal: 10,vertical: 5),
-                              child: custom_text(
-                                  text: _skills[1],
-                                  color: const Color(0xff303030)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric( horizontal: 10),
-                              child: custom_text(
-                                  text: _skills[2],
-                                  color: const Color(0xff303030)),
-                            ),
-                            SizedBox(height: screenHeight(context,dividedBy: 85),),
-                            const Divider(
-                              height: 0,
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: screenHeight(context,dividedBy: 30),
-                              child:Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Show all 17 skills',style: TextStyle(fontWeight: FontWeight.w400,fontFamily: 'Roboto',fontSize: 10,color: AppColor.skyBlue),),
-                                  Container(
-                                    margin: EdgeInsets.only(left: screenWidth(context,dividedBy: 65)),
-                                    height: screenHeight(context,dividedBy: 65),
-                                    width: screenWidth(context,dividedBy: 30),
-                                    child: const Image(image: AssetImage('assets/Images/LineArrow.png')),
-                                  )
-                                ],
-                              ),
-                            )
-
-                          ],
-                        ),
-                      )
-                          : const SizedBox(),
+                      // _skill
+                      //     ? Container(
+                      //
+                      //   height: screenHeight(context, dividedBy: 7.5),
+                      //   width: screenWidth(context),
+                      //   margin: const EdgeInsets.only(bottom: 10),
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(7),
+                      //       color: Colors.white,
+                      //       boxShadow: const [
+                      //         BoxShadow(
+                      //           color: Colors.grey,
+                      //           offset: Offset(
+                      //             1,
+                      //             1,
+                      //           ),
+                      //           blurRadius: 4,
+                      //           // spreadRadius: 1.0,
+                      //         ),
+                      //       ]),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       SizedBox(height: screenHeight(context,dividedBy: 85),),
+                      //       Padding(
+                      //         padding: const EdgeInsets.symmetric( horizontal: 10),
+                      //         child: custom_text(
+                      //             text: _skills[0],
+                      //             color: const Color(0xff303030)),
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.symmetric( horizontal: 10,vertical: 5),
+                      //         child: custom_text(
+                      //             text: _skills[1],
+                      //             color: const Color(0xff303030)),
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.symmetric( horizontal: 10),
+                      //         child: custom_text(
+                      //             text: _skills[2],
+                      //             color: const Color(0xff303030)),
+                      //       ),
+                      //       SizedBox(height: screenHeight(context,dividedBy: 85),),
+                      //       const Divider(
+                      //         height: 0,
+                      //       ),
+                      //       Container(
+                      //         alignment: Alignment.center,
+                      //         height: screenHeight(context,dividedBy: 30),
+                      //         child:Row(
+                      //           mainAxisAlignment: MainAxisAlignment.center,
+                      //           children: [
+                      //             const Text('Show all 17 skills',style: TextStyle(fontWeight: FontWeight.w400,fontFamily: 'Roboto',fontSize: 10,color: AppColor.skyBlue),),
+                      //             Container(
+                      //               margin: EdgeInsets.only(left: screenWidth(context,dividedBy: 65)),
+                      //               height: screenHeight(context,dividedBy: 65),
+                      //               width: screenWidth(context,dividedBy: 30),
+                      //               child:  Image(image: const AssetImage('assets/Images/LineArrow.png')),
+                      //             )
+                      //           ],
+                      //         ),
+                      //       )
+                      //
+                      //     ],
+                      //   ),
+                      // )
+                      //     : const SizedBox(),
                       custom_textfield_header(text: 'Education'),
                       Custom_textfield(context,
                           show_icon: true,

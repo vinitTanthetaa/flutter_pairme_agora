@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/helper/Apis.dart';
@@ -38,11 +40,14 @@ class AcceptorRejectCubit extends Cubit<AcceptorRejectState> {
       // TODO
     }
   }
-  Future<void> RejectNotification({required String id}) async {
+  Future<void> RejectNotification({required List id}) async {
+    Map<String, dynamic> body = {
+      "user_id": id,
+    };
     print("id ==> $id");
     emit(AcceptorRejectLoading());
     try {
-      Response response = await dio.get('${apis.rejectNotification}$id',options:  Options(headers: {
+      Response response = await dio.post(apis.rejectNotification,data: jsonEncode(body),options:  Options(headers: {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }));

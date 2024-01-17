@@ -18,7 +18,8 @@ import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class Business_Address extends StatefulWidget {
-  Business_Address({super.key});
+  String line1,line2,country,state,city,code,date;
+  Business_Address({super.key,required this.line1,required this.line2,required this.country,required this.state,required this.city,required this.code,required this.date,});
 
   @override
   State<Business_Address> createState() => _Business_AddressState();
@@ -48,13 +49,23 @@ class _Business_AddressState extends State<Business_Address> {
     cityandState = (await cityStateCubit.getcalendarEvents(country: country))!;
     setState(() {});
   }
+  Getadddata(){
+    _Address.text = widget.line1;
+    _Address2.text = widget.line2;
+    _Contry.text = widget.country;
+    _State.text = widget.state;
+    _City.text = widget.city;
+    _Zipcode.text = widget.code;
+    _date.text = widget.date;
+    setState(() {});
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     cityStateCubit = BlocProvider.of<CityStateCubit>(context);
     businessaddressUpdatesCubit = BlocProvider.of<BusinessaddressUpdatesCubit>(context);
-
+    Getadddata();
     // getHttp();
   }
   Widget build(BuildContext context) {

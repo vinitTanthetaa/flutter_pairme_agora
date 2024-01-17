@@ -14,7 +14,8 @@ import 'package:pair_me/cubits/address_update.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class Address_Details extends StatefulWidget {
-  Address_Details({super.key});
+  String line1,line2,country,state,city,code;
+  Address_Details({super.key,required this.line1,required this.line2,required this.country,required this.state,required this.city,required this.code,});
 
   @override
   State<Address_Details> createState() => _Address_DetailsState();
@@ -40,13 +41,24 @@ class _Address_DetailsState extends State<Address_Details> {
     cityandState = (await cityStateCubit.getcalendarEvents(country: country))!;
     setState(() {});
   }
+  getdata(){
+    _Address.text = widget.line1;
+    _Address2.text = widget.line2;
+    _Contry.text = widget.country;
+    _State.text = widget.state;
+    _City.text = widget.city;
+    _Zipcode.text = widget.code;
+    setState(() {
+
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     cityStateCubit = BlocProvider.of<CityStateCubit>(context);
     addressDetailsCubit = BlocProvider.of<AddressDetailsCubit>(context);
-
+    getdata();
     // getHttp();
   }
 

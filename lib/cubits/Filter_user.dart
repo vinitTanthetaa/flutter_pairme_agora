@@ -5,11 +5,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:pair_me/Modal/alluserprofile.dart';
 import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/Screen_Pages/verification_code.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
+
+import '../Modal/filter_user_data.dart';
 
 
 abstract class FilterUserState {}
@@ -24,8 +27,8 @@ class FilterUserSuccess extends FilterUserState {}
 
 class FilterUserCubit extends Cubit<FilterUserState> {
   FilterUserCubit() : super(FilterUserInitials());
-
-  Future<void> FilterUserService(
+  FilterUser filterUser = FilterUser();
+  Future<FilterUser?> FilterUserService(
       { String? distance,
          String? country,
          String? state,
@@ -49,17 +52,17 @@ class FilterUserCubit extends Cubit<FilterUserState> {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }) ,data: jsonEncode(body));
-      print("Response ===> ${response.data}");
       final hello = response.data;
-      print(hello);
-      if (hello['message'] == "FilterUser Successfully") {
-        print("Response ===> ${response.data}");
+      if (hello['code'] == 200) {
+        filterUser = FilterUser.fromJson(response.data);
+        log("Response ===> ${response.data}");
         emit(FilterUserSuccess());
         flutterToast(hello['message'], true);
       } else {
         emit(FilterUserError());
         flutterToast(hello['message'], false);
       }
+      return filterUser;
     } on Exception catch (e) {
       print("fail ====> " +e.toString());
       emit(FilterUserError());

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -27,66 +29,73 @@ class _Notification_pageState extends State<Notification_page> {
   UserNotification userNotification = UserNotification();
   AcceptorRejectCubit acceptorRejectCubit = AcceptorRejectCubit();
   ClearAllNotificationCubit clearAllNotificationCubit = ClearAllNotificationCubit();
-  List list = [
-  {
-    "Name":"Jane Koblenz",
-    "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU"
-  },
-  {
-    "Name":"Virat Kohli",
-    "image":"https://wallpapers.com/images/hd/virat-kohli-hd-black-tuxedo-fibgrtdlqvatdblj.jpg"
-  },
-  {
-    "Name":"Hardik Pandeya",
-    "image":"https://i.pinimg.com/originals/2e/31/a4/2e31a4fce6c52a98d518053d269d7eba.jpg"
-  },
-  {
-    "Name":"Amitabh Bachchan",
-    "image":"https://e1.pxfuel.com/desktop-wallpaper/85/759/desktop-wallpaper-%E2%9C%85-8-amitabh-bachchan-amitabh-bachchan-thumbnail.jpg"
-  },
-  {
-    "Name":"Vincenzo cassano",
-    "image":"https://e0.pxfuel.com/wallpapers/251/76/desktop-wallpaper-vincenzo-cassano-thumbnail.jpg"
-  },
-  {
-    "Name":"Shahrukh khan",
-    "image":"https://e0.pxfuel.com/wallpapers/531/653/desktop-wallpaper-shah-rukh-khan-actor-king-gentleman-shahrukhkhan-attitude.jpg"
-  },
-  {
-    "Name":"Robert Downey jr",
-    "image":"https://static.wikia.nocookie.net/ironman/images/7/79/Photo%28906%29.jpg/revision/latest?cb=20141019122536"
-  },
-  {
-    "Name":"Johnny Depp",
-    "image":"https://images.saymedia-content.com/.image/t_share/MTc0NDI1MDExOTk2NTk5OTQy/top-10-greatest-johnny-depp-movies-of-all-time.jpg"
-  },
-  {
-    "Name":"úrsula corberó",
-    "image":"https://www.bollywoodhungama.com/wp-content/uploads/2021/09/WhatsApp-Image-2021-09-23-at-10.45.54-AM.jpeg"
-  },
-  {
-    "Name":"Satoru Gojo",
-    "image":"https://e0.pxfuel.com/wallpapers/666/451/desktop-wallpaper-white-hair-blue-eyes-satoru-gojo-jujutsu-kaisen.jpg"
-  },
-  {
-    "Name":"Nanami Kento",
-    "image":"https://wallpaperaccess.com/full/5661539.png"
-  },
-  {
-    "Name":"Ryomen Sukuna",
-    "image":"https://i1.sndcdn.com/artworks-Ovrge2921kVbhGxA-m3FQYA-t500x500.jpg"
-  },
-  {
-    "Name":"Vijay Thalapathy",
-    "image":"https://static.toiimg.com/photo/101080781.cms"
-  },
-  {
-    "Name":"Yash",
-    "image":"https://img.mensxp.com/media/content/2021/Jan/Lesser-Known-Facts-About-Yash-7_60056adf8c66e.jpeg?w=900&h=1200&cc=1"
-  },
-];
+  List ids = [];
+//   List list = [
+//   {
+//     "Name":"Jane Koblenz",
+//     "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU"
+//   },
+//   {
+//     "Name":"Virat Kohli",
+//     "image":"https://wallpapers.com/images/hd/virat-kohli-hd-black-tuxedo-fibgrtdlqvatdblj.jpg"
+//   },
+//   {
+//     "Name":"Hardik Pandeya",
+//     "image":"https://i.pinimg.com/originals/2e/31/a4/2e31a4fce6c52a98d518053d269d7eba.jpg"
+//   },
+//   {
+//     "Name":"Amitabh Bachchan",
+//     "image":"https://e1.pxfuel.com/desktop-wallpaper/85/759/desktop-wallpaper-%E2%9C%85-8-amitabh-bachchan-amitabh-bachchan-thumbnail.jpg"
+//   },
+//   {
+//     "Name":"Vincenzo cassano",
+//     "image":"https://e0.pxfuel.com/wallpapers/251/76/desktop-wallpaper-vincenzo-cassano-thumbnail.jpg"
+//   },
+//   {
+//     "Name":"Shahrukh khan",
+//     "image":"https://e0.pxfuel.com/wallpapers/531/653/desktop-wallpaper-shah-rukh-khan-actor-king-gentleman-shahrukhkhan-attitude.jpg"
+//   },
+//   {
+//     "Name":"Robert Downey jr",
+//     "image":"https://static.wikia.nocookie.net/ironman/images/7/79/Photo%28906%29.jpg/revision/latest?cb=20141019122536"
+//   },
+//   {
+//     "Name":"Johnny Depp",
+//     "image":"https://images.saymedia-content.com/.image/t_share/MTc0NDI1MDExOTk2NTk5OTQy/top-10-greatest-johnny-depp-movies-of-all-time.jpg"
+//   },
+//   {
+//     "Name":"úrsula corberó",
+//     "image":"https://www.bollywoodhungama.com/wp-content/uploads/2021/09/WhatsApp-Image-2021-09-23-at-10.45.54-AM.jpeg"
+//   },
+//   {
+//     "Name":"Satoru Gojo",
+//     "image":"https://e0.pxfuel.com/wallpapers/666/451/desktop-wallpaper-white-hair-blue-eyes-satoru-gojo-jujutsu-kaisen.jpg"
+//   },
+//   {
+//     "Name":"Nanami Kento",
+//     "image":"https://wallpaperaccess.com/full/5661539.png"
+//   },
+//   {
+//     "Name":"Ryomen Sukuna",
+//     "image":"https://i1.sndcdn.com/artworks-Ovrge2921kVbhGxA-m3FQYA-t500x500.jpg"
+//   },
+//   {
+//     "Name":"Vijay Thalapathy",
+//     "image":"https://static.toiimg.com/photo/101080781.cms"
+//   },
+//   {
+//     "Name":"Yash",
+//     "image":"https://img.mensxp.com/media/content/2021/Jan/Lesser-Known-Facts-About-Yash-7_60056adf8c66e.jpeg?w=900&h=1200&cc=1"
+//   },
+// ];
   getData() async {
     userNotification = (await notificationCubit.GetNotification())!;
+    int lenth =  userNotification.data?.length ?? 0;
+    for(int i=0; i <= lenth-1; i++){
+      ids.add(userNotification.data![i].sentBy?.id);
+    }
+    print("ids $ids");
+    // print("ids ===> $ids");
     setState(() {});
   }
   @override
@@ -119,7 +128,9 @@ class _Notification_pageState extends State<Notification_page> {
                         custom_header(text: 'Notification'),
                         GestureDetector(
                           onTap: () {
-                            clearAllNotificationCubit.GetClearAllNotification();
+                            acceptorRejectCubit.RejectNotification(id: ids).whenComplete(() {
+                              getData();
+                            },);
                           },
                             child: Text('Clear all'.tr(),style: const TextStyle(fontFamily: 'Roboto',fontSize: 14,fontWeight: FontWeight.w500,color: AppColor.skyBlue),))
                       ],
@@ -276,7 +287,8 @@ class _Notification_pageState extends State<Notification_page> {
                                              children: [
                                                GestureDetector(
                                                  onTap: () {
-                                                   acceptorRejectCubit.RejectNotification(id: userNotification.data?[index].id ?? '').whenComplete(() {
+                                                   acceptorRejectCubit.RejectNotification(id: [userNotification.data?[index].sentBy?.id ?? '']).whenComplete(() {
+                                                     getData();
                                                    },);
                                                  },
                                                  child: SvgPicture.asset(
@@ -293,6 +305,7 @@ class _Notification_pageState extends State<Notification_page> {
                                                GestureDetector(
                                                  onTap: () {
                                                    acceptorRejectCubit.AcceptNotification(id: userNotification.data?[index].id ?? '').whenComplete(() {
+                                                     getData();
                                                    },);
                                                  },
                                                  child: SvgPicture.asset(
