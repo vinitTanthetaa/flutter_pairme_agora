@@ -64,97 +64,97 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   AnimationController? _controller;
   double _slider = 10;
   List _type =[];
-  List users = [
-    {
-      'Name': 'Virat Kohli',
-      'images': [
-        'https://wallpapers.com/images/hd/virat-kohli-hd-black-tuxedo-fibgrtdlqvatdblj.jpg',
-        'https://i.pinimg.com/originals/e1/3e/c7/e13ec7f56eb99e1e1226137c8fd3c198.jpg',
-        'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        //'https://files.oyebesmartest.com/uploads/large/virat-kohli-wallpaper-fulr32sd.jpg',
-      ],
-      'premium': 'assets/Images/premium.png'
-    },
-    {
-      'Name': 'Hardik Pande',
-      'images': [
-        'https://i.pinimg.com/originals/2e/31/a4/2e31a4fce6c52a98d518053d269d7eba.jpg',
-        'https://w0.peakpx.com/wallpaper/380/775/HD-wallpaper-cricket-player-hardik-pandya-indian-cricketer.jpg',
-        'https://m.timesofindia.com/photo/98910356/98910356.jpg',
-      ],
-      'premium': 'assets/Images/premium1.png'
-    },
-    {
-      'Name': 'Amitabh Bachchan',
-      'images': [
-        'https://e1.pxfuel.com/desktop-wallpaper/85/759/desktop-wallpaper-%E2%9C%85-8-amitabh-bachchan-amitabh-bachchan-thumbnail.jpg',
-        'https://c4.wallpaperflare.com/wallpaper/439/757/292/5bd141c33ba4a-wallpaper-preview.jpg',
-        'https://c4.wallpaperflare.com/wallpaper/170/960/966/amitabh-bachchan-dashing-photoshoot-wallpaper-preview.jpg',
-      ],
-      'premium': 'assets/Images/premium2.png'
-    },
-    {
-      'Name': 'Vincenzo Cassano',
-      'images': [
-        'https://e0.pxfuel.com/wallpapers/251/76/desktop-wallpaper-vincenzo-cassano-thumbnail.jpg',
-        'https://i.pinimg.com/originals/9f/f8/fa/9ff8fa7d57de8a836f634716a85e56af.jpg',
-        'https://assets.vogue.in/photos/62751a3c8cd4b91f5309d0d4/master/pass/Song%20Joong-ki.jpeg',
-      ],
-      'premium': 'assets/Images/premium3.png'
-    },
-    {
-      'Name': 'Shahrukh khan',
-      'images': [
-        'https://e0.pxfuel.com/wallpapers/531/653/desktop-wallpaper-shah-rukh-khan-actor-king-gentleman-shahrukhkhan-attitude.jpg',
-        'https://w0.peakpx.com/wallpaper/518/289/HD-wallpaper-shahrukh-khan-srk-smile-srk-smile-thumbnail.jpg',
-        'https://www.filmibeat.com/wimgm/500x70/mobi/2019/08/shahrukh-khan_9.jpg',
-      ],
-      'premium': 'assets/Images/premium.png'
-    },
-    {
-      'Name': 'Robert Downey jr',
-      'images': [
-        'https://static.wikia.nocookie.net/ironman/images/7/79/Photo%28906%29.jpg/revision/latest?cb=20141019122536',
-        'https://static.wikia.nocookie.net/bakerstreet/images/7/78/Robert_Downey_Jr._%282022%29.jpg/revision/latest?cb=20220526032213',
-        'https://upnrm.in/wp-content/uploads/2022/08/ironman.webp',
-      ],
-      'premium': 'assets/Images/premium1.png'
-    },
-    {
-      'Name': 'Johnny Depp',
-      'images': [
-        'https://images.saymedia-content.com/.image/t_share/MTc0NDI1MDExOTk2NTk5OTQy/top-10-greatest-johnny-depp-movies-of-all-time.jpg',
-        'https://m.economictimes.com/thumb/msid-92536857,width-1200,height-900,resizemode-4,imgsize-62856/johnny-depp.jpg',
-        'https://www.cultjer.com/img/ug_photo/2017_02/4061620170221075428.jpg',
-      ],
-      'premium': 'assets/Images/premium2.png'
-    },
-    {
-      'Name': 'úrsula corberó',
-      'images': [
-        'https://www.bollywoodhungama.com/wp-content/uploads/2021/09/WhatsApp-Image-2021-09-23-at-10.45.54-AM.jpeg',
-        'https://cdn.7days.ru/upload/images/55d/bb61c45240d3f7d28c2a08a452b7a.jpg',
-        'https://i.ytimg.com/vi/pIUiApJEAIg/oar2.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLC71MqhrXj47zXDwMaIc2K4G7_HxQ',
-      ],
-      'premium': 'assets/Images/premium3.png'
-    },
-  ];
-  List lookingFor = [
-    'Investor',
-    'Startup founder',
-    'Startup founder',
-    //  'Corporate executive',
-  ];
-  List list = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
-    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS92eisuWOx3tEjeW14mT9ACVgXDwIRBGtnww&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdX029ohIUSygq9zirl9fSNBwSLqEOaKEYuw&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-  ];
+  // List users = [
+  //   {
+  //     'Name': 'Virat Kohli',
+  //     'images': [
+  //       'https://wallpapers.com/images/hd/virat-kohli-hd-black-tuxedo-fibgrtdlqvatdblj.jpg',
+  //       'https://i.pinimg.com/originals/e1/3e/c7/e13ec7f56eb99e1e1226137c8fd3c198.jpg',
+  //       'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  //       //'https://files.oyebesmartest.com/uploads/large/virat-kohli-wallpaper-fulr32sd.jpg',
+  //     ],
+  //     'premium': 'assets/Images/premium.png'
+  //   },
+  //   {
+  //     'Name': 'Hardik Pande',
+  //     'images': [
+  //       'https://i.pinimg.com/originals/2e/31/a4/2e31a4fce6c52a98d518053d269d7eba.jpg',
+  //       'https://w0.peakpx.com/wallpaper/380/775/HD-wallpaper-cricket-player-hardik-pandya-indian-cricketer.jpg',
+  //       'https://m.timesofindia.com/photo/98910356/98910356.jpg',
+  //     ],
+  //     'premium': 'assets/Images/premium1.png'
+  //   },
+  //   {
+  //     'Name': 'Amitabh Bachchan',
+  //     'images': [
+  //       'https://e1.pxfuel.com/desktop-wallpaper/85/759/desktop-wallpaper-%E2%9C%85-8-amitabh-bachchan-amitabh-bachchan-thumbnail.jpg',
+  //       'https://c4.wallpaperflare.com/wallpaper/439/757/292/5bd141c33ba4a-wallpaper-preview.jpg',
+  //       'https://c4.wallpaperflare.com/wallpaper/170/960/966/amitabh-bachchan-dashing-photoshoot-wallpaper-preview.jpg',
+  //     ],
+  //     'premium': 'assets/Images/premium2.png'
+  //   },
+  //   {
+  //     'Name': 'Vincenzo Cassano',
+  //     'images': [
+  //       'https://e0.pxfuel.com/wallpapers/251/76/desktop-wallpaper-vincenzo-cassano-thumbnail.jpg',
+  //       'https://i.pinimg.com/originals/9f/f8/fa/9ff8fa7d57de8a836f634716a85e56af.jpg',
+  //       'https://assets.vogue.in/photos/62751a3c8cd4b91f5309d0d4/master/pass/Song%20Joong-ki.jpeg',
+  //     ],
+  //     'premium': 'assets/Images/premium3.png'
+  //   },
+  //   {
+  //     'Name': 'Shahrukh khan',
+  //     'images': [
+  //       'https://e0.pxfuel.com/wallpapers/531/653/desktop-wallpaper-shah-rukh-khan-actor-king-gentleman-shahrukhkhan-attitude.jpg',
+  //       'https://w0.peakpx.com/wallpaper/518/289/HD-wallpaper-shahrukh-khan-srk-smile-srk-smile-thumbnail.jpg',
+  //       'https://www.filmibeat.com/wimgm/500x70/mobi/2019/08/shahrukh-khan_9.jpg',
+  //     ],
+  //     'premium': 'assets/Images/premium.png'
+  //   },
+  //   {
+  //     'Name': 'Robert Downey jr',
+  //     'images': [
+  //       'https://static.wikia.nocookie.net/ironman/images/7/79/Photo%28906%29.jpg/revision/latest?cb=20141019122536',
+  //       'https://static.wikia.nocookie.net/bakerstreet/images/7/78/Robert_Downey_Jr._%282022%29.jpg/revision/latest?cb=20220526032213',
+  //       'https://upnrm.in/wp-content/uploads/2022/08/ironman.webp',
+  //     ],
+  //     'premium': 'assets/Images/premium1.png'
+  //   },
+  //   {
+  //     'Name': 'Johnny Depp',
+  //     'images': [
+  //       'https://images.saymedia-content.com/.image/t_share/MTc0NDI1MDExOTk2NTk5OTQy/top-10-greatest-johnny-depp-movies-of-all-time.jpg',
+  //       'https://m.economictimes.com/thumb/msid-92536857,width-1200,height-900,resizemode-4,imgsize-62856/johnny-depp.jpg',
+  //       'https://www.cultjer.com/img/ug_photo/2017_02/4061620170221075428.jpg',
+  //     ],
+  //     'premium': 'assets/Images/premium2.png'
+  //   },
+  //   {
+  //     'Name': 'úrsula corberó',
+  //     'images': [
+  //       'https://www.bollywoodhungama.com/wp-content/uploads/2021/09/WhatsApp-Image-2021-09-23-at-10.45.54-AM.jpeg',
+  //       'https://cdn.7days.ru/upload/images/55d/bb61c45240d3f7d28c2a08a452b7a.jpg',
+  //       'https://i.ytimg.com/vi/pIUiApJEAIg/oar2.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLC71MqhrXj47zXDwMaIc2K4G7_HxQ',
+  //     ],
+  //     'premium': 'assets/Images/premium3.png'
+  //   },
+  // ];
+  // List lookingFor = [
+  //   'Investor',
+  //   'Startup founder',
+  //   'Startup founder',
+  //   //  'Corporate executive',
+  // ];
+  // List list = [
+  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
+  //   'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80',
+  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS92eisuWOx3tEjeW14mT9ACVgXDwIRBGtnww&usqp=CAU',
+  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdX029ohIUSygq9zirl9fSNBwSLqEOaKEYuw&usqp=CAU',
+  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU',
+  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
+  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU',
+  //   'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+  // ];
   List image = [];
   bool exchang = false;
   int ind = 0;
@@ -216,6 +216,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image.add(filterUserCubit.filterUser.data?[index].last.image?.photo6);
         }
       }
+      image = image.toSet().toList();
     } else {
       if (allUsersdetails.data?[index].last.image != null) {
         if (allUsersdetails.data?[index].last.image?.photo1 == null &&
@@ -255,8 +256,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image.add(allUsersdetails.data?[index].last.image?.photo6);
         }
       }
+      image = image.toSet().toList();
     }
-    image = image.toSet().toList();
   }
 
   @override
@@ -333,15 +334,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       },
                                     ));
                                    if(refresh == "refresh"){
-                                       getPreData();
-                                       if(_Contry.text.isNotEmpty || _gender.text.isNotEmpty || _State.text.isNotEmpty || _City.text.isNotEmpty || _type.isNotEmpty){
-                                         filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text, state: _State.text, city: _City.text, gender: _gender.text, looking_for: _type, context: context).then((value) {
-                                           print("Api called");
-                                             filterData = true;
-                                           setState(() { });
-                                         })
-                                         ;
-                                       }
+                                     filterData = (await prefsService.getBoolData("filter"))!;
+                                     setState(() {});
+                                     print("hello");
                                    }
                                   },
                                   child: Container(
@@ -415,8 +410,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         onSwipeEnd:
                                             (previousIndex, targetIndex, activity) {
                                           setState(() {
-                                            undoid = allUsersdetails
-                                                .data?[ind].first.id ??
+                                            undoid = filterUserCubit.filterUser.data?[ind].first.id ??
                                                 '';
                                             print("undoid =======> $undoid");
                                             activity.direction == AxisDirection.up
@@ -424,7 +418,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 id: filterUserCubit.filterUser.data?[ind].first.id ?? '')
                                                 : connectUserCubit.GetConnectUser(
                                                 id: filterUserCubit.filterUser.data?[ind].first.id ?? '');
-                                            ind >= users.length - 1
+                                            ind >= filterUserCubit.filterUser.data!.length - 1
                                                 ? ind = ind
                                                 : ind = targetIndex;
                                             height = 0;
@@ -666,8 +660,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                         key: _key1,
                                                         controller: TabController(
                                                             vsync: this,
-                                                            length: image
-                                                                .length,
+                                                            length: image.length,
                                                             initialIndex:
                                                             pageViewIndex),
                                                         color: AppColor
@@ -884,7 +877,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         Text(
                                                                           10 <= filterUserCubit.filterUser.data![index].first.businessaddress!.country!.length
                                                                               ? "${allUsersdetails.data?[index].first.businessaddress?.country?.substring(0, 10) ?? ''}..."
-                                                                              : allUsersdetails.data?[index].first.businessaddress?.country ?? '',
+                                                                              : filterUserCubit.filterUser.data?[ind].first.businessaddress?.country ?? '',
                                                                           style: const TextStyle(
                                                                               fontSize: 14,
                                                                               fontFamily: 'Roboto',
@@ -1045,15 +1038,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         },
                                         cardBuilder1:
                                             (BuildContext context, int index) {
-                                          return image[pageViewIndex]
-                                              .toString()
-                                              .endsWith(".mp4")
-                                              ? VideoWidget(
-                                              videoUrl:
-                                              "${apis.baseurl}/${image[pageViewIndex]}")
-                                              : CachedNetworkImage(
+                                          return  CachedNetworkImage(
                                             imageUrl:
-                                            "${apis.baseurl}/${image[pageViewIndex]}",
+                                            "${apis.baseurl}/${image[0]}",
                                             imageBuilder:
                                                 (context, imageProvider) =>
                                                 Container(
@@ -1141,20 +1128,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button3.svg",
                                                       onTap: () {
-                                                        rejectUserCubit.GetRejectUser(
-                                                            id: allUsersdetails.data?[ind].first.id ??
-                                                                '')
-                                                            .then(
-                                                              (value) {
-                                                            controller
-                                                                .swipeUp();
-                                                            setState(
-                                                                    () {
-                                                                  bottonname =
-                                                                  "Reject";
-                                                                });
-                                                          },
-                                                        );
+                                                        controller.swipeUp();
+                                                        setState(
+                                                                () {
+                                                              bottonname = "Reject";
+                                                            });
                                                       },
                                                       buttonName:
                                                       "Skip",
@@ -1174,9 +1152,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   name:
                                                                   'chatting',
                                                                   Username:
-                                                                  allUsersdetails.data?[ind].first.name ??
+                                                                  filterUserCubit.filterUser.data?[ind].first.name ??
                                                                       '',
-                                                                  image: allUsersdetails.data?[ind].first.profileImage ??
+                                                                  image: filterUserCubit.filterUser.data?[ind].first.profileImage ??
                                                                       '',
                                                                 );
                                                               },
@@ -1272,9 +1250,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   name:
                                                                   'chatting',
                                                                   Username:
-                                                                  allUsersdetails.data?[ind].first.name ?? '',
+                                                                  filterUserCubit.filterUser.data?[ind].first.name ?? '',
                                                                   image:
-                                                                  allUsersdetails.data?[ind].first.profileImage ?? '',
+                                                                  filterUserCubit.filterUser.data?[ind].first.profileImage ?? '',
                                                                 );
                                                               },
                                                             ));
@@ -1289,10 +1267,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button2.svg",
                                                       onTap: () {
-                                                        connectUserCubit.GetConnectUser(
-                                                            id: allUsersdetails.data?[ind].first.id ?? '')
-                                                            .then(
-                                                              (value) {
+
                                                             controller
                                                                 .swipeDown();
                                                             setState(
@@ -1300,8 +1275,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   bottonname =
                                                                   "Connect";
                                                                 });
-                                                          },
-                                                        );
+
                                                       },
                                                       buttonName:
                                                       "Connect",
@@ -1320,10 +1294,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button3.svg",
                                                       onTap: () {
-                                                        rejectUserCubit.GetRejectUser(
-                                                            id: allUsersdetails.data?[ind].first.id ?? '')
-                                                            .then(
-                                                              (value) {
+
                                                             controller
                                                                 .swipeUp();
                                                             setState(
@@ -1331,8 +1302,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   bottonname =
                                                                   "Reject";
                                                                 });
-                                                          },
-                                                        );
+
                                                       },
                                                       buttonName:
                                                       "Skip",
@@ -1353,9 +1323,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   name:
                                                                   'chatting',
                                                                   Username:
-                                                                  allUsersdetails.data?[ind].first.name ?? '',
+                                                                  filterUserCubit.filterUser.data?[ind].first.name ?? '',
                                                                   image:
-                                                                  allUsersdetails.data?[ind].first.profileImage ?? '',
+                                                                  filterUserCubit.filterUser.data?[ind].first.profileImage ?? '',
                                                                 );
                                                               },
                                                             ));
@@ -1472,7 +1442,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 id: allUsersdetails
                                                         .data?[ind].first.id ??
                                                     '');
-                                        ind >= users.length - 1
+                                        ind >= allUsersdetails.data!.length - 1
                                             ? ind = ind
                                             : ind = targetIndex;
                                         height = 0;
@@ -1491,8 +1461,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         screenHeight(context, dividedBy: 7),
                                     swipeOptions: const SwipeOptions.only(
                                         down: true, up: true),
-                                    cardCount:
-                                        allUsersdetails.data?.length ?? 0,
+                                    cardCount: allUsersdetails.data?.length ?? 0,
                                     cardBuilder:
                                         (BuildContext context, int index) {
                                       getImage(index);
@@ -2097,15 +2066,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     },
                                     cardBuilder1:
                                         (BuildContext context, int index) {
-                                      return image[pageViewIndex]
-                                              .toString()
-                                              .endsWith(".mp4")
-                                          ? VideoWidget(
-                                              videoUrl:
-                                                  "${apis.baseurl}/${image[pageViewIndex]}")
-                                          : CachedNetworkImage(
+                                      return CachedNetworkImage(
                                               imageUrl:
-                                                  "${apis.baseurl}/${image[pageViewIndex]}",
+                                                  "${apis.baseurl}/${image[0]}",
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(

@@ -78,12 +78,14 @@ class _Filter_pageState extends State<Filter_page> {
                 automaticallyImplyLeading: false,
                 actions: [
                   TextButton(onPressed: () {
-                    filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text, state: _State.text, city: _City.text, gender: gender, looking_for: _type, context: context);
+                    filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text, state: _State.text, city: _City.text, gender: gender, looking_for: _type, context: context).then((value) {
+                      Navigator.pop(context,'refresh');
+                    });
                   }, child: const Text("Apply",style: TextStyle(color: AppColor.skyBlue),))
                 ],
                 leading: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context,'refresh');
+                      Navigator.pop(context);
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 8.0),

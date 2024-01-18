@@ -68,92 +68,7 @@ class _Business_ProfileState extends State<Business_Profile> {
     // Assuming the desired part is always at index 1
     return nameParts.length > 1 ? nameParts[1] : fileName;
   }
-  addFolderNameDialog(String delete) {
-    return SimpleDialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 60),
-      backgroundColor: AppColor.white,
-      surfaceTintColor: AppColor.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 35),
-          child: Text(
-            'Are you sure you want to remove file?',
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            style: TextStyle(
-                color: AppColor.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
-                fontFamily: 'Roboto'),
-          ),
-        ),
-        const Divider(
-          height: 0,
-          color: Color(0xffF5F5F5),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 35,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColor.skyBlue, width: 2),
-                    borderRadius: BorderRadius.circular(32),
-                  ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.skyBlue),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // filelist.remove(delete);
-                  setState(() {});
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // margin: EdgeInsets.symmetric(horizontal:screenWidth(context,dividedBy: 10),vertical: height),
-                  alignment: Alignment.center,
-                  height: 35,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    gradient: const LinearGradient(
-                        colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                  ),
-                  child: const Text(
-                    'Remove',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                        fontFamily: 'Roboto',
-                        color: AppColor.white),
-                  ),
-                ),
-              )
-            ],
-          ),
-        )
-      ],
-    );
-  }
+
 
   getdata() {
     _bio.text = widget.bio;
@@ -6846,7 +6761,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      fileName1,
+                                                      fileName1.length >= 35 ?"${fileName1.substring(0,30)}...":fileName1,
                                                       style: const TextStyle(
                                                           fontFamily: 'Roboto',
                                                           fontSize: 12,
@@ -6872,8 +6787,89 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                     showDialog(
                                                       context: context,
                                                       builder: (context) =>
-                                                          addFolderNameDialog(
-                                                              ''),
+                                                          SimpleDialog(
+                                                            insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                                            backgroundColor: AppColor.white,
+                                                            surfaceTintColor: AppColor.white,
+                                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                            children: [
+                                                              const Padding(
+                                                                padding: EdgeInsets.symmetric(horizontal: 35),
+                                                                child: Text(
+                                                                  'Are you sure you want to remove file?',
+                                                                  textAlign: TextAlign.center,
+                                                                  maxLines: 2,
+                                                                  style: TextStyle(
+                                                                      color: AppColor.black,
+                                                                      fontWeight: FontWeight.w500,
+                                                                      fontSize: 15,
+                                                                      fontFamily: 'Roboto'),
+                                                                ),
+                                                              ),
+                                                              const Divider(
+                                                                height: 0,
+                                                                color: Color(0xffF5F5F5),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              Padding(
+                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    GestureDetector(
+                                                                      onTap: () {
+                                                                        Navigator.pop(context);
+                                                                      },
+                                                                      child: Container(
+                                                                        alignment: Alignment.center,
+                                                                        height: 35,
+                                                                        width: 100,
+                                                                        decoration: BoxDecoration(
+                                                                          border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                                          borderRadius: BorderRadius.circular(32),
+                                                                        ),
+                                                                        child: const Text(
+                                                                          'Cancel',
+                                                                          style: TextStyle(
+                                                                              fontFamily: 'Roboto',
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.w600,
+                                                                              color: AppColor.skyBlue),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap: () {
+
+                                                                        setState(() {});
+                                                                        Navigator.pop(context);
+                                                                      },
+                                                                      child: Container(
+                                                                        alignment: Alignment.center,
+                                                                        height: 35,
+                                                                        width: 100,
+                                                                        decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(50),
+                                                                          gradient: const LinearGradient(
+                                                                              colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                                        ),
+                                                                        child: const Text(
+                                                                          'Remove',
+                                                                          style: TextStyle(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              fontSize: 15,
+                                                                              fontFamily: 'Roboto',
+                                                                              color: AppColor.white),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          )
                                                     );
                                                   },
                                                   child: const Icon(
@@ -6935,7 +6931,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                  MainAxisAlignment.center,
                                                  children: [
                                                    Text(
-                                                     fileName2,
+                                                     fileName2.length >= 35 ?'${fileName2.substring(0,30)}...' : fileName2,
                                                      style: const TextStyle(
                                                          fontFamily: 'Roboto',
                                                          fontSize: 12,
@@ -6961,8 +6957,89 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                    showDialog(
                                                      context: context,
                                                      builder: (context) =>
-                                                         addFolderNameDialog(
-                                                             ''),
+                                                         SimpleDialog(
+                                                           insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                                           backgroundColor: AppColor.white,
+                                                           surfaceTintColor: AppColor.white,
+                                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                           children: [
+                                                             const Padding(
+                                                               padding: EdgeInsets.symmetric(horizontal: 35),
+                                                               child: Text(
+                                                                 'Are you sure you want to remove file?',
+                                                                 textAlign: TextAlign.center,
+                                                                 maxLines: 2,
+                                                                 style: TextStyle(
+                                                                     color: AppColor.black,
+                                                                     fontWeight: FontWeight.w500,
+                                                                     fontSize: 15,
+                                                                     fontFamily: 'Roboto'),
+                                                               ),
+                                                             ),
+                                                             const Divider(
+                                                               height: 0,
+                                                               color: Color(0xffF5F5F5),
+                                                             ),
+                                                             SizedBox(
+                                                               height: 10,
+                                                             ),
+                                                             Padding(
+                                                               padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                               child: Row(
+                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                 children: [
+                                                                   GestureDetector(
+                                                                     onTap: () {
+                                                                       Navigator.pop(context);
+                                                                     },
+                                                                     child: Container(
+                                                                       alignment: Alignment.center,
+                                                                       height: 35,
+                                                                       width: 100,
+                                                                       decoration: BoxDecoration(
+                                                                         border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                                         borderRadius: BorderRadius.circular(32),
+                                                                       ),
+                                                                       child: const Text(
+                                                                         'Cancel',
+                                                                         style: TextStyle(
+                                                                             fontFamily: 'Roboto',
+                                                                             fontSize: 15,
+                                                                             fontWeight: FontWeight.w600,
+                                                                             color: AppColor.skyBlue),
+                                                                       ),
+                                                                     ),
+                                                                   ),
+                                                                   GestureDetector(
+                                                                     onTap: () {
+                                                                       // filelist.remove(delete);
+                                                                       setState(() {});
+                                                                       Navigator.pop(context);
+                                                                     },
+                                                                     child: Container(
+                                                                       alignment: Alignment.center,
+                                                                       height: 35,
+                                                                       width: 100,
+                                                                       decoration: BoxDecoration(
+                                                                         borderRadius: BorderRadius.circular(50),
+                                                                         gradient: const LinearGradient(
+                                                                             colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                                       ),
+                                                                       child: const Text(
+                                                                         'Remove',
+                                                                         style: TextStyle(
+                                                                             fontWeight: FontWeight.w600,
+                                                                             fontSize: 15,
+                                                                             fontFamily: 'Roboto',
+                                                                             color: AppColor.white),
+                                                                       ),
+                                                                     ),
+                                                                   )
+                                                                 ],
+                                                               ),
+                                                             )
+                                                           ],
+                                                         )
                                                    );
                                                  },
                                                  child: const Icon(
@@ -7024,7 +7101,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                  MainAxisAlignment.center,
                                                  children: [
                                                    Text(
-                                                     fileName3,
+                                                     fileName3.length >= 30 ? "${fileName3.substring(0,35)}..." : fileName3,
                                                      style: const TextStyle(
                                                          fontFamily: 'Roboto',
                                                          fontSize: 12,
@@ -7050,8 +7127,89 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                    showDialog(
                                                      context: context,
                                                      builder: (context) =>
-                                                         addFolderNameDialog(
-                                                             ''),
+                                                         SimpleDialog(
+                                                           insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                                           backgroundColor: AppColor.white,
+                                                           surfaceTintColor: AppColor.white,
+                                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                           children: [
+                                                             const Padding(
+                                                               padding: EdgeInsets.symmetric(horizontal: 35),
+                                                               child: Text(
+                                                                 'Are you sure you want to remove file?',
+                                                                 textAlign: TextAlign.center,
+                                                                 maxLines: 2,
+                                                                 style: TextStyle(
+                                                                     color: AppColor.black,
+                                                                     fontWeight: FontWeight.w500,
+                                                                     fontSize: 15,
+                                                                     fontFamily: 'Roboto'),
+                                                               ),
+                                                             ),
+                                                             const Divider(
+                                                               height: 0,
+                                                               color: Color(0xffF5F5F5),
+                                                             ),
+                                                             SizedBox(
+                                                               height: 10,
+                                                             ),
+                                                             Padding(
+                                                               padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                               child: Row(
+                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                 children: [
+                                                                   GestureDetector(
+                                                                     onTap: () {
+                                                                       Navigator.pop(context);
+                                                                     },
+                                                                     child: Container(
+                                                                       alignment: Alignment.center,
+                                                                       height: 35,
+                                                                       width: 100,
+                                                                       decoration: BoxDecoration(
+                                                                         border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                                         borderRadius: BorderRadius.circular(32),
+                                                                       ),
+                                                                       child: const Text(
+                                                                         'Cancel',
+                                                                         style: TextStyle(
+                                                                             fontFamily: 'Roboto',
+                                                                             fontSize: 15,
+                                                                             fontWeight: FontWeight.w600,
+                                                                             color: AppColor.skyBlue),
+                                                                       ),
+                                                                     ),
+                                                                   ),
+                                                                   GestureDetector(
+                                                                     onTap: () {
+                                                                       // filelist.remove(delete);
+                                                                       setState(() {});
+                                                                       Navigator.pop(context);
+                                                                     },
+                                                                     child: Container(
+                                                                       alignment: Alignment.center,
+                                                                       height: 35,
+                                                                       width: 100,
+                                                                       decoration: BoxDecoration(
+                                                                         borderRadius: BorderRadius.circular(50),
+                                                                         gradient: const LinearGradient(
+                                                                             colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                                       ),
+                                                                       child: const Text(
+                                                                         'Remove',
+                                                                         style: TextStyle(
+                                                                             fontWeight: FontWeight.w600,
+                                                                             fontSize: 15,
+                                                                             fontFamily: 'Roboto',
+                                                                             color: AppColor.white),
+                                                                       ),
+                                                                     ),
+                                                                   )
+                                                                 ],
+                                                               ),
+                                                             )
+                                                           ],
+                                                         )
                                                    );
                                                  },
                                                  child: const Icon(

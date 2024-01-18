@@ -88,11 +88,11 @@ class _Notification_pageState extends State<Notification_page> {
 //     "image":"https://img.mensxp.com/media/content/2021/Jan/Lesser-Known-Facts-About-Yash-7_60056adf8c66e.jpeg?w=900&h=1200&cc=1"
 //   },
 // ];
-  getData() async {
-    userNotification = (await notificationCubit.GetNotification())!;
-    int lenth =  userNotification.data?.length ?? 0;
+  getData()  {
+    notificationCubit.GetNotification();
+    int lenth =  notificationCubit.userNotification.data?.length ?? 0;
     for(int i=0; i <= lenth-1; i++){
-      ids.add(userNotification.data![i].sentBy?.id);
+      ids.add(notificationCubit.userNotification.data![i].sentBy?.id);
     }
     print("ids $ids");
     // print("ids ===> $ids");
@@ -154,7 +154,7 @@ class _Notification_pageState extends State<Notification_page> {
                          );
                        }
                        if(state is NotificationSuccess){
-                         return userNotification.data == null || userNotification.data?.length == 0 ? Center(
+                         return notificationCubit.userNotification.data == null || notificationCubit.userNotification.data?.length == 0 ? Center(
                            child: Container(
                              height: screenHeight(context,dividedBy: 5),
                              width: screenHeight(context,dividedBy: 5),
@@ -183,7 +183,7 @@ class _Notification_pageState extends State<Notification_page> {
                                      CrossAxisAlignment.center,
                                      children: [
                                        CachedNetworkImage(
-                                         imageUrl: "${apis.baseurl}/${userNotification.data?[index].sentBy?.image}",
+                                         imageUrl: "${apis.baseurl}/${notificationCubit.userNotification.data?[index].sentBy?.image}",
                                          imageBuilder:
                                              (context, imageProvider) =>
                                              Container(
@@ -227,7 +227,7 @@ class _Notification_pageState extends State<Notification_page> {
                                            CrossAxisAlignment.start,
                                            children: [
                                              Text(
-                                               userNotification.data?[index].sentBy?.userName ?? '',
+                                               notificationCubit.userNotification.data?[index].sentBy?.userName ?? '',
                                                style: const TextStyle(
                                                    fontSize: 15,
                                                    fontWeight:
@@ -243,7 +243,7 @@ class _Notification_pageState extends State<Notification_page> {
                                                width: screenWidth(context,
                                                    dividedBy: 2.2),
                                                child:  Text(
-                                                   userNotification.data?[index].message ?? '',
+                                                   notificationCubit.userNotification.data?[index].message ?? '',
                                                    maxLines: 2,
                                                    style: const TextStyle(
                                                        color: Color(
@@ -264,7 +264,7 @@ class _Notification_pageState extends State<Notification_page> {
                                                      context,
                                                      dividedBy: 2.2),
                                                  child: Text(
-                                                     userNotification.data?[index].time ?? '',
+                                                     notificationCubit.userNotification.data?[index].time ?? '',
                                                      style: const TextStyle(
                                                          color: Color(
                                                              0xffAAAAAA),
@@ -287,7 +287,7 @@ class _Notification_pageState extends State<Notification_page> {
                                              children: [
                                                GestureDetector(
                                                  onTap: () {
-                                                   acceptorRejectCubit.RejectNotification(id: [userNotification.data?[index].sentBy?.id ?? '']).whenComplete(() {
+                                                   acceptorRejectCubit.RejectNotification(id: [notificationCubit.userNotification.data?[index].sentBy?.id ?? '']).whenComplete(() {
                                                      getData();
                                                    },);
                                                  },
@@ -304,7 +304,7 @@ class _Notification_pageState extends State<Notification_page> {
                                                ),
                                                GestureDetector(
                                                  onTap: () {
-                                                   acceptorRejectCubit.AcceptNotification(id: userNotification.data?[index].id ?? '').whenComplete(() {
+                                                   acceptorRejectCubit.AcceptNotification(id: notificationCubit.userNotification.data?[index].sentBy?.id ?? '').whenComplete(() {
                                                      getData();
                                                    },);
                                                  },
@@ -329,7 +329,7 @@ class _Notification_pageState extends State<Notification_page> {
                                  // color: Colors.black12,
                                );
                              },
-                             itemCount: userNotification.data?.length ?? 0);
+                             itemCount: notificationCubit.userNotification.data?.length ?? 0);
                        }
                        return Expanded(child: Center(child: customLoader()));
                      },)

@@ -153,130 +153,6 @@ class _Message_pageState extends State<Message_page> {
                              ),
                            ),
                          ) :
-                         // ListView.separated(
-                         //     physics: const ClampingScrollPhysics(),
-                         //     padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100), ),
-                         //     itemBuilder: (context, index) {
-                         //       return  Dismissible(
-                         //           direction: DismissDirection.endToStart,
-                         //           key: UniqueKey(),
-                         //           background: Container(
-                         //             padding: EdgeInsets.only(
-                         //                 right: screenWidth(context,
-                         //                     dividedBy: 10)),
-                         //             color: AppColor.skyBlue,
-                         //             alignment: Alignment.centerRight,
-                         //             child: Container(
-                         //               height: screenHeight(context,dividedBy: 35),
-                         //               width: screenWidth(context,dividedBy: 15),
-                         //               decoration:  const BoxDecoration(
-                         //                   image: DecorationImage(image: AssetImage('assets/Images/delete.png'))
-                         //               ),
-                         //             ) ,
-                         //           ),
-                         //           child: InkWell(
-                         //             onTap: () {
-                         //               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                         //                 return Chatting_Page(name: 'chatting', Username:list[index]['Name'], image: list[index]['image'],);
-                         //               },));
-                         //             },
-                         //             child: SizedBox(
-                         //               // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                         //               height: screenHeight(context,dividedBy: 10),
-                         //               width: screenHeight(context),
-                         //               child: Padding(
-                         //                 padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 17),),
-                         //                 child: Row(
-                         //                   mainAxisAlignment: MainAxisAlignment.start,
-                         //                   crossAxisAlignment: CrossAxisAlignment.center,
-                         //                   children: [
-                         //                     CachedNetworkImage(
-                         //                       imageUrl: list[index]['image'],
-                         //                       imageBuilder: (context, imageProvider) => Container(
-                         //                         height: screenHeight(context,dividedBy: 15),
-                         //                         width: screenHeight(context,dividedBy: 15),
-                         //                         decoration: BoxDecoration(
-                         //                           image: DecorationImage(
-                         //                             image: imageProvider,
-                         //                             fit: BoxFit.cover,
-                         //
-                         //                             // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
-                         //                           ),
-                         //                           shape: BoxShape.circle,
-                         //                         ),
-                         //                       ),
-                         //                       placeholder: (context, url) => const CircularProgressIndicator(),
-                         //                       errorWidget: (context, url, error) => CircleAvatar(
-                         //                           radius: screenHeight(context,dividedBy:30),
-                         //                           child: const Icon(Icons.person)),
-                         //                     ),
-                         //                     // Container(
-                         //                     //   height: screenHeight(context,dividedBy: 15),
-                         //                     //   width: screenHeight(context,dividedBy: 15),
-                         //                     //   decoration: BoxDecoration(
-                         //                     //       shape: BoxShape.circle,
-                         //                     //       image: DecorationImage(image: NetworkImage("${list[index]["image"]}"),fit: BoxFit.cover)
-                         //                     //   ),
-                         //                     // ),
-                         //                     SizedBox(width: screenWidth(context,dividedBy: 30),),
-                         //                     Padding(
-                         //                       padding: EdgeInsets.symmetric(vertical: screenWidth(context,dividedBy: 40)),
-                         //                       child: Column(
-                         //                         mainAxisAlignment: MainAxisAlignment.start,
-                         //                         crossAxisAlignment: CrossAxisAlignment.start,
-                         //                         children: [
-                         //                           Text(list[index]['Name'],style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
-                         //                           SizedBox(height: screenHeight(context,dividedBy: 300),),
-                         //                           SizedBox(
-                         //                             width: screenWidth(context,dividedBy: 2.2),
-                         //                             child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),overflow: TextOverflow.ellipsis,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
-                         //                           )
-                         //                         ],
-                         //                       ),
-                         //                     ),
-                         //                     const Spacer(),
-                         //                     Padding(
-                         //                       padding: EdgeInsets.symmetric(vertical: screenWidth(context,dividedBy: 40)),
-                         //                       child: Column(
-                         //                         mainAxisAlignment: MainAxisAlignment.start,
-                         //                         children: [
-                         //                           const Text('2 min',style: TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w400,fontSize: 12,color: Color(0xffAAAAAA)),),
-                         //                           SizedBox(height: screenHeight(context,dividedBy: 70),),
-                         //                           Container(
-                         //                             alignment: Alignment.center,
-                         //                             height: screenHeight(context,dividedBy: 90),
-                         //                             width: screenHeight(context,dividedBy: 90),
-                         //                             decoration: const BoxDecoration(
-                         //                               //borderRadius: BorderRadius.circular(3),
-                         //                                 shape: BoxShape.circle,
-                         //                                 color: AppColor.skyBlue
-                         //                               // gradient:LinearGradient(
-                         //                               //     begin: Alignment.topLeft,
-                         //                               //     end: Alignment.bottomCenter,
-                         //                               //     colors: [AppColor.skyBlue,AppColor.whiteskyBlue]
-                         //                               // )
-                         //                             ),
-                         //                             // child: Text('2',style: TextStyle(color: AppColor.white,fontWeight: FontWeight.w600,fontFamily: 'Roboto',fontSize: 7)),
-                         //                           )
-                         //                         ],
-                         //                       ),
-                         //                     )
-                         //                   ],
-                         //                 ),
-                         //               ),
-                         //             ),
-                         //           )
-                         //       );
-                         //     },
-                         //     separatorBuilder: (context, index) {
-                         //       return  const Divider(
-                         //         height: 0,
-                         //         thickness: 2,
-                         //         color: Color(0xffF5F5F5),
-                         //         // color: Colors.black12,
-                         //       );
-                         //     },
-                         //     itemCount: list.length) :
                          ListView.separated(
                              physics: const ClampingScrollPhysics(),
                              padding: EdgeInsets.only(bottom:screenHeight(context,dividedBy: 100), ),
@@ -301,7 +177,7 @@ class _Message_pageState extends State<Message_page> {
                                    child: InkWell(
                                      onTap: () {
                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?[index].userName ?? '', image: "${apis.baseurl}/${userMessage.data?[index].userImage.photo1 ?? ''}",);
+                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?[index].userName ?? '', image: "${apis.baseurl}/${userMessage.data?[index].userImage ?? ''}",);
                                        },));
                                      },
                                      child: SizedBox(
@@ -315,7 +191,7 @@ class _Message_pageState extends State<Message_page> {
                                            crossAxisAlignment: CrossAxisAlignment.center,
                                            children: [
                                              CachedNetworkImage(
-                                               imageUrl: "${apis.baseurl}/${userMessage.data?[index].userImage.photo1 ?? ''}",
+                                               imageUrl: "${apis.baseurl}/${userMessage.data?[index].userImage ?? ''}",
                                                imageBuilder: (context, imageProvider) => Container(
                                                  height: screenHeight(context,dividedBy: 15),
                                                  width: screenHeight(context,dividedBy: 15),

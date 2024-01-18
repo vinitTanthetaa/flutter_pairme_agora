@@ -11,6 +11,7 @@ import 'package:pair_me/Screen_Pages/verification_code.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:pair_me/helper/pref_Service.dart';
 
 import '../Modal/filter_user_data.dart';
 
@@ -27,6 +28,7 @@ class FilterUserSuccess extends FilterUserState {}
 
 class FilterUserCubit extends Cubit<FilterUserState> {
   FilterUserCubit() : super(FilterUserInitials());
+  SharedPrefsService prefsService = SharedPrefsService();
   FilterUser filterUser = FilterUser();
   Future<FilterUser?> FilterUserService(
       { String? distance,
@@ -56,11 +58,15 @@ class FilterUserCubit extends Cubit<FilterUserState> {
       if (hello['code'] == 200) {
         filterUser = FilterUser.fromJson(response.data);
         log("Response ===> ${response.data}");
+        if(filterUser.data1! >= 1){
+          log("filter ===> true");
+          prefsService.setBoolData("filter", true);
+        }
         emit(FilterUserSuccess());
-        flutterToast(hello['message'], true);
+       // flutterToast(hello['message'], true);
       } else {
         emit(FilterUserError());
-        flutterToast(hello['message'], false);
+       // flutterToast(hello['message'], false);
       }
       return filterUser;
     } on Exception catch (e) {

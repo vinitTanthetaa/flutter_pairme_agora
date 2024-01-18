@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/cubits/connected_user_data.dart';
+import 'package:pair_me/cubits/message_user.dart';
 import 'package:pair_me/cubits/remove_connect_user.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -24,6 +26,7 @@ class Connection_Page extends StatefulWidget {
 class _Connection_PageState extends State<Connection_Page> {
   ConnectedUsersCubit connectedUsersCubit = ConnectedUsersCubit();
   RemoveUserCubit removeUserCubit = RemoveUserCubit();
+  MessageUserCubit messageUserCubit = MessageUserCubit();
   List list = [
     {
       "Name": "Jane Koblenz",
@@ -100,7 +103,9 @@ class _Connection_PageState extends State<Connection_Page> {
     super.initState();
     connectedUsersCubit = BlocProvider.of<ConnectedUsersCubit>(context);
     removeUserCubit = BlocProvider.of<RemoveUserCubit>(context);
+    messageUserCubit = BlocProvider.of<MessageUserCubit>(context);
     connectedUsersCubit.GetConnectedUsers();
+    setState(() {});
 }
   @override
   Widget build(BuildContext context) {
@@ -168,8 +173,8 @@ class _Connection_PageState extends State<Connection_Page> {
                           horizontal: screenWidth(context, dividedBy: 30),
                           vertical: screenHeight(context, dividedBy: 70)),
                       child: Text(
-                        "${connectedUsersCubit.connectedUsers.data?.length} Connection",
-                        style: TextStyle(
+                        "${connectedUsersCubit.connectedUsers.data?.length ?? 0} Connection",
+                        style: const TextStyle(
                             fontSize: 17,
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w500,
@@ -181,230 +186,249 @@ class _Connection_PageState extends State<Connection_Page> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Expanded(
-                        child: ListView.separated(
-                            physics: const ClampingScrollPhysics(),
-                            padding: EdgeInsets.only(
-                              bottom: screenHeight(context, dividedBy: 100),
-                            ),
-                            itemBuilder: (context, index) {
-                              return SizedBox(
-                                // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                                height: screenHeight(context, dividedBy: 8),
-                                width: screenHeight(context),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal:
+                    BlocBuilder<ConnectedUsersCubit,ConnectedUsersState>(builder: (context, state) {
+                      if(state is ConnectedUsersSuccess){
+                        return connectedUsersCubit.connectedUsers.data == null || connectedUsersCubit.connectedUsers.data!.length == 0 || connectedUsersCubit.connectedUsers.data!.isEmpty ? Expanded(child: Center(child: NoMessage(context))) : Expanded(
+                            child: ListView.separated(
+                                physics: const ClampingScrollPhysics(),
+                                padding: EdgeInsets.only(
+                                  bottom: screenHeight(context, dividedBy: 100),
+                                ),
+                                itemBuilder: (context, index) {
+                                  return SizedBox(
+                                    // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
+                                    height: screenHeight(context, dividedBy: 8),
+                                    width: screenHeight(context),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal:
                                         screenWidth(context, dividedBy: 30),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                    children: [
-                                      CachedNetworkImage(
-                                        imageUrl: '${apis.baseurl}/${connectedUsersCubit.connectedUsers.data?[index].profileImage ?? ''}',
-                                        imageBuilder:
-                                            (context, imageProvider) =>
+                                        children: [
+                                          CachedNetworkImage(
+                                            imageUrl: '${apis.baseurl}/${connectedUsersCubit.connectedUsers.data?[index].profileImage ?? ''}',
+                                            imageBuilder:
+                                                (context, imageProvider) =>
                                                 Container(
-                                          height: screenHeight(context,
-                                              dividedBy: 15),
-                                          width: screenHeight(context,
-                                              dividedBy: 15),
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
+                                                  height: screenHeight(context,
+                                                      dividedBy: 15),
+                                                  width: screenHeight(context,
+                                                      dividedBy: 15),
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover,
 
-                                              // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
-                                            ),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        placeholder: (context, url) =>
+                                                      // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                                    ),
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ),
+                                            placeholder: (context, url) =>
                                             const CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            CircleAvatar(
-                                                radius: screenHeight(context,
-                                                    dividedBy: 30),
-                                                child:
+                                            errorWidget: (context, url, error) =>
+                                                CircleAvatar(
+                                                    radius: screenHeight(context,
+                                                        dividedBy: 30),
+                                                    child:
                                                     const Icon(Icons.person)),
-                                      ),
-                                      SizedBox(
-                                        width:
+                                          ),
+                                          SizedBox(
+                                            width:
                                             screenWidth(context, dividedBy: 30),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: screenWidth(context,
-                                                dividedBy: 40)),
-                                        child: Column(
-                                          mainAxisAlignment:
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: screenWidth(context,
+                                                    dividedBy: 40)),
+                                            child: Column(
+                                              mainAxisAlignment:
                                               MainAxisAlignment.start,
-                                          crossAxisAlignment:
+                                              crossAxisAlignment:
                                               CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              connectedUsersCubit.connectedUsers.data?[index].name ?? '',
-                                              style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: 'Roboto'),
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight(context,
-                                                  dividedBy: 300),
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth(context,
-                                                  dividedBy: 2.2),
-                                              child: const Text(
-                                                  'Dis promethium, vei maximus gulag......',
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                      color: Color(0xffAAAAAA),
-                                                      fontSize: 13,
-                                                      fontWeight:
+                                              children: [
+                                                Text(
+                                                  connectedUsersCubit.connectedUsers.data?[index].name ?? '',
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontFamily: 'Roboto'),
+                                                ),
+                                                SizedBox(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 300),
+                                                ),
+                                                SizedBox(
+                                                  width: screenWidth(context,
+                                                      dividedBy: 2.2),
+                                                  child: const Text(
+                                                      'Dis promethium, vei maximus gulag......',
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                          color: Color(0xffAAAAAA),
+                                                          fontSize: 13,
+                                                          fontWeight:
                                                           FontWeight.w500,
-                                                      fontFamily: 'Roboto')),
+                                                          fontFamily: 'Roboto')),
+                                                ),
+                                                SizedBox(
+                                                  height: screenHeight(context,
+                                                      dividedBy: 70),
+                                                ),
+                                                SizedBox(
+                                                  width: screenWidth(context,
+                                                      dividedBy: 2.2),
+                                                  child: Row(
+                                                    children: [
+                                                      Image.asset(
+                                                          "assets/Images/calendar.png",
+                                                          width: screenWidth(
+                                                              context,
+                                                              dividedBy: 40)),
+                                                      const SizedBox(
+                                                        width: 3,
+                                                      ),
+                                                      Text(DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data![index].time),
+                                                          style: const TextStyle(
+                                                              color:
+                                                              Color(0xffAAAAAA),
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                              FontWeight.w400,
+                                                              fontFamily: 'Roboto'))
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            SizedBox(
-                                              height: screenHeight(context,
-                                                  dividedBy: 70),
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth(context,
-                                                  dividedBy: 2.2),
+                                          ),
+                                          const Spacer(),
+                                          Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: screenWidth(context,
+                                                      dividedBy: 40)),
                                               child: Row(
                                                 children: [
-                                                  Image.asset(
-                                                      "assets/Images/calendar.png",
-                                                      width: screenWidth(
-                                                          context,
-                                                          dividedBy: 40)),
-                                                  const SizedBox(
-                                                    width: 3,
-                                                  ),
-                                                   Text(DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data![index].time),
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xffAAAAAA),
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily: 'Roboto'))
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: screenWidth(context,
-                                                  dividedBy: 40)),
-                                          child: Row(
-                                            children: [
-                                              InkWell(
-                                                child: SvgPicture.asset(
-                                                    "assets/Images/more.svg",
-                                                    width: screenWidth(context,
-                                                        dividedBy: 100)),
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Container(
-                                                        height: screenHeight(
-                                                            context,
-                                                            dividedBy: 7.5),
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                   EdgeInsets
+                                                  InkWell(
+                                                    onTap: () {
+                                                      showModalBottomSheet(
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return SizedBox(
+                                                            height: screenHeight(
+                                                                context,
+                                                                dividedBy: 7.5),
+                                                            child: Column(
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                  EdgeInsets
                                                                       .only(top: screenHeight(context,dividedBy: 50)),
-                                                              child: Container(
-                                                                width:
+                                                                  child: Container(
+                                                                    width:
                                                                     screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            15),
-                                                                height: 7,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
+                                                                        15),
+                                                                    height: 7,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
                                                                         BorderRadius.circular(
                                                                             10),
-                                                                    color: Colors
-                                                                        .black54),
-                                                              ),
-                                                            ),
-                                                            InkWell(
-                                                              onTap: () {
-                                                               // removeUserCubit.AcceptNotification(id: id)
-                                                              },
-                                                              child: Container(
-                                                                margin: EdgeInsets.only(left: screenWidth(context,dividedBy: 50)),
-                                                                width: screenWidth(context),
-                                                                height:
+                                                                        color: Colors
+                                                                            .black54),
+                                                                  ),
+                                                                ),
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    removeUserCubit.AcceptNotification(id: connectedUsersCubit.connectedUsers.data![index].id).then((value) {
+                                                                      Navigator.pop(context);
+                                                                    },);
+                                                                  },
+                                                                  child: Container(
+                                                                    margin: EdgeInsets.only(left: screenWidth(context,dividedBy: 50)),
+                                                                    width: screenWidth(context),
+                                                                    height:
                                                                     screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                            10),
-                                                                decoration: const BoxDecoration(
-                                                                    color: Colors
-                                                                        .transparent,
-                                                                    borderRadius: BorderRadius.only(
-                                                                        topLeft: Radius
-                                                                            .circular(
+                                                                        10),
+                                                                    decoration: const BoxDecoration(
+                                                                        color: Colors
+                                                                            .transparent,
+                                                                        borderRadius: BorderRadius.only(
+                                                                            topLeft: Radius
+                                                                                .circular(
                                                                                 15),
-                                                                        topRight:
+                                                                            topRight:
                                                                             Radius.circular(
                                                                                 16))),
-                                                                child:
+                                                                    child:
                                                                     const Center(
                                                                         child:
-                                                                            ListTile(
-                                                                  title: Text(
-                                                                      "Remove Connection"),
-                                                                  leading: Icon(
-                                                                      Icons
-                                                                          .delete),
-                                                                )),
-                                                              ),
+                                                                        ListTile(
+                                                                          title: Text(
+                                                                              "Remove Connection"),
+                                                                          leading: Icon(
+                                                                              Icons
+                                                                                  .delete),
+                                                                        )),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                          ],
-                                                        ),
+                                                          );
+                                                        },
                                                       );
                                                     },
-                                                  );
-                                                },
-                                              ),
-                                              SizedBox(
-                                                width: screenWidth(context,
-                                                    dividedBy: 20),
-                                              ),
-                                              SvgPicture.asset(
-                                                  "assets/Images/message.svg",
-                                                  width: screenWidth(context,
-                                                      dividedBy: 25)),
-                                            ],
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return const Divider(
-                                height: 0,
-                                thickness: 2,
-                                color: Color(0xffF5F5F5),
-                                // color: Colors.black12,
-                              );
-                            },
-                            itemCount: connectedUsersCubit.connectedUsers.data?.length ?? 0)),
+                                                    child: SvgPicture.asset(
+                                                        "assets/Images/more.svg",
+                                                        width: screenWidth(context,
+                                                            dividedBy: 100)),
+                                                  ),
+                                                  SizedBox(
+                                                    width: screenWidth(context,
+                                                        dividedBy: 20),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '');
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        "assets/Images/message.svg",
+                                                        width: screenWidth(context,
+                                                            dividedBy: 25)),
+                                                  ),
+                                                ],
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const Divider(
+                                    height: 0,
+                                    thickness: 2,
+                                    color: Color(0xffF5F5F5),
+                                    // color: Colors.black12,
+                                  );
+                                },
+                                itemCount: connectedUsersCubit.connectedUsers.data?.length ?? 0))  ;
+                      }
+                      if(state is ConnectedUsersError){
+                        return NoMessage(context);
+                      }
+                      if(state is ConnectedUsersLoading){
+                        return Expanded(child: Center(child: customLoader()));
+                      }
+                      return NoMessage(context);
+                    },)
+
                   ],
                 ),
               ))
@@ -430,24 +454,21 @@ Widget NoMessage(BuildContext context) {
       ),
       InkWell(
         overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-        onTap: () {},
+        onTap: () {
+          Navigator.pop(context);
+        },
         child: Center(
           child: Container(
-            // margin: EdgeInsets.symmetric(
-            //     horizontal: screenWidth(context, dividedBy: 5),
-            //     vertical: 30),
             alignment: Alignment.center,
             height: screenHeight(context, dividedBy: 18),
             width: screenWidth(context, dividedBy: 1.7),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
                 color: const Color.fromRGBO(250, 250, 250, 1),
-                // gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
                 boxShadow: [
                   BoxShadow(
                     blurStyle: BlurStyle.normal,
                     color: Colors.black.withOpacity(0.15),
-                    // color: Colors.transparent,
                     offset: const Offset(
                       1,
                       1,

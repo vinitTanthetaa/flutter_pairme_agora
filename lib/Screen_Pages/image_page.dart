@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:video_player/video_player.dart';
@@ -13,7 +14,7 @@ class Image_Screen extends StatefulWidget {
 }
 
 class _Image_ScreenState extends State<Image_Screen> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,18 +29,18 @@ class _Image_ScreenState extends State<Image_Screen> {
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _controller?.dispose();
   }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: widget.image.endsWith('.mp4')?
-          SizedBox(
+      child: widget.image.endsWith('.mp4') || widget.image.endsWith('.3gpp')?
+      _controller!.value.isInitialized ? SizedBox(
             height: screenHeight(context),
             width: screenWidth(context),
             child: Stack(
               children: [
-                VideoPlayer(_controller),
+                VideoPlayer(_controller!),
                 IconButton(onPressed: () {
                   Navigator.pop(context);
                 }, icon: const Icon(Icons.arrow_back_ios_new,color: AppColor.white,)),
@@ -49,15 +50,23 @@ class _Image_ScreenState extends State<Image_Screen> {
                       backgroundColor: Colors.white30,
                       child: GestureDetector(onTap: () {
                         setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
+                          _controller!.value.isPlaying
+                              ? _controller?.pause()
+                              : _controller?.play();
                         });
-                      },child: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow,size: 30,)),
+                      },child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow,size: 30,)),
                     ))
               ],
             ),
-          ) :
+          ) : Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(onPressed: () {
+            Navigator.pop(context);
+          }, icon: Icon(Icons.arrow_back_ios_new,color: AppColor.white,)),
+          Expanded(child: Center(child: customLoader()))
+        ],
+      ) :
       InteractiveViewer(
         child: CachedNetworkImage(
           imageUrl: widget.image,

@@ -412,28 +412,32 @@ class _Profile_pageState extends State<Profile_page> {
                                       width:
                                       screenWidth(context, dividedBy: 50),
                                     ),
-                                     Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _file1,
-                                          style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        Text(
-                                          '96.47 KB ',
-                                          style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    )
+                                     Expanded(
+                                       child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _file1.trim(),
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                overflow: TextOverflow.ellipsis,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Text(
+                                            '96.47 KB ',
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w500),
+                                          )
+                                        ],
+                                                                           ),
+                                     )
                                   ],
                                 ),
                               ),
@@ -486,28 +490,32 @@ class _Profile_pageState extends State<Profile_page> {
                                       width:
                                       screenWidth(context, dividedBy: 50),
                                     ),
-                                     Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _file2,
-                                          style: const TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        const Text(
-                                          '96.47 KB ',
-                                          style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    )
+                                     Expanded(
+                                       child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _file2,
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                                fontFamily: 'Roboto',
+                                                overflow: TextOverflow.ellipsis,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          const Text(
+                                            '96.47 KB ',
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w500),
+                                          )
+                                        ],
+                                                                           ),
+                                     )
                                   ],
                                 ),
                               ),
@@ -560,28 +568,32 @@ class _Profile_pageState extends State<Profile_page> {
                                       width:
                                       screenWidth(context, dividedBy: 50),
                                     ),
-                                     Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _file3,
-                                          style: const TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        const Text(
-                                          '96.47 KB ',
-                                          style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    )
+                                     Expanded(
+                                       child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _file3,
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                                fontFamily: 'Roboto',
+                                                overflow: TextOverflow.ellipsis,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          const Text(
+                                            '96.47 KB ',
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w500),
+                                          )
+                                        ],
+                                                                           ),
+                                     )
                                   ],
                                 ),
                               ),

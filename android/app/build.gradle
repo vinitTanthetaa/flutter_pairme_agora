@@ -65,4 +65,5 @@ flutter {
 }
 
 dependencies {
+    implementation "androidx.activity:activity:1.8.2"
 }

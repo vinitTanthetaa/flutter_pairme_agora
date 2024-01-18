@@ -19,6 +19,7 @@ class NotificationSuccess extends NotificationState {}
 class NotificationCubit extends Cubit<NotificationState> {
   NotificationCubit() : super(NotificationInitials());
   final dio = Dio();
+  UserNotification userNotification = UserNotification();
   Future<UserNotification?> GetNotification() async {
     emit(NotificationLoading());
     try {
@@ -30,10 +31,11 @@ class NotificationCubit extends Cubit<NotificationState> {
       if(response.statusCode == 200 && response.data != null)
       {
         emit(NotificationSuccess());
+        userNotification = UserNotification.fromJson(response.data);
         print("passs");
 
       }
-      return UserNotification.fromJson(response.data);
+      return userNotification;
     } on Exception catch (e) {
       emit(NotificationError());
       print("you are fully fail my friend" + e.toString());
