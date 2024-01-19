@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/show_message_requests.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -15,6 +17,7 @@ class MessageRequest extends StatefulWidget {
 }
 
 class _MessageRequestState extends State<MessageRequest> {
+  AllMessageRequestCubit messageRequestCubit = AllMessageRequestCubit();
   List list = [
     {
       "Name":"Jane Koblenz",
@@ -73,6 +76,13 @@ class _MessageRequestState extends State<MessageRequest> {
       "image":"https://img.mensxp.com/media/content/2021/Jan/Lesser-Known-Facts-About-Yash-7_60056adf8c66e.jpeg?w=900&h=1200&cc=1"
     },
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    messageRequestCubit.GetAllMessageRequest();
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,7 +199,7 @@ class _MessageRequestState extends State<MessageRequest> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         CachedNetworkImage(
-                                          imageUrl: list[index]["image"],
+                                          imageUrl: "${apis.baseurl}/${messageRequestCubit.userMssageReq.data?[index].userImage ?? ''}",
                                           imageBuilder: (context, imageProvider) => Container(
                                             height: screenHeight(context,dividedBy: 15),
                                             width: screenHeight(context,dividedBy: 15),
@@ -208,14 +218,6 @@ class _MessageRequestState extends State<MessageRequest> {
                                               radius: screenHeight(context,dividedBy:30),
                                               child: Icon(Icons.person)),
                                         ),
-                                        // Container(
-                                        //   height: screenHeight(context,dividedBy: 15),
-                                        //   width: screenHeight(context,dividedBy: 15),
-                                        //   decoration: BoxDecoration(
-                                        //       shape: BoxShape.circle,
-                                        //       image: DecorationImage(image: NetworkImage("${list[index]["image"]}"),fit: BoxFit.cover)
-                                        //   ),
-                                        // ),
                                         SizedBox(width: screenWidth(context,dividedBy: 30),),
                                         Padding(
                                           padding: EdgeInsets.symmetric(vertical: screenWidth(context,dividedBy: 40)),
@@ -223,7 +225,7 @@ class _MessageRequestState extends State<MessageRequest> {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text("${list[index]["Name"]}",style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
+                                              Text(messageRequestCubit.userMssageReq.data?[index].userName ?? '',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
                                               SizedBox(height: screenHeight(context,dividedBy: 300),),
                                               SizedBox(
                                                 width: screenWidth(context,dividedBy: 2.2),
@@ -274,7 +276,7 @@ class _MessageRequestState extends State<MessageRequest> {
                             // color: Colors.black12,
                           );
                         },
-                        itemCount: list.length))
+                        itemCount: messageRequestCubit.userMssageReq.data?.length ?? 0))
               ],
             )),
           ],

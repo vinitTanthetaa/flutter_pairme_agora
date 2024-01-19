@@ -5,9 +5,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
+import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:path/path.dart' as path;
 import 'package:pair_me/cubits/Buisness_profile.dart';
 import 'package:pair_me/cubits/profile_update.dart';
@@ -56,6 +58,9 @@ class _Business_ProfileState extends State<Business_Profile> {
   SelectedByte? _selectedimag4;
   SelectedByte? _selectedimag5;
   SelectedByte? _selectedimag6;
+  bool _files1 = false;
+  bool _files2 = false;
+  bool _files3 = false;
   PlatformFile? file1;
   PlatformFile? file2;
   PlatformFile? file3;
@@ -68,8 +73,6 @@ class _Business_ProfileState extends State<Business_Profile> {
     // Assuming the desired part is always at index 1
     return nameParts.length > 1 ? nameParts[1] : fileName;
   }
-
-
   getdata() {
     _bio.text = widget.bio;
     if(widget.file4.isNotEmpty){
@@ -88,8 +91,7 @@ class _Business_ProfileState extends State<Business_Profile> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    businessprofileupdateCubit =
-        BlocProvider.of<BusinessprofileupdateCubit>(context);
+    businessprofileupdateCubit = BlocProvider.of<BusinessprofileupdateCubit>(context);
     getdata();
   }
 
@@ -120,7 +122,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                 title: custom_header(text: "Profile"),
               ),
               body: SingleChildScrollView(
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: screenWidth(context, dividedBy: 15),
@@ -128,9 +130,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      custom_discription(
-                          text:
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."),
+                      custom_discription(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."),
                       SizedBox(
                         height: screenHeight(context, dividedBy: 50),
                       ),
@@ -6669,14 +6669,37 @@ class _Business_ProfileState extends State<Business_Profile> {
                                 strokeWidth: 1,
                                 child: GestureDetector(
                                   onTap: () async {
+                                    if(widget.file4.isNotEmpty && widget.file5.isNotEmpty && widget.file6.isNotEmpty){
+                                      flutterToast("Please remove atlest 1 pdf/document", false);
+                                    }
                                     FilePickerResult? result =
                                         await FilePicker.platform.pickFiles(
                                       type: FileType.custom,
                                       // allowMultiple: true,
                                       allowedExtensions: ['jpg', 'pdf', 'doc'],
                                     );
-                                    print("result === >" +
-                                        result!.names.toString());
+                                    print("result === >" + result!.names.toString());
+                                    if(widget.file4.isEmpty && _files1 == false ){
+                                      file1 = result.files.first;
+                                      fileName1 = result.names.first ?? '';
+                                      _files1 = true;
+                                      setState(() {});
+                                      print("123");
+                                    } else
+                                    if(widget.file5.isEmpty && _files2 == false ){
+                                      file2 = result.files.first;
+                                      fileName2 = result.names.first ?? '';
+                                      _files2 = true;
+                                      setState(() {});
+                                      print("456");
+                                    } else
+                                    if(widget.file6.isEmpty && _files3 == false ){
+                                      file3 = result.files.first;
+                                      fileName3 = result.names.first ?? '';
+                                      _files3 = true;
+                                      setState(() {});
+                                      print("678");
+                                    }
                                     setState(() {});
                                   },
                                   child: SizedBox(
@@ -6715,516 +6738,1068 @@ class _Business_ProfileState extends State<Business_Profile> {
                               ),
                               Column(
                                 children: [
-                                 widget.file4.isNotEmpty ?   Container(
-                                    margin: EdgeInsets.only(
-                                        top: screenHeight(context,
-                                            dividedBy: 100)),
-                                    height:
-                                        screenHeight(context, dividedBy: 15),
-                                    width: screenWidth(context, dividedBy: 1.3),
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xffEFF4FF),
-                                        borderRadius: BorderRadius.circular(6)),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: screenWidth(context,
-                                              dividedBy: 55)),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                right: screenWidth(context,
-                                                    dividedBy: 90)),
-                                            height: screenHeight(context,
-                                                dividedBy: 27),
-                                            width: screenWidth(context,
-                                                dividedBy: 15),
-                                            decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'assets/Images/file.png'))),
-                                          ),
-                                          SizedBox(
-                                            height: screenHeight(context,
-                                                dividedBy: 23),
-                                            width: screenWidth(context,
-                                                dividedBy: 1.55),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
+                                 _files1 ? file1 != null ?  GestureDetector(
+                                   onTap: () {
+                                     Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                       return pdfviewshow(
+                                           pdfUrl:file1?.path ?? '');
+                                     },));
+                                   },
+                                   child: Container(
+                                     margin: EdgeInsets.only(
+                                         top: screenHeight(context,
+                                             dividedBy: 100)),
+                                     height:
+                                     screenHeight(context, dividedBy: 15),
+                                     width: screenWidth(context, dividedBy: 1.3),
+                                     decoration: BoxDecoration(
+                                         color: const Color(0xffEFF4FF),
+                                         borderRadius: BorderRadius.circular(6)),
+                                     child: Padding(
+                                       padding: EdgeInsets.symmetric(
+                                           horizontal: screenWidth(context,
+                                               dividedBy: 55)),
+                                       child: Row(
+                                         children: [
+                                           Container(
+                                             margin: EdgeInsets.only(
+                                                 right: screenWidth(context,
+                                                     dividedBy: 90)),
+                                             height: screenHeight(context,
+                                                 dividedBy: 27),
+                                             width: screenWidth(context,
+                                                 dividedBy: 15),
+                                             decoration: const BoxDecoration(
+                                                 image: DecorationImage(
+                                                     image: AssetImage(
+                                                         'assets/Images/file.png'))),
+                                           ),
+                                           SizedBox(
+                                             height: screenHeight(context,
+                                                 dividedBy: 23),
+                                             width: screenWidth(context,
+                                                 dividedBy: 1.55),
+                                             child: Row(
+                                               mainAxisAlignment:
+                                               MainAxisAlignment
+                                                   .spaceBetween,
+                                               children: [
                                                  Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                   crossAxisAlignment:
+                                                   CrossAxisAlignment.start,
+                                                   mainAxisAlignment:
+                                                   MainAxisAlignment.center,
+                                                   children: [
+                                                     Text(
+                                                       fileName1.length >= 35 ?"${fileName1.substring(0,30)}...":fileName1,
+                                                       style: const TextStyle(
+                                                           fontFamily: 'Roboto',
+                                                           fontSize: 12,
+                                                           fontWeight:
+                                                           FontWeight.w500,
+                                                           color: AppColor
+                                                               .dropdownfont),
+                                                     ),
+                                                     const Text(
+                                                       '96.47 KB',
+                                                       style: TextStyle(
+                                                           fontFamily: 'Roboto',
+                                                           fontSize: 8,
+                                                           fontWeight:
+                                                           FontWeight.w500,
+                                                           color: Color(
+                                                               0xff838383)),
+                                                     ),
+                                                   ],
+                                                 ),
+                                                 InkWell(
+                                                   onTap: () {
+                                                     showDialog(
+                                                         context: context,
+                                                         builder: (context) =>
+                                                             SimpleDialog(
+                                                               insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                                               backgroundColor: AppColor.white,
+                                                               surfaceTintColor: AppColor.white,
+                                                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                               children: [
+                                                                 const Padding(
+                                                                   padding: EdgeInsets.symmetric(horizontal: 35),
+                                                                   child: Text(
+                                                                     'Are you sure you want to remove file?',
+                                                                     textAlign: TextAlign.center,
+                                                                     maxLines: 2,
+                                                                     style: TextStyle(
+                                                                         color: AppColor.black,
+                                                                         fontWeight: FontWeight.w500,
+                                                                         fontSize: 15,
+                                                                         fontFamily: 'Roboto'),
+                                                                   ),
+                                                                 ),
+                                                                 const Divider(
+                                                                   height: 0,
+                                                                   color: Color(0xffF5F5F5),
+                                                                 ),
+                                                                 SizedBox(
+                                                                   height: 10,
+                                                                 ),
+                                                                 Padding(
+                                                                   padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                   child: Row(
+                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                     children: [
+                                                                       GestureDetector(
+                                                                         onTap: () {
+                                                                           Navigator.pop(context);
+                                                                         },
+                                                                         child: Container(
+                                                                           alignment: Alignment.center,
+                                                                           height: 35,
+                                                                           width: 100,
+                                                                           decoration: BoxDecoration(
+                                                                             border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                                             borderRadius: BorderRadius.circular(32),
+                                                                           ),
+                                                                           child: const Text(
+                                                                             'Cancel',
+                                                                             style: TextStyle(
+                                                                                 fontFamily: 'Roboto',
+                                                                                 fontSize: 15,
+                                                                                 fontWeight: FontWeight.w600,
+                                                                                 color: AppColor.skyBlue),
+                                                                           ),
+                                                                         ),
+                                                                       ),
+                                                                       GestureDetector(
+                                                                         onTap: () {
+                                                                           _files1 = !_files1;
+                                                                           setState(() {});
+                                                                           Navigator.pop(context);
+                                                                         },
+                                                                         child: Container(
+                                                                           alignment: Alignment.center,
+                                                                           height: 35,
+                                                                           width: 100,
+                                                                           decoration: BoxDecoration(
+                                                                             borderRadius: BorderRadius.circular(50),
+                                                                             gradient: const LinearGradient(
+                                                                                 colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                                           ),
+                                                                           child: const Text(
+                                                                             'Remove',
+                                                                             style: TextStyle(
+                                                                                 fontWeight: FontWeight.w600,
+                                                                                 fontSize: 15,
+                                                                                 fontFamily: 'Roboto',
+                                                                                 color: AppColor.white),
+                                                                           ),
+                                                                         ),
+                                                                       )
+                                                                     ],
+                                                                   ),
+                                                                 )
+                                                               ],
+                                                             )
+                                                     );
+                                                   },
+                                                   child: const Icon(
+                                                     Icons.close,
+                                                     color: AppColor.skyBlue,
+                                                     size: 15,
+                                                   ),
+                                                 )
+                                               ],
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                 ) :  const SizedBox() : widget.file4.isNotEmpty ?  GestureDetector(
+                onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Pdfview( pdfUrl: '${apis.baseurl}/${widget.file4}',);
+              },));
+              },
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: screenHeight(context,
+                          dividedBy: 100)),
+                  height:
+                  screenHeight(context, dividedBy: 15),
+                  width: screenWidth(context, dividedBy: 1.3),
+                  decoration: BoxDecoration(
+                      color: const Color(0xffEFF4FF),
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth(context,
+                            dividedBy: 55)),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                              right: screenWidth(context,
+                                  dividedBy: 90)),
+                          height: screenHeight(context,
+                              dividedBy: 27),
+                          width: screenWidth(context,
+                              dividedBy: 15),
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/Images/file.png'))),
+                        ),
+                        SizedBox(
+                          height: screenHeight(context,
+                              dividedBy: 23),
+                          width: screenWidth(context,
+                              dividedBy: 1.55),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment
+                                .spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    fileName1.length >= 35 ?"${fileName1.substring(0,30)}...":fileName1,
+                                    style: const TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 12,
+                                        fontWeight:
+                                        FontWeight.w500,
+                                        color: AppColor
+                                            .dropdownfont),
+                                  ),
+                                  const Text(
+                                    '96.47 KB',
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 8,
+                                        fontWeight:
+                                        FontWeight.w500,
+                                        color: Color(
+                                            0xff838383)),
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          SimpleDialog(
+                                            insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                            backgroundColor: AppColor.white,
+                                            surfaceTintColor: AppColor.white,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                            children: [
+                                              const Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: 35),
+                                                child: Text(
+                                                  'Are you sure you want to remove file?',
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                      color: AppColor.black,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 15,
+                                                      fontFamily: 'Roboto'),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                height: 0,
+                                                color: Color(0xffF5F5F5),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      fileName1.length >= 35 ?"${fileName1.substring(0,30)}...":fileName1,
-                                                      style: const TextStyle(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: AppColor
-                                                              .dropdownfont),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        height: 35,
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                          borderRadius: BorderRadius.circular(32),
+                                                        ),
+                                                        child: const Text(
+                                                          'Cancel',
+                                                          style: TextStyle(
+                                                              fontFamily: 'Roboto',
+                                                              fontSize: 15,
+                                                              fontWeight: FontWeight.w600,
+                                                              color: AppColor.skyBlue),
+                                                        ),
+                                                      ),
                                                     ),
-                                                    const Text(
-                                                      '96.47 KB',
-                                                      style: TextStyle(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 8,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Color(
-                                                              0xff838383)),
-                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        _files1 = !_files1;
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        height: 35,
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(50),
+                                                          gradient: const LinearGradient(
+                                                              colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                        ),
+                                                        child: const Text(
+                                                          'Remove',
+                                                          style: TextStyle(
+                                                              fontWeight: FontWeight.w600,
+                                                              fontSize: 15,
+                                                              fontFamily: 'Roboto',
+                                                              color: AppColor.white),
+                                                        ),
+                                                      ),
+                                                    )
                                                   ],
                                                 ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          SimpleDialog(
-                                                            insetPadding: const EdgeInsets.symmetric(horizontal: 60),
-                                                            backgroundColor: AppColor.white,
-                                                            surfaceTintColor: AppColor.white,
-                                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                                            children: [
-                                                              const Padding(
-                                                                padding: EdgeInsets.symmetric(horizontal: 35),
-                                                                child: Text(
-                                                                  'Are you sure you want to remove file?',
-                                                                  textAlign: TextAlign.center,
-                                                                  maxLines: 2,
-                                                                  style: TextStyle(
-                                                                      color: AppColor.black,
-                                                                      fontWeight: FontWeight.w500,
-                                                                      fontSize: 15,
-                                                                      fontFamily: 'Roboto'),
-                                                                ),
-                                                              ),
-                                                              const Divider(
-                                                                height: 0,
-                                                                color: Color(0xffF5F5F5),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              Padding(
-                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    GestureDetector(
-                                                                      onTap: () {
-                                                                        Navigator.pop(context);
-                                                                      },
-                                                                      child: Container(
-                                                                        alignment: Alignment.center,
-                                                                        height: 35,
-                                                                        width: 100,
-                                                                        decoration: BoxDecoration(
-                                                                          border: Border.all(color: AppColor.skyBlue, width: 2),
-                                                                          borderRadius: BorderRadius.circular(32),
-                                                                        ),
-                                                                        child: const Text(
-                                                                          'Cancel',
-                                                                          style: TextStyle(
-                                                                              fontFamily: 'Roboto',
-                                                                              fontSize: 15,
-                                                                              fontWeight: FontWeight.w600,
-                                                                              color: AppColor.skyBlue),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    GestureDetector(
-                                                                      onTap: () {
-
-                                                                        setState(() {});
-                                                                        Navigator.pop(context);
-                                                                      },
-                                                                      child: Container(
-                                                                        alignment: Alignment.center,
-                                                                        height: 35,
-                                                                        width: 100,
-                                                                        decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(50),
-                                                                          gradient: const LinearGradient(
-                                                                              colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                                                                        ),
-                                                                        child: const Text(
-                                                                          'Remove',
-                                                                          style: TextStyle(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontSize: 15,
-                                                                              fontFamily: 'Roboto',
-                                                                              color: AppColor.white),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              )
-                                                            ],
-                                                          )
-                                                    );
-                                                  },
-                                                  child: const Icon(
-                                                    Icons.close,
-                                                    color: AppColor.skyBlue,
-                                                    size: 15,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ) : SizedBox(),
-                                 widget.file5.isNotEmpty ?    Container(
-                                   margin: EdgeInsets.only(
-                                       top: screenHeight(context,
-                                           dividedBy: 100)),
-                                   height:
-                                   screenHeight(context, dividedBy: 15),
-                                   width: screenWidth(context, dividedBy: 1.3),
-                                   decoration: BoxDecoration(
-                                       color: const Color(0xffEFF4FF),
-                                       borderRadius: BorderRadius.circular(6)),
-                                   child: Padding(
-                                     padding: EdgeInsets.symmetric(
-                                         horizontal: screenWidth(context,
-                                             dividedBy: 55)),
-                                     child: Row(
-                                       children: [
-                                         Container(
-                                           margin: EdgeInsets.only(
-                                               right: screenWidth(context,
-                                                   dividedBy: 90)),
-                                           height: screenHeight(context,
-                                               dividedBy: 27),
-                                           width: screenWidth(context,
-                                               dividedBy: 15),
-                                           decoration: const BoxDecoration(
-                                               image: DecorationImage(
-                                                   image: AssetImage(
-                                                       'assets/Images/file.png'))),
-                                         ),
-                                         SizedBox(
-                                           height: screenHeight(context,
-                                               dividedBy: 23),
-                                           width: screenWidth(context,
-                                               dividedBy: 1.55),
-                                           child: Row(
-                                             mainAxisAlignment:
-                                             MainAxisAlignment
-                                                 .spaceBetween,
-                                             children: [
-                                               Column(
-                                                 crossAxisAlignment:
-                                                 CrossAxisAlignment.start,
-                                                 mainAxisAlignment:
-                                                 MainAxisAlignment.center,
-                                                 children: [
-                                                   Text(
-                                                     fileName2.length >= 35 ?'${fileName2.substring(0,30)}...' : fileName2,
-                                                     style: const TextStyle(
-                                                         fontFamily: 'Roboto',
-                                                         fontSize: 12,
-                                                         fontWeight:
-                                                         FontWeight.w500,
-                                                         color: AppColor
-                                                             .dropdownfont),
-                                                   ),
-                                                   const Text(
-                                                     '96.47 KB',
-                                                     style: TextStyle(
-                                                         fontFamily: 'Roboto',
-                                                         fontSize: 8,
-                                                         fontWeight:
-                                                         FontWeight.w500,
-                                                         color: Color(
-                                                             0xff838383)),
-                                                   ),
-                                                 ],
-                                               ),
-                                               InkWell(
-                                                 onTap: () {
-                                                   showDialog(
-                                                     context: context,
-                                                     builder: (context) =>
-                                                         SimpleDialog(
-                                                           insetPadding: const EdgeInsets.symmetric(horizontal: 60),
-                                                           backgroundColor: AppColor.white,
-                                                           surfaceTintColor: AppColor.white,
-                                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                                           children: [
-                                                             const Padding(
-                                                               padding: EdgeInsets.symmetric(horizontal: 35),
-                                                               child: Text(
-                                                                 'Are you sure you want to remove file?',
-                                                                 textAlign: TextAlign.center,
-                                                                 maxLines: 2,
-                                                                 style: TextStyle(
-                                                                     color: AppColor.black,
-                                                                     fontWeight: FontWeight.w500,
-                                                                     fontSize: 15,
-                                                                     fontFamily: 'Roboto'),
-                                                               ),
-                                                             ),
-                                                             const Divider(
-                                                               height: 0,
-                                                               color: Color(0xffF5F5F5),
-                                                             ),
-                                                             SizedBox(
-                                                               height: 10,
-                                                             ),
-                                                             Padding(
-                                                               padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                               child: Row(
-                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                 children: [
-                                                                   GestureDetector(
-                                                                     onTap: () {
-                                                                       Navigator.pop(context);
-                                                                     },
-                                                                     child: Container(
-                                                                       alignment: Alignment.center,
-                                                                       height: 35,
-                                                                       width: 100,
-                                                                       decoration: BoxDecoration(
-                                                                         border: Border.all(color: AppColor.skyBlue, width: 2),
-                                                                         borderRadius: BorderRadius.circular(32),
-                                                                       ),
-                                                                       child: const Text(
-                                                                         'Cancel',
-                                                                         style: TextStyle(
-                                                                             fontFamily: 'Roboto',
-                                                                             fontSize: 15,
-                                                                             fontWeight: FontWeight.w600,
-                                                                             color: AppColor.skyBlue),
-                                                                       ),
-                                                                     ),
-                                                                   ),
-                                                                   GestureDetector(
-                                                                     onTap: () {
-                                                                       // filelist.remove(delete);
-                                                                       setState(() {});
-                                                                       Navigator.pop(context);
-                                                                     },
-                                                                     child: Container(
-                                                                       alignment: Alignment.center,
-                                                                       height: 35,
-                                                                       width: 100,
-                                                                       decoration: BoxDecoration(
-                                                                         borderRadius: BorderRadius.circular(50),
-                                                                         gradient: const LinearGradient(
-                                                                             colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                                                                       ),
-                                                                       child: const Text(
-                                                                         'Remove',
-                                                                         style: TextStyle(
-                                                                             fontWeight: FontWeight.w600,
-                                                                             fontSize: 15,
-                                                                             fontFamily: 'Roboto',
-                                                                             color: AppColor.white),
-                                                                       ),
-                                                                     ),
-                                                                   )
-                                                                 ],
-                                                               ),
-                                                             )
-                                                           ],
-                                                         )
-                                                   );
-                                                 },
-                                                 child: const Icon(
-                                                   Icons.close,
-                                                   color: AppColor.skyBlue,
-                                                   size: 15,
-                                                 ),
-                                               )
-                                             ],
+                                              )
+                                            ],
+                                          )
+                                  );
+                                },
+                                child: const Icon(
+                                  Icons.close,
+                                  color: AppColor.skyBlue,
+                                  size: 15,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ) :  const SizedBox(),
+                                 _files2 ? file2 != null ?  GestureDetector(
+                                   onTap: () {
+                                     Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                       return pdfviewshow(
+                                           pdfUrl:file2?.path ?? '');
+                                     },));
+                                   },
+                                   child: Container(
+                                     margin: EdgeInsets.only(
+                                         top: screenHeight(context,
+                                             dividedBy: 100)),
+                                     height:
+                                     screenHeight(context, dividedBy: 15),
+                                     width: screenWidth(context, dividedBy: 1.3),
+                                     decoration: BoxDecoration(
+                                         color: const Color(0xffEFF4FF),
+                                         borderRadius: BorderRadius.circular(6)),
+                                     child: Padding(
+                                       padding: EdgeInsets.symmetric(
+                                           horizontal: screenWidth(context,
+                                               dividedBy: 55)),
+                                       child: Row(
+                                         children: [
+                                           Container(
+                                             margin: EdgeInsets.only(
+                                                 right: screenWidth(context,
+                                                     dividedBy: 90)),
+                                             height: screenHeight(context,
+                                                 dividedBy: 27),
+                                             width: screenWidth(context,
+                                                 dividedBy: 15),
+                                             decoration: const BoxDecoration(
+                                                 image: DecorationImage(
+                                                     image: AssetImage(
+                                                         'assets/Images/file.png'))),
                                            ),
-                                         ),
-                                       ],
+                                           SizedBox(
+                                             height: screenHeight(context,
+                                                 dividedBy: 23),
+                                             width: screenWidth(context,
+                                                 dividedBy: 1.55),
+                                             child: Row(
+                                               mainAxisAlignment:
+                                               MainAxisAlignment
+                                                   .spaceBetween,
+                                               children: [
+                                                 Column(
+                                                   crossAxisAlignment:
+                                                   CrossAxisAlignment.start,
+                                                   mainAxisAlignment:
+                                                   MainAxisAlignment.center,
+                                                   children: [
+                                                     Text(
+                                                       fileName2.length >= 35 ?"${fileName2.substring(0,30)}...":fileName2,
+                                                       style: const TextStyle(
+                                                           fontFamily: 'Roboto',
+                                                           fontSize: 12,
+                                                           fontWeight:
+                                                           FontWeight.w500,
+                                                           color: AppColor
+                                                               .dropdownfont),
+                                                     ),
+                                                     const Text(
+                                                       '96.47 KB',
+                                                       style: TextStyle(
+                                                           fontFamily: 'Roboto',
+                                                           fontSize: 8,
+                                                           fontWeight:
+                                                           FontWeight.w500,
+                                                           color: Color(
+                                                               0xff838383)),
+                                                     ),
+                                                   ],
+                                                 ),
+                                                 InkWell(
+                                                   onTap: () {
+                                                     showDialog(
+                                                         context: context,
+                                                         builder: (context) =>
+                                                             SimpleDialog(
+                                                               insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                                               backgroundColor: AppColor.white,
+                                                               surfaceTintColor: AppColor.white,
+                                                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                               children: [
+                                                                 const Padding(
+                                                                   padding: EdgeInsets.symmetric(horizontal: 35),
+                                                                   child: Text(
+                                                                     'Are you sure you want to remove file?',
+                                                                     textAlign: TextAlign.center,
+                                                                     maxLines: 2,
+                                                                     style: TextStyle(
+                                                                         color: AppColor.black,
+                                                                         fontWeight: FontWeight.w500,
+                                                                         fontSize: 15,
+                                                                         fontFamily: 'Roboto'),
+                                                                   ),
+                                                                 ),
+                                                                 const Divider(
+                                                                   height: 0,
+                                                                   color: Color(0xffF5F5F5),
+                                                                 ),
+                                                                 SizedBox(
+                                                                   height: 10,
+                                                                 ),
+                                                                 Padding(
+                                                                   padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                   child: Row(
+                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                     children: [
+                                                                       GestureDetector(
+                                                                         onTap: () {
+                                                                           Navigator.pop(context);
+                                                                         },
+                                                                         child: Container(
+                                                                           alignment: Alignment.center,
+                                                                           height: 35,
+                                                                           width: 100,
+                                                                           decoration: BoxDecoration(
+                                                                             border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                                             borderRadius: BorderRadius.circular(32),
+                                                                           ),
+                                                                           child: const Text(
+                                                                             'Cancel',
+                                                                             style: TextStyle(
+                                                                                 fontFamily: 'Roboto',
+                                                                                 fontSize: 15,
+                                                                                 fontWeight: FontWeight.w600,
+                                                                                 color: AppColor.skyBlue),
+                                                                           ),
+                                                                         ),
+                                                                       ),
+                                                                       GestureDetector(
+                                                                         onTap: () {
+                                                                           _files2 = !_files2;
+                                                                           setState(() {});
+                                                                           Navigator.pop(context);
+                                                                         },
+                                                                         child: Container(
+                                                                           alignment: Alignment.center,
+                                                                           height: 35,
+                                                                           width: 100,
+                                                                           decoration: BoxDecoration(
+                                                                             borderRadius: BorderRadius.circular(50),
+                                                                             gradient: const LinearGradient(
+                                                                                 colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                                           ),
+                                                                           child: const Text(
+                                                                             'Remove',
+                                                                             style: TextStyle(
+                                                                                 fontWeight: FontWeight.w600,
+                                                                                 fontSize: 15,
+                                                                                 fontFamily: 'Roboto',
+                                                                                 color: AppColor.white),
+                                                                           ),
+                                                                         ),
+                                                                       )
+                                                                     ],
+                                                                   ),
+                                                                 )
+                                                               ],
+                                                             )
+                                                     );
+                                                   },
+                                                   child: const Icon(
+                                                     Icons.close,
+                                                     color: AppColor.skyBlue,
+                                                     size: 15,
+                                                   ),
+                                                 )
+                                               ],
+                                             ),
+                                           ),
+                                         ],
+                                       ),
                                      ),
                                    ),
-                                 ) : SizedBox(),
-                                 widget.file6.isNotEmpty ?   Container(
-                                   margin: EdgeInsets.only(
-                                       top: screenHeight(context,
-                                           dividedBy: 100)),
-                                   height:
-                                   screenHeight(context, dividedBy: 15),
-                                   width: screenWidth(context, dividedBy: 1.3),
-                                   decoration: BoxDecoration(
-                                       color: const Color(0xffEFF4FF),
-                                       borderRadius: BorderRadius.circular(6)),
-                                   child: Padding(
-                                     padding: EdgeInsets.symmetric(
-                                         horizontal: screenWidth(context,
-                                             dividedBy: 55)),
-                                     child: Row(
-                                       children: [
-                                         Container(
-                                           margin: EdgeInsets.only(
-                                               right: screenWidth(context,
-                                                   dividedBy: 90)),
-                                           height: screenHeight(context,
-                                               dividedBy: 27),
-                                           width: screenWidth(context,
-                                               dividedBy: 15),
-                                           decoration: const BoxDecoration(
-                                               image: DecorationImage(
-                                                   image: AssetImage(
-                                                       'assets/Images/file.png'))),
-                                         ),
-                                         SizedBox(
-                                           height: screenHeight(context,
-                                               dividedBy: 23),
-                                           width: screenWidth(context,
-                                               dividedBy: 1.55),
-                                           child: Row(
-                                             mainAxisAlignment:
-                                             MainAxisAlignment
-                                                 .spaceBetween,
-                                             children: [
-                                               Column(
-                                                 crossAxisAlignment:
-                                                 CrossAxisAlignment.start,
-                                                 mainAxisAlignment:
-                                                 MainAxisAlignment.center,
-                                                 children: [
-                                                   Text(
-                                                     fileName3.length >= 30 ? "${fileName3.substring(0,35)}..." : fileName3,
-                                                     style: const TextStyle(
-                                                         fontFamily: 'Roboto',
-                                                         fontSize: 12,
-                                                         fontWeight:
-                                                         FontWeight.w500,
-                                                         color: AppColor
-                                                             .dropdownfont),
-                                                   ),
-                                                   const Text(
-                                                     '96.47 KB',
-                                                     style: TextStyle(
-                                                         fontFamily: 'Roboto',
-                                                         fontSize: 8,
-                                                         fontWeight:
-                                                         FontWeight.w500,
-                                                         color: Color(
-                                                             0xff838383)),
-                                                   ),
-                                                 ],
-                                               ),
-                                               InkWell(
-                                                 onTap: () {
-                                                   showDialog(
-                                                     context: context,
-                                                     builder: (context) =>
-                                                         SimpleDialog(
-                                                           insetPadding: const EdgeInsets.symmetric(horizontal: 60),
-                                                           backgroundColor: AppColor.white,
-                                                           surfaceTintColor: AppColor.white,
-                                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                                           children: [
-                                                             const Padding(
-                                                               padding: EdgeInsets.symmetric(horizontal: 35),
-                                                               child: Text(
-                                                                 'Are you sure you want to remove file?',
-                                                                 textAlign: TextAlign.center,
-                                                                 maxLines: 2,
-                                                                 style: TextStyle(
-                                                                     color: AppColor.black,
-                                                                     fontWeight: FontWeight.w500,
-                                                                     fontSize: 15,
-                                                                     fontFamily: 'Roboto'),
-                                                               ),
-                                                             ),
-                                                             const Divider(
-                                                               height: 0,
-                                                               color: Color(0xffF5F5F5),
-                                                             ),
-                                                             SizedBox(
-                                                               height: 10,
-                                                             ),
-                                                             Padding(
-                                                               padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                               child: Row(
-                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                 children: [
-                                                                   GestureDetector(
-                                                                     onTap: () {
-                                                                       Navigator.pop(context);
-                                                                     },
-                                                                     child: Container(
-                                                                       alignment: Alignment.center,
-                                                                       height: 35,
-                                                                       width: 100,
-                                                                       decoration: BoxDecoration(
-                                                                         border: Border.all(color: AppColor.skyBlue, width: 2),
-                                                                         borderRadius: BorderRadius.circular(32),
-                                                                       ),
-                                                                       child: const Text(
-                                                                         'Cancel',
-                                                                         style: TextStyle(
-                                                                             fontFamily: 'Roboto',
-                                                                             fontSize: 15,
-                                                                             fontWeight: FontWeight.w600,
-                                                                             color: AppColor.skyBlue),
-                                                                       ),
-                                                                     ),
-                                                                   ),
-                                                                   GestureDetector(
-                                                                     onTap: () {
-                                                                       // filelist.remove(delete);
-                                                                       setState(() {});
-                                                                       Navigator.pop(context);
-                                                                     },
-                                                                     child: Container(
-                                                                       alignment: Alignment.center,
-                                                                       height: 35,
-                                                                       width: 100,
-                                                                       decoration: BoxDecoration(
-                                                                         borderRadius: BorderRadius.circular(50),
-                                                                         gradient: const LinearGradient(
-                                                                             colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
-                                                                       ),
-                                                                       child: const Text(
-                                                                         'Remove',
-                                                                         style: TextStyle(
-                                                                             fontWeight: FontWeight.w600,
-                                                                             fontSize: 15,
-                                                                             fontFamily: 'Roboto',
-                                                                             color: AppColor.white),
-                                                                       ),
-                                                                     ),
-                                                                   )
-                                                                 ],
-                                                               ),
-                                                             )
-                                                           ],
-                                                         )
-                                                   );
-                                                 },
-                                                 child: const Icon(
-                                                   Icons.close,
-                                                   color: AppColor.skyBlue,
-                                                   size: 15,
-                                                 ),
-                                               )
-                                             ],
+                                 ) :  const SizedBox() : widget.file5.isNotEmpty ? GestureDetector(
+                onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Pdfview( pdfUrl: '${apis.baseurl}/${widget.file5}',);
+              },));
+              },
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: screenHeight(context,
+                          dividedBy: 100)),
+                  height:
+                  screenHeight(context, dividedBy: 15),
+                  width: screenWidth(context, dividedBy: 1.3),
+                  decoration: BoxDecoration(
+                      color: const Color(0xffEFF4FF),
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth(context,
+                            dividedBy: 55)),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                              right: screenWidth(context,
+                                  dividedBy: 90)),
+                          height: screenHeight(context,
+                              dividedBy: 27),
+                          width: screenWidth(context,
+                              dividedBy: 15),
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/Images/file.png'))),
+                        ),
+                        SizedBox(
+                          height: screenHeight(context,
+                              dividedBy: 23),
+                          width: screenWidth(context,
+                              dividedBy: 1.55),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment
+                                .spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    fileName2.length >= 35 ?"${fileName2.substring(0,30)}...":fileName2,
+                                    style: const TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 12,
+                                        fontWeight:
+                                        FontWeight.w500,
+                                        color: AppColor
+                                            .dropdownfont),
+                                  ),
+                                  const Text(
+                                    '96.47 KB',
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 8,
+                                        fontWeight:
+                                        FontWeight.w500,
+                                        color: Color(
+                                            0xff838383)),
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          SimpleDialog(
+                                            insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                            backgroundColor: AppColor.white,
+                                            surfaceTintColor: AppColor.white,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                            children: [
+                                              const Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: 35),
+                                                child: Text(
+                                                  'Are you sure you want to remove file?',
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                      color: AppColor.black,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 15,
+                                                      fontFamily: 'Roboto'),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                height: 0,
+                                                color: Color(0xffF5F5F5),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        height: 35,
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                          borderRadius: BorderRadius.circular(32),
+                                                        ),
+                                                        child: const Text(
+                                                          'Cancel',
+                                                          style: TextStyle(
+                                                              fontFamily: 'Roboto',
+                                                              fontSize: 15,
+                                                              fontWeight: FontWeight.w600,
+                                                              color: AppColor.skyBlue),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        _files2 = !_files2;
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        height: 35,
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(50),
+                                                          gradient: const LinearGradient(
+                                                              colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                        ),
+                                                        child: const Text(
+                                                          'Remove',
+                                                          style: TextStyle(
+                                                              fontWeight: FontWeight.w600,
+                                                              fontSize: 15,
+                                                              fontFamily: 'Roboto',
+                                                              color: AppColor.white),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                  );
+                                },
+                                child: const Icon(
+                                  Icons.close,
+                                  color: AppColor.skyBlue,
+                                  size: 15,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ) :  const SizedBox(),
+                                 _files3 ? file3 != null ?  GestureDetector(
+                                   onTap: () {
+                                     Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                       return pdfviewshow(
+                                           pdfUrl:file3?.path ?? '');
+                                     },));
+                                   },
+                                   child: Container(
+                                     margin: EdgeInsets.only(
+                                         top: screenHeight(context,
+                                             dividedBy: 100)),
+                                     height:
+                                     screenHeight(context, dividedBy: 15),
+                                     width: screenWidth(context, dividedBy: 1.3),
+                                     decoration: BoxDecoration(
+                                         color: const Color(0xffEFF4FF),
+                                         borderRadius: BorderRadius.circular(6)),
+                                     child: Padding(
+                                       padding: EdgeInsets.symmetric(
+                                           horizontal: screenWidth(context,
+                                               dividedBy: 55)),
+                                       child: Row(
+                                         children: [
+                                           Container(
+                                             margin: EdgeInsets.only(
+                                                 right: screenWidth(context,
+                                                     dividedBy: 90)),
+                                             height: screenHeight(context,
+                                                 dividedBy: 27),
+                                             width: screenWidth(context,
+                                                 dividedBy: 15),
+                                             decoration: const BoxDecoration(
+                                                 image: DecorationImage(
+                                                     image: AssetImage(
+                                                         'assets/Images/file.png'))),
                                            ),
-                                         ),
-                                       ],
+                                           SizedBox(
+                                             height: screenHeight(context,
+                                                 dividedBy: 23),
+                                             width: screenWidth(context,
+                                                 dividedBy: 1.55),
+                                             child: Row(
+                                               mainAxisAlignment:
+                                               MainAxisAlignment
+                                                   .spaceBetween,
+                                               children: [
+                                                 Column(
+                                                   crossAxisAlignment:
+                                                   CrossAxisAlignment.start,
+                                                   mainAxisAlignment:
+                                                   MainAxisAlignment.center,
+                                                   children: [
+                                                     Text(
+                                                       fileName3.length >= 35 ?"${fileName3.substring(0,30)}...":fileName3,
+                                                       style: const TextStyle(
+                                                           fontFamily: 'Roboto',
+                                                           fontSize: 12,
+                                                           fontWeight:
+                                                           FontWeight.w500,
+                                                           color: AppColor
+                                                               .dropdownfont),
+                                                     ),
+                                                     const Text(
+                                                       '96.47 KB',
+                                                       style: TextStyle(
+                                                           fontFamily: 'Roboto',
+                                                           fontSize: 8,
+                                                           fontWeight:
+                                                           FontWeight.w500,
+                                                           color: Color(
+                                                               0xff838383)),
+                                                     ),
+                                                   ],
+                                                 ),
+                                                 InkWell(
+                                                   onTap: () {
+                                                     showDialog(
+                                                         context: context,
+                                                         builder: (context) =>
+                                                             SimpleDialog(
+                                                               insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                                               backgroundColor: AppColor.white,
+                                                               surfaceTintColor: AppColor.white,
+                                                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                               children: [
+                                                                 const Padding(
+                                                                   padding: EdgeInsets.symmetric(horizontal: 35),
+                                                                   child: Text(
+                                                                     'Are you sure you want to remove file?',
+                                                                     textAlign: TextAlign.center,
+                                                                     maxLines: 2,
+                                                                     style: TextStyle(
+                                                                         color: AppColor.black,
+                                                                         fontWeight: FontWeight.w500,
+                                                                         fontSize: 15,
+                                                                         fontFamily: 'Roboto'),
+                                                                   ),
+                                                                 ),
+                                                                 const Divider(
+                                                                   height: 0,
+                                                                   color: Color(0xffF5F5F5),
+                                                                 ),
+                                                                 SizedBox(
+                                                                   height: 10,
+                                                                 ),
+                                                                 Padding(
+                                                                   padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                   child: Row(
+                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                     children: [
+                                                                       GestureDetector(
+                                                                         onTap: () {
+                                                                           Navigator.pop(context);
+                                                                         },
+                                                                         child: Container(
+                                                                           alignment: Alignment.center,
+                                                                           height: 35,
+                                                                           width: 100,
+                                                                           decoration: BoxDecoration(
+                                                                             border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                                             borderRadius: BorderRadius.circular(32),
+                                                                           ),
+                                                                           child: const Text(
+                                                                             'Cancel',
+                                                                             style: TextStyle(
+                                                                                 fontFamily: 'Roboto',
+                                                                                 fontSize: 15,
+                                                                                 fontWeight: FontWeight.w600,
+                                                                                 color: AppColor.skyBlue),
+                                                                           ),
+                                                                         ),
+                                                                       ),
+                                                                       GestureDetector(
+                                                                         onTap: () {
+                                                                           _files3 = !_files3;
+                                                                           setState(() {});
+                                                                           Navigator.pop(context);
+                                                                         },
+                                                                         child: Container(
+                                                                           alignment: Alignment.center,
+                                                                           height: 35,
+                                                                           width: 100,
+                                                                           decoration: BoxDecoration(
+                                                                             borderRadius: BorderRadius.circular(50),
+                                                                             gradient: const LinearGradient(
+                                                                                 colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                                           ),
+                                                                           child: const Text(
+                                                                             'Remove',
+                                                                             style: TextStyle(
+                                                                                 fontWeight: FontWeight.w600,
+                                                                                 fontSize: 15,
+                                                                                 fontFamily: 'Roboto',
+                                                                                 color: AppColor.white),
+                                                                           ),
+                                                                         ),
+                                                                       )
+                                                                     ],
+                                                                   ),
+                                                                 )
+                                                               ],
+                                                             )
+                                                     );
+                                                   },
+                                                   child: const Icon(
+                                                     Icons.close,
+                                                     color: AppColor.skyBlue,
+                                                     size: 15,
+                                                   ),
+                                                 )
+                                               ],
+                                             ),
+                                           ),
+                                         ],
+                                       ),
                                      ),
                                    ),
-                                 ): SizedBox(),
+                                 ) :  const SizedBox() : widget.file6.isNotEmpty ? GestureDetector(
+                onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Pdfview( pdfUrl: '${apis.baseurl}/${widget.file6}',);
+              },));
+              },
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: screenHeight(context,
+                          dividedBy: 100)),
+                  height:
+                  screenHeight(context, dividedBy: 15),
+                  width: screenWidth(context, dividedBy: 1.3),
+                  decoration: BoxDecoration(
+                      color: const Color(0xffEFF4FF),
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth(context,
+                            dividedBy: 55)),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                              right: screenWidth(context,
+                                  dividedBy: 90)),
+                          height: screenHeight(context,
+                              dividedBy: 27),
+                          width: screenWidth(context,
+                              dividedBy: 15),
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/Images/file.png'))),
+                        ),
+                        SizedBox(
+                          height: screenHeight(context,
+                              dividedBy: 23),
+                          width: screenWidth(context,
+                              dividedBy: 1.55),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment
+                                .spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    fileName3.length >= 35 ?"${fileName3.substring(0,30)}...":fileName3,
+                                    style: const TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 12,
+                                        fontWeight:
+                                        FontWeight.w500,
+                                        color: AppColor
+                                            .dropdownfont),
+                                  ),
+                                  const Text(
+                                    '96.47 KB',
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 8,
+                                        fontWeight:
+                                        FontWeight.w500,
+                                        color: Color(
+                                            0xff838383)),
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          SimpleDialog(
+                                            insetPadding: const EdgeInsets.symmetric(horizontal: 60),
+                                            backgroundColor: AppColor.white,
+                                            surfaceTintColor: AppColor.white,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                            children: [
+                                              const Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: 35),
+                                                child: Text(
+                                                  'Are you sure you want to remove file?',
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                      color: AppColor.black,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 15,
+                                                      fontFamily: 'Roboto'),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                height: 0,
+                                                color: Color(0xffF5F5F5),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        height: 35,
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                          border: Border.all(color: AppColor.skyBlue, width: 2),
+                                                          borderRadius: BorderRadius.circular(32),
+                                                        ),
+                                                        child: const Text(
+                                                          'Cancel',
+                                                          style: TextStyle(
+                                                              fontFamily: 'Roboto',
+                                                              fontSize: 15,
+                                                              fontWeight: FontWeight.w600,
+                                                              color: AppColor.skyBlue),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        _files3 = !_files3;
+                                                        setState(() {});
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        alignment: Alignment.center,
+                                                        height: 35,
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(50),
+                                                          gradient: const LinearGradient(
+                                                              colors: [AppColor.skyBlue, AppColor.whiteskyBlue]),
+                                                        ),
+                                                        child: const Text(
+                                                          'Remove',
+                                                          style: TextStyle(
+                                                              fontWeight: FontWeight.w600,
+                                                              fontSize: 15,
+                                                              fontFamily: 'Roboto',
+                                                              color: AppColor.white),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                  );
+                                },
+                                child: const Icon(
+                                  Icons.close,
+                                  color: AppColor.skyBlue,
+                                  size: 15,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ) :  const SizedBox(),
                                 ],
                               )
                             ],
@@ -7286,29 +7861,19 @@ class _Business_ProfileState extends State<Business_Profile> {
                         context,
                         text: 'SAVE',
                         onTap: () {
-
                           businessprofileupdateCubit
                               .BusinessprofileupdateService(
-                                  photo_1:
-                                      _selectedimag1?.selectedFile ?? File(''),
+                                  photo_1: _selectedimag1?.selectedFile ?? File(''),
                                   bio: _bio.text,
-                                  file_2:
-                                      file2 ?? PlatformFile(name: "", size: 0),
-                                  file_3:
-                                      file3 ?? PlatformFile(name: "", size: 0),
+                                  file_2: file2 ?? PlatformFile(name: "", size: 0),
+                                  file_3: file3 ?? PlatformFile(name: "", size: 0),
                                   context: context,
-                                  photo_2:
-                                      _selectedimag2?.selectedFile ?? File(''),
-                                  photo_3:
-                                      _selectedimag3?.selectedFile ?? File(''),
-                                  photo_4:
-                                      _selectedimag4?.selectedFile ?? File(''),
-                                  photo_5:
-                                      _selectedimag5?.selectedFile ?? File(''),
-                                  photo_6:
-                                      _selectedimag6?.selectedFile ?? File(''),
-                                  file_1:
-                                      file1 ?? PlatformFile(name: "", size: 0));
+                                  photo_2: _selectedimag2?.selectedFile ?? File(''),
+                                  photo_3: _selectedimag3?.selectedFile ?? File(''),
+                                  photo_4: _selectedimag4?.selectedFile ?? File(''),
+                                  photo_5: _selectedimag5?.selectedFile ?? File(''),
+                                  photo_6: _selectedimag6?.selectedFile ?? File(''),
+                                  file_1: file1 ?? PlatformFile(name: "", size: 0));
                         },
                         height: screenHeight(context, dividedBy: 20),
                       )

@@ -1216,8 +1216,7 @@ class _StepScreenState extends State<StepScreen> {
                                       flutterToast(
                                           "Please Enter Your Company Domain",
                                           false);
-                                    } else if (regExp
-                                        .hasMatch(_compnyDomain.text)) {
+                                    } else if (_compnyDomain.text.endsWith(".net") || _compnyDomain.text.endsWith(".com") || _compnyDomain.text.endsWith(".org") || _compnyDomain.text.endsWith(".in")) {
                                       if (_email.text.isEmpty) {
                                         flutterToast(
                                             "Please Enter Email", false);

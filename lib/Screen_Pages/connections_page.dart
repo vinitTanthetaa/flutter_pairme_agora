@@ -137,59 +137,58 @@ class _Connection_PageState extends State<Connection_Page> {
               ),
               body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth(context, dividedBy: 30),
-                        vertical: screenHeight(context, dividedBy: 200),
-                      ),
-                      child: Container(
-                        height: 35,
-                        decoration: BoxDecoration(
-                            // color: Colors.red,
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: const EdgeInsets.only(top: 3.5),
-                            hintText: "Search...",
-                            hintStyle: TextStyle(fontSize: 15),
-                            border: InputBorder.none,
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(7),
-                              child: SvgPicture.asset(
-                                "assets/Images/search.svg",
+                child: BlocBuilder<ConnectedUsersCubit,ConnectedUsersState>(builder: (context, state) {
+                  if(state is ConnectedUsersSuccess){
+                    return connectedUsersCubit.connectedUsers.data == null || connectedUsersCubit.connectedUsers.data!.length == 0 || connectedUsersCubit.connectedUsers.data!.isEmpty ? Expanded(child: Center(child: NoMessage(context))) : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth(context, dividedBy: 30),
+                            vertical: screenHeight(context, dividedBy: 200),
+                          ),
+                          child: Container(
+                            height: 35,
+                            decoration: BoxDecoration(
+                              // color: Colors.red,
+                                border: Border.all(color: Colors.grey.shade400),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: const EdgeInsets.only(top: 3.5),
+                                hintText: "Search...",
+                                hintStyle: const TextStyle(fontSize: 15),
+                                border: InputBorder.none,
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(7),
+                                  child: SvgPicture.asset(
+                                    "assets/Images/search.svg",
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth(context, dividedBy: 30),
-                          vertical: screenHeight(context, dividedBy: 70)),
-                      child: Text(
-                        "${connectedUsersCubit.connectedUsers.data?.length ?? 0} Connection",
-                        style: const TextStyle(
-                            fontSize: 17,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                            color: AppColor.skyBlue),
-                        maxLines: 2,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    BlocBuilder<ConnectedUsersCubit,ConnectedUsersState>(builder: (context, state) {
-                      if(state is ConnectedUsersSuccess){
-                        return connectedUsersCubit.connectedUsers.data == null || connectedUsersCubit.connectedUsers.data!.length == 0 || connectedUsersCubit.connectedUsers.data!.isEmpty ? Expanded(child: Center(child: NoMessage(context))) : Expanded(
-                            child: ListView.separated(
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth(context, dividedBy: 30),
+                              vertical: screenHeight(context, dividedBy: 70)),
+                          child: Text(
+                            "${connectedUsersCubit.connectedUsers.data?.length ?? 0} Connection",
+                            style: const TextStyle(
+                                fontSize: 17,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: AppColor.skyBlue),
+                            maxLines: 2,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Expanded(child: ListView.separated(
                                 physics: const ClampingScrollPhysics(),
                                 padding: EdgeInsets.only(
                                   bottom: screenHeight(context, dividedBy: 100),
@@ -418,19 +417,15 @@ class _Connection_PageState extends State<Connection_Page> {
                                     // color: Colors.black12,
                                   );
                                 },
-                                itemCount: connectedUsersCubit.connectedUsers.data?.length ?? 0))  ;
-                      }
-                      if(state is ConnectedUsersError){
-                        return NoMessage(context);
-                      }
-                      if(state is ConnectedUsersLoading){
-                        return Expanded(child: Center(child: customLoader()));
-                      }
-                      return NoMessage(context);
-                    },)
-
-                  ],
-                ),
+                                itemCount: connectedUsersCubit.connectedUsers.data?.length ?? 0))
+                      ],
+                    );
+                  }
+                  if(state is ConnectedUsersLoading){
+                    return Expanded(child: customLoader());
+                  }
+                  return SizedBox();
+                },),
               ))
         ],
       ),

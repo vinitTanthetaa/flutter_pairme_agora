@@ -1,6 +1,6 @@
 class apis{
-  // static const String baseurl = "http://192.168.29.116:3334";
-   static const String baseurl = "http://18.134.143.170";
+   static const String baseurl = "http://192.168.29.116:3334";
+  // static const String baseurl = "http://18.134.143.170";
 
 
 
@@ -23,6 +23,7 @@ class apis{
 
   static const String UserProfile = "$baseurl/user_profile";
   static const String showAllProfiles = "$baseurl/showAllProfiles";
+  static const String showmsgrequst = "$baseurl/message_Request_AllUser";
   static const String connectedUser = "$baseurl/connected_data";
   static const String notification = "$baseurl/getNotification";
   static const String message = "$baseurl/message_page_user";
@@ -32,6 +33,7 @@ class apis{
   static const String acceptNotification = "$baseurl/accept/";
   static const String disconnectUser = "$baseurl/disconnectUser/";
   static const String messageUser = "$baseurl/message/";
+  static const String messageReqUser = "$baseurl/message_requests/";
   static const String rejectNotification = "$baseurl/rejectNotification";
   static const String clearAll = "$baseurl/reject_all";
 

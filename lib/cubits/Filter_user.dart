@@ -58,14 +58,23 @@ class FilterUserCubit extends Cubit<FilterUserState> {
       if (hello['code'] == 200) {
         filterUser = FilterUser.fromJson(response.data);
         log("Response ===> ${response.data}");
-        if(filterUser.data1! >= 1){
+        int ind = filterUser.data1 ?? 0;
+        if(ind >= 1){
           log("filter ===> true");
           prefsService.setBoolData("filter", true);
+          emit(FilterUserSuccess());
+        } else {
+          flutterToast("No User Found!", false);
+          log("filter ===> true");
+          prefsService.setBoolData("filter", false);
+          emit(FilterUserError());
         }
-        emit(FilterUserSuccess());
        // flutterToast(hello['message'], true);
       } else {
         emit(FilterUserError());
+        flutterToast("No User Found!", false);
+        log("filter ===> true");
+        prefsService.setBoolData("filter", false);
        // flutterToast(hello['message'], false);
       }
       return filterUser;

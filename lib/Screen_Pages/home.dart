@@ -17,6 +17,7 @@ import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/cubits/Filter_user.dart';
 import 'package:pair_me/cubits/connect_user.dart';
+import 'package:pair_me/cubits/message_req_id.dart';
 import 'package:pair_me/cubits/reject_user.dart';
 import 'package:pair_me/cubits/show_all_users.dart';
 import 'package:pair_me/cubits/undo_users_cubit.dart';
@@ -55,125 +56,18 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   RejectUserCubit rejectUserCubit = RejectUserCubit();
   UndoUsersCubit undoUsersCubit = UndoUsersCubit();
   FilterUserCubit filterUserCubit = FilterUserCubit();
-  final TextEditingController _gender = TextEditingController();
-  final TextEditingController _Contry = TextEditingController();
-  final TextEditingController _State = TextEditingController();
-  final TextEditingController _City = TextEditingController();
+  MsgReqbyIDCubit msgReqbyIDCubit = MsgReqbyIDCubit();
   late AppinioSwiperController controller = AppinioSwiperController();
-  final TextEditingController bio = TextEditingController();
-  AnimationController? _controller;
-  double _slider = 10;
-  List _type =[];
-  // List users = [
-  //   {
-  //     'Name': 'Virat Kohli',
-  //     'images': [
-  //       'https://wallpapers.com/images/hd/virat-kohli-hd-black-tuxedo-fibgrtdlqvatdblj.jpg',
-  //       'https://i.pinimg.com/originals/e1/3e/c7/e13ec7f56eb99e1e1226137c8fd3c198.jpg',
-  //       'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-  //       //'https://files.oyebesmartest.com/uploads/large/virat-kohli-wallpaper-fulr32sd.jpg',
-  //     ],
-  //     'premium': 'assets/Images/premium.png'
-  //   },
-  //   {
-  //     'Name': 'Hardik Pande',
-  //     'images': [
-  //       'https://i.pinimg.com/originals/2e/31/a4/2e31a4fce6c52a98d518053d269d7eba.jpg',
-  //       'https://w0.peakpx.com/wallpaper/380/775/HD-wallpaper-cricket-player-hardik-pandya-indian-cricketer.jpg',
-  //       'https://m.timesofindia.com/photo/98910356/98910356.jpg',
-  //     ],
-  //     'premium': 'assets/Images/premium1.png'
-  //   },
-  //   {
-  //     'Name': 'Amitabh Bachchan',
-  //     'images': [
-  //       'https://e1.pxfuel.com/desktop-wallpaper/85/759/desktop-wallpaper-%E2%9C%85-8-amitabh-bachchan-amitabh-bachchan-thumbnail.jpg',
-  //       'https://c4.wallpaperflare.com/wallpaper/439/757/292/5bd141c33ba4a-wallpaper-preview.jpg',
-  //       'https://c4.wallpaperflare.com/wallpaper/170/960/966/amitabh-bachchan-dashing-photoshoot-wallpaper-preview.jpg',
-  //     ],
-  //     'premium': 'assets/Images/premium2.png'
-  //   },
-  //   {
-  //     'Name': 'Vincenzo Cassano',
-  //     'images': [
-  //       'https://e0.pxfuel.com/wallpapers/251/76/desktop-wallpaper-vincenzo-cassano-thumbnail.jpg',
-  //       'https://i.pinimg.com/originals/9f/f8/fa/9ff8fa7d57de8a836f634716a85e56af.jpg',
-  //       'https://assets.vogue.in/photos/62751a3c8cd4b91f5309d0d4/master/pass/Song%20Joong-ki.jpeg',
-  //     ],
-  //     'premium': 'assets/Images/premium3.png'
-  //   },
-  //   {
-  //     'Name': 'Shahrukh khan',
-  //     'images': [
-  //       'https://e0.pxfuel.com/wallpapers/531/653/desktop-wallpaper-shah-rukh-khan-actor-king-gentleman-shahrukhkhan-attitude.jpg',
-  //       'https://w0.peakpx.com/wallpaper/518/289/HD-wallpaper-shahrukh-khan-srk-smile-srk-smile-thumbnail.jpg',
-  //       'https://www.filmibeat.com/wimgm/500x70/mobi/2019/08/shahrukh-khan_9.jpg',
-  //     ],
-  //     'premium': 'assets/Images/premium.png'
-  //   },
-  //   {
-  //     'Name': 'Robert Downey jr',
-  //     'images': [
-  //       'https://static.wikia.nocookie.net/ironman/images/7/79/Photo%28906%29.jpg/revision/latest?cb=20141019122536',
-  //       'https://static.wikia.nocookie.net/bakerstreet/images/7/78/Robert_Downey_Jr._%282022%29.jpg/revision/latest?cb=20220526032213',
-  //       'https://upnrm.in/wp-content/uploads/2022/08/ironman.webp',
-  //     ],
-  //     'premium': 'assets/Images/premium1.png'
-  //   },
-  //   {
-  //     'Name': 'Johnny Depp',
-  //     'images': [
-  //       'https://images.saymedia-content.com/.image/t_share/MTc0NDI1MDExOTk2NTk5OTQy/top-10-greatest-johnny-depp-movies-of-all-time.jpg',
-  //       'https://m.economictimes.com/thumb/msid-92536857,width-1200,height-900,resizemode-4,imgsize-62856/johnny-depp.jpg',
-  //       'https://www.cultjer.com/img/ug_photo/2017_02/4061620170221075428.jpg',
-  //     ],
-  //     'premium': 'assets/Images/premium2.png'
-  //   },
-  //   {
-  //     'Name': 'úrsula corberó',
-  //     'images': [
-  //       'https://www.bollywoodhungama.com/wp-content/uploads/2021/09/WhatsApp-Image-2021-09-23-at-10.45.54-AM.jpeg',
-  //       'https://cdn.7days.ru/upload/images/55d/bb61c45240d3f7d28c2a08a452b7a.jpg',
-  //       'https://i.ytimg.com/vi/pIUiApJEAIg/oar2.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLC71MqhrXj47zXDwMaIc2K4G7_HxQ',
-  //     ],
-  //     'premium': 'assets/Images/premium3.png'
-  //   },
-  // ];
-  // List lookingFor = [
-  //   'Investor',
-  //   'Startup founder',
-  //   'Startup founder',
-  //   //  'Corporate executive',
-  // ];
-  // List list = [
-  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
-  //   'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80',
-  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS92eisuWOx3tEjeW14mT9ACVgXDwIRBGtnww&usqp=CAU',
-  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdX029ohIUSygq9zirl9fSNBwSLqEOaKEYuw&usqp=CAU',
-  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU',
-  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
-  //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU',
-  //   'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-  // ];
   List image = [];
+  List image1 = [];
   bool exchang = false;
   int ind = 0;
   bool swipeUp = false;
   bool swipeDown = false;
   bool month = true;
-  late final PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   getData() async {
     allUsersdetails = (await allUsersDetailsCubit.GetAllUsersDetails())!;
-    setState(() {});
-  }
-  getPreData() async {
-    _gender.text = (await prefsService.getStringData("gender"))!;
-    _slider = (await prefsService.getDoubleData("slider"))!;
-    _Contry.text = (await prefsService.getStringData("contry"))!;
-    _State.text = (await prefsService.getStringData("state"))!;
-    _City.text = (await prefsService.getStringData("city"))!;
-    setState(() {});
-    _type = (await prefsService.getStringlistData("type"))!;
     setState(() {});
   }
   getImage(int index) {
@@ -184,6 +78,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image = image;
         } else if (filterUserCubit.filterUser.data?[index].last.image?.photo1 != null) {
           image.add(filterUserCubit.filterUser.data?[index].last.image?.photo1);
+          int imagelength = filterUserCubit.filterUser.data1  ?? 0;
+          image1.add(filterUserCubit.filterUser.data?[imagelength-1 == index-1 ?index:index+1].last.image?.photo1);
         }
         if (filterUserCubit.filterUser.data?[index].last.image?.photo2 == null &&
             image.contains(filterUserCubit.filterUser.data?[index].last.image?.photo2)) {
@@ -217,6 +113,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         }
       }
       image = image.toSet().toList();
+      image1 = image1.toSet().toList();
     } else {
       if (allUsersdetails.data?[index].last.image != null) {
         if (allUsersdetails.data?[index].last.image?.photo1 == null &&
@@ -224,6 +121,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image = image;
         } else if (allUsersdetails.data?[index].last.image?.photo1 != null) {
           image.add(allUsersdetails.data?[index].last.image?.photo1);
+          image1.add(allUsersdetails.data?[index+1].last.image?.photo1);
         }
         if (allUsersdetails.data?[index].last.image?.photo2 == null &&
             image.contains(allUsersdetails.data?[index].last.image?.photo2)) {
@@ -257,9 +155,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         }
       }
       image = image.toSet().toList();
+      image1 = image1.toSet().toList();
     }
   }
-
   @override
   void initState() {
     // allUsersDetailsCubit.GetAllUsersDetails();
@@ -270,7 +168,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     filterUserCubit = BlocProvider.of<FilterUserCubit>(context);
     createTutorial();
     getData();
-    _controller = AnimationController(vsync: this);
+    //_controller = AnimationController(vsync: this);
     controller = AppinioSwiperController();
     Future.delayed(Duration.zero, showTutorial);
     FocusManager.instance.primaryFocus?.unfocus();
@@ -335,6 +233,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     ));
                                    if(refresh == "refresh"){
                                      filterData = (await prefsService.getBoolData("filter"))!;
+                                     ind = 0;
+                                     pageViewIndex=0;
+                                     image.clear();
+                                     image1.clear();
                                      setState(() {});
                                      print("hello");
                                    }
@@ -357,7 +259,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                         SizedBox(
                           height: screenHeight(context, dividedBy: 100),
                         ),
-                        if (filterData) BlocBuilder<FilterUserCubit, FilterUserState>(
+                        if (filterData ) BlocBuilder<FilterUserCubit, FilterUserState>(
                           builder: (context, state) {
                             if (state is FilterUserSuccess) {
                               return Expanded(
@@ -407,11 +309,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             height = 0;
                                           });
                                         },
-                                        onSwipeEnd:
-                                            (previousIndex, targetIndex, activity) {
+                                        onSwipeEnd: (previousIndex, targetIndex, activity) {
                                           setState(() {
-                                            undoid = filterUserCubit.filterUser.data?[ind].first.id ??
-                                                '';
+                                            undoid = filterUserCubit.filterUser.data?[ind].first.id ?? '';
                                             print("undoid =======> $undoid");
                                             activity.direction == AxisDirection.up
                                                 ? rejectUserCubit.GetRejectUser(
@@ -435,11 +335,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         screenHeight(context, dividedBy: 4.5),
                                         maxAngle:
                                         screenHeight(context, dividedBy: 7),
-                                        swipeOptions: const SwipeOptions.only(
-                                            down: true, up: true),
+                                        swipeOptions: const SwipeOptions.only(down: true, up: true),
                                         cardCount:filterUserCubit.filterUser.data?.length ?? 0,
-                                        cardBuilder:
-                                            (BuildContext context, int index) {
+                                        cardBuilder: (BuildContext context, int index) {
                                           getImage(index);
                                           return Padding(
                                             padding: EdgeInsets.symmetric(
@@ -689,8 +587,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   .transparent),
                                                           onTap: () {
                                                             setState(() {
-                                                              pageViewIndex <=
-                                                                  2 &&
+
                                                                   pageViewIndex >
                                                                       0
                                                                   ? pageViewIndex--
@@ -1036,11 +933,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             ),
                                           );
                                         },
-                                        cardBuilder1:
-                                            (BuildContext context, int index) {
+                                        cardBuilder1: (BuildContext context, int index) {
                                           return  CachedNetworkImage(
                                             imageUrl:
-                                            "${apis.baseurl}/${image[0]}",
+                                            "${apis.baseurl}/${image1[0]}",
                                             imageBuilder:
                                                 (context, imageProvider) =>
                                                 Container(
@@ -1372,7 +1268,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                 child: Text("Somthing went wrong ...."),
                               );
                             }
-                            return Center(
+                            return const Center(
                               child: Text("Somthing went wrong ...."),
                             );
                           },
@@ -1426,8 +1322,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         height = 0;
                                       });
                                     },
-                                    onSwipeEnd:
-                                        (previousIndex, targetIndex, activity) {
+                                    onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
                                         undoid = allUsersdetails
                                                 .data?[ind].first.id ??
@@ -1455,15 +1350,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         pageViewIndex = 0;
                                       });
                                     },
-                                    threshold:
-                                        screenHeight(context, dividedBy: 4.5),
-                                    maxAngle:
-                                        screenHeight(context, dividedBy: 7),
+                                    threshold: screenHeight(context, dividedBy: 4.5),
+                                    maxAngle: screenHeight(context, dividedBy: 7),
                                     swipeOptions: const SwipeOptions.only(
                                         down: true, up: true),
                                     cardCount: allUsersdetails.data?.length ?? 0,
-                                    cardBuilder:
-                                        (BuildContext context, int index) {
+                                    cardBuilder: (BuildContext context, int index) {
                                       getImage(index);
                                       return Padding(
                                         padding: EdgeInsets.symmetric(
@@ -1471,15 +1363,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               dividedBy: 100),
                                         ),
                                         child: Container(
-                                          // height: screenHeight(context),
-                                          // width: screenWidth(context),
                                           decoration: const BoxDecoration(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(20))
-                                              // BorderRadius.only(
-                                              //     topRight: Radius.circular(20),
-                                              //     topLeft: Radius.circular(20)
-                                              // )
                                               ),
                                           child: Stack(
                                             children: [
@@ -1714,8 +1600,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         .transparent),
                                                             onTap: () {
                                                               setState(() {
-                                                                pageViewIndex <=
-                                                                            2 &&
                                                                         pageViewIndex >
                                                                             0
                                                                     ? pageViewIndex--
@@ -2031,7 +1915,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         dividedBy:
                                                                             40),
                                                               ),
-                                                              child: Container(
+                                                              child: SizedBox(
                                                                 height:
                                                                     screenHeight(
                                                                         context,
@@ -2042,17 +1926,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         context,
                                                                         dividedBy:
                                                                             10),
-                                                                // decoration: BoxDecoration(
-                                                                //   color: Colors.red,
-                                                                //     image: DecorationImage(
-                                                                //         image: AssetImage(
-                                                                //             users[index]
-                                                                //             ['premium']),
-                                                                //         fit: BoxFit
-                                                                //             .cover,
-                                                                //         filterQuality:
-                                                                //         FilterQuality
-                                                                //             .high)),
                                                                 child: SvgPicture
                                                                     .asset(
                                                                         "assets/Images/premiumTag.svg"),
@@ -2068,7 +1941,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         (BuildContext context, int index) {
                                       return CachedNetworkImage(
                                               imageUrl:
-                                                  "${apis.baseurl}/${image[0]}",
+                                                  "${apis.baseurl}/${image1[0]}",
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(
@@ -2359,21 +2232,22 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
-                                                                      Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) {
-                                                                          return Chatting_Page(
-                                                                            name:
-                                                                                'chatting',
-                                                                            Username:
-                                                                                allUsersdetails.data?[ind].first.name ?? '',
-                                                                            image:
-                                                                                allUsersdetails.data?[ind].first.profileImage ?? '',
-                                                                          );
-                                                                        },
-                                                                      ));
+                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '');
+                                                                      // Navigator.push(
+                                                                      //     context,
+                                                                      //     MaterialPageRoute(
+                                                                      //   builder:
+                                                                      //       (context) {
+                                                                      //     return Chatting_Page(
+                                                                      //       name:
+                                                                      //           'chatting',
+                                                                      //       Username:
+                                                                      //           allUsersdetails.data?[ind].first.name ?? '',
+                                                                      //       image:
+                                                                      //           allUsersdetails.data?[ind].first.profileImage ?? '',
+                                                                      //     );
+                                                                      //   },
+                                                                      // ));
                                                                     },
                                                                     buttonName:
                                                                         "Chat",
@@ -2425,6 +2299,50 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                       ],
                     ),
                   ),
+                  filterData ? BlocBuilder<FilterUserCubit, FilterUserState>(
+                    builder: (context, state) {
+                      if (state is FilterUserSuccess) {
+                        return UsersDetails(
+                          list: image,
+                          onTap: () {
+                            _pageController.animateToPage(
+                              0,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.ease,
+                            );
+                          },
+                          country: filterUserCubit.filterUser.data?[ind].first.businessaddress?.country ?? '',
+                          file1:
+                          filterUserCubit.filterUser.data?[ind].last.file?.file1 ?? '',
+                          file3:
+                          filterUserCubit.filterUser.data?[ind].last.file?.file3 ?? '',
+                          file2:
+                          filterUserCubit.filterUser.data?[ind].last.file?.file2 ?? '',
+                          bio: filterUserCubit.filterUser.data?[ind].last.bio ?? '',
+                          Company: filterUserCubit.filterUser.data?[ind].first
+                                  .professionalDetails?.companyName ??
+                              '',
+                          looking_for:
+                          filterUserCubit.filterUser.data?[ind].last.lookingfor ?? [],
+                          Name: filterUserCubit.filterUser.data?[ind].first.name ?? '',
+                          role: filterUserCubit.filterUser.data?[ind].first
+                                  .professionalDetails?.addRole ??
+                              '',
+                        );
+                      }
+                      if (state is AllUsersDetailsLoading) {
+                        return customLoader();
+                      }
+                      if (state is AllUsersDetailsError) {
+                        return Center(
+                          child: Text("Somthing went wrong ...."),
+                        );
+                      }
+                      return Center(
+                        child: Text("Somthing went wrong ...."),
+                      );
+                    },
+                  ) :
                   BlocBuilder<AllUsersDetailsCubit, AllUsersDetailsState>(
                     builder: (context, state) {
                       if (state is AllUsersDetailsSuccess) {
@@ -2612,26 +2530,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
             builder: (context, controller) {
               return Column(
                 children: [
-                  Lottie.asset(
-                    'assets/json/Swipe To Left.json',
+                  Container(
                     height: screenHeight(context, dividedBy: 5),
                     width: screenHeight(context, dividedBy: 5),
-                    controller: _controller,
-                    onLoaded: (composition) {
-                      // Configure the AnimationController with the duration of the
-                      // Lottie file and start the animation.
-                      _controller
-                        ?..duration = composition.duration
-                        ..forward();
-                    },
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                            AssetImage("assets/Images/SwipeUp-unscreen.gif"),
+                            fit: BoxFit.cover)),
                   ),
-                  // Image(
-                  //   image:
-                  //       const AssetImage('assets/Images/SwipeUp-unscreen.gif'),
-                  //   fit: BoxFit.cover,
-                  //   height: screenHeight(context, dividedBy: 5),
-                  //   width: screenHeight(context, dividedBy: 5),
-                  // ),
                   const Card(
                     child: Padding(
                       padding: EdgeInsets.all(5.0),

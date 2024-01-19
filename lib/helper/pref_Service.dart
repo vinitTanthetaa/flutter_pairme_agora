@@ -10,7 +10,7 @@ class SharedPrefsService {
 
   Future<bool?> getBoolData(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(key) ?? true;
+    return prefs.getBool(key) ?? false;
   }
 
   setIntData(String key, int data) async {

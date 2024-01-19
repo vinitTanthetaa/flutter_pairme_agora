@@ -63,7 +63,7 @@ class _Image_ScreenState extends State<Image_Screen> {
         children: [
           IconButton(onPressed: () {
             Navigator.pop(context);
-          }, icon: Icon(Icons.arrow_back_ios_new,color: AppColor.white,)),
+          }, icon: const Icon(Icons.arrow_back_ios_new,color: AppColor.white,)),
           Expanded(child: Center(child: customLoader()))
         ],
       ) :
@@ -82,13 +82,13 @@ class _Image_ScreenState extends State<Image_Screen> {
                 children: [
                   IconButton(onPressed: () {
                     Navigator.pop(context);
-                  }, icon: Icon(Icons.arrow_back_ios_new,color: AppColor.white,))
+                  }, icon: const Icon(Icons.arrow_back_ios_new,color: AppColor.white,))
                 ],
               ),
             );
           },
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(Icons.error),
+          placeholder: (context, url) => Expanded(child: customLoader()),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
 
