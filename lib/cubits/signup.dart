@@ -42,7 +42,8 @@ class SignUpCubit extends Cubit<SignUpState> {
         "lastName": lastname,
         "gender": gender,
         "dateOfBirth":dob,
-        "phoneNumber": "$countryCodeSelect$phoneNumber",
+        "phoneNumber": phoneNumber,
+        "countryCode": countryCodeSelect,
         "email": email,
         "teamsAndCondition": terms,
         "password": password,
@@ -58,7 +59,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         print("Response ===> ${response.data}");
         emit(SignUpSuccess());
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return  Verification_code(Forggot: false, Number: "$countryCodeSelect$phoneNumber",);
+          return  Verification_code(Forggot: false, Number: phoneNumber,);
         },));
         flutterToast(hello['message'], true);
       } else {

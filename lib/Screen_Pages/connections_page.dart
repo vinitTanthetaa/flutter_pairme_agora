@@ -104,8 +104,9 @@ class _Connection_PageState extends State<Connection_Page> {
     connectedUsersCubit = BlocProvider.of<ConnectedUsersCubit>(context);
     removeUserCubit = BlocProvider.of<RemoveUserCubit>(context);
     messageUserCubit = BlocProvider.of<MessageUserCubit>(context);
-    connectedUsersCubit.GetConnectedUsers();
-    setState(() {});
+    setState(() {
+      connectedUsersCubit.GetConnectedUsers();
+    });
 }
   @override
   Widget build(BuildContext context) {
@@ -291,7 +292,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                                       const SizedBox(
                                                         width: 3,
                                                       ),
-                                                      Text(DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data![index].time),
+                                                      Text(DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data?[index].time ?? DateTime.now()),
                                                           style: const TextStyle(
                                                               color:
                                                               Color(0xffAAAAAA),
@@ -344,7 +345,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                                                 ),
                                                                 InkWell(
                                                                   onTap: () {
-                                                                    removeUserCubit.AcceptNotification(id: connectedUsersCubit.connectedUsers.data![index].id).then((value) {
+                                                                    removeUserCubit.AcceptNotification(id: connectedUsersCubit.connectedUsers.data?[index].id ?? '').then((value) {
                                                                       Navigator.pop(context);
                                                                     },);
                                                                   },
@@ -395,7 +396,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                                   ),
                                                   InkWell(
                                                     onTap: () {
-                                                      messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '');
+                                                      messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '', name: connectedUsersCubit.connectedUsers.data?[index].name ?? '', image: connectedUsersCubit.connectedUsers.data?[index].profileImage ?? '');
                                                     },
                                                     child: SvgPicture.asset(
                                                         "assets/Images/message.svg",
@@ -424,7 +425,7 @@ class _Connection_PageState extends State<Connection_Page> {
                   if(state is ConnectedUsersLoading){
                     return Expanded(child: customLoader());
                   }
-                  return SizedBox();
+                  return const SizedBox();
                 },),
               ))
         ],

@@ -23,7 +23,7 @@ class MessageUserCubit extends Cubit<MessageUserState> {
   MessageUserCubit() : super(MessageUserInitials());
   final dio = Dio();
   MessageuserInfo messageuserInfo = MessageuserInfo();
-  Future<MessageuserInfo?> AcceptNotification(BuildContext context,{required String id}) async {
+  Future<MessageuserInfo?> AcceptNotification(BuildContext context,{required String id,required String name,required String image}) async {
     print("id ==> $id");
     emit(MessageUserLoading());
     try {
@@ -38,22 +38,14 @@ class MessageUserCubit extends Cubit<MessageUserState> {
       {
         emit(MessageUserSuccess());
         //Msg_bottom_page
-        if(hello['msg'] == "This User Already In messagePage"){
-         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
-           return Msg_bottom_page();
-         },), (route) => false);
-        }else{
-          messageuserInfo = MessageuserInfo.fromJson(response.data);
-          Navigator.push(context,MaterialPageRoute(builder: (context) {
-            return Chatting_Page(
-              name:
-              'chatting',
-              Username:
-              messageuserInfo.data?.userName ?? '',
-              image:messageuserInfo.data?.userImage ?? '',
-            );
-          },));
-        }
+        Navigator.push(context,MaterialPageRoute(builder: (context) {
+          return Chatting_Page(
+            name:
+            'chatting',
+            Username: name,
+            image:image,
+          );
+        },));
       }
       return messageuserInfo;
     } on Exception catch (e) {

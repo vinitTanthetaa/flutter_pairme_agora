@@ -58,7 +58,7 @@ class FilterUserCubit extends Cubit<FilterUserState> {
       if (hello['code'] == 200) {
         filterUser = FilterUser.fromJson(response.data);
         log("Response ===> ${response.data}");
-        int ind = filterUser.data1 ?? 0;
+        int ind = filterUser.data?.length ?? 0;
         if(ind >= 1){
           log("filter ===> true");
           prefsService.setBoolData("filter", true);

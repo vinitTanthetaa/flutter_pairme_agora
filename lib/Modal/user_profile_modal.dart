@@ -39,17 +39,19 @@ class Datum {
   String? password;
   String? gender;
   String? dateOfBirth;
+  String? countryCode;
+  String? phoneNumber;
   String? role;
-  int? phoneNumber;
   bool? teamsAndCondition;
+  int? score;
   List<dynamic>? connectedUser;
   List<dynamic>? rejectedUser;
-  int? score;
   int? v;
   String? verified;
   Address? address;
   ProfessionalDetails? professionalDetails;
   Address? businessaddress;
+  String? profileImage;
   Image? image;
   FileClass? file;
   String? bio;
@@ -61,17 +63,19 @@ class Datum {
      this.password,
      this.gender,
      this.dateOfBirth,
+     this.countryCode,
      this.phoneNumber,
      this.role,
      this.teamsAndCondition,
+     this.score,
      this.connectedUser,
      this.rejectedUser,
-     this.score,
      this.v,
      this.verified,
      this.address,
      this.professionalDetails,
      this.businessaddress,
+     this.profileImage,
      this.image,
      this.file,
      this.bio,
@@ -84,17 +88,19 @@ class Datum {
     password: json["password"],
     gender: json["gender"],
     dateOfBirth: json["dateOfBirth"],
+    countryCode: json["countryCode"],
     phoneNumber: json["phoneNumber"],
     role: json["role"],
     teamsAndCondition: json["teamsAndCondition"],
+    score: json["score"],
     connectedUser: List<dynamic>.from(json["connectedUser"].map((x) => x)),
     rejectedUser: List<dynamic>.from(json["rejectedUser"].map((x) => x)),
-    score: json["score"],
     v: json["__v"],
     verified: json["verified"],
     address: Address.fromJson(json["address"]),
     professionalDetails: ProfessionalDetails.fromJson(json["professionalDetails"]),
     businessaddress: Address.fromJson(json["businessaddress"]),
+    profileImage: json["profileImage"],
     image: Image.fromJson(json["image"]),
     file: FileClass.fromJson(json["file"]),
     bio: json["bio"],
@@ -107,17 +113,19 @@ class Datum {
     "password": password,
     "gender": gender,
     "dateOfBirth": dateOfBirth,
+    "countryCode": countryCode,
     "phoneNumber": phoneNumber,
     "role": role,
     "teamsAndCondition": teamsAndCondition,
     "score": score,
-    "connectedUser": List<dynamic>.from(connectedUser?.map((x) => x) ?? []),
-    "rejectedUser": List<dynamic>.from(rejectedUser?.map((x) => x) ?? []),
+    "connectedUser": List<dynamic>.from(connectedUser!.map((x) => x)),
+    "rejectedUser": List<dynamic>.from(rejectedUser!.map((x) => x)),
     "__v": v,
     "verified": verified,
     "address": address?.toJson(),
     "professionalDetails": professionalDetails?.toJson(),
     "businessaddress": businessaddress?.toJson(),
+    "profileImage": profileImage,
     "image": image?.toJson(),
     "file": file?.toJson(),
     "bio": bio,
@@ -174,9 +182,9 @@ class FileClass {
   String? file3;
 
   FileClass({
-   this.file1,
-   this.file2,
-   this.file3,
+     this.file1,
+     this.file2,
+     this.file3,
   });
 
   factory FileClass.fromJson(Map<String, dynamic> json) => FileClass(
@@ -238,7 +246,7 @@ class ProfessionalDetails {
   String? businessExperience;
   String? skills;
   String? education;
-  dynamic university;
+  String? university;
 
   ProfessionalDetails({
      this.userId,

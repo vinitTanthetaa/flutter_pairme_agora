@@ -16,6 +16,7 @@ import 'package:pair_me/cubits/profile_update.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class Business_Profile extends StatefulWidget {
   String image1,
@@ -5792,9 +5793,14 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                             if (details !=
                                                                 null) {
                                                               //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                              _selectedimag6 =
-                                                                  details
-                                                                      .selectedFiles[0];
+                                                              _selectedimag6 = details.selectedFiles[0];
+                                                              final uint8list = await VideoThumbnail.thumbnailData(
+                                                                video: _selectedimag6?.selectedFile.path ?? '',
+                                                                imageFormat: ImageFormat.JPEG,
+                                                                maxWidth: 128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
+                                                                quality: 25,
+                                                              );
+                                                            //  print("helllo ==> ${uint8list.}");
                                                               Navigator.pop(
                                                                   context);
                                                               setState(() {});
@@ -6288,8 +6294,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                               )
                                             ],
                                           )),
-                                  placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
+                                  placeholder: (context, url) => const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
                                       Container(
                                           height: screenHeight(context,
@@ -6496,18 +6501,21 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                                     );
                                                                     print(
                                                                         'Details ===> ${details}');
-                                                                    if (details !=
-                                                                        null) {
+                                                                    if (details != null) {
                                                                       //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                      _selectedimag6 =
-                                                                          details
-                                                                              .selectedFiles[0];
-                                                                      Navigator.pop(
-                                                                          context);
+
+                                                                      _selectedimag6 = details.selectedFiles[0];
+                                                                     final hello =  VideoThumbnail.thumbnailData(
+                                                                          video: _selectedimag6?.selectedFile.path ?? '',
+                                                                          imageFormat: ImageFormat.JPEG,
+                                                                          maxWidth: 128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
+                                                                          quality: 25,
+                                                                        );
+                                                                     print("hello ==> $hello");
+                                                                      Navigator.pop(context);
                                                                       setState(
                                                                           () {});
-                                                                      print(
-                                                                          'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                      print('selectedByte ==> ${_selectedimag6?.selectedFile}');
                                                                     }
                                                                     // if (details != null) await displayDetails(details);
                                                                   },

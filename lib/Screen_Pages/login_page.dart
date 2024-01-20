@@ -193,7 +193,7 @@ class _Login_pageState extends State<Login_page> {
                         } else if(_Password.text.isEmpty) {
                           flutterToast('Please Enter Password', false);
                         } else {
-                          loginCubit.LoginService(phoneNumber: "$countryCodeSelect${_Email.text}", otp: _Password.text, context: context);
+                          loginCubit.LoginService(phoneNumber: _Email.text, otp: _Password.text, context: context);
                         }
                       }, height: screenHeight(context,dividedBy: 13),),
                     ),

@@ -359,11 +359,6 @@ class _SignUp_pageState extends State<SignUp_page> {
                                     ]),
                               ),
                             ),
-                            // SvgPicture.asset(
-                            //     'assets/Images/hide.svg',height: 10,width: 10,
-                            //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
-                            //     //semanticsLabel: 'A red up arrow'
-                            // ),
                             hintText: 'Phone Number'.tr(),
                             hintStyle: const TextStyle(
                                 color: Color(0xffB3B3B3),
@@ -434,20 +429,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                       child: Custom_botton(
                         context,
                         text: 'Next',
-                        // onTap: () {
-                        //   Navigator.push(context, MaterialPageRoute(
-                        //     builder: (context) {
-                        //       return Set_Password(
-                        //         firstname: _firstName.text,
-                        //         lastname: _lastName.text,
-                        //         gender: gender,
-                        //         dob: _date.text,
-                        //         number: _phoneNumber.text,
-                        //         email: _eMail.text, T_C: select,
-                        //       );
-                        //     },
-                        //   ));
-                        // },
+
                         onTap: () {
 
                           if (_firstName.text.isEmpty) {
@@ -475,7 +457,8 @@ class _SignUp_pageState extends State<SignUp_page> {
                                   gender: gender,
                                   dob: _date.text,
                                   number: _phoneNumber.text,
-                                  email: _eMail.text, T_C: select,
+                                  email: _eMail.text,
+                                  T_C: select,
                                 );
                               },
                             ));

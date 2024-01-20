@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/Step_Screens.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/creat_new_password.dart';
+import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -33,6 +34,7 @@ class LoginCubit extends Cubit<LoginState> {
     SharedPrefsService prefsService = SharedPrefsService();
     Map<String, dynamic> body = {
       "phoneNumber": phoneNumber,
+      "countryCode": countryCodeSelect,
       "password": otp,
     };
     // print("Body is $body");

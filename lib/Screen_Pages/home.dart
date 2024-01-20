@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pair_me/Modal/alluserprofile.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
@@ -78,8 +77,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image = image;
         } else if (filterUserCubit.filterUser.data?[index].last.image?.photo1 != null) {
           image.add(filterUserCubit.filterUser.data?[index].last.image?.photo1);
-          int imagelength = filterUserCubit.filterUser.data1  ?? 0;
-          image1.add(filterUserCubit.filterUser.data?[imagelength-1 == index-1 ?index:index+1].last.image?.photo1);
+          int imagelength = filterUserCubit.filterUser.data?.length  ?? 0;
+          image1.add(filterUserCubit.filterUser.data?[imagelength-1 == index ?index:index+1].last.image?.photo1);
         }
         if (filterUserCubit.filterUser.data?[index].last.image?.photo2 == null &&
             image.contains(filterUserCubit.filterUser.data?[index].last.image?.photo2)) {
@@ -121,7 +120,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image = image;
         } else if (allUsersdetails.data?[index].last.image?.photo1 != null) {
           image.add(allUsersdetails.data?[index].last.image?.photo1);
-          image1.add(allUsersdetails.data?[index+1].last.image?.photo1);
+          int imagelength = allUsersdetails.data?.length  ?? 0;
+          image1.add(allUsersdetails.data?[imagelength == index + 1 ? index :index+1].last.image?.photo1);
         }
         if (allUsersdetails.data?[index].last.image?.photo2 == null &&
             image.contains(allUsersdetails.data?[index].last.image?.photo2)) {
@@ -1352,8 +1352,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     },
                                     threshold: screenHeight(context, dividedBy: 4.5),
                                     maxAngle: screenHeight(context, dividedBy: 7),
-                                    swipeOptions: const SwipeOptions.only(
-                                        down: true, up: true),
+                                    swipeOptions: const SwipeOptions.only(down: true, up: true),
                                     cardCount: allUsersdetails.data?.length ?? 0,
                                     cardBuilder: (BuildContext context, int index) {
                                       getImage(index);

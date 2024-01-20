@@ -9,6 +9,7 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
+import 'package:pair_me/cubits/delete_msg_users.dart';
 import 'package:pair_me/cubits/message_data_cubit.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -82,6 +83,7 @@ class _Message_pageState extends State<Message_page> {
   ];
   MessageCubit messageCubit = MessageCubit();
   UserMessage userMessage = UserMessage();
+  RemoveMsgUserCubit removeMsgUserCubit = RemoveMsgUserCubit();
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
     setState(() {});
@@ -91,6 +93,7 @@ class _Message_pageState extends State<Message_page> {
     // TODO: implement initState
     super.initState();
     messageCubit = BlocProvider.of<MessageCubit>(context);
+    removeMsgUserCubit = BlocProvider.of<RemoveMsgUserCubit>(context);
     getData();
   }
   @override
@@ -144,7 +147,7 @@ class _Message_pageState extends State<Message_page> {
                          return Expanded(child: Center(child: customLoader()));
                        }
                        if(state is MessageSuccess){
-                         return userMessage.data == null || userMessage.data?.length  == 0 ?     Center(
+                         return userMessage.data == null || userMessage.data?.data?.length  == 0 ?     Center(
                            child: Container(
                              height: screenHeight(context,dividedBy: 5),
                              width: screenHeight(context,dividedBy: 5),
@@ -159,6 +162,11 @@ class _Message_pageState extends State<Message_page> {
                              itemBuilder: (context, index) {
                                return  Dismissible(
                                    direction: DismissDirection.endToStart,
+                                   onDismissed: (direction) {
+                                     removeMsgUserCubit.DeleteUser(context, id: userMessage.data?.data?[index].id ?? '').then((value) {
+                                       messageCubit.GetMessage();
+                                     },);
+                                   },
                                    key: UniqueKey(),
                                    background: Container(
                                      padding: EdgeInsets.only(
@@ -177,7 +185,7 @@ class _Message_pageState extends State<Message_page> {
                                    child: InkWell(
                                      onTap: () {
                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?[index].userName ?? '', image: "${apis.baseurl}/${userMessage.data?[index].userImage ?? ''}",);
+                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: "${apis.baseurl}/${userMessage.data?.data?[index].userImage ?? ''}",);
                                        },));
                                      },
                                      child: SizedBox(
@@ -191,7 +199,7 @@ class _Message_pageState extends State<Message_page> {
                                            crossAxisAlignment: CrossAxisAlignment.center,
                                            children: [
                                              CachedNetworkImage(
-                                               imageUrl: "${apis.baseurl}/${userMessage.data?[index].userImage ?? ''}",
+                                               imageUrl: "${apis.baseurl}/${userMessage.data?.data?[index].userImage ?? ''}",
                                                imageBuilder: (context, imageProvider) => Container(
                                                  height: screenHeight(context,dividedBy: 15),
                                                  width: screenHeight(context,dividedBy: 15),
@@ -225,7 +233,7 @@ class _Message_pageState extends State<Message_page> {
                                                  mainAxisAlignment: MainAxisAlignment.start,
                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                  children: [
-                                                   Text(userMessage.data?[index].userName ?? '',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
+                                                   Text(userMessage.data?.data?[index].userName ?? '',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
                                                    SizedBox(height: screenHeight(context,dividedBy: 300),),
                                                    SizedBox(
                                                      width: screenWidth(context,dividedBy: 2.2),
@@ -276,7 +284,7 @@ class _Message_pageState extends State<Message_page> {
                                  // color: Colors.black12,
                                );
                              },
-                             itemCount: userMessage.data?.length ?? 0);
+                             itemCount: userMessage.data?.data?.length ?? 0);
                        }
                        return Center(
                          child: Container(

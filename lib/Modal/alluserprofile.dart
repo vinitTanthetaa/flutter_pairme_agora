@@ -39,7 +39,8 @@ class Datum {
   String? password;
   String? gender;
   String? dateOfBirth;
-  int? phoneNumber;
+  String? countryCode;
+  String? phoneNumber;
   String? role;
   bool? teamsAndCondition;
   int? score;
@@ -65,6 +66,7 @@ class Datum {
     this.password,
     this.gender,
     this.dateOfBirth,
+    this.countryCode,
     this.phoneNumber,
     this.role,
     this.teamsAndCondition,
@@ -92,6 +94,7 @@ class Datum {
     password: json["password"],
     gender: json["gender"],
     dateOfBirth: json["dateOfBirth"],
+    countryCode: json["countryCode"],
     phoneNumber: json["phoneNumber"],
     role: json["role"],
     teamsAndCondition: json["teamsAndCondition"],
@@ -119,6 +122,7 @@ class Datum {
     "password": password,
     "gender": gender,
     "dateOfBirth": dateOfBirth,
+    "countryCode": countryCode,
     "phoneNumber": phoneNumber,
     "role": role,
     "teamsAndCondition": teamsAndCondition,
@@ -190,9 +194,9 @@ class FileClass {
   String? file3;
 
   FileClass({
-   this.file1,
-   this.file2,
-   this.file3,
+    this.file1,
+    this.file2,
+    this.file3,
   });
 
   factory FileClass.fromJson(Map<String, dynamic> json) => FileClass(
@@ -217,12 +221,12 @@ class Image {
   String? photo6;
 
   Image({
-     this.photo1,
-     this.photo2,
-     this.photo3,
-     this.photo4,
-     this.photo5,
-     this.photo6,
+    this.photo1,
+    this.photo2,
+    this.photo3,
+    this.photo4,
+    this.photo5,
+    this.photo6,
   });
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(

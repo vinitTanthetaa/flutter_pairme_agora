@@ -1,37 +1,33 @@
 // To parse this JSON data, do
 //
-//     final filterUser = filterUserFromJson(jsonString);
+//     final FilterUser = FilterUserFromJson(jsonString);
 
 import 'dart:convert';
 
-FilterUser filterUserFromJson(String str) => FilterUser.fromJson(json.decode(str));
+FilterUser FilterUserFromJson(String str) => FilterUser.fromJson(json.decode(str));
 
-String filterUserToJson(FilterUser data) => json.encode(data.toJson());
+String FilterUserToJson(FilterUser data) => json.encode(data.toJson());
 
 class FilterUser {
   bool? status;
   int? code;
-  int? data1;
   List<List<Datum>>? data;
 
   FilterUser({
-     this.status,
-     this.code,
-     this.data1,
-     this.data,
+    this.status,
+    this.code,
+    this.data,
   });
 
   factory FilterUser.fromJson(Map<String, dynamic> json) => FilterUser(
     status: json["status"],
     code: json["code"],
-    data1: json["data1"],
     data: List<List<Datum>>.from(json["data"].map((x) => List<Datum>.from(x.map((x) => Datum.fromJson(x))))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
-    "data1": data1,
     "data": List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
   };
 }
@@ -43,11 +39,12 @@ class Datum {
   String? password;
   String? gender;
   String? dateOfBirth;
-  int? phoneNumber;
+  String? countryCode;
+  String? phoneNumber;
   String? role;
   bool? teamsAndCondition;
   int? score;
-  List<ConnectedUser>? connectedUser;
+  List<dynamic>? connectedUser;
   List<dynamic>? rejectedUser;
   int? v;
   String? verified;
@@ -63,19 +60,20 @@ class Datum {
   String? bio;
 
   Datum({
-     this.id,
+    this.id,
     this.name,
     this.email,
     this.password,
     this.gender,
     this.dateOfBirth,
+    this.countryCode,
     this.phoneNumber,
     this.role,
     this.teamsAndCondition,
     this.score,
     this.connectedUser,
     this.rejectedUser,
-     this.v,
+    this.v,
     this.verified,
     this.address,
     this.professionalDetails,
@@ -96,11 +94,12 @@ class Datum {
     password: json["password"],
     gender: json["gender"],
     dateOfBirth: json["dateOfBirth"],
+    countryCode: json["countryCode"],
     phoneNumber: json["phoneNumber"],
     role: json["role"],
     teamsAndCondition: json["teamsAndCondition"],
     score: json["score"],
-    connectedUser: json["connectedUser"] == null ? [] : List<ConnectedUser>.from(json["connectedUser"]!.map((x) => ConnectedUser.fromJson(x))),
+    connectedUser: json["connectedUser"] == null ? [] : List<dynamic>.from(json["connectedUser"]!.map((x) => x)),
     rejectedUser: json["rejectedUser"] == null ? [] : List<dynamic>.from(json["rejectedUser"]!.map((x) => x)),
     v: json["__v"],
     verified: json["verified"],
@@ -123,11 +122,12 @@ class Datum {
     "password": password,
     "gender": gender,
     "dateOfBirth": dateOfBirth,
+    "countryCode": countryCode,
     "phoneNumber": phoneNumber,
     "role": role,
     "teamsAndCondition": teamsAndCondition,
     "score": score,
-    "connectedUser": connectedUser == null ? [] : List<dynamic>.from(connectedUser!.map((x) => x.toJson())),
+    "connectedUser": connectedUser == null ? [] : List<dynamic>.from(connectedUser!.map((x) => x)),
     "rejectedUser": rejectedUser == null ? [] : List<dynamic>.from(rejectedUser!.map((x) => x)),
     "__v": v,
     "verified": verified,
@@ -152,16 +152,16 @@ class Address {
   String? zipCode;
   double? latitude;
   double? longitude;
-  dynamic startdate;
+  String? startdate;
 
   Address({
-     this.address,
-     this.country,
-     this.state,
-     this.city,
-     this.zipCode,
-     this.latitude,
-     this.longitude,
+    this.address,
+    this.country,
+    this.state,
+    this.city,
+    this.zipCode,
+    this.latitude,
+    this.longitude,
     this.startdate,
   });
 
@@ -188,47 +188,27 @@ class Address {
   };
 }
 
-class ConnectedUser {
-  String? userId;
-  DateTime? time;
-
-  ConnectedUser({
-     this.userId,
-     this.time,
-  });
-
-  factory ConnectedUser.fromJson(Map<String, dynamic> json) => ConnectedUser(
-    userId: json["user_id"],
-    time: DateTime.parse(json["time"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "user_id": userId,
-    "time": time?.toIso8601String(),
-  };
-}
-
 class FileClass {
   String? file1;
-  String? file3;
   String? file2;
+  String? file3;
 
   FileClass({
-     this.file1,
-     this.file3,
-     this.file2,
+    this.file1,
+    this.file2,
+    this.file3,
   });
 
   factory FileClass.fromJson(Map<String, dynamic> json) => FileClass(
     file1: json["file_1"],
-    file3: json["file_3"],
     file2: json["file_2"],
+    file3: json["file_3"],
   );
 
   Map<String, dynamic> toJson() => {
     "file_1": file1,
-    "file_3": file3,
     "file_2": file2,
+    "file_3": file3,
   };
 }
 
@@ -241,12 +221,12 @@ class Image {
   String? photo6;
 
   Image({
-     this.photo1,
-     this.photo2,
-     this.photo3,
-     this.photo4,
-     this.photo5,
-     this.photo6,
+    this.photo1,
+    this.photo2,
+    this.photo3,
+    this.photo4,
+    this.photo5,
+    this.photo6,
   });
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
@@ -278,19 +258,19 @@ class ProfessionalDetails {
   String? businessExperience;
   String? skills;
   String? education;
-  dynamic university;
+  String? university;
 
   ProfessionalDetails({
-     this.userId,
-     this.companyName,
-     this.addRole,
-     this.companyDomain,
-     this.email,
-     this.category,
-     this.businessExperience,
-     this.skills,
-     this.education,
-     this.university,
+    this.userId,
+    this.companyName,
+    this.addRole,
+    this.companyDomain,
+    this.email,
+    this.category,
+    this.businessExperience,
+    this.skills,
+    this.education,
+    this.university,
   });
 
   factory ProfessionalDetails.fromJson(Map<String, dynamic> json) => ProfessionalDetails(

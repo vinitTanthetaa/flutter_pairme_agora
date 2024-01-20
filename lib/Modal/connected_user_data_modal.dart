@@ -28,21 +28,21 @@ class ConnectedUsers {
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
-    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data?.map((x) => x.toJson()) ?? []),
   };
 }
 
 class Datum {
-  String id;
-  String name;
-  String profileImage;
-  DateTime time;
+  String? id;
+  String? name;
+  String? profileImage;
+  DateTime? time;
 
   Datum({
-    required this.id,
-    required this.name,
-    required this.profileImage,
-    required this.time,
+     this.id,
+     this.name,
+     this.profileImage,
+     this.time,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -56,6 +56,6 @@ class Datum {
     "_id": id,
     "name": name,
     "profileImage": profileImage,
-    "time": time.toIso8601String(),
+    "time": time?.toIso8601String(),
   };
 }

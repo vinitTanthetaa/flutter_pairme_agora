@@ -22,6 +22,7 @@ import 'package:pair_me/cubits/clearAllNotification_cubit.dart';
 import 'package:pair_me/cubits/connect_user.dart';
 import 'package:pair_me/cubits/connect_with_cubit.dart';
 import 'package:pair_me/cubits/connected_user_data.dart';
+import 'package:pair_me/cubits/delete_msg_users.dart';
 import 'package:pair_me/cubits/forggot_password.dart';
 import 'package:pair_me/cubits/login_cubit.dart';
 import 'package:pair_me/cubits/message_data_cubit.dart';
@@ -109,6 +110,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => MessageUserCubit()),
         BlocProvider(create: (context) => MsgReqbyIDCubit()),
         BlocProvider(create: (context) => AllMessageRequestCubit()),
+        BlocProvider(create: (context) => RemoveMsgUserCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -36,6 +36,9 @@ class apis{
   static const String messageReqUser = "$baseurl/message_requests/";
   static const String rejectNotification = "$baseurl/rejectNotification";
   static const String clearAll = "$baseurl/reject_all";
+  static const String deletemsgUser = "$baseurl/delete_messagePage_user/";
+  static const String deletereqmsgUser = "$baseurl/delete_message_request_page/";
+  static const String deleteAllreqmsgUser = "$baseurl/delete_message_request_page";
 
 
   // App Manage
