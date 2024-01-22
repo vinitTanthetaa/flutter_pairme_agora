@@ -367,6 +367,19 @@ class _MessageRequestState extends State<MessageRequest> {
                  if(state is AllMessageRequestLoading){
                    return Expanded(child: customLoader());
                  }
+                 if(state is AllMessageRequestError){
+                   return Expanded(
+                     child: Center(
+                       child: Container(
+                         height: screenHeight(context,dividedBy: 5),
+                         width: screenHeight(context,dividedBy: 5),
+                         decoration: const BoxDecoration(
+                             image: DecorationImage(image: AssetImage('assets/Images/nomsg.png'))
+                         ),
+                       ),
+                     ),
+                   );
+                 }
                  return SizedBox();
                },)
               ],

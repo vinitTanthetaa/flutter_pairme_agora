@@ -425,6 +425,9 @@ class _Connection_PageState extends State<Connection_Page> {
                   if(state is ConnectedUsersLoading){
                     return Expanded(child: customLoader());
                   }
+                  if(state is ConnectedUsersError){
+                    return Expanded(child: Center(child: NoMessage(context)));
+                  }
                   return const SizedBox();
                 },),
               ))

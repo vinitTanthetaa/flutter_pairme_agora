@@ -4,6 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -18,6 +19,7 @@ class Location_page extends StatefulWidget {
 class _Location_pageState extends State<Location_page> {
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
+  bool change = false;
 final TextEditingController _map = TextEditingController();
   static  CameraPosition? _kGooglePlex ;
 
@@ -84,20 +86,21 @@ final TextEditingController _map = TextEditingController();
       List<Placemark> placemark = await placemarkFromCoordinates(value.latitude, value.longitude);
       _map.text = "${placemark[0].street}, ${placemark[0].administrativeArea}, ${placemark[0].country}";
           print('placemark =====> $placemark');
+          change = true;
       setState(() {});
     });
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       backgroundColor: AppColor.white,
       body: SizedBox(
         height: screenHeight(context),
         width: screenWidth(context),
-        child: Stack(
+        child:  Stack(
           alignment: Alignment.center,
           children: [
-            Positioned(
+            change ? Positioned(
               top: 0.0,
               child:  SizedBox(
                 height: screenHeight(context,dividedBy: 1.6),
@@ -110,8 +113,8 @@ final TextEditingController _map = TextEditingController();
                   },
                 ),
               ),
-            ),
-            Positioned(
+            ) :SizedBox(),
+            change ? Positioned(
               bottom: 0.0,
               child: Container(
                 height: screenHeight(context,dividedBy: 2.281),
@@ -200,7 +203,7 @@ final TextEditingController _map = TextEditingController();
                   ),
                 ),
               ),
-            ),
+            ) : Center(child: customLoader(),),
             Positioned(
               left: screenWidth(context,dividedBy: 30),
               top: screenHeight(context,dividedBy: 15),
@@ -211,7 +214,7 @@ final TextEditingController _map = TextEditingController();
                   child: Icon(Icons.arrow_back_ios_rounded,size: 25,),
                 ))
           ],
-        ),
+        )
       ),
     );
   }
