@@ -77,7 +77,7 @@ final TextEditingController _map = TextEditingController();
     // TODO: implement initState
     super.initState();
     getUserCurrentLocation().then((value) async {
-      _kGooglePlex = CameraPosition(
+      _kGooglePlex = await CameraPosition(
         target: LatLng(value.latitude, value.longitude),
         zoom: 14,
       );

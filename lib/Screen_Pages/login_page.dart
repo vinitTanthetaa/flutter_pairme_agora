@@ -16,7 +16,6 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
 
 String countryCodeSelect = '1';
-String countryCodeflagsvg = '🇺🇸';
 
 class Login_page extends StatefulWidget {
   const Login_page({super.key});
@@ -97,7 +96,7 @@ class _Login_pageState extends State<Login_page> {
                                     print(
                                         'Select country: ${country.phoneCode}');
                                     countryCodeSelect = country.phoneCode;
-                                    countryCodeflagsvg = country.flagEmoji;
+                                   // countryCodeflagsvg = country.flagEmoji;
                                     //flutterToast(country.displayNameNoCountryCode, true);
                                     setState(() {});
                                   },
@@ -126,7 +125,7 @@ class _Login_pageState extends State<Login_page> {
                                           width: screenWidth(context,
                                               dividedBy: 70)),
                                       Text(
-                                        "$countryCodeflagsvg +$countryCodeSelect",
+                                        "+$countryCodeSelect",
                                         style: TextStyle(
                                             fontSize:
                                             countryCodeSelect.length <= 3

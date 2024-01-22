@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/login_page.dart';
-import 'package:pair_me/Screen_Pages/verification_code.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -41,6 +40,7 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
       "gender": gendar,
       "dateOfBirth": dateofbirth,
       "phoneNumber":phonenumber,
+      "countryCode": countryCodeSelect,
       "email": email,
     };
     print("Body is $body");

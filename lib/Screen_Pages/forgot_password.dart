@@ -90,7 +90,7 @@ class _Forget_PasswordState extends State<Forget_Password> {
                                 onSelect: (Country country) {
                                   print('Select country: ${country.phoneCode}');
                                   countryCodeSelect = country.phoneCode;
-                                  countryCodeflagsvg = country.flagEmoji;
+                                 // countryCodeflagsvg = country.flagEmoji;
                                   //flutterToast(country.displayNameNoCountryCode, true);
                                   setState(() {});
                                 },
@@ -119,7 +119,7 @@ class _Forget_PasswordState extends State<Forget_Password> {
                                         width: screenWidth(context,
                                             dividedBy: 70)),
                                     Text(
-                                      "$countryCodeflagsvg +$countryCodeSelect",
+                                      "+$countryCodeSelect",
                                       style: TextStyle(
                                           fontSize:
                                               countryCodeSelect.length <= 3

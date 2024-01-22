@@ -19,9 +19,9 @@ class _Image_ScreenState extends State<Image_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.image))
+    _controller = VideoPlayerController.networkUrl(Uri.parse('http://192.168.29.116:3334/upload/images/1705902891199-VID_20231228_150419.mp4'))
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        print(widget.image);
         setState(() {});
       });
   }

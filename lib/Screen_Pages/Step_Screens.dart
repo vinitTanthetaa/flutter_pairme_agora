@@ -154,7 +154,7 @@ class _StepScreenState extends State<StepScreen> {
     'Channel Partner',
     'Business Partner',
     'Translator',
-    'Software tester',
+
   ];
   List selectedlookingFor = [];
   List selectedlookingFor1 = [];

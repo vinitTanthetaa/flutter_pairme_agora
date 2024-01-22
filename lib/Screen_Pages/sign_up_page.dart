@@ -308,7 +308,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                                     print(
                                         'Select country: ${country.phoneCode}');
                                     countryCodeSelect = country.phoneCode;
-                                    countryCodeflagsvg = country.flagEmoji;
+                                  //  countryCodeflagsvg = country.flagEmoji;
                                     //flutterToast(country.displayNameNoCountryCode, true);
                                     setState(() {});
                                   },
@@ -337,7 +337,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                                           width: screenWidth(context,
                                               dividedBy: 70)),
                                       Text(
-                                        "$countryCodeflagsvg +$countryCodeSelect",
+                                        "+$countryCodeSelect",
                                         style: TextStyle(
                                             fontSize:
                                                 countryCodeSelect.length <= 3

@@ -49,12 +49,13 @@ class _Edit_ProfileState extends State<Edit_Profile> {
         userDetailsCubit.userProfile.data?.first.name?.split(" ") ?? [];
 
     // Assuming the first part is the first name and the last part is the last name
-    String firstName = nameParts[0];
+    String firstName = nameParts.first;
     String lastName = nameParts.length > 1 ? nameParts.last : '';
     _firstName.text = firstName;
     _lastName.text = lastName;
-    _phoneNumber.text =
-        userDetailsCubit.userProfile.data?.first.phoneNumber.toString() ?? '';
+    countryCodeSelect = userDetailsCubit.userProfile.data?.first.countryCode ?? '';
+    print(countryCodeSelect);
+    _phoneNumber.text = userDetailsCubit.userProfile.data?.first.phoneNumber.toString() ?? '';
     _gender.text = userDetailsCubit.userProfile.data?.first.gender ?? '';
     _eMail.text = userDetailsCubit.userProfile.data?.first.email ?? '';
     _date.text = userDetailsCubit.userProfile.data?.first.dateOfBirth ?? '';
@@ -284,7 +285,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                               title: 'Set your Birthday',
                               dateOrder: DatePickerDateOrder.dmy,
                               initialDateTime: _focusedDay,
-                              gradientColors: [
+                              gradientColors: const [
                                 AppColor.skyBlue,
                                 AppColor.whiteskyBlue
                               ],
@@ -295,12 +296,12 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                               displayCloseIcon: false,
                               maxDateTime: DateTime(2050),
                               minDateTime: DateTime(1980),
-                              pickerTextStyle: TextStyle(
+                              pickerTextStyle: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
                               ),
-                              titleStyle: TextStyle(
+                              titleStyle: const TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.w500,
@@ -358,8 +359,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                     onSelect: (Country country) {
                                       print(
                                           'Select country: ${country.phoneCode}');
-                                      countryCodeSelect = country.phoneCode;
-                                      countryCodeflagsvg = country.flagEmoji;
+                                      countryCodeSelect = "${country.phoneCode}";
+                                    //  countryCodeflagsvg = country.flagEmoji;
                                       //flutterToast(country.displayNameNoCountryCode, true);
                                       setState(() {});
                                     },
@@ -389,7 +390,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                             width: screenWidth(context,
                                                 dividedBy: 70)),
                                         Text(
-                                          "$countryCodeflagsvg +$countryCodeSelect",
+                                          countryCodeSelect,
                                           style: const TextStyle(
                                               fontSize: 12,
                                               fontFamily: 'Roboto',
@@ -527,8 +528,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                             lastname: _lastName.text,
                             gendar: _gender.text,
                             dateofbirth: _date.text,
-                            phonenumber:
-                                "${countryCodeSelect}${_phoneNumber.text}",
+                            phonenumber: _phoneNumber.text,
                             email: _eMail.text,
                             context: context);
                         // Navigator.pop(context);
@@ -593,3 +593,4 @@ Widget EditCard(BuildContext context,
     ),
   );
 }
+
