@@ -2754,7 +2754,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     return _controller.value.isInitialized
         ? ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: VideoPlayer(_controller))
+            child: VideoPlayer(_controller),)
         : Container(
             height: screenHeight(context),
             width: screenWidth(context),
