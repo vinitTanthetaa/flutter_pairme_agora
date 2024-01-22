@@ -14,9 +14,9 @@ class AllUsersdetails {
   List<List<Datum>>? data;
 
   AllUsersdetails({
-     this.status,
-     this.code,
-     this.data,
+    this.status,
+    this.code,
+    this.data,
   });
 
   factory AllUsersdetails.fromJson(Map<String, dynamic> json) => AllUsersdetails(
@@ -60,7 +60,7 @@ class Datum {
   String? bio;
 
   Datum({
-     this.id,
+    this.id,
     this.name,
     this.email,
     this.password,
@@ -73,7 +73,7 @@ class Datum {
     this.score,
     this.connectedUser,
     this.rejectedUser,
-     this.v,
+    this.v,
     this.verified,
     this.address,
     this.professionalDetails,
@@ -155,13 +155,13 @@ class Address {
   String? startdate;
 
   Address({
-     this.address,
-     this.country,
-     this.state,
-     this.city,
-     this.zipCode,
-     this.latitude,
-     this.longitude,
+    this.address,
+    this.country,
+    this.state,
+    this.city,
+    this.zipCode,
+    this.latitude,
+    this.longitude,
     this.startdate,
   });
 
@@ -261,16 +261,16 @@ class ProfessionalDetails {
   String? university;
 
   ProfessionalDetails({
-     this.userId,
-     this.companyName,
-     this.addRole,
-     this.companyDomain,
-     this.email,
-     this.category,
-     this.businessExperience,
-     this.skills,
-     this.education,
-     this.university,
+    this.userId,
+    this.companyName,
+    this.addRole,
+    this.companyDomain,
+    this.email,
+    this.category,
+    this.businessExperience,
+    this.skills,
+    this.education,
+    this.university,
   });
 
   factory ProfessionalDetails.fromJson(Map<String, dynamic> json) => ProfessionalDetails(

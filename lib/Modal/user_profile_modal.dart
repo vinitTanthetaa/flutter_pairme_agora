@@ -14,9 +14,9 @@ class UserProfile {
   List<Datum>? data;
 
   UserProfile({
-     this.status,
-     this.code,
-     this.data,
+    this.status,
+    this.code,
+    this.data,
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
@@ -57,28 +57,28 @@ class Datum {
   String? bio;
 
   Datum({
-     this.id,
-     this.name,
-     this.email,
-     this.password,
-     this.gender,
-     this.dateOfBirth,
-     this.countryCode,
-     this.phoneNumber,
-     this.role,
-     this.teamsAndCondition,
-     this.score,
-     this.connectedUser,
-     this.rejectedUser,
-     this.v,
-     this.verified,
-     this.address,
-     this.professionalDetails,
-     this.businessaddress,
-     this.profileImage,
-     this.image,
-     this.file,
-     this.bio,
+    this.id,
+    this.name,
+    this.email,
+    this.password,
+    this.gender,
+    this.dateOfBirth,
+    this.countryCode,
+    this.phoneNumber,
+    this.role,
+    this.teamsAndCondition,
+    this.score,
+    this.connectedUser,
+    this.rejectedUser,
+    this.v,
+    this.verified,
+    this.address,
+    this.professionalDetails,
+    this.businessaddress,
+    this.profileImage,
+    this.image,
+    this.file,
+    this.bio,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -143,13 +143,13 @@ class Address {
   dynamic startdate;
 
   Address({
-     this.address,
-     this.country,
-     this.state,
-     this.city,
-     this.zipCode,
-     this.latitude,
-     this.longitude,
+    this.address,
+    this.country,
+    this.state,
+    this.city,
+    this.zipCode,
+    this.latitude,
+    this.longitude,
     this.startdate,
   });
 
@@ -182,9 +182,9 @@ class FileClass {
   String? file3;
 
   FileClass({
-     this.file1,
-     this.file2,
-     this.file3,
+    this.file1,
+    this.file2,
+    this.file3,
   });
 
   factory FileClass.fromJson(Map<String, dynamic> json) => FileClass(
@@ -209,12 +209,12 @@ class Image {
   String? photo6;
 
   Image({
-     this.photo1,
-     this.photo2,
-     this.photo3,
-     this.photo4,
-     this.photo5,
-     this.photo6,
+    this.photo1,
+    this.photo2,
+    this.photo3,
+    this.photo4,
+    this.photo5,
+    this.photo6,
   });
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
@@ -249,16 +249,16 @@ class ProfessionalDetails {
   String? university;
 
   ProfessionalDetails({
-     this.userId,
-     this.companyName,
-     this.addRole,
-     this.companyDomain,
-     this.email,
-     this.category,
-     this.businessExperience,
-     this.skills,
-     this.education,
-     this.university,
+    this.userId,
+    this.companyName,
+    this.addRole,
+    this.companyDomain,
+    this.email,
+    this.category,
+    this.businessExperience,
+    this.skills,
+    this.education,
+    this.university,
   });
 
   factory ProfessionalDetails.fromJson(Map<String, dynamic> json) => ProfessionalDetails(
