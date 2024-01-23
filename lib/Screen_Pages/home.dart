@@ -60,7 +60,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   List looking_for = [];
   List looking_for1 = [];
   List image = [];
-  List image1 = [];
   bool exchang = false;
   int ind = 0;
   bool swipeUp = false;
@@ -81,7 +80,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image.add(filterUserCubit.filterUser.data?[index].last.image?.photo1);
           int imagelength = filterUserCubit.filterUser.data?.length  ?? 0;
           // looking_for1 = filterUserCubit.filterUser.data[index].
-          image1.add(filterUserCubit.filterUser.data?[imagelength-1 == index ?index:index+1].last.image?.photo1);
+         // image1.add(filterUserCubit.filterUser.data?[imagelength-1 == index ?index:index+1].last.image?.photo1);
         }
         if (filterUserCubit.filterUser.data?[index].last.image?.photo2 == null &&
             image.contains(filterUserCubit.filterUser.data?[index].last.image?.photo2)) {
@@ -115,7 +114,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         }
       }
       image = image.toSet().toList();
-      image1 = image1.toSet().toList();
     } else {
       if (allUsersdetails.data?[index].last.image != null) {
         if (allUsersdetails.data?[index].last.image?.photo1 == null &&
@@ -123,8 +121,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image = image;
         } else if (allUsersdetails.data?[index].last.image?.photo1 != null) {
           image.add(allUsersdetails.data?[index].last.image?.photo1);
-          int imagelength = allUsersdetails.data?.length  ?? 0;
-          image1.add(allUsersdetails.data?[imagelength == index + 1 ? index :index+1].last.image?.photo1);
+         // int imagelength = allUsersdetails.data?.length  ?? 0;
+
         }
         if (allUsersdetails.data?[index].last.image?.photo2 == null &&
             image.contains(allUsersdetails.data?[index].last.image?.photo2)) {
@@ -158,7 +156,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         }
       }
       image = image.toSet().toList();
-      image1 = image1.toSet().toList();
+      //image1 = image1.toSet().toList();
     }
   }
   @override
@@ -239,7 +237,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                      ind = 0;
                                      pageViewIndex=0;
                                      image.clear();
-                                     image1.clear();
+                                     //image1.clear();
                                      setState(() {});
                                      print("hello");
                                    }
@@ -271,7 +269,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       AppinioSwiper(
                                         controller: controller,
                                         invertAngleOnBottomDrag: true,
-                                        loop: true,
                                         onCardPositionChanged: (position) {
                                           if (position.offset.direction > 0) {
                                             setState(() {
@@ -937,9 +934,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           );
                                         },
                                         cardBuilder1: (BuildContext context, int index) {
+                                          final image1 = filterUserCubit.filterUser.data?[index].last.image?.photo1 ?? '';
                                           return  CachedNetworkImage(
                                             imageUrl:
-                                            "${apis.baseurl}/${image1[0]}",
+                                            "${apis.baseurl}/$image1",
                                             imageBuilder:
                                                 (context, imageProvider) =>
                                                 Container(
@@ -1279,12 +1277,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                           builder: (context, state) {
                             if (state is AllUsersDetailsSuccess) {
                               return  Expanded(
-                                  child: allUsersdetails.data?.length == 0 ?Center(child: Text("No Users"),) :Stack(
+                                  child: allUsersdetails.data!.isEmpty ? Center(child: Text("No Users"),) :Stack(
                                 children: [
                                   AppinioSwiper(
                                     controller: controller,
                                     invertAngleOnBottomDrag: true,
-                                    loop: true,
                                     onCardPositionChanged: (position) {
                                       if (position.offset.direction > 0) {
                                         setState(() {
@@ -1570,8 +1567,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 key: _key1,
                                                                 controller: TabController(
                                                                     vsync: this,
-                                                                    length: image
-                                                                        .length,
+                                                                    length: image.length,
                                                                     initialIndex:
                                                                         pageViewIndex),
                                                                 color: AppColor
@@ -1699,8 +1695,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
-                                                                          allUsersdetails.data?[index].first.name ??
-                                                                              '',
+                                                                          allUsersdetails.data?[index].first.name?.trim() ?? '',
                                                                           style: const TextStyle(
                                                                               color: AppColor.white,
                                                                               fontFamily: 'Roboto',
@@ -1745,7 +1740,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                           const Text(
-                                                                            " : ",
+                                                                            ": ",
                                                                             style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 fontFamily: 'Roboto',
@@ -1776,7 +1771,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                           const Text(
-                                                                            " : ",
+                                                                            ": ",
                                                                             style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 fontFamily: 'Roboto',
@@ -1806,7 +1801,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                           const Text(
-                                                                            " : ",
+                                                                            ": ",
                                                                             style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 fontFamily: 'Roboto',
@@ -1937,11 +1932,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         ),
                                       );
                                     },
-                                    cardBuilder1:
-                                        (BuildContext context, int index) {
+                                    cardBuilder1: (BuildContext context, int index) {
+                                     final image1 = allUsersdetails.data?[index].last.image?.photo1 ?? '';
                                       return CachedNetworkImage(
                                               imageUrl:
-                                                  "${apis.baseurl}/${image1[0]}",
+                                                  "${apis.baseurl}/${image1}",
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(
@@ -2287,11 +2282,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                   child: Center(child: customLoader()));
                             }
                             if (state is AllUsersDetailsError) {
-                              return Center(
+                              return const Center(
                                 child: Text("Somthing went wrong ...."),
                               );
                             }
-                            return Center(
+                            return const Center(
                               child: Text("Somthing went wrong ...."),
                             );
                           },

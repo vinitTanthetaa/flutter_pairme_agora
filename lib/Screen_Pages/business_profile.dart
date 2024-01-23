@@ -589,7 +589,30 @@ class _Business_ProfileState extends State<Business_Profile> {
                               ),
                               child: Stack(
                                 children: [
-                                  widget.image1.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image1}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image1}',imageBuilder: (context, imageProvider) {
+                                  widget.image1.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image1}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image1}',    errorWidget: (context, url, error) {
+                                    return Container(
+                                      height: screenHeight(context,
+                                          dividedBy: 8),
+                                      width: screenHeight(context,
+                                          dividedBy: 8),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(15),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: AppColor.fontgray,
+                                              offset: Offset(
+                                                1,
+                                                1,
+                                              ),
+                                              blurRadius: 5,
+                                              // spreadRadius: 1.0,
+                                            ),
+                                          ],
+                                          image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
+                                      ),
+                                    );
+                                  },imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -718,11 +741,11 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               if (details !=
                                                                   null) {
                                                                 // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                _selectedimag2 =
+                                                                _selectedimag1 =
                                                                 details.selectedFiles[0];
                                                                 Navigator.pop(context);
                                                                 setState(() {});
-                                                                print('selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                print('selectedByte ==> ${_selectedimag1?.selectedFile}');
                                                               }
                                                               // if (details != null) await displayDetails(details);
                                                             },
@@ -796,7 +819,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         if (details !=
                                                             null) {
                                                           //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag2 =
+                                                          _selectedimag1 =
                                                           details
                                                               .selectedFiles[0];
                                                           Navigator.pop(
@@ -804,7 +827,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           setState(
                                                                   () {});
                                                           print(
-                                                              'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                              'selectedByte ==> ${_selectedimag1?.selectedFile}');
                                                         }
                                                         // if (details != null) await displayDetails(details);
                                                       },
@@ -1374,7 +1397,30 @@ class _Business_ProfileState extends State<Business_Profile> {
                                   ),
                               child: Stack(
                                 children: [
-                                  widget.image2.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image2}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image2}',imageBuilder: (context, imageProvider) {
+                                  widget.image2.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image2}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image2}',    errorWidget: (context, url, error) {
+                                    return Container(
+                                      height: screenHeight(context,
+                                          dividedBy: 8),
+                                      width: screenHeight(context,
+                                          dividedBy: 8),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(15),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: AppColor.fontgray,
+                                              offset: Offset(
+                                                1,
+                                                1,
+                                              ),
+                                              blurRadius: 5,
+                                              // spreadRadius: 1.0,
+                                            ),
+                                          ],
+                                          image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
+                                      ),
+                                    );
+                                  },imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -2155,7 +2201,30 @@ class _Business_ProfileState extends State<Business_Profile> {
                               ),
                               child: Stack(
                                 children: [
-                                  widget.image3.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image3}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image3}',imageBuilder: (context, imageProvider) {
+                                  widget.image3.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image3}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image3}',    errorWidget: (context, url, error) {
+                                    return Container(
+                                      height: screenHeight(context,
+                                          dividedBy: 8),
+                                      width: screenHeight(context,
+                                          dividedBy: 8),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(15),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: AppColor.fontgray,
+                                              offset: Offset(
+                                                1,
+                                                1,
+                                              ),
+                                              blurRadius: 5,
+                                              // spreadRadius: 1.0,
+                                            ),
+                                          ],
+                                          image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
+                                      ),
+                                    );
+                                  },imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -2284,11 +2353,11 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               if (details !=
                                                                   null) {
                                                                 // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                _selectedimag2 =
+                                                                _selectedimag3 =
                                                                 details.selectedFiles[0];
                                                                 Navigator.pop(context);
                                                                 setState(() {});
-                                                                print('selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                print('selectedByte ==> ${_selectedimag3?.selectedFile}');
                                                               }
                                                               // if (details != null) await displayDetails(details);
                                                             },
@@ -2362,7 +2431,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         if (details !=
                                                             null) {
                                                           //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag2 =
+                                                          _selectedimag3 =
                                                           details
                                                               .selectedFiles[0];
                                                           Navigator.pop(
@@ -2944,7 +3013,30 @@ class _Business_ProfileState extends State<Business_Profile> {
                               ),
                               child: Stack(
                                 children: [
-                                  widget.image4.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image4}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image4}',imageBuilder: (context, imageProvider) {
+                                  widget.image4.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image4}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image4}',    errorWidget: (context, url, error) {
+                                    return Container(
+                                      height: screenHeight(context,
+                                          dividedBy: 8),
+                                      width: screenHeight(context,
+                                          dividedBy: 8),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(15),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: AppColor.fontgray,
+                                              offset: Offset(
+                                                1,
+                                                1,
+                                              ),
+                                              blurRadius: 5,
+                                              // spreadRadius: 1.0,
+                                            ),
+                                          ],
+                                          image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
+                                      ),
+                                    );
+                                  },imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -3073,11 +3165,11 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               if (details !=
                                                                   null) {
                                                                 // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                _selectedimag2 =
+                                                                _selectedimag4 =
                                                                 details.selectedFiles[0];
                                                                 Navigator.pop(context);
                                                                 setState(() {});
-                                                                print('selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                print('selectedByte ==> ${_selectedimag4?.selectedFile}');
                                                               }
                                                               // if (details != null) await displayDetails(details);
                                                             },
@@ -3151,7 +3243,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         if (details !=
                                                             null) {
                                                           //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag2 =
+                                                          _selectedimag4 =
                                                           details
                                                               .selectedFiles[0];
                                                           Navigator.pop(
@@ -3725,7 +3817,30 @@ class _Business_ProfileState extends State<Business_Profile> {
                               ),
                               child: Stack(
                                 children: [
-                                  widget.image5.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image5}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image5}',imageBuilder: (context, imageProvider) {
+                                  widget.image5.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image5}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image5}',    errorWidget: (context, url, error) {
+                                return Container(
+                                  height: screenHeight(context,
+                                      dividedBy: 8),
+                                  width: screenHeight(context,
+                                      dividedBy: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(15),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: AppColor.fontgray,
+                                          offset: Offset(
+                                            1,
+                                            1,
+                                          ),
+                                          blurRadius: 5,
+                                          // spreadRadius: 1.0,
+                                        ),
+                                      ],
+                                      image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
+                                  ),
+                                );
+                              },imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -3854,7 +3969,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                               if (details !=
                                                                   null) {
                                                                 // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                _selectedimag2 =
+                                                                _selectedimag5 =
                                                                 details.selectedFiles[0];
                                                                 Navigator.pop(context);
                                                                 setState(() {});
@@ -3932,7 +4047,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                         if (details !=
                                                             null) {
                                                           //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                          _selectedimag2 =
+                                                          _selectedimag5 =
                                                           details
                                                               .selectedFiles[0];
                                                           Navigator.pop(
@@ -4505,7 +4620,33 @@ class _Business_ProfileState extends State<Business_Profile> {
                               ),
                               child: Stack(
                                 children: [
-                                  widget.image6.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image6}',) : CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image6}',imageBuilder: (context, imageProvider) {
+                                  widget.image6.endsWith(".mp4") ? networkVideo(url: '${apis.baseurl}/${widget.image6}',) :
+                                  CachedNetworkImage(imageUrl: '${apis.baseurl}/${widget.image6}',
+                                    errorWidget: (context, url, error) {
+                                     return Container(
+                                        height: screenHeight(context,
+                                            dividedBy: 8),
+                                        width: screenHeight(context,
+                                            dividedBy: 8),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(15),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                color: AppColor.fontgray,
+                                                offset: Offset(
+                                                  1,
+                                                  1,
+                                                ),
+                                                blurRadius: 5,
+                                                // spreadRadius: 1.0,
+                                              ),
+                                            ],
+                                            image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
+                                        ),
+                                      );
+                                    },
+                                    imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -4720,7 +4861,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           setState(
                                                                   () {});
                                                           print(
-                                                              'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                              'selectedByte ==> ${_selectedimag6?.selectedFile}');
                                                         }
                                                         // if (details != null) await displayDetails(details);
                                                       },
@@ -6069,26 +6210,35 @@ class _Business_ProfileState extends State<Business_Profile> {
                           ),
                         ),
                       ),
-                      Custom_botton(
-                        context,
-                        text: 'SAVE',
-                        onTap: () {
-                          businessprofileupdateCubit
-                              .BusinessprofileupdateService(
-                                  photo_1: _selectedimag1?.selectedFile ?? File(''),
-                                  bio: _bio.text,
-                                  file_2: file2 ?? PlatformFile(name: "", size: 0),
-                                  file_3: file3 ?? PlatformFile(name: "", size: 0),
-                                  context: context,
-                                  photo_2: _selectedimag2?.selectedFile ?? File(''),
-                                  photo_3: _selectedimag3?.selectedFile ?? File(''),
-                                  photo_4: _selectedimag4?.selectedFile ?? File(''),
-                                  photo_5: _selectedimag5?.selectedFile ?? File(''),
-                                  photo_6: _selectedimag6?.selectedFile ?? File(''),
-                                  file_1: file1 ?? PlatformFile(name: "", size: 0));
-                        },
-                        height: screenHeight(context, dividedBy: 20),
-                      )
+
+                      BlocBuilder<BusinessprofileupdateCubit,BusinessprofileupdateState>(builder: (context, state) {
+                        if(state is BusinessprofileupdateLoading){
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 20)),
+                            child: Center(child: customLoader(),),
+                          );
+                        }
+                        return Custom_botton(
+                          context,
+                          text: 'SAVE',
+                          onTap: () {
+                            businessprofileupdateCubit
+                                .BusinessprofileupdateService(
+                                photo_1: _selectedimag1?.selectedFile ?? File(''),
+                                bio: _bio.text,
+                                file_2: file2 ?? PlatformFile(name: "", size: 0),
+                                file_3: file3 ?? PlatformFile(name: "", size: 0),
+                                context: context,
+                                photo_2: _selectedimag2?.selectedFile ?? File(''),
+                                photo_3: _selectedimag3?.selectedFile ?? File(''),
+                                photo_4: _selectedimag4?.selectedFile ?? File(''),
+                                photo_5: _selectedimag5?.selectedFile ?? File(''),
+                                photo_6: _selectedimag6?.selectedFile ?? File(''),
+                                file_1: file1 ?? PlatformFile(name: "", size: 0)).then((value) => Navigator.pop(context,'refresh'));
+                          },
+                          height: screenHeight(context, dividedBy: 20),
+                        );
+                      },)
                     ],
                   ),
                 ),

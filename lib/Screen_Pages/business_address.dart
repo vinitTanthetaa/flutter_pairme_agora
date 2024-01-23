@@ -9,6 +9,7 @@ import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Screen_Pages/business_profile.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/stepper.dart';
 import 'package:pair_me/Widgets/textfield.dart';
@@ -417,10 +418,19 @@ class _Business_AddressState extends State<Business_Address> {
                           bottomPickerTheme: BottomPickerTheme.plumPlate,
                         ).show(context);
                       }, hint: 'Select ', controller: _date, hidetext: false,readOnly: true),
-                      Custom_botton(context, text:'SAVE', onTap: () {
-                        businessaddressUpdatesCubit.BusinessaddressUpdatesService(address: "${_Address.text} ${_Address2.text}", country: _Contry.text, state: _State.text, city: _City.text, zipCode: _Zipcode.text, start_date: _date.text, context: context);
-                        //  Navigator.pop(context);
-                      }, height: screenHeight(context,dividedBy: 20),)
+
+                  BlocBuilder<BusinessaddressUpdatesCubit,BusinessaddressUpdatesState>(builder: (context, state) {
+                    if(state is BusinessaddressUpdatesLoading){
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 20)),
+                        child: Center(child: customLoader(),),
+                      );
+                    }
+                    return     Custom_botton(context, text:'SAVE', onTap: () {
+                      businessaddressUpdatesCubit.BusinessaddressUpdatesService(address: "${_Address.text} ${_Address2.text}", country: _Contry.text, state: _State.text, city: _City.text, zipCode: _Zipcode.text, start_date: _date.text, context: context).then((value) => Navigator.pop(context,'refresh'));
+                      //  Navigator.pop(context);
+                    }, height: screenHeight(context,dividedBy: 20),);
+                  },)
                     ],
                   ),
                 ),

@@ -51,8 +51,8 @@ class MsgReqbyIDCubit extends Cubit<MsgReqbyIDState> {
           Navigator.push(context,MaterialPageRoute(builder: (context) {
             return Chatting_Page(
               name: 'chatting',
-              Username:  userMsgReq.data?.withoutConnect?[0].userName ?? '',
-              image: userMsgReq.data?.withoutConnect?[0].userImage ?? '',
+              Username:  name,
+              image: image,
             );
           },));
         }

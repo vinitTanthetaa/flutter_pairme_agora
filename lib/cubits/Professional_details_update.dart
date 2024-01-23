@@ -47,6 +47,7 @@ class ProfessionalDetailsUpdateCubit extends Cubit<ProfessionalDetailsUpdateStat
 
     };
     print("Body is $body");
+    emit(ProfessionalDetailsUpdateLoading());
     try {
       final response = await dio.post(apis.professional_details_update,options:  Options(headers: {
         'Content-Type': 'application/json',

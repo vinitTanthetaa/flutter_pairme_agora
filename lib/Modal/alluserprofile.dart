@@ -14,9 +14,9 @@ class AllUsersdetails {
   List<List<Datum>>? data;
 
   AllUsersdetails({
-    this.status,
-    this.code,
-    this.data,
+     this.status,
+     this.code,
+     this.data,
   });
 
   factory AllUsersdetails.fromJson(Map<String, dynamic> json) => AllUsersdetails(
@@ -33,7 +33,7 @@ class AllUsersdetails {
 }
 
 class Datum {
-  String? id;
+  String id;
   String? name;
   String? email;
   String? password;
@@ -58,9 +58,10 @@ class Datum {
   FileClass? file;
   String? userId;
   String? bio;
+  String? sc;
 
   Datum({
-    this.id,
+    required this.id,
     this.name,
     this.email,
     this.password,
@@ -73,7 +74,7 @@ class Datum {
     this.score,
     this.connectedUser,
     this.rejectedUser,
-    this.v,
+     this.v,
     this.verified,
     this.address,
     this.professionalDetails,
@@ -85,6 +86,7 @@ class Datum {
     this.file,
     this.userId,
     this.bio,
+    this.sc,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -113,6 +115,7 @@ class Datum {
     file: json["file"] == null ? null : FileClass.fromJson(json["file"]),
     userId: json["user_id"],
     bio: json["bio"],
+    sc: json["sc"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -141,6 +144,7 @@ class Datum {
     "file": file?.toJson(),
     "user_id": userId,
     "bio": bio,
+    "sc": sc,
   };
 }
 
@@ -152,16 +156,18 @@ class Address {
   String? zipCode;
   double? latitude;
   double? longitude;
+  String? sc;
   String? startdate;
 
   Address({
-    this.address,
-    this.country,
-    this.state,
-    this.city,
-    this.zipCode,
-    this.latitude,
-    this.longitude,
+     this.address,
+     this.country,
+     this.state,
+     this.city,
+     this.zipCode,
+     this.latitude,
+     this.longitude,
+     this.sc,
     this.startdate,
   });
 
@@ -173,6 +179,7 @@ class Address {
     zipCode: json["zipCode"],
     latitude: json["latitude"]?.toDouble(),
     longitude: json["longitude"]?.toDouble(),
+    sc: json["sc"],
     startdate: json["startdate"],
   );
 
@@ -184,6 +191,7 @@ class Address {
     "zipCode": zipCode,
     "latitude": latitude,
     "longitude": longitude,
+    "sc": sc,
     "startdate": startdate,
   };
 }
@@ -194,7 +202,7 @@ class FileClass {
   String? file3;
 
   FileClass({
-    this.file1,
+     this.file1,
     this.file2,
     this.file3,
   });
@@ -221,8 +229,8 @@ class Image {
   String? photo6;
 
   Image({
-    this.photo1,
-    this.photo2,
+     this.photo1,
+     this.photo2,
     this.photo3,
     this.photo4,
     this.photo5,
@@ -259,18 +267,20 @@ class ProfessionalDetails {
   String? skills;
   String? education;
   String? university;
+  String? sc;
 
   ProfessionalDetails({
-    this.userId,
-    this.companyName,
-    this.addRole,
-    this.companyDomain,
-    this.email,
-    this.category,
-    this.businessExperience,
-    this.skills,
-    this.education,
-    this.university,
+     this.userId,
+     this.companyName,
+     this.addRole,
+     this.companyDomain,
+     this.email,
+     this.category,
+     this.businessExperience,
+     this.skills,
+     this.education,
+     this.university,
+     this.sc,
   });
 
   factory ProfessionalDetails.fromJson(Map<String, dynamic> json) => ProfessionalDetails(
@@ -284,6 +294,7 @@ class ProfessionalDetails {
     skills: json["skills"],
     education: json["education"],
     university: json["university"],
+    sc: json["sc"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -297,5 +308,6 @@ class ProfessionalDetails {
     "skills": skills,
     "education": education,
     "university": university,
+    "sc": sc,
   };
 }

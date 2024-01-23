@@ -6,6 +6,7 @@ import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Screen_Pages/professional_details.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/stepper.dart';
 import 'package:pair_me/Widgets/textfield.dart';
@@ -395,23 +396,29 @@ class _Address_DetailsState extends State<Address_Details> {
                           hint: "Post code / Zip code",
                           hidetext: false,
                           controller: _Zipcode),
-                      Custom_botton(
+                    BlocBuilder<AddressDetailsCubit,AddressDetailsState>(builder: (context, state) {
+                      if(state is AddressDetailsLoading){
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 20)),
+                          child: Center(child: customLoader(),),
+                        );
+                      }
+                      return   Custom_botton(
                         context,
                         text: 'SAVE',
                         onTap: () {
-                          addressDetailsCubit.AddressDetailsService(address: "${_Address.text},${_Address2.text}", country: _Contry.text, state: _State.text, city: _City.text, zipCode: _Zipcode.text, context: context);
-                        //  Navigator.pop(context);
+                          addressDetailsCubit.AddressDetailsService(address: "${_Address.text},${_Address2.text}", country: _Contry.text, state: _State.text, city: _City.text, zipCode: _Zipcode.text, context: context).then((value) => Navigator.pop(context,'refresh'));
+                          //  Navigator.pop(context);
                         },
                         height: screenHeight(context, dividedBy: 20),
-                      )
+                      );
+                    },)
                     ],
                   ),
                 ),
               ),
             )
-            // Positioned(
-            //     top: 0.0,
-            //     child: custom_stepper(context, positaion: 1)),
+
           ],
         ),
       )),

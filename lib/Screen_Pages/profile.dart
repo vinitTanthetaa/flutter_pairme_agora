@@ -204,12 +204,15 @@ class _Profile_pageState extends State<Profile_page> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(
+                                      onTap: () async {
+                                        String refresh = await Navigator.push(context, MaterialPageRoute(
                                           builder: (context) {
                                             return Edit_Profile();
                                           },
                                         ));
+                                        if(refresh == "refresh"){
+                                          GetData();
+                                        }
                                       },
                                       child: Container(
                                         height:

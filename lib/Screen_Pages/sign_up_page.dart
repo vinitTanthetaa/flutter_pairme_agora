@@ -452,8 +452,8 @@ class _SignUp_pageState extends State<SignUp_page> {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return Set_Password(
-                                  firstname: _firstName.text,
-                                  lastname: _lastName.text,
+                                  firstname: _firstName.text.trim(),
+                                  lastname: _lastName.text.trim(),
                                   gender: gender,
                                   dob: _date.text,
                                   number: _phoneNumber.text,

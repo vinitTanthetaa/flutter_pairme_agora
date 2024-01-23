@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/user_profile_modal.dart';
 import 'package:pair_me/Screen_Pages/business_address.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/stepper.dart';
 import 'package:pair_me/Widgets/textfield.dart';
@@ -508,16 +510,23 @@ class _Professional_DetailsState extends State<Professional_Details> {
                         ),
                       )
                           : const SizedBox(),
-                      Center(
-                        child: Custom_botton(
-                          context,
-                          text:'SAVE',
-                          onTap: () {
-                            professionalDetailsUpdateCubit.ProfessionalDetailsUpdateService( company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context);
-                            //  Navigator.pop(context);
-                          }, height: screenHeight(context,dividedBy: 20),
-                        ),
-                      ),
+
+                     BlocBuilder<ProfessionalDetailsUpdateCubit,ProfessionalDetailsUpdateState>(builder: (context, state) {
+                       if(state is ProfessionalDetailsUpdateLoading){
+                         return Padding(
+                           padding: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 20)),
+                           child: Center(child: customLoader(),),
+                         );
+                       }
+                       return  Custom_botton(
+                         context,
+                         text:'SAVE',
+                         onTap: () {
+                           professionalDetailsUpdateCubit.ProfessionalDetailsUpdateService( company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) => Navigator.pop(context,'refresh'));
+                           //  Navigator.pop(context);
+                         }, height: screenHeight(context,dividedBy: 20),
+                       );
+                     },)
                     ],
                   ),
                 ),

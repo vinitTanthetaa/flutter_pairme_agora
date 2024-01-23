@@ -34,13 +34,14 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
         required BuildContext context}) async {
     emit(UserUpdateLoading());
     final dio = Dio();
+    countryCodeSelect = countryCodeSelect.replaceAll('+', '');
     Map<String, dynamic> body = {
       "firstName": firstname,
       "lastName": lastname,
       "gender": gendar,
       "dateOfBirth": dateofbirth,
       "phoneNumber":phonenumber,
-      "countryCode": countryCodeSelect,
+      "countryCode": countryCodeSelect.trim(),
       "email": email,
     };
     print("Body is $body");

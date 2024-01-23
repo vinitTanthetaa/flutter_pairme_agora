@@ -13,6 +13,7 @@ import 'package:pair_me/Screen_Pages/business_profile.dart';
 import 'package:pair_me/Screen_Pages/professional_details.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/cubits/user_profile_cubit.dart';
@@ -47,12 +48,13 @@ class _Edit_ProfileState extends State<Edit_Profile> {
     // Split the full name into parts using space as a delimiter
     List<String> nameParts =
         userDetailsCubit.userProfile.data?.first.name?.split(" ") ?? [];
-
+    print("name ==> $nameParts");
     // Assuming the first part is the first name and the last part is the last name
-    String firstName = nameParts.first;
-    String lastName = nameParts.length > 1 ? nameParts.last : '';
+    String firstName = nameParts[0];
+    String lastName =  nameParts.last;
     _firstName.text = firstName;
     _lastName.text = lastName;
+    setState(() {});
     countryCodeSelect = userDetailsCubit.userProfile.data?.first.countryCode ?? '';
     print(countryCodeSelect);
     _phoneNumber.text = userDetailsCubit.userProfile.data?.first.phoneNumber.toString() ?? '';
@@ -430,19 +432,23 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                       EditCard(
                         context,
                         Name: 'Address Details',
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
+                        onTap: () async {
+                          String refresh = await Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return Address_Details(line1: userDetailsCubit.userProfile.data?.first.address?.address ?? '', line2: '', country: userDetailsCubit.userProfile.data?.first.address?.country ?? '', state: userDetailsCubit.userProfile.data?.first.address?.state ?? '', city: userDetailsCubit.userProfile.data?.first.address?.city ?? '', code: userDetailsCubit.userProfile.data?.first.address?.zipCode ?? '',);
                             },
                           ));
+                          if(refresh == 'refresh'){
+                            userDetailsCubit.GetUserdetails();
+                            getdata();
+                          }
                         },
                       ),
                       EditCard(
                         context,
                         Name: 'Professional Details',
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
+                        onTap: () async {
+                          String refresh = await Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return Professional_Details(
                                 Name: userDetailsCubit.userProfile.data?.first
@@ -487,24 +493,32 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                               );
                             },
                           ));
+                          if(refresh == 'refresh'){
+                            userDetailsCubit.GetUserdetails();
+                            getdata();
+                          }
                         },
                       ),
                       EditCard(
                         context,
                         Name: 'Business or Professional Address',
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
+                        onTap: () async {
+                          String refresh = await  Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return Business_Address(line1: userDetailsCubit.userProfile.data?.first.businessaddress?.address ?? '', line2: '', country:userDetailsCubit.userProfile.data?.first.businessaddress?.country ?? '', state: userDetailsCubit.userProfile.data?.first.businessaddress?.state ?? '', city: userDetailsCubit.userProfile.data?.first.businessaddress?.city ?? '', code: userDetailsCubit.userProfile.data?.first.businessaddress?.zipCode ?? '', date: userDetailsCubit.userProfile.data?.first.businessaddress?.startdate ?? '',);
                             },
                           ));
+                          if(refresh == 'refresh'){
+                            userDetailsCubit.GetUserdetails();
+                            getdata();
+                          }
                         },
                       ),
                       EditCard(
                         context,
                         Name: 'Profile',
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
+                        onTap: () async {
+                          String refresh = await  Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return Business_Profile(
                                 image1: userDetailsCubit.userProfile.data?.first.image?.photo1 ?? '',
@@ -520,19 +534,44 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                               );
                             },
                           ));
+                          if(refresh == 'refresh'){
+                            userDetailsCubit.GetUserdetails();
+                            getdata();
+                          }
                         },
                       ),
-                      Custom_botton(context, text: 'Save', onTap: () {
-                        userUpdateCubit.UserUpdateService(
-                            firstname: _firstName.text,
-                            lastname: _lastName.text,
-                            gendar: _gender.text,
-                            dateofbirth: _date.text,
-                            phonenumber: _phoneNumber.text,
-                            email: _eMail.text,
-                            context: context);
-                        // Navigator.pop(context);
-                      }, height: screenHeight(context, dividedBy: 30))
+                      BlocBuilder<UserUpdateCubit,UserUpdateState>(builder: (context, state) {
+                        if(state is UserUpdateSuccess){
+                          return Custom_botton(context, text: 'Save', onTap: () {
+                            userUpdateCubit.UserUpdateService(
+                                firstname: _firstName.text,
+                                lastname: _lastName.text,
+                                gendar: _gender.text,
+                                dateofbirth: _date.text,
+                                phonenumber: _phoneNumber.text,
+                                email: _eMail.text,
+                                context: context).then((value) => Navigator.pop(context,'refresh'));
+                            // Navigator.pop(context);
+                          }, height: screenHeight(context, dividedBy: 30));
+                        }
+                        if(state is UserUpdateLoading){
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: screenHeight(context, dividedBy: 30)),
+                            child: Center(child: customLoader(),),
+                          );
+                        }
+                        return Custom_botton(context, text: 'Save', onTap: () {
+                          userUpdateCubit.UserUpdateService(
+                              firstname: _firstName.text,
+                              lastname: _lastName.text,
+                              gendar: _gender.text,
+                              dateofbirth: _date.text,
+                              phonenumber: _phoneNumber.text,
+                              email: _eMail.text,
+                              context: context);
+                          // Navigator.pop(context);
+                        }, height: screenHeight(context, dividedBy: 30));
+                      },)
                     ],
                   ),
                 ),

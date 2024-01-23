@@ -44,8 +44,8 @@ class Datum {
   String? role;
   bool? teamsAndCondition;
   int? score;
-  List<dynamic>? connectedUser;
-  List<dynamic>? rejectedUser;
+ // List<dynamic>? connectedUser;
+ // List<dynamic>? rejectedUser;
   int? v;
   String? verified;
   Address? address;
@@ -68,8 +68,8 @@ class Datum {
     this.role,
     this.teamsAndCondition,
     this.score,
-    this.connectedUser,
-    this.rejectedUser,
+  //  this.connectedUser,
+  //  this.rejectedUser,
     this.v,
     this.verified,
     this.address,
@@ -93,8 +93,8 @@ class Datum {
     role: json["role"],
     teamsAndCondition: json["teamsAndCondition"],
     score: json["score"],
-    connectedUser: List<dynamic>.from(json["connectedUser"].map((x) => x)),
-    rejectedUser: List<dynamic>.from(json["rejectedUser"].map((x) => x)),
+  //  connectedUser: List<dynamic>.from(json["connectedUser"].map((x) => x) ?? []),
+   // rejectedUser: List<dynamic>.from(json["rejectedUser"].map((x) => x) ?? []),
     v: json["__v"],
     verified: json["verified"],
     address: Address.fromJson(json["address"]),
@@ -118,8 +118,8 @@ class Datum {
     "role": role,
     "teamsAndCondition": teamsAndCondition,
     "score": score,
-    "connectedUser": List<dynamic>.from(connectedUser!.map((x) => x)),
-    "rejectedUser": List<dynamic>.from(rejectedUser!.map((x) => x)),
+   // "connectedUser": List<dynamic>.from(connectedUser?.map((x) => x) ?? []),
+   // "rejectedUser": List<dynamic>.from(rejectedUser?.map((x) => x) ?? []),
     "__v": v,
     "verified": verified,
     "address": address?.toJson(),
