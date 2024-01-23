@@ -31,12 +31,15 @@ class AllMessageRequestCubit extends Cubit<AllMessageRequestState> {
         'Authorization': Authtoken,
       }));
       log("response ====> $response");
-      if(response.statusCode == 200 && response.data != null)
+      final hello = response.data;
+      print("hello ==> $hello");
+      if(hello['data'] != null)
       {
         userMssageReq = UserMssageReq.fromJson(response.data);
         emit(AllMessageRequestSuccess());
         print("passs");
-
+      } else {
+        emit(AllMessageRequestError());
       }
       return userMssageReq;
     } on Exception catch (e) {

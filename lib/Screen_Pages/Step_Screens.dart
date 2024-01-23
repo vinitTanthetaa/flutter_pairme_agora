@@ -15,6 +15,7 @@ import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/stepper.dart';
@@ -29,6 +30,7 @@ import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
+import 'package:video_player/video_player.dart';
 import '../Widgets/custom_button.dart';
 
 class StepScreen extends StatefulWidget {
@@ -303,38 +305,38 @@ class _StepScreenState extends State<StepScreen> {
                               skip_button(
                                 context,
                                 onTap: () {
-                                  if (_Address.text.isNotEmpty ||
-                                      _Address2.text.isNotEmpty) {
-                                    if (_Contry.text.isEmpty) {
-                                      flutterToast("Enter Your Country", false);
-                                    } else if (_City.text.isEmpty) {
-                                      flutterToast("Enter Your City", false);
-                                    } else if (_State.text.isEmpty) {
-                                      flutterToast("Enter Your State", false);
-                                    } else if (_Zipcode.text.isEmpty) {
-                                      flutterToast("Enter Your Zipcode", false);
-                                    } else {
-                                      adressDetailsCubit.AdressDetailsService(
-                                              address:
-                                                  "${_Address.text}${_Address2.text}",
-                                              country: _Contry.text,
-                                              state: _State.text,
-                                              city: _City.text,
-                                              zipCode: _Zipcode.text,
-                                              context: context)
-                                          .then((value) {
-                                        setState(() {
-                                          ind++;
-                                        });
-                                      });
-                                    }
-                                  } else {
-                                    flutterToast(
-                                        "Please Enter Your Address", true);
-                                  }
-                                  //   // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  //   //   return Professional_Details(Name: '',);
-                                  //   // },));
+                                  setState(() {
+                                    ind++;
+                                  });
+                                  // if (_Address.text.isNotEmpty ||
+                                  //     _Address2.text.isNotEmpty) {
+                                  //   if (_Contry.text.isEmpty) {
+                                  //     flutterToast("Enter Your Country", false);
+                                  //   } else if (_City.text.isEmpty) {
+                                  //     flutterToast("Enter Your City", false);
+                                  //   } else if (_State.text.isEmpty) {
+                                  //     flutterToast("Enter Your State", false);
+                                  //   } else if (_Zipcode.text.isEmpty) {
+                                  //     flutterToast("Enter Your Zipcode", false);
+                                  //   } else {
+                                  //     adressDetailsCubit.AdressDetailsService(
+                                  //             address:
+                                  //                 "${_Address.text}${_Address2.text}",
+                                  //             country: _Contry.text,
+                                  //             state: _State.text,
+                                  //             city: _City.text,
+                                  //             zipCode: _Zipcode.text,
+                                  //             context: context)
+                                  //         .then((value) {
+                                  //       setState(() {
+                                  //         ind++;
+                                  //       });
+                                  //     });
+                                  //   }
+                                  // } else {
+                                  //   flutterToast(
+                                  //       "Please Enter Your Address", true);
+                                  // }
                                 },
                               )
                             ],
@@ -700,64 +702,64 @@ class _StepScreenState extends State<StepScreen> {
                                           text: "Professional Details")),
                                   skip_button(
                                     context,
-                                    onTap: () {
-                                      if (_compnyName.text.isEmpty) {
-                                        flutterToast(
-                                            "Please Enter Your Company Name",
-                                            false);
-                                      } else if (_jobTitle.text.isEmpty) {
-                                        flutterToast(
-                                            "Please Enter Your Job Title/Add Role",
-                                            false);
-                                      } else if (_compnyDomain.text.isEmpty) {
-                                        flutterToast(
-                                            "Please Enter Your Company Domain",
-                                            false);
-                                      } else if (_email.text.isEmpty) {
-                                        flutterToast(
-                                            "Please Enter Email", false);
-                                      } else if (_categorycontroller
-                                          .text.isEmpty) {
-                                        flutterToast(
-                                            "Please Enter Category", false);
-                                      } else {
-                                        professionalDetailsCubit
-                                                .ProfessionalDetailsService(
-                                                    company_name:
-                                                        _compnyName.text,
-                                                    add_role: _jobTitle.text,
-                                                    company_domain:
-                                                        _compnyDomain.text,
-                                                    email: _email.text,
-                                                    category:
-                                                        _categorycontroller
-                                                            .text,
-                                                    business_experience:
-                                                        _experiencecontroller
-                                                            .text,
-                                                    skills:
-                                                        _skillcontroller.text,
-                                                    education:
-                                                        _educationcontroller
-                                                            .text,
-                                                    university:
-                                                        _univercitycontroller
-                                                            .text,
-                                                    context: context)
-                                            .then(
-                                          (value) {
-                                            setState(() {
-                                              ind++;
-                                            });
-                                          },
-                                        );
-                                      }
-                                    },
                                     // onTap: () {
-                                    //   setState(() {
-                                    //     ind++;
-                                    //   });
+                                    //   if (_compnyName.text.isEmpty) {
+                                    //     flutterToast(
+                                    //         "Please Enter Your Company Name",
+                                    //         false);
+                                    //   } else if (_jobTitle.text.isEmpty) {
+                                    //     flutterToast(
+                                    //         "Please Enter Your Job Title/Add Role",
+                                    //         false);
+                                    //   } else if (_compnyDomain.text.isEmpty) {
+                                    //     flutterToast(
+                                    //         "Please Enter Your Company Domain",
+                                    //         false);
+                                    //   } else if (_email.text.isEmpty) {
+                                    //     flutterToast(
+                                    //         "Please Enter Email", false);
+                                    //   } else if (_categorycontroller
+                                    //       .text.isEmpty) {
+                                    //     flutterToast(
+                                    //         "Please Enter Category", false);
+                                    //   } else {
+                                    //     professionalDetailsCubit
+                                    //             .ProfessionalDetailsService(
+                                    //                 company_name:
+                                    //                     _compnyName.text,
+                                    //                 add_role: _jobTitle.text,
+                                    //                 company_domain:
+                                    //                     _compnyDomain.text,
+                                    //                 email: _email.text,
+                                    //                 category:
+                                    //                     _categorycontroller
+                                    //                         .text,
+                                    //                 business_experience:
+                                    //                     _experiencecontroller
+                                    //                         .text,
+                                    //                 skills:
+                                    //                     _skillcontroller.text,
+                                    //                 education:
+                                    //                     _educationcontroller
+                                    //                         .text,
+                                    //                 university:
+                                    //                     _univercitycontroller
+                                    //                         .text,
+                                    //                 context: context)
+                                    //         .then(
+                                    //       (value) {
+                                    //         setState(() {
+                                    //           ind++;
+                                    //         });
+                                    //       },
+                                    //     );
+                                    //   }
                                     // },
+                                    onTap: () {
+                                      setState(() {
+                                        ind++;
+                                      });
+                                    },
                                   )
                                 ],
                               ),
@@ -1303,54 +1305,53 @@ class _StepScreenState extends State<StepScreen> {
                                       skip_button(
                                         context,
                                         onTap: () {
-                                          if (_Address1.text.isEmpty &&
-                                              _Address3.text.isEmpty) {
-                                            flutterToast(
-                                                "Please Enter Your Business or Professinoal Address",
-                                                false);
-                                          } else if (_Contry1.text.isEmpty) {
-                                            flutterToast(
-                                                "Please Enter Your Business or Professinoal Contry",
-                                                false);
-                                          } else if (_State1.text.isEmpty) {
-                                            flutterToast(
-                                                "Please Enter Your Business or Professinoal State",
-                                                false);
-                                          } else if (_City1.text.isEmpty) {
-                                            flutterToast(
-                                                "Please Enter Your Business or Professinoal City",
-                                                false);
-                                          } else if (_Zipcode1.text.isEmpty) {
-                                            flutterToast(
-                                                "Please Enter Your Business or Professinoal Zipcode",
-                                                false);
-                                          } else if (_date.text.isEmpty) {
-                                            flutterToast(
-                                                "Please Enter Your Business or Professinoal Start date",
-                                                false);
-                                          } else {
-                                            businessDetailsCubit
-                                                    .BusinessDetailsService(
-                                                        address:
-                                                            "${_Address1.text}${_Address3.text}",
-                                                        country: _Contry1.text,
-                                                        state: _State1.text,
-                                                        city: _City1.text,
-                                                        zipCode: _Zipcode1.text,
-                                                        context: context,
-                                                        startDate: _date.text)
-                                                .then(
-                                              (value) {
-                                                setState(() {
-                                                  ind++;
-                                                });
-                                              },
-                                            );
-                                          }
-
-                                          // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                          //   return Business_Profile(Name: '',);
-                                          // },));
+                                          setState(() {
+                                            ind++;
+                                          });
+                                          // if (_Address1.text.isEmpty &&
+                                          //     _Address3.text.isEmpty) {
+                                          //   flutterToast(
+                                          //       "Please Enter Your Business or Professinoal Address",
+                                          //       false);
+                                          // } else if (_Contry1.text.isEmpty) {
+                                          //   flutterToast(
+                                          //       "Please Enter Your Business or Professinoal Contry",
+                                          //       false);
+                                          // } else if (_State1.text.isEmpty) {
+                                          //   flutterToast(
+                                          //       "Please Enter Your Business or Professinoal State",
+                                          //       false);
+                                          // } else if (_City1.text.isEmpty) {
+                                          //   flutterToast(
+                                          //       "Please Enter Your Business or Professinoal City",
+                                          //       false);
+                                          // } else if (_Zipcode1.text.isEmpty) {
+                                          //   flutterToast(
+                                          //       "Please Enter Your Business or Professinoal Zipcode",
+                                          //       false);
+                                          // } else if (_date.text.isEmpty) {
+                                          //   flutterToast(
+                                          //       "Please Enter Your Business or Professinoal Start date",
+                                          //       false);
+                                          // } else {
+                                          //   businessDetailsCubit
+                                          //           .BusinessDetailsService(
+                                          //               address:
+                                          //                   "${_Address1.text}${_Address3.text}",
+                                          //               country: _Contry1.text,
+                                          //               state: _State1.text,
+                                          //               city: _City1.text,
+                                          //               zipCode: _Zipcode1.text,
+                                          //               context: context,
+                                          //               startDate: _date.text)
+                                          //       .then(
+                                          //     (value) {
+                                          //       setState(() {
+                                          //         ind++;
+                                          //       });
+                                          //     },
+                                          //   );
+                                          // }
                                         },
                                       )
                                     ],
@@ -1917,20 +1918,62 @@ class _StepScreenState extends State<StepScreen> {
                                                     // spreadRadius: 1.0,
                                                   ),
                                                 ],
-                                                image: _selectedimag1 != null
-                                                    ? DecorationImage(
-                                                        //  image: AssestImage('assets/Images/vincenzo.png'),
-                                                        image: FileImage(
-                                                            _selectedimag1!
-                                                                .selectedFile),
-                                                        fit: BoxFit.cover)
-                                                    : const DecorationImage(
-                                                        image: AssetImage(
-                                                            'assets/Images/placeHolderImage.jpg'),
-                                                        fit: BoxFit.cover),
                                               ),
                                               child: Stack(
                                                 children: [
+                                                  _selectedimag1 != null ? _selectedimag1!.selectedFile.path.endsWith(".mp4") ?
+                                                  video(videoPath: _selectedimag1!.selectedFile,) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: AppColor.fontgray,
+                                                          offset: Offset(
+                                                            1,
+                                                            1,
+                                                          ),
+                                                          blurRadius: 5,
+                                                          // spreadRadius: 1.0,
+                                                        ),
+                                                      ],
+                                                      image: DecorationImage(
+                                                        //  image: AssestImage('assets/Images/vincenzo.png'),
+                                                          image: FileImage(
+                                                              _selectedimag1!.selectedFile),
+                                                          fit: BoxFit.cover)
+                                                    ),
+                                                  ) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: AppColor.fontgray,
+                                                          offset: Offset(
+                                                            1,
+                                                            1,
+                                                          ),
+                                                          blurRadius: 5,
+                                                          // spreadRadius: 1.0,
+                                                        ),
+                                                      ],
+                                                      image: const DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/Images/placeHolderImage.jpg'),
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                  ),
                                                   Positioned(
                                                     bottom: 0.0,
                                                     right: 0.0,
@@ -2260,19 +2303,62 @@ class _StepScreenState extends State<StepScreen> {
                                                       // spreadRadius: 1.0,
                                                     ),
                                                   ],
-                                                  image: _selectedimag2 != null
-                                                      ? DecorationImage(
-                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                          image: FileImage(
-                                                              _selectedimag2!
-                                                                  .selectedFile),
-                                                          fit: BoxFit.cover)
-                                                      : const DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/Images/placeHolderImage.jpg'),
-                                                          fit: BoxFit.cover)),
+                                                ),
                                               child: Stack(
                                                 children: [
+                                                  _selectedimag2 != null ? _selectedimag2!.selectedFile.path.endsWith(".mp4") ?
+                                                  video(videoPath: _selectedimag2!.selectedFile,) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: AppColor.fontgray,
+                                                          offset: Offset(
+                                                            1,
+                                                            1,
+                                                          ),
+                                                          blurRadius: 5,
+                                                          // spreadRadius: 1.0,
+                                                        ),
+                                                      ],
+                                                      image: DecorationImage(
+                                                        //  image: AssestImage('assets/Images/vincenzo.png'),
+                                                          image: FileImage(
+                                                              _selectedimag2!.selectedFile),
+                                                          fit: BoxFit.cover)
+                                                          ,
+                                                    ),
+                                                  ) : Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: AppColor.fontgray,
+                                                          offset: Offset(
+                                                            1,
+                                                            1,
+                                                          ),
+                                                          blurRadius: 5,
+                                                          // spreadRadius: 1.0,
+                                                        ),
+                                                      ],
+                                                      image: const DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/Images/placeHolderImage.jpg'),
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                  ),
                                                   Positioned(
                                                     bottom: 0.0,
                                                     right: 0.0,
@@ -2603,19 +2689,62 @@ class _StepScreenState extends State<StepScreen> {
                                                       // spreadRadius: 1.0,
                                                     ),
                                                   ],
-                                                  image: _selectedimag3 != null
-                                                      ? DecorationImage(
-                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                          image: FileImage(
-                                                              _selectedimag3!
-                                                                  .selectedFile),
-                                                          fit: BoxFit.cover)
-                                                      : const DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/Images/placeHolderImage.jpg'),
-                                                          fit: BoxFit.cover)),
+                                                  ),
                                               child: Stack(
                                                 children: [
+                                                  _selectedimag3 != null ? _selectedimag3!.selectedFile.path.endsWith(".mp4") ?
+                                                  video(videoPath: _selectedimag3!.selectedFile,) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(15),
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color: AppColor.fontgray,
+                                                            offset: Offset(
+                                                              1,
+                                                              1,
+                                                            ),
+                                                            blurRadius: 5,
+                                                            // spreadRadius: 1.0,
+                                                          ),
+                                                        ],
+                                                        image: DecorationImage(
+                                                          //  image: AssestImage('assets/Images/vincenzo.png'),
+                                                            image: FileImage(
+                                                                _selectedimag3!.selectedFile),
+                                                            fit: BoxFit.cover)
+                                                    ),
+                                                  ) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: AppColor.fontgray,
+                                                          offset: Offset(
+                                                            1,
+                                                            1,
+                                                          ),
+                                                          blurRadius: 5,
+                                                          // spreadRadius: 1.0,
+                                                        ),
+                                                      ],
+                                                      image: const DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/Images/placeHolderImage.jpg'),
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                  ),
                                                   Positioned(
                                                     bottom: 0.0,
                                                     right: 0.0,
@@ -2956,19 +3085,62 @@ class _StepScreenState extends State<StepScreen> {
                                                       // spreadRadius: 1.0,
                                                     ),
                                                   ],
-                                                  image: _selectedimag4 != null
-                                                      ? DecorationImage(
-                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                          image: FileImage(
-                                                              _selectedimag4!
-                                                                  .selectedFile),
-                                                          fit: BoxFit.cover)
-                                                      : const DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/Images/placeHolderImage.jpg'),
-                                                          fit: BoxFit.cover)),
+                                                  ),
                                               child: Stack(
                                                 children: [
+                                                  _selectedimag4 != null ? _selectedimag4!.selectedFile.path.endsWith(".mp4") ?
+                                                  video(videoPath: _selectedimag4!.selectedFile,) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(15),
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color: AppColor.fontgray,
+                                                            offset: Offset(
+                                                              1,
+                                                              1,
+                                                            ),
+                                                            blurRadius: 5,
+                                                            // spreadRadius: 1.0,
+                                                          ),
+                                                        ],
+                                                        image: DecorationImage(
+                                                          //  image: AssestImage('assets/Images/vincenzo.png'),
+                                                            image: FileImage(
+                                                                _selectedimag4!.selectedFile),
+                                                            fit: BoxFit.cover)
+                                                    ),
+                                                  ) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: AppColor.fontgray,
+                                                          offset: Offset(
+                                                            1,
+                                                            1,
+                                                          ),
+                                                          blurRadius: 5,
+                                                          // spreadRadius: 1.0,
+                                                        ),
+                                                      ],
+                                                      image: const DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/Images/placeHolderImage.jpg'),
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                  ),
                                                   Positioned(
                                                     bottom: 0.0,
                                                     right: 0.0,
@@ -3299,19 +3471,62 @@ class _StepScreenState extends State<StepScreen> {
                                                       // spreadRadius: 1.0,
                                                     ),
                                                   ],
-                                                  image: _selectedimag5 != null
-                                                      ? DecorationImage(
-                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                          image: FileImage(
-                                                              _selectedimag5!
-                                                                  .selectedFile),
-                                                          fit: BoxFit.cover)
-                                                      : const DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/Images/placeHolderImage.jpg'),
-                                                          fit: BoxFit.cover)),
+                                                  ),
                                               child: Stack(
                                                 children: [
+                                                  _selectedimag5 != null ? _selectedimag5!.selectedFile.path.endsWith(".mp4") ?
+                                                  video(videoPath: _selectedimag5!.selectedFile,) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(15),
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color: AppColor.fontgray,
+                                                            offset: Offset(
+                                                              1,
+                                                              1,
+                                                            ),
+                                                            blurRadius: 5,
+                                                            // spreadRadius: 1.0,
+                                                          ),
+                                                        ],
+                                                        image: DecorationImage(
+                                                          //  image: AssestImage('assets/Images/vincenzo.png'),
+                                                            image: FileImage(
+                                                                _selectedimag5!.selectedFile),
+                                                            fit: BoxFit.cover)
+                                                    ),
+                                                  ) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: AppColor.fontgray,
+                                                          offset: Offset(
+                                                            1,
+                                                            1,
+                                                          ),
+                                                          blurRadius: 5,
+                                                          // spreadRadius: 1.0,
+                                                        ),
+                                                      ],
+                                                      image: const DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/Images/placeHolderImage.jpg'),
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                  ),
                                                   Positioned(
                                                     bottom: 0.0,
                                                     right: 0.0,
@@ -3642,33 +3857,22 @@ class _StepScreenState extends State<StepScreen> {
                                                       // spreadRadius: 1.0,
                                                     ),
                                                   ],
-                                                  image: _selectedimag6 != null
-                                                      ? DecorationImage(
-                                                          //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                          image: FileImage(
-                                                              _selectedimag6!
-                                                                  .selectedFile),
-                                                          fit: BoxFit.cover)
-                                                      : const DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/Images/placeHolderImage.jpg'),
-                                                          fit: BoxFit.cover)),
+                                                 ),
                                               child: Stack(
                                                 children: [
+                                                  _selectedimag6 != null ? _selectedimag6!.selectedFile.path.endsWith(".mp4") ?
+                                                  video(videoPath: _selectedimag6!.selectedFile,) :
                                                   Container(
-                                                    height: screenHeight(
-                                                        context,
+                                                    height: screenHeight(context,
                                                         dividedBy: 8),
                                                     width: screenHeight(context,
                                                         dividedBy: 8),
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
+                                                        BorderRadius.circular(15),
                                                         boxShadow: const [
                                                           BoxShadow(
-                                                            color: AppColor
-                                                                .fontgray,
+                                                            color: AppColor.fontgray,
                                                             offset: Offset(
                                                               1,
                                                               1,
@@ -3677,21 +3881,37 @@ class _StepScreenState extends State<StepScreen> {
                                                             // spreadRadius: 1.0,
                                                           ),
                                                         ],
-                                                        image: _selectedimag6
-                                                                    ?.selectedFile !=
-                                                                null
-                                                            ? DecorationImage(
-                                                                //  image: AssetImage('assets/Images/vincenzo.png'),
-                                                                image: FileImage(
-                                                                    _selectedimag6!
-                                                                        .selectedFile),
-                                                                fit:
-                                                                    BoxFit.fill)
-                                                            : const DecorationImage(
-                                                                image: AssetImage(
-                                                                    'assets/Images/placeHolderImage.jpg'),
-                                                                fit: BoxFit
-                                                                    .fill)),
+                                                        image: DecorationImage(
+                                                          //  image: AssestImage('assets/Images/vincenzo.png'),
+                                                            image: FileImage(
+                                                                _selectedimag6!.selectedFile),
+                                                            fit: BoxFit.cover)
+                                                    ),
+                                                  ) :
+                                                  Container(
+                                                    height: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: AppColor.fontgray,
+                                                          offset: Offset(
+                                                            1,
+                                                            1,
+                                                          ),
+                                                          blurRadius: 5,
+                                                          // spreadRadius: 1.0,
+                                                        ),
+                                                      ],
+                                                      image: const DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/Images/placeHolderImage.jpg'),
+                                                          fit: BoxFit.cover),
+                                                    ),
                                                   ),
                                                   Positioned(
                                                     bottom: 0.0,
@@ -5336,3 +5556,55 @@ class _StepScreenState extends State<StepScreen> {
     );
   }
 }
+class video extends StatefulWidget {
+  final File videoPath;
+  const video({super.key,required this.videoPath});
+
+  @override
+  State<video> createState() => _videoState();
+}
+
+class _videoState extends State<video> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.file(widget.videoPath)
+      ..initialize().then((_) {
+        setState(() {
+         // _controller.setVolume(0);
+          // _controller.play();
+         // _controller.setLooping(true); // Auto-repeating the video
+        });
+      });
+    setState(() {});
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: screenHeight(context,
+          dividedBy: 8),
+      width: screenHeight(context,
+          dividedBy: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: const [
+          BoxShadow(
+            color: AppColor.gray,
+            offset: Offset(
+              1,
+              1,
+            ),
+            blurRadius: 5,
+            // spreadRadius: 1.0,
+          ),
+        ],
+      ),
+      child: _controller.value.isInitialized ?  ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: VideoPlayer(_controller)) : Center(child: customLoader(),),
+    );
+  }
+}
+

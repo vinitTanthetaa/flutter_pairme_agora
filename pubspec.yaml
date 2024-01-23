@@ -72,7 +72,6 @@ dependencies:
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   video_thumbnail: ^0.5.3
-  chewie: ^1.7.4
 
 dev_dependencies:
   flutter_test:

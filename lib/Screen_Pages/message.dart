@@ -11,6 +11,7 @@ import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/cubits/delete_msg_users.dart';
 import 'package:pair_me/cubits/message_data_cubit.dart';
+import 'package:pair_me/cubits/show_message_requests.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -84,6 +85,8 @@ class _Message_pageState extends State<Message_page> {
   MessageCubit messageCubit = MessageCubit();
   UserMessage userMessage = UserMessage();
   RemoveMsgUserCubit removeMsgUserCubit = RemoveMsgUserCubit();
+  AllMessageRequestCubit messageRequestCubit = AllMessageRequestCubit();
+
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
     setState(() {});
@@ -94,6 +97,8 @@ class _Message_pageState extends State<Message_page> {
     super.initState();
     messageCubit = BlocProvider.of<MessageCubit>(context);
     removeMsgUserCubit = BlocProvider.of<RemoveMsgUserCubit>(context);
+    messageRequestCubit = BlocProvider.of<AllMessageRequestCubit>(context);
+    messageRequestCubit.GetAllMessageRequest();
     getData();
   }
   @override
@@ -123,7 +128,7 @@ class _Message_pageState extends State<Message_page> {
                            child: Row(
                              children: [
                                Text('Requests'.tr(),style: const TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
-                               const Text('(2)',style: TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
+                                Text('(${messageRequestCubit.userMssageReq.data?.withoutConnect?.length ?? 0})',style: TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
                              ],
                            ),),
                      ],

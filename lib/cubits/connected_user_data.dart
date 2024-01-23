@@ -30,11 +30,16 @@ class ConnectedUsersCubit extends Cubit<ConnectedUsersState> {
         'Authorization': Authtoken,
       }));
       log("response ====> $response");
-      if(response.statusCode == 200 && response.data != null)
+      final hello = response.data;
+      print("hello ===> $hello");
+      if(hello['code'] == 200 && hello['data'] != null)
       {
-        emit(ConnectedUsersSuccess());
         connectedUsers = ConnectedUsers.fromJson(response.data);
+        print(connectedUsers);
         print("passs");
+        emit(ConnectedUsersSuccess());
+      } else {
+        emit(ConnectedUsersError());
       }
       return connectedUsers;
     } on Exception catch (e) {

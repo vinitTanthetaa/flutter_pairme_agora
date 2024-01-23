@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/cubits/payments.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -19,44 +20,37 @@ class _PremiumMembershipState extends State<PremiumMembership> {
   List data = [
     {
       'month': '1 Month',
-      'ruppy': '\$14.99 USD\n(auto-renews each month)',
+      'ruppy': '\$413.85/per month',
       'des':
           'Unlock all of our features to be in completecontrol of your experience'
     },
     {
       'name': 'popular',
       'month': '6 Month',
-      'ruppy': '\$7.50 USD\n per month (\$40.00 USD, paid up-front)',
+      'ruppy': '\$273.35/month',
+      'save': 'Save 40%',
       'des':
           'Unlock all of our features to be in completecontrol of your experience'
     },
     {
       'name': 'Best value',
       'month': '12 Month',
-      'ruppy': '\$4.99 USD\n per month (\$59.89 USD, paid up-front)',
+      'ruppy': '\$207.35/month',
+      'save': 'Save 40%',
       'des':
           'Unlock all of our features to be in completecontrol of your experience'
     }
   ];
-  List month1 = [
-    "Unlimited swipes",
-    "Unlimited rewinds",
-    "Unlimited connection requests",
-    "PairMe Premium badge"
-  ];
+  List month1 = ["Unlimited Likes", "Travel mode", "5 SuperSwipes a Week"];
   List month6 = [
-    "Unlimited swipes",
-    "Unlimited rewinds",
-    "Unlimited messaging",
-    "Unlimited rewinds",
-    "Unlimited connection requests",
-    "PairMe Premium badge",
-    "PairMe Premium badge",
-    "Advertisements hidden",
+    "Unlimited Likes",
+    "Travel mode",
+    "5 SuperSwipes a Week",
+    "Advanced filters",
+    "Unlimited Locations",
+    "Hide Ads"
   ];
-
   int ind = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,13 +73,13 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                     child: Padding(
                       padding: EdgeInsets.only(
                           left: screenWidth(context, dividedBy: 17)),
-                      child: const Icon(Icons.close),
+                      child: Icon(Icons.close),
                     )),
                 centerTitle: false,
                 title: custom_header(text: "Premium Membership"),
               ),
               body: SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
+                physics: ClampingScrollPhysics(),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: screenWidth(context, dividedBy: 15)),
@@ -99,15 +93,12 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                         SizedBox(
                           height: screenHeight(context, dividedBy: 60),
                         ),
-                        const Text(
-                          "Select a plan",
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w700,
-                              overflow: TextOverflow.ellipsis,
-                              color: AppColor.black),
-                        ),
+                        Text("Select a plan", style: const TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w700,
+                            overflow: TextOverflow.ellipsis,
+                            color: AppColor.black),),
                         Padding(
                           padding: EdgeInsets.only(
                               bottom: screenHeight(context, dividedBy: 40),
@@ -222,45 +213,26 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                                                             context,
                                                             dividedBy: 100)),
                                                     alignment: Alignment.center,
-                                                    // height: screenHeight(
-                                                    //     context,
-                                                    //     dividedBy: 18),
-                                                    width: screenWidth(
-                                                      context,
-                                                      dividedBy: 2.3,
-                                                    ),
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 30),
+                                                    width: screenWidth(context,
+                                                        dividedBy: 3.5),
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(20),
                                                         color: AppColor.white),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          50),
-                                                              vertical:
-                                                                  screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          95)),
-                                                      child: Text(
-                                                          data[index]['ruppy'],
-                                                          style: const TextStyle(
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontFamily:
-                                                                  'roboto',
-                                                              color: AppColor
-                                                                  .black),
-                                                          textAlign:
-                                                              TextAlign.center),
-                                                    ),
+                                                    child: Text(
+                                                        data[index]['ruppy'],
+                                                        style: const TextStyle(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontFamily:
+                                                                'roboto',
+                                                            color: AppColor
+                                                                .black)),
                                                   )
                                                 : const SizedBox(),
                                           ],
@@ -302,23 +274,20 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                         SizedBox(
                           height: screenHeight(context, dividedBy: 90),
                         ),
-                        Newtext(text: 'Unlimited swipes'),
-                        Newtext(text: 'Unlimited rewinds'),
-                        Newtext(text: 'Unlimited messaging'),
-                        Newtext(text: 'Unlimited connection requests'),
-                        Newtext(text: 'Boost your profile’s visibility'),
-                        Newtext(text: 'In-app video call / phone call feature'),
-                        Newtext(text: 'PairMe Premium badge'),
-                        Newtext(text: 'Advertisements hidden'),
-                        Custom_botton(context, text: 'Continue', onTap: () {
-                          premiumMembershipCubit.PremiumMembershipService(
-                              product: ind == 0
-                                  ? "Basic"
-                                  : ind == 1
-                                      ? "Plus"
-                                      : "Pro",
-                              context: context);
-                        }, height: screenHeight(context, dividedBy: 20))
+                        Newtext(text: 'Unlimited Likes'),
+                        Newtext(text: 'Beeline'),
+                        Newtext(text: 'Advanced filters'),
+                        Newtext(text: 'Incognito mode'),
+                        Newtext(text: 'Travel mode'),
+                        Newtext(text: '5 SuperSwipes a Week'),
+                        Newtext(text: 'Unlimited Locations'),
+                        Newtext(text: 'Hide Ads'),
+                        Custom_botton(context,
+                            text: 'Continue',
+                            onTap: () {
+                                premiumMembershipCubit.PremiumMembershipService(product: ind == 0 ? "Basic" : ind == 1? "Plus" :"Pro", context: context);
+                            },
+                            height: screenHeight(context, dividedBy: 20))
                       ],
                     ),
                   ),
@@ -358,16 +327,8 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                       horizontal: screenWidth(context, dividedBy: 45)),
                   child: Image(
                     fit: BoxFit.fill,
-                    image: const AssetImage("assets/Images/check.png"),
-                    color: ind == 2
-                        ? AppColor.skyBlue
-                        : ind == 1
-                            ? month6.contains(text)
-                                ? AppColor.skyBlue
-                                : AppColor.fontgray
-                            : month1.contains(text)
-                                ? AppColor.skyBlue
-                                : AppColor.fontgray,
+                      image: const AssetImage("assets/Images/check.png"),
+                    color: ind == 2 ?  AppColor.skyBlue : ind == 1 ? month6.contains(text) ? AppColor.skyBlue :AppColor.fontgray :month1.contains(text) ?AppColor.skyBlue :AppColor.fontgray ,
                     height: screenHeight(context, dividedBy: 70),
                     width: screenHeight(context, dividedBy: 50),
                   ),
@@ -389,7 +350,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
             dashGapLength: 4.0,
             dashGapColor: Colors.transparent,
             dashGapRadius: 0.0,
-          ),
+          )
         ],
       ),
     );

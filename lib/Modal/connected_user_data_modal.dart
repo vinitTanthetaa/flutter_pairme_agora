@@ -28,7 +28,7 @@ class ConnectedUsers {
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
-    "data": List<dynamic>.from(data?.map((x) => x.toJson()) ?? []),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 

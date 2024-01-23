@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/image_page.dart';
@@ -20,10 +21,10 @@ class UsersDetails extends StatefulWidget {
   State<UsersDetails> createState() => _UsersDetailsState();
 }
 
-class _UsersDetailsState extends State<UsersDetails>
-    with TickerProviderStateMixin {
+class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMixin {
   int pageViewIndex = 0;
   final TextEditingController _bio = TextEditingController();
+  late VideoPlayerController _controller;
   bool file1 = false;
   bool file2 = false;
   bool file3 = false;
@@ -31,11 +32,7 @@ class _UsersDetailsState extends State<UsersDetails>
   String _file2 = '';
   String _file3 = '';
 
-  List lookingFor = [
-    'Investor',
-    'Startup founder',
-    'Distributor',
-  ];
+  List lookingFor = [];
   List list = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
     'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80',
@@ -57,7 +54,8 @@ class _UsersDetailsState extends State<UsersDetails>
     return nameParts.length > 1 ? nameParts[1] : fileName;
   }
   GetData() async {
-
+    print("looking for ==> ${widget.looking_for}");
+    lookingFor = widget.looking_for;
     file1 = widget.file1.isNotEmpty ? true : false ;
     file2 = widget.file2.isNotEmpty ? true : false ;
     file3 = widget.file3.isNotEmpty ? true : false ;
@@ -77,7 +75,10 @@ class _UsersDetailsState extends State<UsersDetails>
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.list = widget.list.toSet().toList();
+    setState(() {
+      widget.list = widget.list.toSet().toList();
+      widget.looking_for = widget.looking_for;
+    });
     GetData();
     setState(() {});
   }
@@ -86,6 +87,7 @@ class _UsersDetailsState extends State<UsersDetails>
   Widget build(BuildContext context) {
     setState(() {
       _bio.text = widget.bio;
+      print("looking1 for ==> ${widget.looking_for}");
       GetData();
     });
     return Scaffold(
@@ -134,43 +136,26 @@ class _UsersDetailsState extends State<UsersDetails>
                           child: widget.list[pageViewIndex]
                               .toString()
                               .endsWith('.mp4')
-                              ? Container(
-                            // margin: EdgeInsets.symmetric(
-                            //     vertical: screenHeight(context,
-                            //         dividedBy: 65)),
-                            height: screenHeight(context,
-                                dividedBy: 2.6),
-                            width: screenWidth(context,dividedBy: 1.015),
-                            decoration: const BoxDecoration(
-                              //  image: DecorationImage(image: NetworkImage(list[pageViewIndex]),fit: BoxFit.fill)
+                              ? video_play(videoUrl: "${apis.baseurl}/${widget.list[pageViewIndex]}")
+                              : CachedNetworkImage(
+                            imageUrl: "${apis.baseurl}/${widget.list[pageViewIndex]}",
+                            imageBuilder: (context, imageProvider) =>  Container(
+                              // margin: EdgeInsets.symmetric(
+                              //     vertical: screenHeight(context,
+                              //         dividedBy: 65)),
+                              height: screenHeight(context,
+                                  dividedBy: 3),
+                              width: screenWidth(context,dividedBy: 1.015),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    //fit:BoxFit.cover
+                                  )),
                             ),
-                            child: Stack(
-                              children: [
-                                VideoPlayer(VideoPlayerController.networkUrl(Uri.parse("${apis.baseurl}/${widget.list[pageViewIndex]}"))),
-                                const Align(
-                                  child: CircleAvatar(
-                                    backgroundColor:
-                                    Colors.white30,
-                                    child: Icon(
-                                        Icons.play_arrow_rounded),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                              : Container(
-                            // margin: EdgeInsets.symmetric(
-                            //     vertical: screenHeight(context,
-                            //         dividedBy: 65)),
-                            height: screenHeight(context,
-                                dividedBy: 3),
-                            width: screenWidth(context,dividedBy: 1.015),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage("${apis.baseurl}/${widget.list[pageViewIndex]}"),
-                                  //fit:BoxFit.cover
-                                    )),
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
                           ),
+
                         ))
                             .toList(),
                         options: CarouselOptions(
@@ -289,7 +274,7 @@ class _UsersDetailsState extends State<UsersDetails>
                           SizedBox(
                             height: screenHeight(context, dividedBy: 500),
                           ),
-                          const Row(
+                           Row(
                             children: [
                               Text(
                                 'Company: ',
@@ -300,7 +285,7 @@ class _UsersDetailsState extends State<UsersDetails>
                                     fontFamily: 'Roboto'),
                               ),
                               Text(
-                                'Infosys',
+                                widget.Company,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color: AppColor.dropdownfont,
@@ -319,7 +304,7 @@ class _UsersDetailsState extends State<UsersDetails>
                           Wrap(
                             spacing: 5,
                             runSpacing: 8,
-                            children: lookingFor
+                            children: widget.looking_for
                                 .map((e) => Container(
                                     decoration: BoxDecoration(
                                         border: Border.all(color: const Color(0xff6D9Aff), width: 2.5),
@@ -589,12 +574,12 @@ class _UsersDetailsState extends State<UsersDetails>
                                       children: [
                                         Text(
                                           _file3,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 13,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        Text(
+                                        const Text(
                                           '96.47 KB ',
                                           style: TextStyle(
                                               fontFamily: 'Roboto',
@@ -617,6 +602,64 @@ class _UsersDetailsState extends State<UsersDetails>
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class video_play extends StatefulWidget {
+  final String videoUrl;
+  const video_play({super.key,required this.videoUrl});
+
+  @override
+  State<video_play> createState() => _video_playState();
+}
+
+class _video_playState extends State<video_play> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(widget.videoUrl)
+      ..initialize().then((_) {
+        setState(() {
+          _controller.setVolume(0);
+         // _controller.play();
+          _controller.setLooping(true); // Auto-repeating the video
+        });
+      });
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // margin: EdgeInsets.symmetric(
+      //     vertical: screenHeight(context,
+      //         dividedBy: 65)),
+      height: screenHeight(context,
+          dividedBy: 2.6),
+      width: screenWidth(context,dividedBy: 1.015),
+      decoration: const BoxDecoration(
+        //  image: DecorationImage(image: NetworkImage(list[pageViewIndex]),fit: BoxFit.fill)
+      ),
+      child: Stack(
+        children: [
+          VideoPlayer(_controller),
+          const Align(
+            child: CircleAvatar(
+              backgroundColor:
+              Colors.white30,
+              child: Icon(Icons.play_arrow_rounded),
+            ),
+          )
+        ],
       ),
     );
   }

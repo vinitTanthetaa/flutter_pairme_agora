@@ -57,6 +57,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   FilterUserCubit filterUserCubit = FilterUserCubit();
   MsgReqbyIDCubit msgReqbyIDCubit = MsgReqbyIDCubit();
   late AppinioSwiperController controller = AppinioSwiperController();
+  List looking_for = [];
+  List looking_for1 = [];
   List image = [];
   List image1 = [];
   bool exchang = false;
@@ -78,6 +80,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
         } else if (filterUserCubit.filterUser.data?[index].last.image?.photo1 != null) {
           image.add(filterUserCubit.filterUser.data?[index].last.image?.photo1);
           int imagelength = filterUserCubit.filterUser.data?.length  ?? 0;
+          // looking_for1 = filterUserCubit.filterUser.data[index].
           image1.add(filterUserCubit.filterUser.data?[imagelength-1 == index ?index:index+1].last.image?.photo1);
         }
         if (filterUserCubit.filterUser.data?[index].last.image?.photo2 == null &&
@@ -820,7 +823,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   direction: Axis
                                                                       .vertical,
                                                                   spacing: 5,
-                                                                  children: filterUserCubit.filterUser.data?[index].first.yourself
+                                                                  children: filterUserCubit.filterUser.data?[index].first.lookingfor
                                                                       ?.map((e) => Container(
                                                                       decoration: BoxDecoration(
                                                                           border: Border.all(
@@ -1275,8 +1278,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                         ) else BlocBuilder<AllUsersDetailsCubit, AllUsersDetailsState>(
                           builder: (context, state) {
                             if (state is AllUsersDetailsSuccess) {
-                              return Expanded(
-                                  child: Stack(
+                              return  Expanded(
+                                  child: allUsersdetails.data?.length == 0 ?Center(child: Text("No Users"),) :Stack(
                                 children: [
                                   AppinioSwiper(
                                     controller: controller,
@@ -1324,9 +1327,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     },
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
-                                        undoid = allUsersdetails
-                                                .data?[ind].first.id ??
-                                            '';
+                                        undoid = allUsersdetails.data?[ind].first.id ?? '';
                                         print("undoid =======> $undoid");
                                         activity.direction == AxisDirection.up
                                             ? rejectUserCubit.GetRejectUser(
@@ -1834,7 +1835,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     children: allUsersdetails
                                                                             .data?[index]
                                                                             .first
-                                                                            .yourself
+                                                                            .lookingfor
                                                                             ?.map((e) => Container(
                                                                                 decoration: BoxDecoration(
                                                                                     border: Border.all(
@@ -2367,8 +2368,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                           Company: allUsersdetails.data?[ind].first
                                   .professionalDetails?.companyName ??
                               '',
-                          looking_for:
-                              allUsersdetails.data?[ind].last.lookingfor ?? [],
+                          looking_for: allUsersdetails.data?[ind].first.lookingfor ?? [],
                           Name: allUsersdetails.data?[ind].first.name ?? '',
                           role: allUsersdetails.data?[ind].first
                                   .professionalDetails?.addRole ??
@@ -2735,7 +2735,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
         setState(() {
-          _controller.setVolume(10);
+          _controller.setVolume(0);
           _controller.play();
           _controller.setLooping(true); // Auto-repeating the video
         });
