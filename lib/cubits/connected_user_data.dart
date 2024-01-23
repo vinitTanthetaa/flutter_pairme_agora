@@ -34,9 +34,10 @@ class ConnectedUsersCubit extends Cubit<ConnectedUsersState> {
       print("hello ===> $hello");
       if(hello['code'] == 200 && hello['data'] != null)
       {
-        emit(ConnectedUsersSuccess());
         connectedUsers = ConnectedUsers.fromJson(response.data);
+        print(connectedUsers);
         print("passs");
+        emit(ConnectedUsersSuccess());
       } else {
         emit(ConnectedUsersError());
       }

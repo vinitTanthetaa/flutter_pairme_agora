@@ -1278,8 +1278,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                         ) else BlocBuilder<AllUsersDetailsCubit, AllUsersDetailsState>(
                           builder: (context, state) {
                             if (state is AllUsersDetailsSuccess) {
-                              return Expanded(
-                                  child: Stack(
+                              return  Expanded(
+                                  child: allUsersdetails.data?.length == 0 ?Center(child: Text("No Users"),) :Stack(
                                 children: [
                                   AppinioSwiper(
                                     controller: controller,
@@ -1327,9 +1327,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     },
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
-                                        undoid = allUsersdetails
-                                                .data?[ind].first.id ??
-                                            '';
+                                        undoid = allUsersdetails.data?[ind].first.id ?? '';
                                         print("undoid =======> $undoid");
                                         activity.direction == AxisDirection.up
                                             ? rejectUserCubit.GetRejectUser(
