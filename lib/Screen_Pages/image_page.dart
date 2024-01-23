@@ -19,14 +19,11 @@ class _Image_ScreenState extends State<Image_Screen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _controller = VideoPlayerController.networkUrl(
-        Uri.parse(
-            'http://192.168.29.116:3334/upload/images/1705902891199-VID_20231228_150419.mp4'),
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.image),
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
       ..initialize().then((_) {
-        print(widget.image);
+        print("Hello Prit:- ${widget.image}");
         setState(() {});
       });
   }
@@ -47,17 +44,14 @@ class _Image_ScreenState extends State<Image_Screen> {
                   width: screenWidth(context),
                   child: Stack(
                     children: [
-                      FittedBox(
-                        fit: BoxFit.cover,
-                        child: SizedBox(
-                          width: 20 / 20,
-                          height: 1,
-                          child: VideoPlayer(_controller!),
-                        ),
-                      ),
-                      // VideoPlayer(
-                      //   _controller!,
+                      // SizedBox(
+                      //   width: 20 / 20
+                      //   height: 1,
+                      //   child:VideoPlayer(_controller!),
                       // ),
+                      VideoPlayer(
+                        _controller!,
+                      ),
                       IconButton(
                           onPressed: () {
                             Navigator.pop(context);
@@ -112,7 +106,7 @@ class _Image_ScreenState extends State<Image_Screen> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(widget.image),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fitWidth,
                             filterQuality: FilterQuality.high)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

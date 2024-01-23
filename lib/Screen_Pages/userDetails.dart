@@ -152,8 +152,8 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                                     //fit:BoxFit.cover
                                   )),
                             ),
-                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
+                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
                           ),
 
                         ))
@@ -276,7 +276,7 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                           ),
                            Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Company: ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
@@ -286,7 +286,7 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                               ),
                               Text(
                                 widget.Company,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color: AppColor.dropdownfont,
                                     fontSize: 14,
@@ -426,12 +426,12 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                                       children: [
                                         Text(
                                           _file1,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 13,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        Text(
+                                        const Text(
                                           '96.47 KB ',
                                           style: TextStyle(
                                               fontFamily: 'Roboto',
@@ -500,12 +500,12 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                                       children: [
                                         Text(
                                           _file2,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontFamily: 'Roboto',
                                               fontSize: 13,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        Text(
+                                        const Text(
                                           '96.47 KB ',
                                           style: TextStyle(
                                               fontFamily: 'Roboto',
