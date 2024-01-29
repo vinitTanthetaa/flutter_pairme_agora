@@ -829,7 +829,5 @@ class _Chatting_PageState extends State<Chatting_Page> {
       scrollController.jumpTo(scrollController.position.maxScrollExtent);
     });
   }
-  String get _timeString {
-    return DateTime.now().toString().split(".").first;
-  }
+
 }

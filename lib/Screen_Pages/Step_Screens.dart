@@ -2173,20 +2173,16 @@ class _StepScreenState extends State<StepScreen> {
                                                                       //   setState(() {});
                                                                       //   Navigator.pop(context);
                                                                       // },
-                                                                      onTap:
-                                                                          () async {
+                                                                      onTap: () async {
                                                                         ImagePickerPlus
                                                                             picker =
                                                                             ImagePickerPlus(context);
                                                                         SelectedImagesDetails?
                                                                             details =
-                                                                            await picker.pickBoth(
+                                                                            await picker.pickImage(
                                                                           source:
                                                                               ImageSource.gallery,
 
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                              true,
                                                                           galleryDisplaySettings:
                                                                               GalleryDisplaySettings(
                                                                             appTheme:
@@ -2255,34 +2251,72 @@ class _StepScreenState extends State<StepScreen> {
                                                                             context,
                                                                             dividedBy:
                                                                                 100)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 17),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 2),
-                                                                          child:
-                                                                              Row(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.center,
-                                                                            children: [
-                                                                              Container(
-                                                                                margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                                height: screenHeight(context, dividedBy: 40),
-                                                                                width: screenWidth(context, dividedBy: 15),
-                                                                                decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                                              ),
-                                                                              const Text(
-                                                                                'Videos',
-                                                                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                              ),
-                                                                            ],
+                                                                    child: GestureDetector(
+                                                                      onTap: () async {
+                                                                        ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(context);
+                                                                        SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker.pickVideo(
+                                                                          source:
+                                                                          ImageSource.gallery,
+
+                                                                          galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                            appTheme:
+                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            cropImage:
+                                                                            true,
+                                                                            showImagePreview:
+                                                                            true,
                                                                           ),
-                                                                        )
-                                                                      ],
+                                                                        );
+                                                                        print(
+                                                                            'Details ===> ${details}');
+                                                                        if (details !=
+                                                                            null) {
+                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                          _selectedimag1 =
+                                                                          details.selectedFiles[0];
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          setState(
+                                                                                  () {});
+                                                                          print(
+                                                                              'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                                        }
+                                                                        // if (details != null) await displayDetails(details);
+                                                                      },
+                                                                      child: Row(
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 17),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 2),
+                                                                            child:
+                                                                                Row(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Container(
+                                                                                  margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                                  height: screenHeight(context, dividedBy: 40),
+                                                                                  width: screenWidth(context, dividedBy: 15),
+                                                                                  decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                                ),
+                                                                                const Text(
+                                                                                  'Videos',
+                                                                                  style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -2364,7 +2398,8 @@ class _StepScreenState extends State<StepScreen> {
                                                           fit: BoxFit.cover)
                                                           ,
                                                     ),
-                                                  ) : Container(
+                                                  ) :
+                                                  Container(
                                                     height: screenHeight(context,
                                                         dividedBy: 8),
                                                     width: screenHeight(context,
@@ -2559,20 +2594,17 @@ class _StepScreenState extends State<StepScreen> {
                                                                       //   setState(() {});
                                                                       //   Navigator.pop(context);
                                                                       // },
-                                                                      onTap:
-                                                                          () async {
+                                                                      onTap: () async {
                                                                         ImagePickerPlus
                                                                             picker =
                                                                             ImagePickerPlus(context);
                                                                         SelectedImagesDetails?
                                                                             details =
-                                                                            await picker.pickBoth(
+                                                                            await picker.pickImage(
                                                                           source:
                                                                               ImageSource.gallery,
 
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                              true,
+
                                                                           galleryDisplaySettings:
                                                                               GalleryDisplaySettings(
                                                                             appTheme:
@@ -2641,34 +2673,71 @@ class _StepScreenState extends State<StepScreen> {
                                                                             context,
                                                                             dividedBy:
                                                                                 100)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 17),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 2),
-                                                                          child:
-                                                                              Row(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.center,
-                                                                            children: [
-                                                                              Container(
-                                                                                margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                                height: screenHeight(context, dividedBy: 40),
-                                                                                width: screenWidth(context, dividedBy: 15),
-                                                                                decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                                              ),
-                                                                              const Text(
-                                                                                'Videos',
-                                                                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                              ),
-                                                                            ],
+                                                                    child: GestureDetector(
+                                                                      onTap: () async {
+                                                                        ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(context);
+                                                                        SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker.pickVideo(
+                                                                          source:
+                                                                          ImageSource.gallery,
+                                                                          galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                            appTheme:
+                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            cropImage:
+                                                                            true,
+                                                                            showImagePreview:
+                                                                            true,
                                                                           ),
-                                                                        )
-                                                                      ],
+                                                                        );
+                                                                        print(
+                                                                            'Details ===> ${details}');
+                                                                        if (details !=
+                                                                            null) {
+                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                          _selectedimag2 =
+                                                                          details.selectedFiles[0];
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          setState(
+                                                                                  () {});
+                                                                          print(
+                                                                              'selectedByte ==> ${_selectedimag2?.selectedFile}');
+                                                                        }
+                                                                        // if (details != null) await displayDetails(details);
+                                                                      },
+                                                                      child: Row(
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 17),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 2),
+                                                                            child:
+                                                                                Row(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Container(
+                                                                                  margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                                  height: screenHeight(context, dividedBy: 40),
+                                                                                  width: screenWidth(context, dividedBy: 15),
+                                                                                  decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                                ),
+                                                                                const Text(
+                                                                                  'Videos',
+                                                                                  style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -2945,20 +3014,18 @@ class _StepScreenState extends State<StepScreen> {
                                                                       //   setState(() {});
                                                                       //   Navigator.pop(context);
                                                                       // },
-                                                                      onTap:
-                                                                          () async {
+                                                                      onTap: () async {
                                                                         ImagePickerPlus
                                                                             picker =
                                                                             ImagePickerPlus(context);
                                                                         SelectedImagesDetails?
                                                                             details =
-                                                                            await picker.pickBoth(
+                                                                            await picker.pickImage(
                                                                           source:
                                                                               ImageSource.gallery,
 
                                                                           /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                              true,
+
                                                                           galleryDisplaySettings:
                                                                               GalleryDisplaySettings(
                                                                             appTheme:
@@ -3027,34 +3094,74 @@ class _StepScreenState extends State<StepScreen> {
                                                                             context,
                                                                             dividedBy:
                                                                                 100)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 17),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 2),
-                                                                          child:
-                                                                              Row(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.center,
-                                                                            children: [
-                                                                              Container(
-                                                                                margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                                height: screenHeight(context, dividedBy: 40),
-                                                                                width: screenWidth(context, dividedBy: 15),
-                                                                                decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                                              ),
-                                                                              const Text(
-                                                                                'Videos',
-                                                                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                              ),
-                                                                            ],
+                                                                    child: GestureDetector(
+                                                                      onTap: () async {
+                                                                        ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(context);
+                                                                        SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker.pickVideo(
+                                                                          source:
+                                                                          ImageSource.gallery,
+
+                                                                          /// On long tap, it will be available.
+
+                                                                          galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                            appTheme:
+                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            cropImage:
+                                                                            true,
+                                                                            showImagePreview:
+                                                                            true,
                                                                           ),
-                                                                        )
-                                                                      ],
+                                                                        );
+                                                                        print(
+                                                                            'Details ===> ${details}');
+                                                                        if (details !=
+                                                                            null) {
+                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                          _selectedimag3 =
+                                                                          details.selectedFiles[0];
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          setState(
+                                                                                  () {});
+                                                                          print(
+                                                                              'selectedByte ==> ${_selectedimag3?.selectedFile}');
+                                                                        }
+                                                                        // if (details != null) await displayDetails(details);
+                                                                      },
+                                                                      child: Row(
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 17),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 2),
+                                                                            child:
+                                                                                Row(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Container(
+                                                                                  margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                                  height: screenHeight(context, dividedBy: 40),
+                                                                                  width: screenWidth(context, dividedBy: 15),
+                                                                                  decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                                ),
+                                                                                const Text(
+                                                                                  'Videos',
+                                                                                  style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -3341,20 +3448,15 @@ class _StepScreenState extends State<StepScreen> {
                                                                       //   setState(() {});
                                                                       //   Navigator.pop(context);
                                                                       // },
-                                                                      onTap:
-                                                                          () async {
+                                                                      onTap: () async {
                                                                         ImagePickerPlus
                                                                             picker =
                                                                             ImagePickerPlus(context);
                                                                         SelectedImagesDetails?
                                                                             details =
-                                                                            await picker.pickBoth(
+                                                                            await picker.pickImage(
                                                                           source:
                                                                               ImageSource.gallery,
-
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                              true,
                                                                           galleryDisplaySettings:
                                                                               GalleryDisplaySettings(
                                                                             appTheme:
@@ -3423,34 +3525,71 @@ class _StepScreenState extends State<StepScreen> {
                                                                             context,
                                                                             dividedBy:
                                                                                 100)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 17),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 2),
-                                                                          child:
-                                                                              Row(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.center,
-                                                                            children: [
-                                                                              Container(
-                                                                                margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                                height: screenHeight(context, dividedBy: 40),
-                                                                                width: screenWidth(context, dividedBy: 15),
-                                                                                decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                                              ),
-                                                                              const Text(
-                                                                                'Videos',
-                                                                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                              ),
-                                                                            ],
+                                                                    child: GestureDetector(
+                                                                      onTap: () async {
+                                                                        ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(context);
+                                                                        SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker.pickVideo(
+                                                                          source:
+                                                                          ImageSource.gallery,
+                                                                          galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                            appTheme:
+                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            cropImage:
+                                                                            true,
+                                                                            showImagePreview:
+                                                                            true,
                                                                           ),
-                                                                        )
-                                                                      ],
+                                                                        );
+                                                                        print(
+                                                                            'Details ===> ${details}');
+                                                                        if (details !=
+                                                                            null) {
+                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                          _selectedimag4 =
+                                                                          details.selectedFiles[0];
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          setState(
+                                                                                  () {});
+                                                                          print(
+                                                                              'selectedByte ==> ${_selectedimag4?.selectedFile}');
+                                                                        }
+                                                                        // if (details != null) await displayDetails(details);
+                                                                      },
+                                                                      child: Row(
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 17),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 2),
+                                                                            child:
+                                                                                Row(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Container(
+                                                                                  margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                                  height: screenHeight(context, dividedBy: 40),
+                                                                                  width: screenWidth(context, dividedBy: 15),
+                                                                                  decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                                ),
+                                                                                const Text(
+                                                                                  'Videos',
+                                                                                  style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -3727,20 +3866,15 @@ class _StepScreenState extends State<StepScreen> {
                                                                       //   setState(() {});
                                                                       //   Navigator.pop(context);
                                                                       // },
-                                                                      onTap:
-                                                                          () async {
+                                                                      onTap: () async {
                                                                         ImagePickerPlus
                                                                             picker =
                                                                             ImagePickerPlus(context);
                                                                         SelectedImagesDetails?
                                                                             details =
-                                                                            await picker.pickBoth(
+                                                                            await picker.pickImage(
                                                                           source:
                                                                               ImageSource.gallery,
-
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                              true,
                                                                           galleryDisplaySettings:
                                                                               GalleryDisplaySettings(
                                                                             appTheme:
@@ -3809,34 +3943,71 @@ class _StepScreenState extends State<StepScreen> {
                                                                             context,
                                                                             dividedBy:
                                                                                 100)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 17),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 2),
-                                                                          child:
-                                                                              Row(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.center,
-                                                                            children: [
-                                                                              Container(
-                                                                                margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                                height: screenHeight(context, dividedBy: 40),
-                                                                                width: screenWidth(context, dividedBy: 15),
-                                                                                decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                                              ),
-                                                                              const Text(
-                                                                                'Videos',
-                                                                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                              ),
-                                                                            ],
+                                                                    child: GestureDetector(
+                                                                      onTap: () async {
+                                                                        ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(context);
+                                                                        SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker.pickVideo(
+                                                                          source:
+                                                                          ImageSource.gallery,
+                                                                          galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                            appTheme:
+                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            cropImage:
+                                                                            true,
+                                                                            showImagePreview:
+                                                                            true,
                                                                           ),
-                                                                        )
-                                                                      ],
+                                                                        );
+                                                                        print(
+                                                                            'Details ===> ${details}');
+                                                                        if (details !=
+                                                                            null) {
+                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                          _selectedimag5 =
+                                                                          details.selectedFiles[0];
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          setState(
+                                                                                  () {});
+                                                                          print(
+                                                                              'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                        }
+                                                                        // if (details != null) await displayDetails(details);
+                                                                      },
+                                                                      child: Row(
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 17),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 2),
+                                                                            child:
+                                                                                Row(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Container(
+                                                                                  margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                                  height: screenHeight(context, dividedBy: 40),
+                                                                                  width: screenWidth(context, dividedBy: 15),
+                                                                                  decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                                ),
+                                                                                const Text(
+                                                                                  'Videos',
+                                                                                  style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -4107,20 +4278,16 @@ class _StepScreenState extends State<StepScreen> {
                                                                       //   setState(() {});
                                                                       //   Navigator.pop(context);
                                                                       // },
-                                                                      onTap:
-                                                                          () async {
+                                                                      onTap: () async {
                                                                         ImagePickerPlus
                                                                             picker =
                                                                             ImagePickerPlus(context);
                                                                         SelectedImagesDetails?
                                                                             details =
-                                                                            await picker.pickBoth(
+                                                                            await picker.pickImage(
                                                                           source:
                                                                               ImageSource.gallery,
 
-                                                                          /// On long tap, it will be available.
-                                                                          multiSelection:
-                                                                              true,
                                                                           galleryDisplaySettings:
                                                                               GalleryDisplaySettings(
                                                                             appTheme:
@@ -4189,34 +4356,72 @@ class _StepScreenState extends State<StepScreen> {
                                                                             context,
                                                                             dividedBy:
                                                                                 100)),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 17),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 2),
-                                                                          child:
-                                                                              Row(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.center,
-                                                                            children: [
-                                                                              Container(
-                                                                                margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                                height: screenHeight(context, dividedBy: 40),
-                                                                                width: screenWidth(context, dividedBy: 15),
-                                                                                decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                                              ),
-                                                                              const Text(
-                                                                                'Videos',
-                                                                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
-                                                                              ),
-                                                                            ],
+                                                                    child: GestureDetector(
+                                                                      onTap: () async {
+                                                                        ImagePickerPlus
+                                                                        picker =
+                                                                        ImagePickerPlus(context);
+                                                                        SelectedImagesDetails?
+                                                                        details =
+                                                                        await picker.pickVideo(
+                                                                          source:
+                                                                          ImageSource.gallery,
+
+                                                                          galleryDisplaySettings:
+                                                                          GalleryDisplaySettings(
+                                                                            appTheme:
+                                                                            AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                                            cropImage:
+                                                                            true,
+                                                                            showImagePreview:
+                                                                            true,
                                                                           ),
-                                                                        )
-                                                                      ],
+                                                                        );
+                                                                        print(
+                                                                            'Details ===> ${details}');
+                                                                        if (details !=
+                                                                            null) {
+                                                                          //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                                          _selectedimag6 =
+                                                                          details.selectedFiles[0];
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          setState(
+                                                                                  () {});
+                                                                          print(
+                                                                              'selectedByte ==> ${_selectedimag6?.selectedFile}');
+                                                                        }
+                                                                        // if (details != null) await displayDetails(details);
+                                                                      },
+                                                                      child: Row(
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 17),
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 2),
+                                                                            child:
+                                                                                Row(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Container(
+                                                                                  margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                                  height: screenHeight(context, dividedBy: 40),
+                                                                                  width: screenWidth(context, dividedBy: 15),
+                                                                                  decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                                ),
+                                                                                const Text(
+                                                                                  'Videos',
+                                                                                  style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],

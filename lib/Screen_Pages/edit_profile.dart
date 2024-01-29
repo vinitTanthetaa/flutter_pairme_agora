@@ -1,12 +1,15 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Screen_Pages/address_details.dart';
 import 'package:pair_me/Screen_Pages/business_address.dart';
 import 'package:pair_me/Screen_Pages/business_profile.dart';
@@ -44,6 +47,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
   String gender = 'Female';
   bool popup = false;
   bool calendar = false;
+  SelectedByte? _selectedimag1;
+
   getdata() {
     // Split the full name into parts using space as a delimiter
     List<String> nameParts =
@@ -110,36 +115,275 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: Container(
-                          height: screenHeight(context, dividedBy: 7.5),
-                          width: screenHeight(context, dividedBy: 7.5),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      '${apis.baseurl}/${userDetailsCubit.userProfile.data?.first.image?.photo1}'),
-                                  fit: BoxFit.cover),
-                              shape: BoxShape.circle,
-                              color: Colors.grey),
+                        child: SizedBox(
                           child: Stack(
                             children: [
+                              _selectedimag1 != null ?
+                              Container(
+                                height: screenHeight(context, dividedBy: 7.5),
+                                width: screenHeight(context, dividedBy: 7.5),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: FileImage(
+                                            _selectedimag1!.selectedFile),
+                                        fit: BoxFit.cover),
+                                    shape: BoxShape.circle,
+                                    color: Colors.grey),
+                              ) : Container(
+                                height: screenHeight(context, dividedBy: 7.5),
+                                width: screenHeight(context, dividedBy: 7.5),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            '${apis.baseurl}/${userDetailsCubit.userProfile.data?.first.profileImage}'),
+                                        fit: BoxFit.cover),
+                                    shape: BoxShape.circle,
+                                    color: Colors.grey),
+                              ),
                               Positioned(
                                 bottom: screenHeight(context, dividedBy: 150),
                                 right: screenWidth(context, dividedBy: 200),
-                                child: Container(
-                                  height: screenHeight(context, dividedBy: 30),
-                                  width: screenHeight(context, dividedBy: 30),
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: AppColor.white),
-                                  child: Center(
-                                    child: Image(
-                                      image: const AssetImage(
-                                          'assets/Images/camera.png'),
-                                      height:
-                                          screenHeight(context, dividedBy: 50),
-                                      width:
-                                          screenHeight(context, dividedBy: 50),
-                                      color: AppColor.skyBlue,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return Container(
+                                          height: screenHeight(
+                                              context,
+                                              dividedBy: 4.3),
+                                          decoration: const BoxDecoration(
+                                              color: AppColor
+                                                  .white,
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius
+                                                      .circular(
+                                                      15),
+                                                  topRight: Radius
+                                                      .circular(
+                                                      16))),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment
+                                                .start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: screenWidth(
+                                                        context,
+                                                        dividedBy:
+                                                        15),
+                                                    vertical: screenHeight(
+                                                        context,
+                                                        dividedBy:
+                                                        70)),
+                                                child:
+                                                const Text(
+                                                  'Change Image',
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      'Roboto',
+                                                      fontSize:
+                                                      25,
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w600),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                height: 0,
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: screenWidth(
+                                                        context,
+                                                        dividedBy:
+                                                        15),
+                                                    vertical: screenHeight(
+                                                        context,
+                                                        dividedBy:
+                                                        100)),
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      height: screenHeight(
+                                                          context,
+                                                          dividedBy:
+                                                          17),
+                                                      width: screenWidth(
+                                                          context,
+                                                          dividedBy:
+                                                          2),
+                                                      child:
+                                                      GestureDetector(
+                                                        onTap:
+                                                            () async {
+                                                          // final ImagePicker picker = ImagePicker();
+                                                          // final image = picker.pickImage(source: ImageSource.gallery);
+                                                          // print("image ===> $image");
+                                                          ImagePickerPlus
+                                                          picker =
+                                                          ImagePickerPlus(context);
+                                                          SelectedImagesDetails?
+                                                          details =
+                                                          await picker.pickImage(
+                                                            source: ImageSource.camera,
+                                                            /// On long tap, it will be available.
+                                                            galleryDisplaySettings:
+                                                            GalleryDisplaySettings(
+                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
+                                                              cropImage: true,
+                                                              showImagePreview: true,
+                                                            ),
+                                                          );
+                                                          print(
+                                                              'Details ===> ${details}');
+                                                          if (details !=
+                                                              null) {
+                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                            _selectedimag1 =
+                                                            details.selectedFiles[0];
+                                                            Navigator.pop(context);
+                                                            setState(() {});
+                                                            print('selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                          }
+                                                          // if (details != null) await displayDetails(details);
+                                                        },
+                                                        child:
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment.center,
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                              height: screenHeight(context, dividedBy: 40),
+                                                              width: screenWidth(context, dividedBy: 15),
+                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                            ),
+                                                            const Text(
+                                                              'Camera',
+                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              const Divider(
+                                                height: 0,
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: screenWidth(
+                                                        context,
+                                                        dividedBy:
+                                                        15),
+                                                    vertical: screenHeight(
+                                                        context,
+                                                        dividedBy:
+                                                        100)),
+                                                child:
+                                                GestureDetector(
+                                                  onTap:
+                                                      () async {
+                                                    ImagePickerPlus
+                                                    picker =
+                                                    ImagePickerPlus(
+                                                        context);
+                                                    SelectedImagesDetails?
+                                                    details =
+                                                    await picker
+                                                        .pickImage(
+                                                      source: ImageSource
+                                                          .gallery,
+
+                                                      /// On long tap, it will be available.
+                                                      galleryDisplaySettings:
+                                                      GalleryDisplaySettings(
+                                                        appTheme: AppTheme(
+                                                            focusColor:
+                                                            Colors.white,
+                                                            primaryColor: Colors.black),
+                                                        cropImage:
+                                                        true,
+                                                        showImagePreview:
+                                                        true,
+                                                      ),
+                                                    );
+                                                    print(
+                                                        'Details ===> ${details}');
+                                                    if (details !=
+                                                        null) {
+                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
+                                                      _selectedimag1 =
+                                                      details
+                                                          .selectedFiles[0];
+                                                      Navigator.pop(
+                                                          context);
+                                                      setState(
+                                                              () {});
+                                                      print(
+                                                          'selectedByte ==> ${_selectedimag1?.selectedFile}');
+                                                    }
+                                                    // if (details != null) await displayDetails(details);
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: screenHeight(
+                                                            context,
+                                                            dividedBy:
+                                                            17),
+                                                        width: screenWidth(
+                                                            context,
+                                                            dividedBy:
+                                                            2),
+                                                        child:
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment.center,
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                              height: screenHeight(context, dividedBy: 40),
+                                                              width: screenWidth(context, dividedBy: 15),
+                                                              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                            ),
+                                                            const Text(
+                                                              'Photos',
+                                                              style: TextStyle(fontFamily: 'Roboto', fontSize: 17, fontWeight: FontWeight.w500, color: AppColor.dropdownfont),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    height: screenHeight(context, dividedBy: 30),
+                                    width: screenHeight(context, dividedBy: 30),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: AppColor.white),
+                                    child: Center(
+                                      child: Image(
+                                        image: const AssetImage(
+                                            'assets/Images/camera.png'),
+                                        height:
+                                            screenHeight(context, dividedBy: 50),
+                                        width:
+                                            screenHeight(context, dividedBy: 50),
+                                        color: AppColor.skyBlue,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -550,7 +794,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                 dateofbirth: _date.text,
                                 phonenumber: _phoneNumber.text,
                                 email: _eMail.text,
-                                context: context).then((value) => Navigator.pop(context,'refresh'));
+                                context: context, photo_1: _selectedimag1?.selectedFile ?? File('')).then((value) => Navigator.pop(context,'refresh'));
                             // Navigator.pop(context);
                           }, height: screenHeight(context, dividedBy: 30));
                         }
@@ -568,7 +812,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                               dateofbirth: _date.text,
                               phonenumber: _phoneNumber.text,
                               email: _eMail.text,
-                              context: context);
+                              context: context, photo_1: _selectedimag1?.selectedFile ?? File('')).then((value) => Navigator.pop(context,'refresh'));
                           // Navigator.pop(context);
                         }, height: screenHeight(context, dividedBy: 30));
                       },)

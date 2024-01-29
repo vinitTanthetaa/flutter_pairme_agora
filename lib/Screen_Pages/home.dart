@@ -58,6 +58,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   MsgReqbyIDCubit msgReqbyIDCubit = MsgReqbyIDCubit();
   late AppinioSwiperController controller = AppinioSwiperController();
   List looking_for = [];
+  bool theEnd = false;
   List looking_for1 = [];
   List image = [];
   bool exchang = false;
@@ -264,16 +265,31 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                           builder: (context, state) {
                             if (state is FilterUserSuccess) {
                               return Expanded(
-                                  child: Stack(
+                                  child: theEnd ? Center(child: Text("No User!"),) : Stack(
                                     children: [
                                       AppinioSwiper(
                                         controller: controller,
+                                      onEnd: () {
+                                        print("hello to this is end");
+                                        theEnd = true;
+                                        setState(() {});
+                                      },
                                         invertAngleOnBottomDrag: true,
                                         onCardPositionChanged: (position) {
                                           if (position.offset.direction > 0) {
                                             setState(() {
                                               swipeDown = true;
                                               height = height + 20;
+                                              height1 = height1 >= 1.60
+                                                  ? height1 + 0.001
+                                                  : height1 + 0.004;
+                                              height1 >= 1.50 && fontsize >= 20
+                                                  ? fontsize = fontsize - 1
+                                                  : fontsize = fontsize;
+                                              print(height1);
+                                              wight = height1 >= 1.60
+                                                  ? wight + 0.001
+                                                  : wight + 0.003;
                                               swipeUp = false;
                                               bottonname = "Connect";
                                             });
@@ -288,6 +304,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               height1 >= 1.50 && fontsize >= 20
                                                   ? fontsize = fontsize - 1
                                                   : fontsize = fontsize;
+                                              print(height1);
                                               wight = height1 >= 1.60
                                                   ? wight + 0.001
                                                   : wight + 0.003;
@@ -312,15 +329,18 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         onSwipeEnd: (previousIndex, targetIndex, activity) {
                                           setState(() {
                                             undoid = filterUserCubit.filterUser.data?[ind].first?.id ?? '';
-                                            print("undoid =======> $undoid");
-                                            activity.direction == AxisDirection.up
-                                                ? rejectUserCubit.GetRejectUser(
-                                                id: filterUserCubit.filterUser.data?[ind].first?.id ?? '')
-                                                : connectUserCubit.GetConnectUser(
-                                                id: filterUserCubit.filterUser.data?[ind].first?.id ?? '');
-                                            ind >= filterUserCubit.filterUser.data!.length - 1
-                                                ? ind = ind
-                                                : ind = targetIndex;
+                                           height1 >= 1.51 ? print("undoid =======> $undoid") :print("Sorry =======> ");
+                                            print("previousIndex  ===> $previousIndex");
+                                            print("targetIndex  ===> $targetIndex");
+                                            print("activity  ===> $activity");
+                                            print("activity  ===> ${activity.end}");
+                                            print("activity  ===> ${activity.direction}");
+                                           height1 >= 1.50 ?  activity.direction == AxisDirection.up
+                                               ? rejectUserCubit.GetRejectUser(
+                                               id: filterUserCubit.filterUser.data?[ind].first?.id ?? '').then((value) =>  pageViewIndex = 0)
+                                               : connectUserCubit.GetConnectUser(
+                                               id: filterUserCubit.filterUser.data?[ind].first?.id ?? '').then((value) =>  pageViewIndex = 0) : height1;
+                                           ind >= filterUserCubit.filterUser.data!.length - 1 ? ind = ind : ind = targetIndex;
                                             height = 0;
                                             fontsize = 70;
                                             height1 = 1.2;
@@ -328,13 +348,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             swipeUp = false;
                                             swipeDown = false;
                                             image.clear();
-                                            pageViewIndex = 0;
                                           });
                                         },
-                                        threshold:
-                                        screenHeight(context, dividedBy: 4.5),
-                                        maxAngle:
-                                        screenHeight(context, dividedBy: 7),
+                                        threshold: screenHeight(context, dividedBy: 4.5),
+                                        maxAngle: screenHeight(context, dividedBy: 7),
                                         swipeOptions: const SwipeOptions.only(down: true, up: true),
                                         cardCount:filterUserCubit.filterUser.data?.length ?? 0,
                                         cardBuilder: (BuildContext context, int index) {
@@ -358,7 +375,81 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               child: Stack(
                                                 children: [
                                                   swipeUp || swipeDown
-                                                      ? Align(
+                                                      ? image[pageViewIndex]
+                                                      .toString()
+                                                      .endsWith(
+                                                      ".mp4") ||
+                                                      image[pageViewIndex]
+                                                          .toString()
+                                                          .endsWith(".3gpp")
+                                                      ? Center(
+                                                        child: SizedBox(
+                                                          height: screenHeight(
+                                                          context,
+                                                          dividedBy:
+                                                          swipeDown ? 1.2 : height1),
+                                                          width: screenWidth(
+                                                          context,
+                                                          dividedBy:
+                                                          swipeDown ?1 :wight),
+                                                          child: Stack(
+                                                            children: [
+                                                              VideoWidget(
+                                                              videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: false,),
+                                                              Container(
+                                                                  height: screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      swipeDown ? 1.2 : height1),
+                                                                  width: screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      swipeDown ?1 :wight),
+                                                                  decoration: const BoxDecoration(
+                                                                      gradient: LinearGradient(
+                                                                          begin: Alignment
+                                                                              .bottomCenter,
+                                                                          end: Alignment.topCenter,
+                                                                          colors: [
+                                                                            Colors
+                                                                                .black,
+                                                                            Colors
+                                                                                .black38
+                                                                          ]),
+                                                                      borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(20))),
+                                                                  child: swipeUp
+                                                                      ? Center(
+                                                                    child:
+                                                                    Text(
+                                                                      "Skip"
+                                                                          .tr(),
+                                                                      style: TextStyle(
+                                                                          fontSize: fontsize,
+                                                                          fontFamily: 'Roboto',
+                                                                          fontWeight: FontWeight.w700,
+                                                                          // color: AppColor.skyBlue
+                                                                          color: AppColor.white),
+                                                                    ),
+                                                                  )
+                                                                      : Center(
+                                                                    child:
+                                                                    Text(
+                                                                      "Connect"
+                                                                          .tr(),
+                                                                      style: TextStyle(
+                                                                          fontSize: fontsize,
+                                                                          fontFamily: 'Roboto',
+                                                                          fontWeight: FontWeight.w700,
+                                                                          // color: AppColor.skyBlue
+                                                                          color: AppColor.white),
+                                                                    ),
+                                                                  )),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ) : Align(
                                                       alignment:
                                                       Alignment.topCenter,
                                                       child: SizedBox(
@@ -374,11 +465,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     height: screenHeight(
                                                                         context,
                                                                         dividedBy:
-                                                                        height1),
+                                                                       swipeDown?1.2: height1),
                                                                     width: screenWidth(
                                                                         context,
                                                                         dividedBy:
-                                                                        wight),
+                                                                        swipeDown ?1 :wight),
                                                                     decoration: BoxDecoration(
                                                                         image: DecorationImage(
                                                                             image:
@@ -432,11 +523,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 height: screenHeight(
                                                                     context,
                                                                     dividedBy:
-                                                                    height1),
+                                                                   swipeDown ?1.2 : height1),
                                                                 width: screenWidth(
                                                                     context,
                                                                     dividedBy:
-                                                                    wight),
+                                                                    swipeDown ? 1 :wight),
                                                                 decoration: const BoxDecoration(
                                                                     gradient: LinearGradient(
                                                                         begin: Alignment
@@ -489,13 +580,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           .toString()
                                                           .endsWith(".3gpp")
                                                       ? VideoWidget(
-                                                      videoUrl:
-                                                      "${apis.baseurl}/${image[pageViewIndex]}")
+                                                      videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: true,)
                                                       : CachedNetworkImage(
-                                                    imageUrl:
-                                                    "${apis.baseurl}/${image[pageViewIndex]}",
-                                                    imageBuilder: (context,
-                                                        imageProvider) =>
+                                                    imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
+                                                    imageBuilder: (context, imageProvider) =>
                                                         Container(
                                                           decoration: BoxDecoration(
                                                               image: DecorationImage(
@@ -512,8 +600,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   Radius.circular(
                                                                       20))),
                                                         ),
-                                                    placeholder:
-                                                        (context, url) =>
+                                                    placeholder: (context, url) =>
                                                         Container(
                                                           height:
                                                           screenHeight(
@@ -535,9 +622,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             ),
                                                           ),
                                                         ),
-                                                    errorWidget: (context,
-                                                        url, error) =>
-                                                    const Center(
+                                                    errorWidget: (context, url, error) => const Center(
                                                       child: Icon(
                                                           Icons.error),
                                                     ),
@@ -566,13 +651,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                         color: AppColor
                                                             .gray,
                                                         borderStyle:
-                                                        BorderStyle
-                                                            .none,
-                                                        indicatorSize:
-                                                        8,
-                                                        selectedColor:
-                                                        AppColor
-                                                            .skyBlue,
+                                                        BorderStyle. none,
+
+                                                        indicatorSize: 9,
+                                                        selectedColor: AppColor.skyBlue,
                                                       ),
                                                     )
                                                         : const SizedBox(),
@@ -612,15 +694,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   .transparent),
                                                           onTap: () {
                                                             setState(() {
-                                                              pageViewIndex >=
-                                                                  image.length -
-                                                                      1
-                                                                  ? null
-                                                                  : pageViewIndex++;
-                                                              print(
-                                                                  pageViewIndex);
-                                                              print(image
-                                                                  .length);
+                                                              pageViewIndex >= image.length  ? null : pageViewIndex++;
+                                                              pageViewIndex = pageViewIndex;
                                                               image = image;
                                                             });
                                                           },
@@ -784,7 +859,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                               color: Colors.white),
                                                                         ),
                                                                       ],
-                                                                    ) : SizedBox(),
+                                                                    ) : const SizedBox(),
                                                                     filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName != null ?Row(
                                                                       children: [
                                                                         Text(
@@ -807,7 +882,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           15 <= filterUserCubit.filterUser.data![index].first!.professionalDetails!.companyName!.length
                                                                               ? "${filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName?.substring(0, 13) ?? ''}..."
                                                                               : "${filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName ?? ''}",
-                                                                          style: TextStyle(
+                                                                          style: const TextStyle(
                                                                               fontSize: 14,
                                                                               fontFamily: 'Roboto',
                                                                               fontWeight: FontWeight.w400,
@@ -1245,13 +1320,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               bottonname =
                                                               "Connect";
                                                             });
-                                                        // connectUserCubit.GetConnectUser(
-                                                        //         id: allUsersdetails.data?[ind].first.id ?? '')
-                                                        //     .then(
-                                                        //   (value) {
-                                                        //
-                                                        //   },
-                                                        // );
                                                       },
                                                       buttonName:
                                                       "Connect",
@@ -1501,7 +1569,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               .endsWith(".3gpp")
                                                       ? VideoWidget(
                                                           videoUrl:
-                                                              "${apis.baseurl}/${image[pageViewIndex]}")
+                                                              "${apis.baseurl}/${image[pageViewIndex]}", play: true,)
                                                       : CachedNetworkImage(
                                                           imageUrl:
                                                               "${apis.baseurl}/${image[pageViewIndex]}",
@@ -1585,61 +1653,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               ),
                                                             )
                                                           : const SizedBox(),
-                                                    ),
-                                              swipeUp || swipeDown
-                                                  ? const SizedBox()
-                                                  : Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: InkWell(
-                                                            overlayColor:
-                                                                const MaterialStatePropertyAll(
-                                                                    Colors
-                                                                        .transparent),
-                                                            onTap: () {
-                                                              setState(() {
-                                                                        pageViewIndex >
-                                                                            0
-                                                                    ? pageViewIndex--
-                                                                    : null;
-                                                                image = image;
-                                                              });
-                                                            },
-                                                            child: Container(
-                                                              height:
-                                                                  screenHeight(
-                                                                      context),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: InkWell(
-                                                            overlayColor:
-                                                                const MaterialStatePropertyAll(
-                                                                    Colors
-                                                                        .transparent),
-                                                            onTap: () {
-                                                              setState(() {
-                                                                pageViewIndex >=
-                                                                        image.length -
-                                                                            1
-                                                                    ? null
-                                                                    : pageViewIndex++;
-                                                                print(
-                                                                    pageViewIndex);
-                                                                print(image
-                                                                    .length);
-                                                                image = image;
-                                                              });
-                                                            },
-                                                            child: Container(
-                                                              height:
-                                                                  screenHeight(
-                                                                      context),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
                                                     ),
                                               swipeUp || swipeDown
                                                   ? const SizedBox()
@@ -1761,7 +1774,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                         ],
-                                                                      ) : SizedBox(),
+                                                                      ) : const SizedBox(),
                                                                       allUsersdetails.data?[index].first.businessaddress?.country != null ? Row(
                                                                         children: [
                                                                           Text(
@@ -1791,7 +1804,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                         ],
-                                                                      ) : SizedBox(),
+                                                                      ) : const SizedBox(),
                                                                       allUsersdetails.data?[index].first.professionalDetails?.companyName != null ? Row(
                                                                         children: [
                                                                           Text(
@@ -1814,14 +1827,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             15 <= allUsersdetails.data![index].first.professionalDetails!.companyName!.length
                                                                                 ? "${allUsersdetails.data?[index].first.professionalDetails?.companyName?.substring(0, 13) ?? ''}..."
                                                                                 : "${allUsersdetails.data?[index].first.professionalDetails?.companyName ?? ''}",
-                                                                            style: TextStyle(
+                                                                            style: const TextStyle(
                                                                                 fontSize: 14,
                                                                                 fontFamily: 'Roboto',
                                                                                 fontWeight: FontWeight.w400,
                                                                                 color: Colors.white),
                                                                           ),
                                                                         ],
-                                                                      ) : SizedBox(),
+                                                                      ) : const SizedBox(),
                                                                     ],
                                                                   ),
                                                                   const Spacer(),
@@ -1882,7 +1895,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   : Align(
                                                       alignment:
                                                           Alignment.center,
-                                                      child: Container(
+                                                      child: SizedBox(
                                                         key: _key3,
                                                         // margin: EdgeInsets.only(
                                                         //     top: screenHeight(context,
@@ -1972,9 +1985,58 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                               ),
                                               errorWidget:
                                                   (context, url, error) =>
-                                                      const Icon(Icons.error),
+                                                      const Center(child: Icon(Icons.error)),
                                             );
                                     },
+                                  ),
+                                  swipeUp || swipeDown
+                                      ? const SizedBox()
+                                      : Row(
+                                    children: [
+                                      Expanded(
+                                        child: InkWell(
+                                          overlayColor:
+                                          const MaterialStatePropertyAll(
+                                              Colors
+                                                  .transparent),
+                                          onTap: () {
+                                            setState(() {
+                                              pageViewIndex >
+                                                  0
+                                                  ? pageViewIndex--
+                                                  : null;
+                                              image = image;
+                                            });
+                                          },
+                                          child: Container(
+                                            height:
+                                            screenHeight(
+                                                context),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: InkWell(
+                                          overlayColor:
+                                          const MaterialStatePropertyAll(
+                                              Colors
+                                                  .transparent),
+                                          onTap: () {
+                                            setState(() {
+                                              setState(() {
+                                                pageViewIndex >= image.length - 1 ? null : pageViewIndex++;
+                                              });
+                                              image = image;
+                                            });
+                                          },
+                                          child: Container(
+                                            height:
+                                            screenHeight(
+                                                context),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Align(
                                       alignment: swipeUp
@@ -2376,11 +2438,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                         return customLoader();
                       }
                       if (state is AllUsersDetailsError) {
-                        return Center(
+                        return const Center(
                           child: Text("Somthing went wrong ...."),
                         );
                       }
-                      return Center(
+                      return const Center(
                         child: Text("Somthing went wrong ...."),
                       );
                     },
@@ -2680,23 +2742,6 @@ Widget buttons(
             width: screenHeight(context,
                 dividedBy: img.endsWith("button3.svg") ? 80 : 65),
           ),
-          // Container(
-          //   height: screenHeight(context,
-          //       dividedBy: img.endsWith("button1.svg") ? 80 : 65),
-          //   width: screenHeight(context,
-          //       dividedBy: img.endsWith("button1.svg") ? 80 : 65),
-          //   decoration: BoxDecoration(
-          //       image: DecorationImage(image: AssetImage(img),fit: BoxFit.cover,colorFilter: const ColorFilter.mode(AppColor.white, BlendMode.color))
-          //   ),
-          // ),
-          // Image(
-          //   color: AppColor.white,
-          //   image: AssetImage(img),
-          //   height: screenHeight(context,
-          //       dividedBy: img.endsWith("button1.png") ? 80 : 65),
-          //   width: screenHeight(context,
-          //       dividedBy: img.endsWith("button1.png") ? 80 : 65),
-          // ),
           SizedBox(
             width: screenWidth(context, dividedBy: 90),
           ),
@@ -2716,8 +2761,8 @@ Widget buttons(
 
 class VideoWidget extends StatefulWidget {
   final String videoUrl;
-
-  const VideoWidget({Key? key, required this.videoUrl}) : super(key: key);
+bool play;
+   VideoWidget({Key? key, required this.videoUrl,required this.play}) : super(key: key);
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
@@ -2725,21 +2770,26 @@ class VideoWidget extends StatefulWidget {
 
 class _VideoWidgetState extends State<VideoWidget> {
   late VideoPlayerController _controller;
-
-  @override
+startvideo(){
+  print("video ===> ${widget.videoUrl}");
+  _controller = VideoPlayerController.network(widget.videoUrl)
+    ..initialize().then((_) {
+      print(widget.videoUrl);
+      _controller.setVolume(0);
+     widget.play ? _controller.play() : _controller.pause();
+      _controller.setLooping(true); // Auto-repeating the video
+      setState(() { });
+    });
+  setState(() {});
+}
+@override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _controller = VideoPlayerController.network(widget.videoUrl)
-      ..initialize().then((_) {
-        setState(() {
-          _controller.setVolume(0);
-          _controller.play();
-          _controller.setLooping(true); // Auto-repeating the video
-        });
-      });
-    setState(() {});
+    setState(() {
+      startvideo();
+    });
   }
-
   @override
   void dispose() {
     _controller.dispose();

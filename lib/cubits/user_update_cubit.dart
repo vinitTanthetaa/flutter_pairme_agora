@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
@@ -25,7 +26,8 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
   UserUpdateCubit() : super(UserUpdateInitials());
 
   Future<void> UserUpdateService(
-      {required String firstname,
+      {required File photo_1,
+        required String firstname,
       required String lastname,
         required String gendar,
         required String dateofbirth,
@@ -44,12 +46,31 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
       "countryCode": countryCodeSelect.trim(),
       "email": email,
     };
-    print("Body is $body");
+    FormData formData = FormData();
+
+    if(photo_1.path.isNotEmpty ){
+      print("img 1");
+      String? fileName = photo_1.path.split('/').last ;
+      formData.files.add(
+        MapEntry('photo_1', await MultipartFile.fromFile(photo_1.path ?? "", filename: fileName,contentType: MediaType("image", "jpeg"))),
+      );
+    }
+    formData.fields.add(MapEntry("firstName", firstname));
+    formData.fields.add(MapEntry("lastName", lastname));
+    formData.fields.add(MapEntry("gender", gendar));
+    formData.fields.add(MapEntry("dateOfBirth", dateofbirth));
+    formData.fields.add(MapEntry("phoneNumber", phonenumber));
+    formData.fields.add(MapEntry("countryCode", countryCodeSelect.trim()));
+    formData.fields.add(MapEntry("email", email));
+
+    print("Body is ${formData.fields}");
+    print("Body is ${formData.files}");
     try {
       final response = await dio.post(apis.userupdate,options:  Options(headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
-      }) ,data: jsonEncode(body));
+      }) ,data: formData);
       print("Response ===> ${response.data}");
       final hello = response.data;
       print(hello);

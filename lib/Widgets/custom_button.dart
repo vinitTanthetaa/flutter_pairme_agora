@@ -6,32 +6,34 @@ import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 Widget Custom_botton (BuildContext context ,{required String text,Color? color,required Function() onTap,required double height}){
-  return InkWell(
-    overlayColor: MaterialStatePropertyAll(Colors.white),
-    onTap: onTap,
-    child: Center(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal:screenWidth(context,dividedBy: 10),vertical: height),
-        alignment: Alignment.center,
-        height: screenHeight(context,dividedBy: 17),
-        width: text.length <=12 ? screenWidth(context,dividedBy: 2.5) : screenWidth(context,dividedBy: 1.5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          color: color != null ? color :AppColor.Blue
-          // gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
-          // boxShadow: const [
-          //   BoxShadow(
-          //     color: Color(0xff7A7A7A),
-          //     offset: Offset(
-          //       0,
-          //       4,
-          //     ),
-          //     blurRadius: 11,
-          //      spreadRadius: 0.0,
-          //   ),
-          // ]
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal:screenWidth(context,dividedBy: 10),vertical: height),
+    child: InkWell(
+      overlayColor: const MaterialStatePropertyAll(Colors.white),
+      onTap: onTap,
+      child: Center(
+        child: Container(
+          alignment: Alignment.center,
+          height: screenHeight(context,dividedBy: 17),
+          width: text.length <=12 ? screenWidth(context,dividedBy: 2.5) : screenWidth(context,dividedBy: 1.5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: color != null ? color :AppColor.Blue
+            // gradient: const LinearGradient(colors: [AppColor.skyBlue,AppColor.whiteskyBlue]),
+            // boxShadow: const [
+            //   BoxShadow(
+            //     color: Color(0xff7A7A7A),
+            //     offset: Offset(
+            //       0,
+            //       4,
+            //     ),
+            //     blurRadius: 11,
+            //      spreadRadius: 0.0,
+            //   ),
+            // ]
+          ),
+          child: Text(text.tr(),style:  const TextStyle(fontWeight: FontWeight.w600,fontSize: 17,fontFamily: 'Roboto',color: AppColor.white),),
         ),
-        child: Text(text.tr(),style:  const TextStyle(fontWeight: FontWeight.w600,fontSize: 17,fontFamily: 'Roboto',color: AppColor.white),),
       ),
     ),
   );
