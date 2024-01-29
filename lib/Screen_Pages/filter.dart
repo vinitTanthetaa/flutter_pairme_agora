@@ -44,8 +44,11 @@ class _Filter_pageState extends State<Filter_page> {
   getPreData() async {
     _gender.text = (await prefsService.getStringData("gender"))!;
     _slider = (await prefsService.getDoubleData("slider"))!;
+    setState(() {});
     _Contry.text = (await prefsService.getStringData("contry"))!;
+    setState(() {});
     _State.text = (await prefsService.getStringData("state"))!;
+    setState(() {});
     _City.text = (await prefsService.getStringData("city"))!;
     setState(() {});
     _type = (await prefsService.getStringlistData("type"))!;
@@ -78,9 +81,12 @@ class _Filter_pageState extends State<Filter_page> {
                 automaticallyImplyLeading: false,
                 actions: [
                   TextButton(onPressed: () {
-                    filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text, state: _State.text, city: _City.text, gender: gender, looking_for: _type, context: context).then((value) {
+                    filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text.trim(), state: _State.text.trim(), city: _City.text.trim(), gender: _gender.text.trim(), looking_for: _type, context: context).then((value) {
                       Navigator.pop(context,'refresh');
                     });
+                    // filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text.isEmpty ? null :_Contry.text, state: _State.text.isEmpty ? null : _State.text, city: _City.text.isEmpty ? null :_City.text, gender: gender.isEmpty ?null :gender, looking_for: _type.isEmpty ? null :_type, context: context).then((value) {
+                    //   Navigator.pop(context,'refresh');
+                    // });
                   }, child: const Text("Apply",style: TextStyle(color: AppColor.skyBlue),))
                 ],
                 leading: GestureDetector(

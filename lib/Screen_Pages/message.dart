@@ -119,7 +119,7 @@ class _Message_pageState extends State<Message_page> {
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        custom_header(text: 'Message'),
-                       GestureDetector(
+                       messageRequestCubit.userMssageReq.data != null ? GestureDetector(
                          onTap: () {
                            Navigator.push(context, MaterialPageRoute(builder:(context) {
                              return const MessageRequest();
@@ -130,7 +130,7 @@ class _Message_pageState extends State<Message_page> {
                                Text('Requests'.tr(),style: const TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
                                 Text('(${messageRequestCubit.userMssageReq.data?.withoutConnect?.length ?? 0})',style: TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
                              ],
-                           ),),
+                           ),) : const SizedBox(),
                      ],
                    ),
                  ),
@@ -169,7 +169,10 @@ class _Message_pageState extends State<Message_page> {
                                    direction: DismissDirection.endToStart,
                                    onDismissed: (direction) {
                                      removeMsgUserCubit.DeleteUser(context, id: userMessage.data?.data?[index].id ?? '').then((value) {
-                                       messageCubit.GetMessage();
+                                       setState(() {
+                                         messageCubit.GetMessage();
+                                         setState(() {});
+                                       });
                                      },);
                                    },
                                    key: UniqueKey(),
@@ -190,7 +193,7 @@ class _Message_pageState extends State<Message_page> {
                                    child: InkWell(
                                      onTap: () {
                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: "${apis.baseurl}/${userMessage.data?.data?[index].userImage ?? ''}",);
+                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: "${apis.baseurl}/${userMessage.data?.data?[index].userImage ?? ''}", id: userMessage.data?.data?[index].id ?? '',);
                                        },));
                                      },
                                      child: SizedBox(

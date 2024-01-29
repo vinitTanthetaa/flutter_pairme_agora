@@ -43,7 +43,7 @@ class MessageUserCubit extends Cubit<MessageUserState> {
             name:
             'chatting',
             Username: name,
-            image:image,
+            image:image, id: id,
           );
         },));
       }

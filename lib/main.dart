@@ -13,6 +13,7 @@ import 'package:pair_me/cubits/ReSend_Otp_cubit.dart';
 import 'package:pair_me/cubits/Reset_Password.dart';
 import 'package:pair_me/cubits/Verify.dart';
 import 'package:pair_me/cubits/acceptORrejectnotification.dart';
+import 'package:pair_me/cubits/accept_req_msg_user.dart';
 import 'package:pair_me/cubits/address_update.dart';
 import 'package:pair_me/cubits/adsress_drtails.dart';
 import 'package:pair_me/cubits/business_add_update.dart';
@@ -111,6 +112,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => MsgReqbyIDCubit()),
         BlocProvider(create: (context) => AllMessageRequestCubit()),
         BlocProvider(create: (context) => RemoveMsgUserCubit()),
+        BlocProvider(create: (context) => AcceptReqMsgUserCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

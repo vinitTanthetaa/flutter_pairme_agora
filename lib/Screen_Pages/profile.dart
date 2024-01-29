@@ -140,7 +140,7 @@ class _Profile_pageState extends State<Profile_page> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600),
                                     ),
-                                    Row(
+                                    userProfile.data?.first.professionalDetails?.addRole != null ? Row(
                                       children: [
                                         Text(
                                           'Role'.tr(),
@@ -167,8 +167,8 @@ class _Profile_pageState extends State<Profile_page> {
                                               color: AppColor.dropdownfont),
                                         ),
                                       ],
-                                    ),
-                                    Row(
+                                    ) : SizedBox(),
+                                    userProfile.data?.first.professionalDetails?.companyName != null ? Row(
                                       children: [
                                         Text(
                                           'Company'.tr(),
@@ -195,7 +195,7 @@ class _Profile_pageState extends State<Profile_page> {
                                               color: AppColor.dropdownfont),
                                         ),
                                       ],
-                                    ),
+                                    ) : SizedBox(),
                                   ],
                                 ),
                                 const Spacer(),
@@ -317,53 +317,55 @@ class _Profile_pageState extends State<Profile_page> {
                           //   padding: const EdgeInsets.only(left: 330.0),
                           //   child: custom_text(text: "2/5", color: Color(0xff434343)),
                           // ),
-                          custom_textfield_header(text: 'Bio'),
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: screenHeight(context, dividedBy: 100),
-                                bottom: screenHeight(context, dividedBy: 70)),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: AppColor.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: AppColor.fontgray,
-                                  offset: Offset(
-                                    0,
-                                    0,
+                          if(_bio.text.isNotEmpty)...[
+                            custom_textfield_header(text: 'Bio'),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: screenHeight(context, dividedBy: 100),
+                                  bottom: screenHeight(context, dividedBy: 70)),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: AppColor.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      0,
+                                      0,
+                                    ),
+                                    blurRadius: 8,
+                                    // spreadRadius: 1.0,
                                   ),
-                                  blurRadius: 8,
-                                  // spreadRadius: 1.0,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth(context, dividedBy: 25),
-                                  vertical: screenHeight(context, dividedBy: 150)),
-                              child: TextField(
-                                controller: _bio,
-                                maxLength: 250,
-                                readOnly: true,
-                                minLines: 1,
-                                maxLines: 7,
-                                cursorColor: AppColor.fontdarkgray,
-                                style: const TextStyle(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Color(0xff434343)),
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  // hintText: 'Enter some words of your Profile',
-                                  // hintStyle: TextStyle(
-                                  //     fontFamily: 'Roboto',
-                                  //     fontWeight: FontWeight.w400,
-                                  //     fontSize: 15)
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth(context, dividedBy: 25),
+                                    vertical: screenHeight(context, dividedBy: 150)),
+                                child: TextField(
+                                  controller: _bio,
+                                  maxLength: 250,
+                                  readOnly: true,
+                                  minLines: 1,
+                                  maxLines: 7,
+                                  cursorColor: AppColor.fontdarkgray,
+                                  style: const TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Color(0xff434343)),
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    // hintText: 'Enter some words of your Profile',
+                                    // hintStyle: TextStyle(
+                                    //     fontFamily: 'Roboto',
+                                    //     fontWeight: FontWeight.w400,
+                                    //     fontSize: 15)
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                           custom_textfield_header(text: 'My Documents'),
                           SizedBox(
                             height: screenHeight(context, dividedBy: 150),
@@ -602,11 +604,11 @@ class _Profile_pageState extends State<Profile_page> {
                               ),
                             ),
                           ) : const SizedBox(),
-                          SizedBox(
+                          userProfile.data?.first.address != null ?SizedBox(
                             height: screenHeight(context, dividedBy: 100),
-                          ),
-                          custom_textfield_header(text: 'Address'),
-                          Container(
+                          ) : const SizedBox(),
+                          userProfile.data?.first.address != null ?custom_textfield_header(text: 'Address'):const SizedBox(),
+                          userProfile.data?.first.address != null ?Container(
                             margin: EdgeInsets.only(
                                 top: screenHeight(context, dividedBy: 100),
                                 bottom: screenHeight(context, dividedBy: 70)),
@@ -640,152 +642,154 @@ class _Profile_pageState extends State<Profile_page> {
                                     fontFamily: "Roboto"),
                               ),
                             ),
-                          ),
-                          custom_textfield_header(text: 'Business Experience'),
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: screenHeight(context, dividedBy: 100),
-                                bottom: screenHeight(context, dividedBy: 70)),
-                            alignment: Alignment.centerLeft,
-                            height: screenHeight(context, dividedBy: 20),
-                            width: screenWidth(context, dividedBy: 1.15),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7),
-                                color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: AppColor.fontgray,
-                                    offset: Offset(
-                                      1,
-                                      1,
+                          ) : const SizedBox(),
+                          if(userProfile.data?.first.professionalDetails != null)...[
+                            custom_textfield_header(text: 'Business Experience'),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: screenHeight(context, dividedBy: 100),
+                                  bottom: screenHeight(context, dividedBy: 70)),
+                              alignment: Alignment.centerLeft,
+                              height: screenHeight(context, dividedBy: 20),
+                              width: screenWidth(context, dividedBy: 1.15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: Colors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: AppColor.fontgray,
+                                      offset: Offset(
+                                        1,
+                                        1,
+                                      ),
+                                      blurRadius: 4,
+                                      // spreadRadius: 1.0,
                                     ),
-                                    blurRadius: 4,
-                                    // spreadRadius: 1.0,
-                                  ),
-                                ]),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth(context, dividedBy: 30),
-                                  vertical: screenHeight(context, dividedBy: 100)),
-                              child: Text(
-                                userProfile.data?.first.professionalDetails?.businessExperience ?? '1 year',
-                                style: TextStyle(
-                                    color: Color(0xff434343),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "Roboto"),
+                                  ]),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth(context, dividedBy: 30),
+                                    vertical: screenHeight(context, dividedBy: 100)),
+                                child: Text(
+                                  userProfile.data?.first.professionalDetails?.businessExperience ?? '',
+                                  style: TextStyle(
+                                      color: Color(0xff434343),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Roboto"),
+                                ),
                               ),
                             ),
-                          ),
-                          custom_textfield_header(text: 'Skills'),
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: screenHeight(context, dividedBy: 100),
-                                bottom: screenHeight(context, dividedBy: 70)),
-                            alignment: Alignment.centerLeft,
-                            height: screenHeight(context, dividedBy: 20),
-                            width: screenWidth(context, dividedBy: 1.15),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7),
-                                color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: AppColor.fontgray,
-                                    offset: Offset(
-                                      1,
-                                      1,
+                            custom_textfield_header(text: 'Skills'),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: screenHeight(context, dividedBy: 100),
+                                  bottom: screenHeight(context, dividedBy: 70)),
+                              alignment: Alignment.centerLeft,
+                              height: screenHeight(context, dividedBy: 20),
+                              width: screenWidth(context, dividedBy: 1.15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: Colors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: AppColor.fontgray,
+                                      offset: Offset(
+                                        1,
+                                        1,
+                                      ),
+                                      blurRadius: 4,
+                                      // spreadRadius: 1.0,
                                     ),
-                                    blurRadius: 4,
-                                    // spreadRadius: 1.0,
-                                  ),
-                                ]),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth(context, dividedBy: 30),
-                                  vertical: screenHeight(context, dividedBy: 100)),
-                              child: Text(
-                                userProfile.data?.first.professionalDetails?.skills ?? '1 year',
-                                style: const TextStyle(
-                                    color: Color(0xff434343),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "Roboto"),
+                                  ]),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth(context, dividedBy: 30),
+                                    vertical: screenHeight(context, dividedBy: 100)),
+                                child: Text(
+                                  userProfile.data?.first.professionalDetails?.skills ?? '1 year',
+                                  style: const TextStyle(
+                                      color: Color(0xff434343),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Roboto"),
+                                ),
                               ),
                             ),
-                          ),
-                          custom_textfield_header(text: 'Education'),
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: screenHeight(context, dividedBy: 100),
-                                bottom: screenHeight(context, dividedBy: 70)),
-                            height: screenHeight(context, dividedBy: 20),
-                            width: screenWidth(context, dividedBy: 1.15),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7),
-                                color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: AppColor.fontgray,
-                                    offset: Offset(
-                                      1,
-                                      1,
+                            custom_textfield_header(text: 'Education'),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: screenHeight(context, dividedBy: 100),
+                                  bottom: screenHeight(context, dividedBy: 70)),
+                              height: screenHeight(context, dividedBy: 20),
+                              width: screenWidth(context, dividedBy: 1.15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: Colors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: AppColor.fontgray,
+                                      offset: Offset(
+                                        1,
+                                        1,
+                                      ),
+                                      blurRadius: 4,
+                                      // spreadRadius: 1.0,
                                     ),
-                                    blurRadius: 4,
-                                    // spreadRadius: 1.0,
-                                  ),
-                                ]),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth(context, dividedBy: 30)),
-                              child:  Row(
-                                children: [
-                                  Text(
-                                    userProfile.data?.first.professionalDetails?.education ?? '',
-                                    style: const TextStyle(
-                                        color: AppColor.black,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12),
-                                  ),
-                                ],
+                                  ]),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth(context, dividedBy: 30)),
+                                child:  Row(
+                                  children: [
+                                    Text(
+                                      userProfile.data?.first.professionalDetails?.education ?? '',
+                                      style: const TextStyle(
+                                          color: AppColor.black,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          custom_textfield_header(text: 'University'),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.only(
-                                top: screenHeight(context, dividedBy: 100),
-                                bottom: screenHeight(context, dividedBy: 70)),
-                            height: screenHeight(context, dividedBy: 20),
-                            width: screenWidth(context, dividedBy: 1.15),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7),
-                                color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: AppColor.fontgray,
-                                    offset: Offset(
-                                      1,
-                                      1,
+                            custom_textfield_header(text: 'University'),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              margin: EdgeInsets.only(
+                                  top: screenHeight(context, dividedBy: 100),
+                                  bottom: screenHeight(context, dividedBy: 70)),
+                              height: screenHeight(context, dividedBy: 20),
+                              width: screenWidth(context, dividedBy: 1.15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: Colors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: AppColor.fontgray,
+                                      offset: Offset(
+                                        1,
+                                        1,
+                                      ),
+                                      blurRadius: 4,
+                                      // spreadRadius: 1.0,
                                     ),
-                                    blurRadius: 4,
-                                    // spreadRadius: 1.0,
-                                  ),
-                                ]),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth(context, dividedBy: 30)),
-                              child:  Text(
-                                userProfile.data?.first.professionalDetails?.university ?? '',
-                                style: const TextStyle(
-                                    color: AppColor.black,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12),
+                                  ]),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth(context, dividedBy: 30)),
+                                child:  Text(
+                                  userProfile.data?.first.professionalDetails?.university ?? '',
+                                  style: const TextStyle(
+                                      color: AppColor.black,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                           Custom_botton(
                             context,
                             text: 'Premium Membership',

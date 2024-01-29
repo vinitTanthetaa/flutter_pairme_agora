@@ -1,38 +1,43 @@
 // To parse this JSON data, do
 //
-//     final FilterUser = FilterUserFromJson(jsonString);
+//     final filterUser = filterUserFromJson(jsonString);
 
 import 'dart:convert';
 
-FilterUser FilterUserFromJson(String str) => FilterUser.fromJson(json.decode(str));
+FilterUser filterUserFromJson(String str) => FilterUser.fromJson(json.decode(str));
 
-String FilterUserToJson(FilterUser data) => json.encode(data.toJson());
+String filterUserToJson(FilterUser data) => json.encode(data.toJson());
 
 class FilterUser {
   bool? status;
   int? code;
-  List<List<Datum>>? data;
+  int? data1;
+  List<List<Datum?>>? data;
 
   FilterUser({
     this.status,
     this.code,
+    this.data1,
     this.data,
   });
 
   factory FilterUser.fromJson(Map<String, dynamic> json) => FilterUser(
     status: json["status"],
     code: json["code"],
-    data: List<List<Datum>>.from(json["data"].map((x) => List<Datum>.from(x.map((x) => Datum.fromJson(x))))),
+    data1: json["data1"],
+    data: List<List<Datum?>>.from(json["data"].map((x) => List<Datum?>.from(x.map((x) => x == null ? null : Datum.fromJson(x))))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
-    "data": List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
+    "data1": data1,
+    "data": List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x?.toJson())))),
   };
 }
 
 class Datum {
+  List<dynamic>? connectedUser;
   String? id;
   String? name;
   String? email;
@@ -44,8 +49,6 @@ class Datum {
   String? role;
   bool? teamsAndCondition;
   int? score;
-  List<dynamic>? connectedUser;
-  List<dynamic>? rejectedUser;
   int? v;
   String? verified;
   Address? address;
@@ -54,12 +57,14 @@ class Datum {
   String? profileImage;
   List<String>? yourself;
   List<String>? lookingfor;
+  List<String>? rejectedUser;
   Image? image;
   FileClass? file;
   String? userId;
   String? bio;
 
   Datum({
+    this.connectedUser,
     this.id,
     this.name,
     this.email,
@@ -71,8 +76,6 @@ class Datum {
     this.role,
     this.teamsAndCondition,
     this.score,
-    this.connectedUser,
-    this.rejectedUser,
     this.v,
     this.verified,
     this.address,
@@ -81,6 +84,7 @@ class Datum {
     this.profileImage,
     this.yourself,
     this.lookingfor,
+    this.rejectedUser,
     this.image,
     this.file,
     this.userId,
@@ -88,6 +92,7 @@ class Datum {
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    connectedUser: json["connectedUser"] == null ? null : List<dynamic>.from(json["connectedUser"].map((x) => x)),
     id: json["_id"],
     name: json["name"],
     email: json["email"],
@@ -99,23 +104,23 @@ class Datum {
     role: json["role"],
     teamsAndCondition: json["teamsAndCondition"],
     score: json["score"],
-    connectedUser: json["connectedUser"] == null ? [] : List<dynamic>.from(json["connectedUser"]!.map((x) => x)),
-    rejectedUser: json["rejectedUser"] == null ? [] : List<dynamic>.from(json["rejectedUser"]!.map((x) => x)),
     v: json["__v"],
     verified: json["verified"],
     address: json["address"] == null ? null : Address.fromJson(json["address"]),
     professionalDetails: json["professionalDetails"] == null ? null : ProfessionalDetails.fromJson(json["professionalDetails"]),
     businessaddress: json["businessaddress"] == null ? null : Address.fromJson(json["businessaddress"]),
-    profileImage: json["profileImage"],
-    yourself: json["yourself"] == null ? [] : List<String>.from(json["yourself"]!.map((x) => x)),
-    lookingfor: json["lookingfor"] == null ? [] : List<String>.from(json["lookingfor"]!.map((x) => x)),
+    profileImage: json["profileImage"] == null ? null : json["profileImage"],
+    yourself: json["yourself"] == null ? null : List<String>.from(json["yourself"]!.map((x) => x)),
+    lookingfor: json["lookingfor"] == null ? null : List<String>.from(json["lookingfor"]!.map((x) => x)),
+    rejectedUser: json["rejectedUser"] == null ? null : List<String>.from(json["rejectedUser"]!.map((x) => x)),
     image: json["image"] == null ? null : Image.fromJson(json["image"]),
     file: json["file"] == null ? null : FileClass.fromJson(json["file"]),
-    userId: json["user_id"],
-    bio: json["bio"],
+    userId: json["user_id"] == null ? null : json["user_id"],
+    bio: json["bio"] == null ? null : json["bio"],
   );
 
   Map<String, dynamic> toJson() => {
+    "connectedUser": connectedUser == null ? [] : List<dynamic>.from(connectedUser!.map((x) => x)),
     "_id": id,
     "name": name,
     "email": email,
@@ -127,20 +132,19 @@ class Datum {
     "role": role,
     "teamsAndCondition": teamsAndCondition,
     "score": score,
-    "connectedUser": connectedUser == null ? [] : List<dynamic>.from(connectedUser!.map((x) => x)),
-    "rejectedUser": rejectedUser == null ? [] : List<dynamic>.from(rejectedUser!.map((x) => x)),
     "__v": v,
     "verified": verified,
-    "address": address?.toJson(),
-    "professionalDetails": professionalDetails?.toJson(),
-    "businessaddress": businessaddress?.toJson(),
-    "profileImage": profileImage,
+    "address": address?.toJson() ?? '',
+    "professionalDetails": professionalDetails?.toJson() ?? '',
+    "businessaddress": businessaddress?.toJson() ?? '',
+    "profileImage": profileImage ?? '',
     "yourself": yourself == null ? [] : List<dynamic>.from(yourself!.map((x) => x)),
     "lookingfor": lookingfor == null ? [] : List<dynamic>.from(lookingfor!.map((x) => x)),
-    "image": image?.toJson(),
-    "file": file?.toJson(),
-    "user_id": userId,
-    "bio": bio,
+    "rejectedUser": rejectedUser == null ? [] : List<dynamic>.from(rejectedUser!.map((x) => x)),
+    "image": image?.toJson() ?? '',
+    "file": file?.toJson() ?? '',
+    "user_id": userId ?? '',
+    "bio": bio ?? '',
   };
 }
 

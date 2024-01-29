@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Screen_Pages/view_pdf.dart';
@@ -217,67 +218,85 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                                   const AssetImage('assets/Images/verified.png'))
                             ],
                           ),
-                          //  Text(
-                          //   widget.role,
-                          //   style: TextStyle(
-                          //       fontWeight: FontWeight.w400,
-                          //       color: AppColor.fontdarkgray,
-                          //       fontSize: 14,
-                          //       fontFamily: 'Roboto'),
-                          // ),
-                          // SizedBox(
-                          //   height: screenHeight(context, dividedBy: 160),
-                          // ),
-                           Row(
+                          if(widget.country.isNotEmpty)...[
+                            Row(
+                              children: [
+                                Text(
+                                  'City/Country'.tr(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.skyBlue,
+                                      fontSize: 14,
+                                      fontFamily: 'Roboto'),
+                                ),
+                                Text(
+                                  ': ',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.skyBlue,
+                                      fontSize: 14,
+                                      fontFamily: 'Roboto'),
+                                ),
+                                Text(
+                                  widget.country,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.dropdownfont,
+                                      fontSize: 14,
+                                      fontFamily: 'Roboto'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: screenHeight(context, dividedBy: 500),
+                            ),
+                          ],
+                          if(widget.role.isNotEmpty)...[
+                            Row(
+                              children: [
+                                Text(
+                                  'Role'.tr(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.skyBlue,
+                                      fontSize: 14,
+                                      fontFamily: 'Roboto'),
+                                ),
+                                const Text(
+                                  ': ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.skyBlue,
+                                      fontSize: 14,
+                                      fontFamily: 'Roboto'),
+                                ),
+                                Text(
+                                  widget.role,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.dropdownfont,
+                                      fontSize: 14,
+                                      fontFamily: 'Roboto'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: screenHeight(context, dividedBy: 500),
+                            ),
+                          ],
+
+                          widget.Company.isNotEmpty ? Row(
                             children: [
-                              const Text(
-                                'City/Country: ',
-                                style: TextStyle(
+                               Text(
+                                'Company'.tr(),
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: AppColor.skyBlue,
                                     fontSize: 14,
                                     fontFamily: 'Roboto'),
                               ),
-                              Text(
-                                widget.country,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColor.dropdownfont,
-                                    fontSize: 14,
-                                    fontFamily: 'Roboto'),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: screenHeight(context, dividedBy: 500),
-                          ),
-                           Row(
-                            children: [
-                              const Text(
-                                'Role: ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColor.skyBlue,
-                                    fontSize: 14,
-                                    fontFamily: 'Roboto'),
-                              ),
-                              Text(
-                                widget.role,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColor.dropdownfont,
-                                    fontSize: 14,
-                                    fontFamily: 'Roboto'),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: screenHeight(context, dividedBy: 500),
-                          ),
-                           Row(
-                            children: [
-                              const Text(
-                                'Company: ',
+                               const Text(
+                                ': ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: AppColor.skyBlue,
@@ -293,9 +312,9 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                                     fontFamily: 'Roboto'),
                               ),
                             ],
-                          ),
+                          ) : const SizedBox(),
                           SizedBox(
-                            height: screenHeight(context, dividedBy: 50),
+                            height: screenHeight(context, dividedBy: 50) ,
                           ),
                           custom_textfield_header(text: 'Looking for'),
                           SizedBox(
@@ -323,53 +342,55 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                           SizedBox(
                             height: screenHeight(context, dividedBy: 50),
                           ),
-                          custom_textfield_header(text: 'Bio'),
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: screenHeight(context, dividedBy: 65),
-                                bottom: screenHeight(context, dividedBy: 100)),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: AppColor.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: AppColor.fontgray,
-                                  offset: Offset(
-                                    0,
-                                    0,
+                          if(_bio.text.isNotEmpty)...[
+                            custom_textfield_header(text: 'Bio'),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: screenHeight(context, dividedBy: 65),
+                                  bottom: screenHeight(context, dividedBy: 100)),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: AppColor.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: AppColor.fontgray,
+                                    offset: Offset(
+                                      0,
+                                      0,
+                                    ),
+                                    blurRadius: 8,
+                                    // spreadRadius: 1.0,
                                   ),
-                                  blurRadius: 8,
-                                  // spreadRadius: 1.0,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal:
-                                  screenWidth(context, dividedBy: 25),
-                                  vertical:
-                                  screenHeight(context, dividedBy: 150)),
-                              child: TextField(
-                                maxLength: 250,
-                                readOnly: true,
-                                minLines: 1,
-                                maxLines: 7,
-                                controller: _bio,
-                                cursorColor: AppColor.fontdarkgray,
-                                style: const TextStyle(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    color: AppColor.dropdownfont),
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                    screenWidth(context, dividedBy: 25),
+                                    vertical:
+                                    screenHeight(context, dividedBy: 150)),
+                                child: TextField(
+                                  maxLength: 250,
+                                  readOnly: true,
+                                  minLines: 1,
+                                  maxLines: 7,
+                                  controller: _bio,
+                                  cursorColor: AppColor.fontdarkgray,
+                                  style: const TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: AppColor.dropdownfont),
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: screenHeight(context, dividedBy: 50),
-                          ),
+                            SizedBox(
+                              height: screenHeight(context, dividedBy: 50),
+                            ),
+                          ],
                           custom_textfield_header(text: 'Documents'),
                           file1 ? InkWell(
                             onTap: () async {

@@ -43,7 +43,7 @@ class MsgReqbyIDCubit extends Cubit<MsgReqbyIDState> {
             return Chatting_Page(
               name: 'chatting',
               Username:  name,
-              image: image,
+              image: image, id: id,
             );
           },));
         }else{
@@ -52,7 +52,7 @@ class MsgReqbyIDCubit extends Cubit<MsgReqbyIDState> {
             return Chatting_Page(
               name: 'chatting',
               Username:  name,
-              image: image,
+              image: image, id: id,
             );
           },));
         }

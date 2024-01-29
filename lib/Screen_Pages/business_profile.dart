@@ -612,7 +612,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                           image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
                                       ),
                                     );
-                                  },imageBuilder: (context, imageProvider) {
+                                  },progressIndicatorBuilder: (context, url, progress) => Center(child: customLoader(),),imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -1420,7 +1420,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                           image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
                                       ),
                                     );
-                                  },imageBuilder: (context, imageProvider) {
+                                  },progressIndicatorBuilder: (context, url, progress) => Center(child: customLoader(),),imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -2224,7 +2224,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                           image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
                                       ),
                                     );
-                                  },imageBuilder: (context, imageProvider) {
+                                  },progressIndicatorBuilder: (context, url, progress) => Center(child: customLoader(),),imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -3036,7 +3036,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                           image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
                                       ),
                                     );
-                                  },imageBuilder: (context, imageProvider) {
+                                  },progressIndicatorBuilder: (context, url, progress) => Center(child: customLoader(),),imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -3840,7 +3840,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                       image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
                                   ),
                                 );
-                              },imageBuilder: (context, imageProvider) {
+                              },progressIndicatorBuilder: (context, url, progress) => Center(child: customLoader(),),imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,
                                           dividedBy: 8),
@@ -4645,7 +4645,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                             image: DecorationImage(image: AssetImage("assets/Images/placeHolderImage.jpg"),fit: BoxFit.cover)
                                         ),
                                       );
-                                    },
+                                    },progressIndicatorBuilder: (context, url, progress) => Center(child: customLoader(),),
                                     imageBuilder: (context, imageProvider) {
                                     return Container(
                                       height: screenHeight(context,

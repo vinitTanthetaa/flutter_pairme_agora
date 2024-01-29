@@ -1206,68 +1206,98 @@ class _StepScreenState extends State<StepScreen> {
                                   context,
                                   text: 'Next',
                                   onTap: () {
-                                    if (_compnyName.text.isEmpty) {
-                                      flutterToast(
-                                          "Please Enter Your Company Name",
-                                          false);
-                                    } else if (_jobTitle.text.isEmpty) {
-                                      flutterToast(
-                                          "Please Enter Your Job Title/Add Role",
-                                          false);
-                                    } else if (_compnyDomain.text.isEmpty) {
-                                      flutterToast(
-                                          "Please Enter Your Company Domain",
-                                          false);
-                                    } else if (_compnyDomain.text.endsWith(".net") || _compnyDomain.text.endsWith(".com") || _compnyDomain.text.endsWith(".org") || _compnyDomain.text.endsWith(".in")) {
-                                      if (_email.text.isEmpty) {
-                                        flutterToast(
-                                            "Please Enter Email", false);
-                                      } else if (regExp1
-                                          .hasMatch(_email.text)) {
-                                        if (_categorycontroller.text.isEmpty) {
-                                          flutterToast(
-                                              "Please Enter Category", false);
-                                        } else {
-                                          professionalDetailsCubit
-                                                  .ProfessionalDetailsService(
-                                                      company_name:
-                                                          _compnyName.text,
-                                                      add_role: _jobTitle.text,
-                                                      company_domain:
-                                                          _compnyDomain.text,
-                                                      email: _email.text,
-                                                      category:
-                                                          _categorycontroller
-                                                              .text,
-                                                      business_experience:
-                                                          _experiencecontroller
-                                                              .text,
-                                                      skills:
-                                                          _skillcontroller.text,
-                                                      education:
-                                                          _educationcontroller
-                                                              .text,
-                                                      university:
-                                                          _univercitycontroller
-                                                              .text,
-                                                      context: context)
-                                              .then(
-                                            (value) {
-                                              setState(() {
-                                                ind++;
-                                              });
-                                            },
-                                          );
-                                        }
-                                      } else {
-                                        flutterToast(
-                                            "Please Enter valid Email", false);
-                                      }
-                                    } else {
-                                      flutterToast(
-                                          "Please Enter valid company domain",
-                                          false);
-                                    }
+                                    professionalDetailsCubit
+                                        .ProfessionalDetailsService(
+                                        company_name:
+                                        _compnyName.text,
+                                        add_role: _jobTitle.text[0].toUpperCase() + _jobTitle.text.substring(1),
+                                        company_domain:
+                                        _compnyDomain.text,
+                                        email: _email.text,
+                                        category:
+                                        _categorycontroller
+                                            .text,
+                                        business_experience:
+                                        _experiencecontroller
+                                            .text,
+                                        skills:
+                                        _skillcontroller.text,
+                                        education:
+                                        _educationcontroller
+                                            .text,
+                                        university:
+                                        _univercitycontroller
+                                            .text,
+                                        context: context)
+                                        .then(
+                                          (value) {
+                                        setState(() {
+                                          ind++;
+                                        });
+                                      },
+                                    );
+                                    // if (_compnyName.text.isEmpty) {
+                                    //   flutterToast(
+                                    //       "Please Enter Your Company Name",
+                                    //       false);
+                                    // } else if (_jobTitle.text.isEmpty) {
+                                    //   flutterToast(
+                                    //       "Please Enter Your Job Title/Add Role",
+                                    //       false);
+                                    // } else if (_compnyDomain.text.isEmpty) {
+                                    //   flutterToast(
+                                    //       "Please Enter Your Company Domain",
+                                    //       false);
+                                    // } else if (_compnyDomain.text.endsWith(".net") || _compnyDomain.text.endsWith(".com") || _compnyDomain.text.endsWith(".org") || _compnyDomain.text.endsWith(".in")) {
+                                    //   if (_email.text.isEmpty) {
+                                    //     flutterToast(
+                                    //         "Please Enter Email", false);
+                                    //   } else if (regExp1
+                                    //       .hasMatch(_email.text)) {
+                                    //     if (_categorycontroller.text.isEmpty) {
+                                    //       flutterToast(
+                                    //           "Please Enter Category", false);
+                                    //     } else {
+                                    //       professionalDetailsCubit
+                                    //               .ProfessionalDetailsService(
+                                    //                   company_name:
+                                    //                       _compnyName.text,
+                                    //                   add_role: _jobTitle.text[0].toUpperCase() + _jobTitle.text.substring(1),
+                                    //                   company_domain:
+                                    //                       _compnyDomain.text,
+                                    //                   email: _email.text,
+                                    //                   category:
+                                    //                       _categorycontroller
+                                    //                           .text,
+                                    //                   business_experience:
+                                    //                       _experiencecontroller
+                                    //                           .text,
+                                    //                   skills:
+                                    //                       _skillcontroller.text,
+                                    //                   education:
+                                    //                       _educationcontroller
+                                    //                           .text,
+                                    //                   university:
+                                    //                       _univercitycontroller
+                                    //                           .text,
+                                    //                   context: context)
+                                    //           .then(
+                                    //         (value) {
+                                    //           setState(() {
+                                    //             ind++;
+                                    //           });
+                                    //         },
+                                    //       );
+                                    //      }
+                                    //   } else {
+                                    //     flutterToast(
+                                    //         "Please Enter valid Email", false);
+                                    //   }
+                                    // } else {
+                                    //   flutterToast(
+                                    //       "Please Enter valid company domain",
+                                    //       false);
+                                    // }
                                   },
                                   // onTap: () {
                                   //   setState(() {

@@ -6,13 +6,16 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:pair_me/Screen_Pages/videocall.dart';
 import 'package:pair_me/Screen_Pages/voice_call.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
+import 'package:pair_me/cubits/accept_req_msg_user.dart';
+import 'package:pair_me/cubits/delete_msg_users.dart';
+import 'package:pair_me/cubits/reject_user.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class Chatting_Page extends StatefulWidget {
-  String name,Username,image;
-   Chatting_Page({super.key,required this.name,required this.Username,required this.image});
+  String name,Username,image,id;
+   Chatting_Page({super.key,required this.name,required this.id,required this.Username,required this.image});
 
   @override
   State<Chatting_Page> createState() => _Chatting_PageState();
@@ -24,6 +27,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
   GlobalKey<ScaffoldMessengerState>();
   TextEditingController messageController = TextEditingController();
+  RemoveMsgUserCubit removeMsgUserCubit = RemoveMsgUserCubit();
+  AcceptReqMsgUserCubit acceptReqMsgUserCubit = AcceptReqMsgUserCubit();
+  RejectUserCubit rejectUserCubit = RejectUserCubit();
   late ChatClient agoraChatClient;
   String messageContent = "", recipientId = "";
   final List<Widget> messageList = [];
@@ -63,71 +69,86 @@ class _Chatting_PageState extends State<Chatting_Page> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
-              height: screenHeight(context,dividedBy: 20),
-              width: screenWidth(context,dividedBy: 3.7),
-              decoration: BoxDecoration(
-                  color: AppColor.white,
-                  borderRadius: BorderRadius.circular(23),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: AppColor.fontgray,
-                      offset: Offset(
-                        0,
-                        4,
+            GestureDetector(
+              onTap: () {
+                rejectUserCubit.GetRejectUser(id: widget.id).then((value) => Navigator.pop(context,"refresh"));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
+                height: screenHeight(context,dividedBy: 20),
+                width: screenWidth(context,dividedBy: 3.7),
+                decoration: BoxDecoration(
+                    color: AppColor.white,
+                    borderRadius: BorderRadius.circular(23),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: AppColor.fontgray,
+                        offset: Offset(
+                          0,
+                          4,
+                        ),
+                        blurRadius: 11,
+                        spreadRadius: 0.0,
                       ),
-                      blurRadius: 11,
-                      spreadRadius: 0.0,
-                    ),
-                  ]
+                    ]
+                ),
+                child: Text('Block'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
               ),
-              child: Text('Block'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
             ),
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
-              height: screenHeight(context,dividedBy: 20),
-              width: screenWidth(context,dividedBy: 3.7),
-              decoration: BoxDecoration(
-                  color: AppColor.white,
-                  borderRadius: BorderRadius.circular(23),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: AppColor.fontgray,
-                      offset: Offset(
-                        0,
-                        4,
+            GestureDetector(
+              onTap: () {
+                removeMsgUserCubit.DeleteReqUser(context, id: widget.id).then((value) => Navigator.pop(context,"refresh"));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
+                height: screenHeight(context,dividedBy: 20),
+                width: screenWidth(context,dividedBy: 3.7),
+                decoration: BoxDecoration(
+                    color: AppColor.white,
+                    borderRadius: BorderRadius.circular(23),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: AppColor.fontgray,
+                        offset: Offset(
+                          0,
+                          4,
+                        ),
+                        blurRadius: 11,
+                        spreadRadius: 0.0,
                       ),
-                      blurRadius: 11,
-                      spreadRadius: 0.0,
-                    ),
-                  ]
+                    ]
+                ),
+                child:  Text('Delete'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
               ),
-              child:  Text('Delete'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xffFF0000)),),
             ),
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
-              height: screenHeight(context,dividedBy: 20),
-              width: screenWidth(context,dividedBy: 3.7),
-              decoration: BoxDecoration(
-                  color: AppColor.white,
-                  borderRadius: BorderRadius.circular(23),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: AppColor.fontgray,
-                      offset: Offset(
-                        0,
-                        4,
+            GestureDetector(
+              onTap: () {
+                acceptReqMsgUserCubit.AcceptNotification(id: widget.id).then((value) => Navigator.pop(context,"refresh"));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
+                height: screenHeight(context,dividedBy: 20),
+                width: screenWidth(context,dividedBy: 3.7),
+                decoration: BoxDecoration(
+                    color: AppColor.white,
+                    borderRadius: BorderRadius.circular(23),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: AppColor.fontgray,
+                        offset: Offset(
+                          0,
+                          4,
+                        ),
+                        blurRadius: 11,
+                        spreadRadius: 0.0,
                       ),
-                      blurRadius: 11,
-                      spreadRadius: 0.0,
-                    ),
-                  ]
+                    ]
+                ),
+                child: Text('Accept'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xff1D1D1D)),),
               ),
-              child: Text('Accept'.tr(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w600,fontFamily: 'Roboto',color: Color(0xff1D1D1D)),),
             ),
           ],
         ),
@@ -650,14 +671,13 @@ class _Chatting_PageState extends State<Chatting_Page> {
   void setupChatClient() async {
     ChatOptions options = ChatOptions(
       appKey: '611031492#1211760',
-      autoLogin: false,
+      autoLogin: false
     );
     agoraChatClient = ChatClient.getInstance;
     await agoraChatClient.init(options);
     await ChatClient.getInstance.startCallback();
     try {
-      await agoraChatClient.loginWithAgoraToken("Virat_kohli", "007eJxTYHhX3q2jdnx//GPOVUqMruXbCh33b/89mWPOZ07lAok+hkMKDAYWxobmaWapqYbJSSZJpgYWRqaphqmm5kbJxgZAcSNl8UWpDYGMDH8dqpkYGVgZGIEQxFdhMLNIMrRISTLQTTJMTtU1NExN1QVyzXQtjY1NzUwMTC0sDc0A2hYlJQ==");
-      showLog("Logged in successfully as Virat_kohli");
+      await agoraChatClient.getCurrentUserId();
       print("================ successfully ================");
     } on ChatError catch (e) {
       if (e.code == 200) { // Already logged in
@@ -681,7 +701,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
     // }
 
     var msg = ChatMessage.createTxtSendMessage(
-      targetId: "Virat_Kohli",
+      targetId: widget.id,
       content: messageContent,
     );
     ChatClient.getInstance.chatManager.addMessageEvent(

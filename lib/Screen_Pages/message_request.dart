@@ -215,13 +215,17 @@ class _MessageRequestState extends State<MessageRequest> {
                                  ),
                                  child: InkWell(
                                    onTap: () {
-                                     Navigator.push(context, MaterialPageRoute(
+                                     final refresh =     Navigator.push(context, MaterialPageRoute(
                                        builder: (context) {
                                          return Chatting_Page(name: 'Request',
                                            Username: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userName ?? '',
-                                           image: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userImage ?? '',);
+                                           image: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userImage ?? '', id: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].id ?? '',);
                                        },
                                      ));
+                                     if(refresh == "refresh"){
+                                       messageRequestCubit.GetAllMessageRequest();
+                                       setState(() {});
+                                     }
                                    },
                                    child: SizedBox(
                                      // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),

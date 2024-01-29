@@ -31,29 +31,37 @@ class FilterUserCubit extends Cubit<FilterUserState> {
   SharedPrefsService prefsService = SharedPrefsService();
   FilterUser filterUser = FilterUser();
   Future<FilterUser?> FilterUserService(
-      { String? distance,
+      {  String? distance,
          String? country,
          String? state,
          String? city,
          String? gender,
          List? looking_for,
-        required BuildContext context}) async {
+         BuildContext? context}) async {
     emit(FilterUserLoading());
-    final dio = Dio();
     Map<String, dynamic> body = {
-       "distance": distance,
+      "distance": distance,
       "gender": gender  ,
       "looking_for": looking_for ,
-       "country":country,
-       "city": city,
-       "state": state,
+      "country":country,
+      "city": city,
+      "state": state,
     };
+    // Map<String, dynamic> body = {};
+    // distance != null ? body['distance'] = distance : body = body;
+    // country != null ? body['country'] = country : body = body;
+    // state != null ? body['state'] = state : body = body;
+    // city != null ? body['city'] = city : body = body;
+    // gender != null ? body['gender'] = gender : body = body;
+    // looking_for != null ? body['looking_for'] = looking_for : body = body;
+    final dio = Dio();
     print("Body is $body");
     try {
       final response = await dio.post(apis.filter,options:  Options(headers: {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }) ,data: jsonEncode(body));
+      log("response : $response");
       final hello = response.data;
       if (hello['code'] == 200) {
         filterUser = FilterUser.fromJson(response.data);

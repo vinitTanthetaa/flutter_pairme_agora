@@ -267,14 +267,14 @@ class _Setting_pageState extends State<Setting_page> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      context.setLocale(const Locale('en'));
+                                      context.setLocale(const Locale('zh', 'TW'));
                                     });
                                   },
                                     child: custom_text(text: "Cantonese", color: AppColor.fontdarkgray)),
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      context.setLocale(const Locale('en'));
+                                      context.setLocale(const Locale('zh', 'CN'));
                                     });
                                   },
                                     child: custom_text(text: "Mandarin", color: AppColor.fontdarkgray)),

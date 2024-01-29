@@ -44,8 +44,8 @@ class Datum {
   String? role;
   bool? teamsAndCondition;
   int? score;
- // List<dynamic>? connectedUser;
- // List<dynamic>? rejectedUser;
+  List<dynamic>? connectedUser;
+  List<dynamic>? rejectedUser;
   int? v;
   String? verified;
   Address? address;
@@ -68,8 +68,8 @@ class Datum {
     this.role,
     this.teamsAndCondition,
     this.score,
-  //  this.connectedUser,
-  //  this.rejectedUser,
+    this.connectedUser,
+    this.rejectedUser,
     this.v,
     this.verified,
     this.address,
@@ -93,13 +93,13 @@ class Datum {
     role: json["role"],
     teamsAndCondition: json["teamsAndCondition"],
     score: json["score"],
-  //  connectedUser: List<dynamic>.from(json["connectedUser"].map((x) => x) ?? []),
-   // rejectedUser: List<dynamic>.from(json["rejectedUser"].map((x) => x) ?? []),
+    connectedUser:json["connectedUser"] == null ? null : List<dynamic>.from(json["connectedUser"].map((x) => x) ?? []),
+    rejectedUser:json["rejectedUser"] == null ? null : List<dynamic>.from(json["rejectedUser"].map((x) => x) ?? []),
     v: json["__v"],
     verified: json["verified"],
-    address: Address.fromJson(json["address"]),
-    professionalDetails: ProfessionalDetails.fromJson(json["professionalDetails"]),
-    businessaddress: Address.fromJson(json["businessaddress"]),
+    address:json["address"] == null ? null :  Address.fromJson(json["address"]),
+    professionalDetails:json["professionalDetails"] == null ? null : ProfessionalDetails.fromJson(json["professionalDetails"] ),
+    businessaddress:json["businessaddress"] == null ? null : Address.fromJson(json["businessaddress"]),
     profileImage: json["profileImage"],
     image: Image.fromJson(json["image"]),
     file: FileClass.fromJson(json["file"]),
@@ -118,13 +118,13 @@ class Datum {
     "role": role,
     "teamsAndCondition": teamsAndCondition,
     "score": score,
-   // "connectedUser": List<dynamic>.from(connectedUser?.map((x) => x) ?? []),
-   // "rejectedUser": List<dynamic>.from(rejectedUser?.map((x) => x) ?? []),
+    "connectedUser": List<dynamic>.from(connectedUser?.map((x) => x) ?? []),
+    "rejectedUser": List<dynamic>.from(rejectedUser?.map((x) => x) ?? []),
     "__v": v,
     "verified": verified,
-    "address": address?.toJson(),
-    "professionalDetails": professionalDetails?.toJson(),
-    "businessaddress": businessaddress?.toJson(),
+    "address": address?.toJson() ?? '',
+    "professionalDetails": professionalDetails?.toJson() ?? '',
+    "businessaddress": businessaddress?.toJson() ?? '',
     "profileImage": profileImage,
     "image": image?.toJson(),
     "file": file?.toJson(),
@@ -154,25 +154,25 @@ class Address {
   });
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
-    address: json["address"],
-    country: json["country"],
-    state: json["state"],
-    city: json["city"],
-    zipCode: json["zipCode"],
-    latitude: json["latitude"]?.toDouble(),
-    longitude: json["longitude"]?.toDouble(),
-    startdate: json["startdate"],
+    address: json["address"] ?? '',
+    country: json["country"] ?? '',
+    state: json["state"] ?? '',
+    city: json["city"] ?? '',
+    zipCode: json["zipCode"] ?? '',
+    latitude: json["latitude"]?.toDouble() ?? 0.0,
+    longitude: json["longitude"]?.toDouble() ?? 0.0,
+    startdate: json["startdate"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
-    "address": address,
-    "country": country,
-    "state": state,
-    "city": city,
-    "zipCode": zipCode,
-    "latitude": latitude,
-    "longitude": longitude,
-    "startdate": startdate,
+    "address": address ?? '',
+    "country": country ?? '',
+    "state": state ?? '',
+    "city": city ?? '',
+    "zipCode": zipCode ?? '',
+    "latitude": latitude ?? '',
+    "longitude": longitude ?? '',
+    "startdate": startdate ?? '',
   };
 }
 

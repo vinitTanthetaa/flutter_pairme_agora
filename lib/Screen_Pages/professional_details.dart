@@ -522,7 +522,8 @@ class _Professional_DetailsState extends State<Professional_Details> {
                          context,
                          text:'SAVE',
                          onTap: () {
-                           professionalDetailsUpdateCubit.ProfessionalDetailsUpdateService( company_name: _compnyName.text, add_role: _jobTitle.text, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) => Navigator.pop(context,'refresh'));
+                           String role = _jobTitle.text[0].toUpperCase() + _jobTitle.text.substring(1);
+                           professionalDetailsUpdateCubit.ProfessionalDetailsUpdateService( company_name: _compnyName.text, add_role: role, company_domain: _compnyDomain.text, email: _email.text, category: _categorycontroller.text, business_experience: _experiencecontroller.text, skills: _skillcontroller.text, education: _educationcontroller.text, university: _univercitycontroller.text, context: context).then((value) => Navigator.pop(context,'refresh'));
                            //  Navigator.pop(context);
                          }, height: screenHeight(context,dividedBy: 20),
                        );
