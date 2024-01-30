@@ -7,6 +7,7 @@ import 'package:pair_me/Screen_Pages/videocall.dart';
 import 'package:pair_me/Screen_Pages/voice_call.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/cubits/accept_req_msg_user.dart';
+import 'package:pair_me/cubits/block_req_msg_user.dart';
 import 'package:pair_me/cubits/delete_msg_users.dart';
 import 'package:pair_me/cubits/reject_user.dart';
 import 'package:pair_me/helper/Apis.dart';
@@ -30,6 +31,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   RemoveMsgUserCubit removeMsgUserCubit = RemoveMsgUserCubit();
   AcceptReqMsgUserCubit acceptReqMsgUserCubit = AcceptReqMsgUserCubit();
   RejectUserCubit rejectUserCubit = RejectUserCubit();
+  BlockUserCubit blockUserCubit = BlockUserCubit();
   late ChatClient agoraChatClient;
   String messageContent = "", recipientId = "";
   final List<Widget> messageList = [];
@@ -71,6 +73,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
           children: [
             GestureDetector(
               onTap: () {
+                blockUserCubit.AcceptNotification(id: widget.id);
                 rejectUserCubit.GetRejectUser(id: widget.id).then((value) => Navigator.pop(context,"refresh"));
               },
               child: Container(

@@ -214,8 +214,8 @@ class _MessageRequestState extends State<MessageRequest> {
                                    ),
                                  ),
                                  child: InkWell(
-                                   onTap: () {
-                                     final refresh =     Navigator.push(context, MaterialPageRoute(
+                                   onTap: () async {
+                                     String refresh = await Navigator.push(context, MaterialPageRoute(
                                        builder: (context) {
                                          return Chatting_Page(name: 'Request',
                                            Username: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userName ?? '',

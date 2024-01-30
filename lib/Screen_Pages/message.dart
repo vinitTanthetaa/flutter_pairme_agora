@@ -193,7 +193,7 @@ class _Message_pageState extends State<Message_page> {
                                    child: InkWell(
                                      onTap: () {
                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: "${apis.baseurl}/${userMessage.data?.data?[index].userImage ?? ''}", id: userMessage.data?.data?[index].id ?? '',);
+                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '',);
                                        },));
                                      },
                                      child: SizedBox(

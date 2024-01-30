@@ -315,7 +315,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           }
                                         },
                                         onSwipeCancelled: (activity) {
-                                          bottonname = '';
                                           setState(() {
                                             image.clear();
                                             swipeUp = false;
@@ -1117,22 +1116,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                                return Chatting_Page(
-                                                                  name:
-                                                                  'chatting',
-                                                                  Username:
-                                                                  filterUserCubit.filterUser.data?[ind].first?.name ??
-                                                                      '',
-                                                                  image: filterUserCubit.filterUser.data?[ind].first?.profileImage ??
-                                                                      '', id: filterUserCubit.filterUser.data?[ind].first?.id ?? '',
-                                                                );
-                                                              },
-                                                            ));
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '');
                                                       },
                                                       buttonName:
                                                       "Chat",
@@ -1215,21 +1199,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                                return Chatting_Page(
-                                                                  name:
-                                                                  'chatting',
-                                                                  Username:
-                                                                  filterUserCubit.filterUser.data?[ind].first?.name ?? '',
-                                                                  image:
-                                                                  filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', id:filterUserCubit.filterUser.data?[ind].first?.id ?? '',
-                                                                );
-                                                              },
-                                                            ));
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '');
                                                       },
                                                       buttonName:
                                                       "Chat",
@@ -1288,21 +1258,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                                return Chatting_Page(
-                                                                  name:
-                                                                  'chatting',
-                                                                  Username:
-                                                                  filterUserCubit.filterUser.data?[ind].first?.name ?? '',
-                                                                  image:
-                                                                  filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', id:filterUserCubit.filterUser.data?[ind].first?.id ?? '',
-                                                                );
-                                                              },
-                                                            ));
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '');
                                                       },
                                                       buttonName:
                                                       "Chat",
@@ -1347,16 +1303,31 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                           builder: (context, state) {
                             if (state is AllUsersDetailsSuccess) {
                               return  Expanded(
-                                  child: allUsersdetails.data!.isEmpty ? Center(child: Text("No Users"),) :Stack(
+                                  child: theEnd ? Center(child: Text("No User!"),) : Stack(
                                 children: [
                                   AppinioSwiper(
                                     controller: controller,
                                     invertAngleOnBottomDrag: true,
+                                    onEnd: () {
+                                      print("hello to this is end");
+                                      theEnd = true;
+                                      setState(() {});
+                                    },
                                     onCardPositionChanged: (position) {
                                       if (position.offset.direction > 0) {
                                         setState(() {
                                           swipeDown = true;
                                           height = height + 20;
+                                          height1 = height1 >= 1.60
+                                              ? height1 + 0.001
+                                              : height1 + 0.004;
+                                          height1 >= 1.50 && fontsize >= 20
+                                              ? fontsize = fontsize - 1
+                                              : fontsize = fontsize;
+                                          print(height1);
+                                          wight = height1 >= 1.60
+                                              ? wight + 0.001
+                                              : wight + 0.003;
                                           swipeUp = false;
                                           bottonname = "Connect";
                                         });
@@ -1396,15 +1367,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       setState(() {
                                         undoid = allUsersdetails.data?[ind].first.id ?? '';
                                         print("undoid =======> $undoid");
-                                        activity.direction == AxisDirection.up
+                                        height1 >= 1.50 ?   activity.direction == AxisDirection.up
                                             ? rejectUserCubit.GetRejectUser(
-                                                id: allUsersdetails
-                                                        .data?[ind].first.id ??
-                                                    '')
+                                            id: allUsersdetails
+                                                .data?[ind].first.id ??
+                                                '').then((value) =>  pageViewIndex = 0)
                                             : connectUserCubit.GetConnectUser(
-                                                id: allUsersdetails
-                                                        .data?[ind].first.id ??
-                                                    '');
+                                            id: allUsersdetails
+                                                .data?[ind].first.id ??
+                                                '').then((value) =>  pageViewIndex = 0) : height1;
                                         ind >= allUsersdetails.data!.length - 1
                                             ? ind = ind
                                             : ind = targetIndex;
@@ -1415,7 +1386,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         swipeUp = false;
                                         swipeDown = false;
                                         image.clear();
-                                        pageViewIndex = 0;
                                       });
                                     },
                                     threshold: screenHeight(context, dividedBy: 4.5),
@@ -1437,188 +1407,307 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                           child: Stack(
                                             children: [
                                               swipeUp || swipeDown
-                                                  ? Align(
-                                                      alignment:
-                                                          Alignment.topCenter,
-                                                      child: SizedBox(
-                                                        child: Stack(
-                                                          children: [
-                                                            CachedNetworkImage(
-                                                              imageUrl:
-                                                                  "${apis.baseurl}/${image[pageViewIndex]}",
-                                                              imageBuilder:
-                                                                  (context,
-                                                                          imageProvider) =>
-                                                                      Container(
+                                                  ? image[pageViewIndex]
+                                                  .toString()
+                                                  .endsWith(
+                                                  ".mp4") ||
+                                                  image[pageViewIndex]
+                                                      .toString()
+                                                      .endsWith(".3gpp")
+                                                  ? Center(
+                                                child: SizedBox(
+                                                  height: screenHeight(
+                                                      context,
+                                                      dividedBy:
+                                                      swipeDown ? 1.2 : height1),
+                                                  width: screenWidth(
+                                                      context,
+                                                      dividedBy:
+                                                      swipeDown ?1 :wight),
+                                                  child: Stack(
+                                                    children: [
+                                                      VideoWidget(
+                                                        videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: false,),
+                                                      Container(
+                                                          height: screenHeight(
+                                                              context,
+                                                              dividedBy:
+                                                              swipeDown ? 1.2 : height1),
+                                                          width: screenWidth(
+                                                              context,
+                                                              dividedBy:
+                                                              swipeDown ?1 :wight),
+                                                          decoration: const BoxDecoration(
+                                                              gradient: LinearGradient(
+                                                                  begin: Alignment
+                                                                      .bottomCenter,
+                                                                  end: Alignment.topCenter,
+                                                                  colors: [
+                                                                    Colors
+                                                                        .black,
+                                                                    Colors
+                                                                        .black38
+                                                                  ]),
+                                                              borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(20))),
+                                                          child: swipeUp
+                                                              ? Center(
+                                                            child:
+                                                            Text(
+                                                              "Skip"
+                                                                  .tr(),
+                                                              style: TextStyle(
+                                                                  fontSize: fontsize,
+                                                                  fontFamily: 'Roboto',
+                                                                  fontWeight: FontWeight.w700,
+                                                                  // color: AppColor.skyBlue
+                                                                  color: AppColor.white),
+                                                            ),
+                                                          )
+                                                              : Center(
+                                                            child:
+                                                            Text(
+                                                              "Connect"
+                                                                  .tr(),
+                                                              style: TextStyle(
+                                                                  fontSize: fontsize,
+                                                                  fontFamily: 'Roboto',
+                                                                  fontWeight: FontWeight.w700,
+                                                                  // color: AppColor.skyBlue
+                                                                  color: AppColor.white),
+                                                            ),
+                                                          )),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ) : Align(
+                                                  alignment:
+                                                  Alignment.topCenter,
+                                                  child: SizedBox(
+                                                    child: Stack(
+                                                      children: [
+                                                        CachedNetworkImage(
+                                                          imageUrl:
+                                                          "${apis.baseurl}/${image[pageViewIndex]}",
+                                                          imageBuilder:
+                                                              (context,
+                                                              imageProvider) =>
+                                                              Container(
                                                                 height: screenHeight(
                                                                     context,
                                                                     dividedBy:
-                                                                        height1),
+                                                                    swipeDown?1.2: height1),
                                                                 width: screenWidth(
                                                                     context,
                                                                     dividedBy:
-                                                                        wight),
+                                                                    swipeDown ?1 :wight),
                                                                 decoration: BoxDecoration(
                                                                     image: DecorationImage(
                                                                         image:
-                                                                            imageProvider,
+                                                                        imageProvider,
                                                                         fit: BoxFit
                                                                             .cover,
                                                                         filterQuality:
-                                                                            FilterQuality
-                                                                                .high),
+                                                                        FilterQuality
+                                                                            .high),
                                                                     borderRadius:
-                                                                        const BorderRadius
-                                                                            .all(
-                                                                            Radius.circular(20))),
+                                                                    const BorderRadius
+                                                                        .all(
+                                                                        Radius.circular(20))),
                                                               ),
-                                                              placeholder:
-                                                                  (context,
-                                                                          url) =>
-                                                                      Container(
+                                                          placeholder:
+                                                              (context,
+                                                              url) =>
+                                                              Container(
                                                                 height:
-                                                                    screenHeight(
-                                                                        context),
+                                                                screenHeight(
+                                                                    context),
                                                                 width:
-                                                                    screenWidth(
-                                                                        context),
+                                                                screenWidth(
+                                                                    context),
                                                                 decoration: const BoxDecoration(
                                                                     borderRadius: BorderRadius.only(
                                                                         topRight:
-                                                                            Radius.circular(
-                                                                                20),
+                                                                        Radius.circular(
+                                                                            20),
                                                                         topLeft:
-                                                                            Radius.circular(
-                                                                                20)),
+                                                                        Radius.circular(
+                                                                            20)),
                                                                     color: Colors
                                                                         .black),
                                                                 child:
-                                                                    const Center(
+                                                                const Center(
                                                                   child:
-                                                                      CircularProgressIndicator(
+                                                                  CircularProgressIndicator(
                                                                     color: AppColor
                                                                         .skyBlue,
                                                                   ),
                                                                 ),
                                                               ),
-                                                              errorWidget: (context,
-                                                                      url,
-                                                                      error) =>
-                                                                  const Icon(Icons
-                                                                      .error),
-                                                            ),
-                                                            Container(
-                                                                height: screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        height1),
-                                                                width: screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        wight),
-                                                                decoration: const BoxDecoration(
-                                                                    gradient: LinearGradient(
-                                                                        begin: Alignment
-                                                                            .bottomCenter,
-                                                                        end: Alignment.topCenter,
-                                                                        colors: [
-                                                                          Colors
-                                                                              .black,
-                                                                          Colors
-                                                                              .black38
-                                                                        ]),
-                                                                    borderRadius:
-                                                                        BorderRadius.all(
-                                                                            Radius.circular(20))),
-                                                                child: swipeUp
-                                                                    ? Center(
-                                                                        child:
-                                                                            Text(
-                                                                          "Skip"
-                                                                              .tr(),
-                                                                          style: TextStyle(
-                                                                              fontSize: fontsize,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w700,
-                                                                              // color: AppColor.skyBlue
-                                                                              color: AppColor.white),
-                                                                        ),
-                                                                      )
-                                                                    : Center(
-                                                                        child:
-                                                                            Text(
-                                                                          "Connect"
-                                                                              .tr(),
-                                                                          style: TextStyle(
-                                                                              fontSize: fontsize,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w700,
-                                                                              // color: AppColor.skyBlue
-                                                                              color: AppColor.white),
-                                                                        ),
-                                                                      )),
-                                                          ],
-                                                        ),
-                                                      ))
-                                                  : image[pageViewIndex]
-                                                              .toString()
-                                                              .endsWith(
-                                                                  ".mp4") ||
-                                                          image[pageViewIndex]
-                                                              .toString()
-                                                              .endsWith(".3gpp")
-                                                      ? VideoWidget(
-                                                          videoUrl:
-                                                              "${apis.baseurl}/${image[pageViewIndex]}", play: true,)
-                                                      : CachedNetworkImage(
-                                                          imageUrl:
-                                                              "${apis.baseurl}/${image[pageViewIndex]}",
-                                                          imageBuilder: (context,
-                                                                  imageProvider) =>
-                                                              Container(
-                                                            decoration: BoxDecoration(
-                                                                image: DecorationImage(
-                                                                    image:
-                                                                        imageProvider,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                    filterQuality:
-                                                                        FilterQuality
-                                                                            .high),
-                                                                borderRadius:
-                                                                    const BorderRadius
-                                                                        .all(
-                                                                        Radius.circular(
-                                                                            20))),
-                                                          ),
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Container(
-                                                            height:
-                                                                screenHeight(
-                                                                    context),
-                                                            width: screenWidth(
-                                                                context),
-                                                            decoration: const BoxDecoration(
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            20)),
-                                                                color: Colors
-                                                                    .black),
-                                                            child: const Center(
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                color: AppColor
-                                                                    .skyBlue,
-                                                              ),
-                                                            ),
-                                                          ),
                                                           errorWidget: (context,
-                                                                  url, error) =>
-                                                              const Icon(
-                                                                  Icons.error),
+                                                              url,
+                                                              error) =>
+                                                          const Icon(Icons
+                                                              .error),
                                                         ),
+                                                        Container(
+                                                            height: screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                swipeDown ?1.2 : height1),
+                                                            width: screenWidth(
+                                                                context,
+                                                                dividedBy:
+                                                                swipeDown ? 1 :wight),
+                                                            decoration: const BoxDecoration(
+                                                                gradient: LinearGradient(
+                                                                    begin: Alignment
+                                                                        .bottomCenter,
+                                                                    end: Alignment.topCenter,
+                                                                    colors: [
+                                                                      Colors
+                                                                          .black,
+                                                                      Colors
+                                                                          .black38
+                                                                    ]),
+                                                                borderRadius:
+                                                                BorderRadius.all(
+                                                                    Radius.circular(20))),
+                                                            child: swipeUp
+                                                                ? Center(
+                                                              child:
+                                                              Text(
+                                                                "Skip"
+                                                                    .tr(),
+                                                                style: TextStyle(
+                                                                    fontSize: fontsize,
+                                                                    fontFamily: 'Roboto',
+                                                                    fontWeight: FontWeight.w700,
+                                                                    // color: AppColor.skyBlue
+                                                                    color: AppColor.white),
+                                                              ),
+                                                            )
+                                                                : Center(
+                                                              child:
+                                                              Text(
+                                                                "Connect"
+                                                                    .tr(),
+                                                                style: TextStyle(
+                                                                    fontSize: fontsize,
+                                                                    fontFamily: 'Roboto',
+                                                                    fontWeight: FontWeight.w700,
+                                                                    // color: AppColor.skyBlue
+                                                                    color: AppColor.white),
+                                                              ),
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ))
+                                                  : image[pageViewIndex]
+                                                  .toString()
+                                                  .endsWith(
+                                                  ".mp4") ||
+                                                  image[pageViewIndex]
+                                                      .toString()
+                                                      .endsWith(".3gpp")
+                                                  ? VideoWidget(
+                                                videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: true,)
+                                                  : CachedNetworkImage(
+                                                imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
+                                                imageBuilder: (context, imageProvider) =>
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image:
+                                                              imageProvider,
+                                                              fit: BoxFit
+                                                                  .cover,
+                                                              filterQuality:
+                                                              FilterQuality
+                                                                  .high),
+                                                          borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                              Radius.circular(
+                                                                  20))),
+                                                    ),
+                                                placeholder: (context, url) =>
+                                                    Container(
+                                                      height:
+                                                      screenHeight(
+                                                          context),
+                                                      width: screenWidth(
+                                                          context),
+                                                      decoration: const BoxDecoration(
+                                                          borderRadius: BorderRadius
+                                                              .all(Radius
+                                                              .circular(
+                                                              20)),
+                                                          color: Colors
+                                                              .black),
+                                                      child: const Center(
+                                                        child:
+                                                        CircularProgressIndicator(
+                                                          color: AppColor
+                                                              .skyBlue,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                errorWidget: (context, url, error) => const Center(
+                                                  child: Icon(
+                                                      Icons.error),
+                                                ),
+                                              ),
+                                              swipeUp || swipeDown
+                                                  ? const SizedBox()
+                                                  : Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      overlayColor:
+                                                      const MaterialStatePropertyAll(
+                                                          Colors
+                                                              .transparent),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          pageViewIndex >
+                                                              0
+                                                              ? pageViewIndex--
+                                                              : null;
+                                                          image = image;
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        height:
+                                                        screenHeight(
+                                                            context),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      overlayColor:
+                                                      const MaterialStatePropertyAll(
+                                                          Colors
+                                                              .transparent),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          setState(() {
+                                                            pageViewIndex >= image.length - 1 ? null : pageViewIndex++;
+                                                          });
+                                                          image = image;
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        height:
+                                                        screenHeight(
+                                                            context),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                               swipeUp || swipeDown
                                                   ? const SizedBox()
                                                   : Align(
@@ -1989,55 +2078,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             );
                                     },
                                   ),
-                                  swipeUp || swipeDown
-                                      ? const SizedBox()
-                                      : Row(
-                                    children: [
-                                      Expanded(
-                                        child: InkWell(
-                                          overlayColor:
-                                          const MaterialStatePropertyAll(
-                                              Colors
-                                                  .transparent),
-                                          onTap: () {
-                                            setState(() {
-                                              pageViewIndex >
-                                                  0
-                                                  ? pageViewIndex--
-                                                  : null;
-                                              image = image;
-                                            });
-                                          },
-                                          child: Container(
-                                            height:
-                                            screenHeight(
-                                                context),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: InkWell(
-                                          overlayColor:
-                                          const MaterialStatePropertyAll(
-                                              Colors
-                                                  .transparent),
-                                          onTap: () {
-                                            setState(() {
-                                              setState(() {
-                                                pageViewIndex >= image.length - 1 ? null : pageViewIndex++;
-                                              });
-                                              image = image;
-                                            });
-                                          },
-                                          child: Container(
-                                            height:
-                                            screenHeight(
-                                                context),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                   Align(
                                       alignment: swipeUp
                                           ? Alignment.bottomLeft
@@ -2088,20 +2128,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 img:
                                                                     "assets/Images/button3.svg",
                                                                 onTap: () {
-                                                                  rejectUserCubit.GetRejectUser(
-                                                                          id: allUsersdetails.data?[ind].first.id ??
-                                                                              '')
-                                                                      .then(
-                                                                    (value) {
-                                                                      controller
-                                                                          .swipeUp();
-                                                                      setState(
+                                                                  controller.swipeUp();
+                                                                  setState(
                                                                           () {
                                                                         bottonname =
-                                                                            "Reject";
+                                                                        "Reject";
                                                                       });
-                                                                    },
-                                                                  );
                                                                 },
                                                                 buttonName:
                                                                     "Skip",
@@ -2112,22 +2144,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 img:
                                                                     "assets/Images/button1.svg",
                                                                 onTap: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) {
-                                                                      return Chatting_Page(
-                                                                        name:
-                                                                            'chatting',
-                                                                        Username:
-                                                                            allUsersdetails.data?[ind].first.name ??
-                                                                                '',
-                                                                        image: allUsersdetails.data?[ind].first.profileImage ??
-                                                                            '', id:allUsersdetails.data?[ind].first.id ?? '',
-                                                                      );
-                                                                    },
-                                                                  ));
+                                                                  msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '');
                                                                 },
                                                                 buttonName:
                                                                     "Chat",
@@ -2210,21 +2227,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
-                                                                      Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) {
-                                                                          return Chatting_Page(
-                                                                            name:
-                                                                                'chatting',
-                                                                            Username:
-                                                                                allUsersdetails.data?[ind].first.name ?? '',
-                                                                            image:
-                                                                                allUsersdetails.data?[ind].first.profileImage ?? '', id:allUsersdetails.data?[ind].first.id ?? '',
-                                                                          );
-                                                                        },
-                                                                      ));
+                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '');
                                                                     },
                                                                     buttonName:
                                                                         "Chat",
@@ -2236,19 +2239,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button2.svg",
                                                                     onTap: () {
-                                                                      connectUserCubit.GetConnectUser(
-                                                                              id: allUsersdetails.data?[ind].first.id ?? '')
-                                                                          .then(
-                                                                        (value) {
-                                                                          controller
-                                                                              .swipeDown();
-                                                                          setState(
+                                                                      controller.swipeDown();
+                                                                      setState(
                                                                               () {
                                                                             bottonname =
-                                                                                "Connect";
+                                                                            "Connect";
                                                                           });
-                                                                        },
-                                                                      );
                                                                     },
                                                                     buttonName:
                                                                         "Connect",
@@ -2267,19 +2263,12 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button3.svg",
                                                                     onTap: () {
-                                                                      rejectUserCubit.GetRejectUser(
-                                                                              id: allUsersdetails.data?[ind].first.id ?? '')
-                                                                          .then(
-                                                                        (value) {
-                                                                          controller
-                                                                              .swipeUp();
-                                                                          setState(
+                                                                      controller.swipeUp();
+                                                                      setState(
                                                                               () {
                                                                             bottonname =
-                                                                                "Reject";
+                                                                            "Reject";
                                                                           });
-                                                                        },
-                                                                      );
                                                                     },
                                                                     buttonName:
                                                                         "Skip",
@@ -2292,21 +2281,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
                                                                       msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '');
-                                                                      // Navigator.push(
-                                                                      //     context,
-                                                                      //     MaterialPageRoute(
-                                                                      //   builder:
-                                                                      //       (context) {
-                                                                      //     return Chatting_Page(
-                                                                      //       name:
-                                                                      //           'chatting',
-                                                                      //       Username:
-                                                                      //           allUsersdetails.data?[ind].first.name ?? '',
-                                                                      //       image:
-                                                                      //           allUsersdetails.data?[ind].first.profileImage ?? '',
-                                                                      //     );
-                                                                      //   },
-                                                                      // ));
                                                                     },
                                                                     buttonName:
                                                                         "Chat",
