@@ -19,9 +19,9 @@ class _ChangePasswordState extends State<ChangePassword> {
   final TextEditingController _Password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final TextEditingController _oldPassword = TextEditingController();
-  bool hidePassword = false;
-  bool hideconfirmPassword = false;
-  bool hideoldPassword = false;
+  bool hidePassword = true;
+  bool hideconfirmPassword = true;
+  bool hideoldPassword = true;
   @override
   void initState() {
     // TODO: implement initState

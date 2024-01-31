@@ -21,8 +21,8 @@ class _Create_New_PasswordState extends State<Create_New_Password> {
   ResetPasswordCubit resetPasswordCubit = ResetPasswordCubit();
   final TextEditingController  _Password = TextEditingController();
   final TextEditingController  _confirmPassword = TextEditingController();
-  bool hidePassword = false;
-  bool hideconfirmPassword = false;
+  bool hidePassword = true;
+  bool hideconfirmPassword = true;
   RegExp regExp =  RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
 
   @override

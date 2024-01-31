@@ -106,7 +106,7 @@ class _Image_ScreenState extends State<Image_Screen> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(widget.image),
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.fitHeight,
                             filterQuality: FilterQuality.high)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

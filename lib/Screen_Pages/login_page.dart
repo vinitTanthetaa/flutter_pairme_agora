@@ -25,7 +25,7 @@ class Login_page extends StatefulWidget {
 }
 
 class _Login_pageState extends State<Login_page> {
-  bool showpassword = false;
+  bool showpassword = true;
   final TextEditingController _Email = TextEditingController();
   final TextEditingController _Password = TextEditingController();
   SharedPrefsService prefsService = SharedPrefsService();

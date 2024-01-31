@@ -24,8 +24,8 @@ class _Set_PasswordState extends State<Set_Password> {
   final TextEditingController _Password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   RegExp regExp =  RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-  bool hidePassword = false;
-  bool hideconfirmPassword = false;
+  bool hidePassword = true;
+  bool hideconfirmPassword = true;
   @override
   void initState() {
     // TODO: implement initState
