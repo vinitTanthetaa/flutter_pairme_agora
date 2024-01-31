@@ -278,7 +278,7 @@ class _Profile_pageState extends State<Profile_page> {
                                         ),
                                         SizedBox(
                                           height: screenHeight(context,
-                                              dividedBy: 60),
+                                              dividedBy: 30),
                                         ),
                                         InkWell(
                                           onTap: () {
@@ -292,7 +292,7 @@ class _Profile_pageState extends State<Profile_page> {
                                           child: Container(
                                               alignment: Alignment.center,
                                               height: screenHeight(context,
-                                                  dividedBy: 35),
+                                                  dividedBy: 30),
                                               // width: screenWidth(context, dividedBy: 5),
                                               decoration: BoxDecoration(
                                                   borderRadius:

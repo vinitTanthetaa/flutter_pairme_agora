@@ -126,8 +126,8 @@ class MyApp extends StatelessWidget {
         ),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
-       // home: const SpleshScreen(),
-        home: const StepScreen(),
+        home: const SpleshScreen(),
+       // home: const StepScreen(),
       ),
     );
   }
