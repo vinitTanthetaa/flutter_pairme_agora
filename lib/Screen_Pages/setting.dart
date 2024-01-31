@@ -32,6 +32,7 @@ class _Setting_pageState extends State<Setting_page> {
       insetPadding: const EdgeInsets.symmetric(horizontal: 60),
       backgroundColor: AppColor.white,
       surfaceTintColor: AppColor.white,
+      alignment: Alignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       children: [
         Padding(
@@ -48,9 +49,9 @@ class _Setting_pageState extends State<Setting_page> {
         ),
         const SizedBox(height: 10,),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
+          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 40)),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
                 onTap: () {
@@ -67,6 +68,7 @@ class _Setting_pageState extends State<Setting_page> {
                   child:  Text(cancel.tr(),style: const TextStyle(fontFamily: 'Roboto',fontSize: 15,fontWeight: FontWeight.w600,color: AppColor.skyBlue),),
                 ),
               ),
+              SizedBox(width: screenWidth(context,dividedBy: 25),),
               GestureDetector(
                 onTap: onTap,
                 child: Container(

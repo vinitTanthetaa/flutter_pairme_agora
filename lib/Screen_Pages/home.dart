@@ -334,11 +334,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             print("activity  ===> $activity");
                                             print("activity  ===> ${activity.end}");
                                             print("activity  ===> ${activity.direction}");
-                                           height1 >= 1.50 ?  activity.direction == AxisDirection.up
+                                            activity.direction == AxisDirection.up
                                                ? rejectUserCubit.GetRejectUser(
                                                id: filterUserCubit.filterUser.data?[ind].first?.id ?? '').then((value) =>  pageViewIndex = 0)
                                                : connectUserCubit.GetConnectUser(
-                                               id: filterUserCubit.filterUser.data?[ind].first?.id ?? '').then((value) =>  pageViewIndex = 0) : height1;
+                                               id: filterUserCubit.filterUser.data?[ind].first?.id ?? '').then((value) =>  pageViewIndex = 0);
                                            ind >= filterUserCubit.filterUser.data!.length - 1 ? ind = ind : ind = targetIndex;
                                             height = 0;
                                             fontsize = 70;
@@ -1367,7 +1367,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       setState(() {
                                         undoid = allUsersdetails.data?[ind].first.id ?? '';
                                         print("undoid =======> $undoid");
-                                        height1 >= 1.50 ?   activity.direction == AxisDirection.up
+                                          activity.direction == AxisDirection.up
                                             ? rejectUserCubit.GetRejectUser(
                                             id: allUsersdetails
                                                 .data?[ind].first.id ??
@@ -1375,7 +1375,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                             : connectUserCubit.GetConnectUser(
                                             id: allUsersdetails
                                                 .data?[ind].first.id ??
-                                                '').then((value) =>  pageViewIndex = 0) : height1;
+                                                '').then((value) =>  pageViewIndex = 0) ;
                                         ind >= allUsersdetails.data!.length - 1
                                             ? ind = ind
                                             : ind = targetIndex;
