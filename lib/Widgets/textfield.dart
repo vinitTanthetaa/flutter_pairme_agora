@@ -11,15 +11,17 @@ Widget Custom_textfield(BuildContext context,
     required bool readOnly,
     Function()? onPress,
     Function()? onTap,
-      bool number = false,
+    bool number = false,
     String? image,
     required String hint,
     required bool hidetext,
     required TextEditingController controller}) {
   return Container(
     alignment: Alignment.center,
-    margin: EdgeInsets.only(bottom: screenHeight(context, dividedBy: 70),top: screenHeight(context, dividedBy: 100)),
-     height: screenHeight(context,dividedBy: 20),
+    margin: EdgeInsets.only(
+        bottom: screenHeight(context, dividedBy: 70),
+        top: screenHeight(context, dividedBy: 100)),
+    height: screenHeight(context, dividedBy: 20),
     // width: screenWidth(context,dividedBy: 1),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
@@ -53,24 +55,24 @@ Widget Custom_textfield(BuildContext context,
             ? InputDecoration(
                 contentPadding: EdgeInsets.only(
                     left: screenWidth(context, dividedBy: 25),
-                    top: screenHeight(context,dividedBy: 100),
+                    top: screenHeight(context, dividedBy: 200),
                     right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
                 border: InputBorder.none,
 
                 //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
                 suffixIcon: IconButton(
-                  splashRadius: 1,
-                  style: const ButtonStyle(
-                      overlayColor:
-                          MaterialStatePropertyAll(Colors.transparent)),
-                  onPressed: () {
-                    onPress!();
-                  },
-                  icon: Image(image: AssetImage(image!),
-                  height: screenHeight(context,dividedBy: 40),
-                  width: screenHeight(context,dividedBy: 40),
-                 )
-                ),
+                    splashRadius: 1,
+                    style: const ButtonStyle(
+                        overlayColor:
+                            MaterialStatePropertyAll(Colors.transparent)),
+                    onPressed: () {
+                      onPress!();
+                    },
+                    icon: Image(
+                      image: AssetImage(image!),
+                      height: screenHeight(context, dividedBy: 40),
+                      width: screenHeight(context, dividedBy: 40),
+                    )),
                 // SvgPicture.asset(
                 //     'assets/Images/hide.svg',height: 10,width: 10,
                 //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
@@ -83,10 +85,10 @@ Widget Custom_textfield(BuildContext context,
                     fontSize: 14,
                     fontWeight: FontWeight.w400))
             : InputDecoration(
-                 contentPadding: EdgeInsets.only(
-                     left: screenWidth(context, dividedBy: 25),
-                     bottom: screenHeight(context,dividedBy: 150),
-                     right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
+                contentPadding: EdgeInsets.only(
+                    left: screenWidth(context, dividedBy: 25),
+                    bottom: screenHeight(context, dividedBy: 75),
+                    right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
                 border: InputBorder.none,
                 hintText: hint.tr(),
                 hintStyle: const TextStyle(
