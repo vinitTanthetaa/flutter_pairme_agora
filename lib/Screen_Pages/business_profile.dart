@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custom_gallery_display/custom_gallery_display.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Screen_Pages/Step_Screens.dart';
 import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
@@ -227,49 +228,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag1 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag1 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -337,48 +312,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag1 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag1 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -447,48 +397,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag1 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag1 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -680,52 +605,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag1 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag1 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -793,49 +689,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag1 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag1 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -904,49 +774,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag1 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag1 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -1182,52 +1026,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag2 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag2 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -1237,9 +1052,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -1297,48 +1110,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag2 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag2 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -1407,100 +1195,71 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag2 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag2 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height:
-                                                          screenHeight(
-                                                              context,
-                                                              dividedBy:
-                                                              17),
-                                                          width:
-                                                          screenWidth(
-                                                              context,
-                                                              dividedBy:
-                                                              1.2),
-                                                          child: Row(
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                            children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy: 40)),
-                                                                height: screenHeight(
+                                                    child: SizedBox(
+                                                      height:
+                                                      screenHeight(
+                                                          context,
+                                                          dividedBy:
+                                                          17),
+                                                      width:
+                                                      screenWidth(
+                                                          context,
+                                                          dividedBy:
+                                                          1.2),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                        children: [
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                right: screenWidth(
                                                                     context,
-                                                                    dividedBy:
-                                                                    40),
-                                                                width: screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                    15),
-                                                                decoration:
-                                                                const BoxDecoration(
-                                                                    image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                              ),
-                                                              const Text(
-                                                                'Videos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                    'Roboto',
-                                                                    fontSize:
-                                                                    17,
-                                                                    fontWeight: FontWeight
-                                                                        .w500,
-                                                                    color:
-                                                                    AppColor.dropdownfont),
-                                                              ),
-                                                            ],
+                                                                    dividedBy: 40)),
+                                                            height: screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                40),
+                                                            width: screenWidth(
+                                                                context,
+                                                                dividedBy:
+                                                                15),
+                                                            decoration:
+                                                            const BoxDecoration(
+                                                                image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
                                                           ),
-                                                        )
-                                                      ],
+                                                          const Text(
+                                                            'Videos',
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                'Roboto',
+                                                                fontSize:
+                                                                17,
+                                                                fontWeight: FontWeight
+                                                                    .w500,
+                                                                color:
+                                                                AppColor.dropdownfont),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -1644,54 +1403,24 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag2 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag2 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
-
                                                     child: SizedBox(
                                                       height:
                                                       screenHeight(
@@ -1700,9 +1429,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -1760,49 +1487,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag2 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag2 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -1871,47 +1572,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print('Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag2 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag2 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -2143,52 +1820,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag3 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag3 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -2198,9 +1846,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -2258,49 +1904,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag3 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag3 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -2369,49 +1989,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag3 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag3 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -2603,52 +2197,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag3 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag3 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -2658,9 +2223,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -2718,49 +2281,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag3 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag3 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -2829,49 +2366,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag3 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag3 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -3111,52 +2622,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag4 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag4 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -3166,9 +2648,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -3226,49 +2706,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag4 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag4 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -3337,49 +2791,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag4 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag4 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -3571,52 +2999,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag4 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag4 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -3626,9 +3025,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -3686,48 +3083,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag4 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag4 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -3796,49 +3168,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag4 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag4 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -4070,52 +3416,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag5 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag5 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -4125,9 +3442,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -4185,46 +3500,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag5 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag5 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -4293,46 +3585,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag5 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag5 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -4524,52 +3793,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag5 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag5 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -4579,9 +3819,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -4639,46 +3877,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag5 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag5 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -4747,46 +3962,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag5 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag5?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag5 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -5018,52 +4210,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag6 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag6 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -5073,9 +4236,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -5133,50 +4294,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag6 =
-                                                        details
-                                                            .selectedFiles[0];
-
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag6 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -5245,50 +4379,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag6 =
-                                                        details
-                                                            .selectedFiles[0];
-
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag6 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -5480,52 +4587,23 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // final ImagePicker picker = ImagePicker();
-                                                      // final image = picker.pickImage(source: ImageSource.gallery);
-                                                      // print("image ===> $image");
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickBoth(
-                                                        source: ImageSource
-                                                            .camera,
-
-                                                        /// On long tap, it will be available.
-                                                        multiSelection:
-                                                        true,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor: Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors.black),
-                                                          cropImage:
-                                                          true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag6 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(
-                                                                () {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.camera,
+                                                              pickerSource: PickerSource.both,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag6 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
                                                     child: SizedBox(
                                                       height:
@@ -5535,9 +4613,7 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           17),
                                                       width:
                                                       screenWidth(
-                                                          context,
-                                                          dividedBy:
-                                                          1.2),
+                                                          context,dividedBy: 1.2),
                                                       child:
                                                       Row(
                                                         crossAxisAlignment:
@@ -5595,98 +4671,71 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickImage(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag6 =
-                                                        details
-                                                            .selectedFiles[0];
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.image,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag6 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height:
-                                                          screenHeight(
-                                                              context,
-                                                              dividedBy:
-                                                              17),
-                                                          width:
-                                                          screenWidth(
-                                                              context,
-                                                              dividedBy:
-                                                              1.2),
-                                                          child: Row(
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                            children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy: 40)),
-                                                                height: screenHeight(
+                                                    child: SizedBox(
+                                                      height:
+                                                      screenHeight(
+                                                          context,
+                                                          dividedBy:
+                                                          17),
+                                                      width:
+                                                      screenWidth(
+                                                          context,
+                                                          dividedBy:
+                                                          1.2),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                        children: [
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                right: screenWidth(
                                                                     context,
-                                                                    dividedBy:
-                                                                    40),
-                                                                width: screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                    15),
-                                                                decoration:
-                                                                const BoxDecoration(
-                                                                    image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
-                                                              ),
-                                                              const Text(
-                                                                'Photos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                    'Roboto',
-                                                                    fontSize:
-                                                                    17,
-                                                                    fontWeight: FontWeight
-                                                                        .w500,
-                                                                    color:
-                                                                    AppColor.dropdownfont),
-                                                              ),
-                                                            ],
+                                                                    dividedBy: 40)),
+                                                            height: screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                40),
+                                                            width: screenWidth(
+                                                                context,
+                                                                dividedBy:
+                                                                15),
+                                                            decoration:
+                                                            const BoxDecoration(
+                                                                image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
                                                           ),
-                                                        )
-                                                      ],
+                                                          const Text(
+                                                            'Photos',
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                'Roboto',
+                                                                fontSize:
+                                                                17,
+                                                                fontWeight: FontWeight
+                                                                    .w500,
+                                                                color:
+                                                                AppColor.dropdownfont),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -5707,102 +4756,71 @@ class _Business_ProfileState extends State<Business_Profile> {
                                                           100)),
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      ImagePickerPlus
-                                                      picker =
-                                                      ImagePickerPlus(
-                                                          context);
-                                                      SelectedImagesDetails?
-                                                      details =
-                                                      await picker
-                                                          .pickVideo(
-                                                        source:
-                                                        ImageSource
-                                                            .gallery,
-
-                                                        /// On long tap, it will be available.
-
-                                                        galleryDisplaySettings:
-                                                        GalleryDisplaySettings(
-                                                          appTheme: AppTheme(
-                                                              focusColor:
-                                                              Colors
-                                                                  .white,
-                                                              primaryColor:
-                                                              Colors
-                                                                  .black),
-                                                          cropImage: true,
-                                                          showImagePreview:
-                                                          true,
-                                                        ),
-                                                      );
-                                                      print(
-                                                          'Details ===> ${details}');
-                                                      if (details !=
-                                                          null) {
-                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                        _selectedimag6 =
-                                                        details
-                                                            .selectedFiles[0];
-
-                                                        Navigator.pop(
-                                                            context);
-                                                        setState(() {});
-                                                        print(
-                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                      }
-                                                      // if (details != null) await displayDetails(details);
+                                                      Navigator.of(context).push(CupertinoDialogRoute(
+                                                          builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                              displaySource: DisplaySource.gallery,
+                                                              pickerSource: PickerSource.video,
+                                                              multiSelection: true,
+                                                              cropImage: false,
+                                                              galleryDisplaySettings: GalleryDisplaySettings(
+                                                                appTheme: AppTheme(
+                                                                    primaryColor: Colors.black, focusColor: Colors.white),
+                                                              ),
+                                                              onDone: (SelectedImagesDetails details) async {
+                                                                print("details ==>${details.selectedFiles.toString()}");
+                                                                _selectedimag6 = details.selectedFiles.first;
+                                                                setState(() {});
+                                                                Navigator.pop(context);
+                                                              }),
+                                                          context: context)).then((value) => Navigator.pop(context));
                                                     },
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height:
-                                                          screenHeight(
-                                                              context,
-                                                              dividedBy:
-                                                              17),
-                                                          width:
-                                                          screenWidth(
-                                                              context,
-                                                              dividedBy:
-                                                              1.2),
-                                                          child: Row(
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                            children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: screenWidth(
-                                                                        context,
-                                                                        dividedBy: 40)),
-                                                                height: screenHeight(
+                                                    child: SizedBox(
+                                                      height:
+                                                      screenHeight(
+                                                          context,
+                                                          dividedBy:
+                                                          17),
+                                                      width:
+                                                      screenWidth(
+                                                          context,
+                                                          dividedBy:
+                                                          1.2),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                        children: [
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                right: screenWidth(
                                                                     context,
-                                                                    dividedBy:
-                                                                    40),
-                                                                width: screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                    15),
-                                                                decoration:
-                                                                const BoxDecoration(
-                                                                    image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                              ),
-                                                              const Text(
-                                                                'Videos',
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                    'Roboto',
-                                                                    fontSize:
-                                                                    17,
-                                                                    fontWeight: FontWeight
-                                                                        .w500,
-                                                                    color:
-                                                                    AppColor.dropdownfont),
-                                                              ),
-                                                            ],
+                                                                    dividedBy: 40)),
+                                                            height: screenHeight(
+                                                                context,
+                                                                dividedBy:
+                                                                40),
+                                                            width: screenWidth(
+                                                                context,
+                                                                dividedBy:
+                                                                15),
+                                                            decoration:
+                                                            const BoxDecoration(
+                                                                image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
                                                           ),
-                                                        )
-                                                      ],
+                                                          const Text(
+                                                            'Videos',
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                'Roboto',
+                                                                fontSize:
+                                                                17,
+                                                                fontWeight: FontWeight
+                                                                    .w500,
+                                                                color:
+                                                                AppColor.dropdownfont),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -5945,50 +4963,50 @@ class _Business_ProfileState extends State<Business_Profile> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              DottedBorder(
-                                color: AppColor.skyBlue,
-                                strokeWidth: 1,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    if (widget.file4.isNotEmpty &&
-                                        widget.file5.isNotEmpty &&
-                                        widget.file6.isNotEmpty) {
-                                      flutterToast(
-                                          "Please remove atlest 1 pdf/document",
-                                          false);
-                                    }
-                                    FilePickerResult? result =
-                                        await FilePicker.platform.pickFiles(
-                                      type: FileType.custom,
-                                      // allowMultiple: true,
-                                      allowedExtensions: ['jpg', 'pdf', 'doc'],
-                                    );
-                                    print("result === >" +
-                                        result!.names.toString());
-                                    if (widget.file4.isEmpty &&
-                                        _files1 == false) {
-                                      file1 = result.files.first;
-                                      fileName1 = result.names.first ?? '';
-                                      _files1 = true;
-                                      setState(() {});
-                                      print("123");
-                                    } else if (widget.file5.isEmpty &&
-                                        _files2 == false) {
-                                      file2 = result.files.first;
-                                      fileName2 = result.names.first ?? '';
-                                      _files2 = true;
-                                      setState(() {});
-                                      print("456");
-                                    } else if (widget.file6.isEmpty &&
-                                        _files3 == false) {
-                                      file3 = result.files.first;
-                                      fileName3 = result.names.first ?? '';
-                                      _files3 = true;
-                                      setState(() {});
-                                      print("678");
-                                    }
+                              InkWell(
+                                onTap: () async {
+                                  if (widget.file4.isNotEmpty &&
+                                      widget.file5.isNotEmpty &&
+                                      widget.file6.isNotEmpty) {
+                                    flutterToast(
+                                        "Please remove atlest 1 pdf/document",
+                                        false);
+                                  }
+                                  FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    // allowMultiple: true,
+                                    allowedExtensions: ['jpg', 'pdf', 'doc'],
+                                  );
+                                  print("result === >" +
+                                      result!.names.toString());
+                                  if (widget.file4.isEmpty &&
+                                      _files1 == false) {
+                                    file1 = result.files.first;
+                                    fileName1 = result.names.first ?? '';
+                                    _files1 = true;
                                     setState(() {});
-                                  },
+                                    print("123");
+                                  } else if (widget.file5.isEmpty &&
+                                      _files2 == false) {
+                                    file2 = result.files.first;
+                                    fileName2 = result.names.first ?? '';
+                                    _files2 = true;
+                                    setState(() {});
+                                    print("456");
+                                  } else if (widget.file6.isEmpty &&
+                                      _files3 == false) {
+                                    file3 = result.files.first;
+                                    fileName3 = result.names.first ?? '';
+                                    _files3 = true;
+                                    setState(() {});
+                                    print("678");
+                                  }
+                                  setState(() {});
+                                },
+                                child: DottedBorder(
+                                  color: AppColor.skyBlue,
+                                  strokeWidth: 1,
                                   child: SizedBox(
                                     height:
                                         screenHeight(context, dividedBy: 13),

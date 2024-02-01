@@ -38,7 +38,7 @@ Widget Custom_textfield(BuildContext context,
         ]),
     child: Center(
       child: Padding(
-        padding: const EdgeInsets.only(left: 15.0,bottom: 2),
+        padding: const EdgeInsets.only(left: 15.0,bottom: 0),
         child: TextField(
           onTap: onTap,
           enabled: true,

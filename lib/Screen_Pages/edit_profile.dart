@@ -5,11 +5,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:custom_gallery_display/custom_gallery_display.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Screen_Pages/address_details.dart';
 import 'package:pair_me/Screen_Pages/business_address.dart';
 import 'package:pair_me/Screen_Pages/business_profile.dart';
@@ -216,38 +216,36 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                                           2),
                                                       child:
                                                       GestureDetector(
-                                                        onTap:
-                                                            () async {
-                                                          // final ImagePicker picker = ImagePicker();
-                                                          // final image = picker.pickImage(source: ImageSource.gallery);
-                                                          // print("image ===> $image");
-                                                          ImagePickerPlus
-                                                          picker =
-                                                          ImagePickerPlus(context);
-                                                          SelectedImagesDetails?
-                                                          details =
-                                                          await picker.pickImage(
-                                                            source: ImageSource.camera,
-                                                            /// On long tap, it will be available.
-                                                            galleryDisplaySettings:
-                                                            GalleryDisplaySettings(
-                                                              appTheme: AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                              cropImage: true,
-                                                              showImagePreview: true,
-                                                            ),
-                                                          );
-                                                          print(
-                                                              'Details ===> ${details}');
-                                                          if (details !=
-                                                              null) {
-                                                            // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                            _selectedimag1 =
-                                                            details.selectedFiles[0];
-                                                            Navigator.pop(context);
-                                                            setState(() {});
-                                                            print('selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                          }
-                                                          // if (details != null) await displayDetails(details);
+                                                        onTap: () async {
+                                                          Navigator.of(context).push(CupertinoDialogRoute(
+                                                              builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                  displaySource: DisplaySource.camera,
+                                                                  pickerSource: PickerSource.image,
+                                                                  multiSelection: true,
+                                                                  cropImage: false,
+                                                                  galleryDisplaySettings: GalleryDisplaySettings(
+                                                                      appTheme: AppTheme(
+                                                                          primaryColor: Colors.black, focusColor: Colors.white),
+                                                                     ),
+                                                                  onDone: (SelectedImagesDetails details) async {
+                                                                    print("details ==>${details.selectedFiles.toString()}");
+                                                                    _selectedimag1 = details.selectedFiles.first;
+                                                                    setState(() {});
+                                                                    Navigator.pop(context);
+                                                                  }),
+                                                              context: context)).then((value) => Navigator.pop(context));
+                                                              // CustomGalleryDisplay.instagramDisplay(
+                                                              //     displaySource: DisplaySource.both,
+                                                              //     pickerSource: PickerSource.both,
+                                                              //     multiSelection: true,
+                                                              //     cropImage: false,
+                                                              //     galleryDisplaySettings: GalleryDisplaySettings(
+                                                              //         appTheme: AppTheme(
+                                                              //             primaryColor: Colors.black, focusColor: Colors.white),
+                                                              //        ),
+                                                              //     onDone: (SelectedImagesDetails details) async {
+                                                              //       print("details ==>$details");
+                                                              //     });
                                                         },
                                                         child:
                                                         Row(
@@ -286,48 +284,25 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                                         100)),
                                                 child:
                                                 GestureDetector(
-                                                  onTap:
-                                                      () async {
-                                                    ImagePickerPlus
-                                                    picker =
-                                                    ImagePickerPlus(
-                                                        context);
-                                                    SelectedImagesDetails?
-                                                    details =
-                                                    await picker
-                                                        .pickImage(
-                                                      source: ImageSource
-                                                          .gallery,
+                                                  onTap: () async {
+                                                    Navigator.of(context).push(CupertinoDialogRoute(
+                                                        builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                            displaySource: DisplaySource.gallery,
+                                                            pickerSource: PickerSource.both,
+                                                            multiSelection: true,
+                                                            cropImage: false,
+                                                            galleryDisplaySettings: GalleryDisplaySettings(
+                                                              appTheme: AppTheme(
+                                                                  primaryColor: Colors.black, focusColor: Colors.white),
+                                                            ),
+                                                            onDone: (SelectedImagesDetails details) async {
+                                                              print("details ==>${details.selectedFiles.toString()}");
+                                                              _selectedimag1 = details.selectedFiles.first;
+                                                              setState(() {});
+                                                              Navigator.pop(context);
+                                                            }),
+                                                        context: context)).then((value) => Navigator.pop(context));
 
-                                                      /// On long tap, it will be available.
-                                                      galleryDisplaySettings:
-                                                      GalleryDisplaySettings(
-                                                        appTheme: AppTheme(
-                                                            focusColor:
-                                                            Colors.white,
-                                                            primaryColor: Colors.black),
-                                                        cropImage:
-                                                        true,
-                                                        showImagePreview:
-                                                        true,
-                                                      ),
-                                                    );
-                                                    print(
-                                                        'Details ===> ${details}');
-                                                    if (details !=
-                                                        null) {
-                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                      _selectedimag1 =
-                                                      details
-                                                          .selectedFiles[0];
-                                                      Navigator.pop(
-                                                          context);
-                                                      setState(
-                                                              () {});
-                                                      print(
-                                                          'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                    }
-                                                    // if (details != null) await displayDetails(details);
                                                   },
                                                   child: Row(
                                                     children: [

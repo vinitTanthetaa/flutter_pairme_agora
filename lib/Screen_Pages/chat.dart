@@ -41,8 +41,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setupChatClient();
-    _initSDK();
+    //setupChatClient();
+   // _initSDK();
     _addChatListener();
   }
   void _initSDK() async {
@@ -565,7 +565,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                           style: const ButtonStyle(
                               overlayColor:
                                   MaterialStatePropertyAll(Colors.transparent)),
-                          onPressed: sendMessage,
+                          onPressed: _sendMessage,
                           icon: Container(
                             height: screenHeight(context, dividedBy: 30),
                             width: screenWidth(context, dividedBy: 20),
@@ -697,34 +697,15 @@ class _Chatting_PageState extends State<Chatting_Page> {
       content: Text(message),
     ));
   }
-  void sendMessage() async {
-    // if (recipientId.isEmpty || messageContent.isEmpty) {
-    //   showLog("Enter recipient user ID and type a message");
-    //   return;
-    // }
+  void _sendMessage() async {
+
 
     var msg = ChatMessage.createTxtSendMessage(
-      targetId: widget.id,
-      content: messageContent,
+      targetId: widget.Username,
+      content:messageController.text,
     );
-    ChatClient.getInstance.chatManager.addMessageEvent(
-      "UNIQUE_HANDLER_ID",
-      ChatMessageEvent(
-        onSuccess: (msgId, msg) {
-          _addLogToConsole("on message succeed");
-        },
-        onProgress: (msgId, progress) {
-          _addLogToConsole("on message progress");
-        },
-        onError: (msgId, msg, error) {
-          _addLogToConsole(
-            "on message failed, code: ${error.code}, desc: ${error.description}",
-          );
-        },
-      ),
-    );
-    ChatClient.getInstance.chatManager.removeMessageEvent("UNIQUE_HANDLER_ID");
-    agoraChatClient.chatManager.sendMessage(msg);
+
+    ChatClient.getInstance.chatManager.sendMessage(msg);
   }
   // void _sendMessage() async {
   //   // if (_chatId == null || _messageContent == null) {
@@ -804,26 +785,27 @@ class _Chatting_PageState extends State<Chatting_Page> {
       }
     }
   }
-  void _addChatListener() {
-    ChatClient.getInstance.chatManager.addMessageEvent(
-        "UNIQUE_HANDLER_ID",
-        ChatMessageEvent(
-          onSuccess: (msgId, msg) {
-            _addLogToConsole("send message succeed");
-          },
-          onProgress: (msgId, progress) {
-            _addLogToConsole("send message succeed");
-          },
-          onError: (msgId, msg, error) {
-            _addLogToConsole(
-              "send message failed, code: ${error.code}, desc: $error , msg : $msg , id : $msgId",
-            );
-          },
-        ));
+  Future<void> _addChatListener() async {
+    // AgoraRtcEngine.create('YOUR_APP_ID');
+
 
     ChatClient.getInstance.chatManager.addEventHandler(
-      "UNIQUE_HANDLER_ID",
+      'UNIQUE_HANDLER_ID',
       ChatEventHandler(onMessagesReceived: onMessagesReceived),
+    );
+
+    ChatClient.getInstance.chatManager.addMessageEvent(
+      'UNIQUE_HANDLER_ID',
+      ChatMessageEvent(
+        onSuccess: (msgId, msg) {
+          _addLogToConsole("send message: ${messageController.text} ,${widget.Username},$msgId,$msg");
+        },
+        onError: (msgId, msg, error) {
+          _addLogToConsole(
+            "send message failed, code: ${error.code}, desc: ${error.description}",
+          );
+        },
+      ),
     );
   }
   void _addLogToConsole(String log) {

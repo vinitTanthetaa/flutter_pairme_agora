@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:custom_gallery_display/custom_gallery_display.dart';
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,7 +10,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker_plus/image_picker_plus.dart';
 import 'package:pair_me/Modal/city&state.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
@@ -1949,44 +1949,43 @@ class _StepScreenState extends State<StepScreen> {
                                                     context: context,
                                                     builder: (context) {
                                                       return Container(
-                                                        height: screenHeight(
-                                                            context,
+                                                        height: screenHeight(context,
                                                             dividedBy: 3),
                                                         decoration: const BoxDecoration(
-                                                            color:
-                                                                AppColor.white,
-                                                            borderRadius: BorderRadius.only(
+                                                            color: AppColor.white,
+                                                            borderRadius:
+                                                            BorderRadius.only(
                                                                 topLeft: Radius
-                                                                    .circular(
-                                                                        15),
+                                                                    .circular(15),
                                                                 topRight: Radius
                                                                     .circular(
-                                                                        16))),
+                                                                    16))),
                                                         child: Column(
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          70)),
+                                                                      70)),
                                                               child: const Text(
                                                                 'Add Media',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        25,
+                                                                    'Roboto',
+                                                                    fontSize: 25,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                               ),
                                                             ),
                                                             const Divider(
@@ -1994,101 +1993,79 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
+                                                                      100)),
                                                               child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                  SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickBoth(
-                                                                    source: ImageSource
-                                                                        .camera,
-
-                                                                    /// On long tap, it will be available.
-                                                                    multiSelection:
-                                                                        true,
-                                                                    galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                      appTheme: AppTheme(
-                                                                          focusColor: Colors
-                                                                              .white,
-                                                                          primaryColor:
-                                                                              Colors.black),
-                                                                      cropImage:
-                                                                          true,
-                                                                      showImagePreview:
-                                                                          true,
-                                                                    ),
-                                                                  );
-                                                                  print(
-                                                                      'Details ===> ${details}');
-                                                                  if (details !=
-                                                                      null) {
-                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                    _selectedimag1 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    setState(
-                                                                        () {});
-                                                                    print(
-                                                                        'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                                  }
-                                                                  // if (details != null) await displayDetails(details);
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.camera,
+                                                                          pickerSource: PickerSource.both,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag1 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
                                                                 },
                                                                 child: SizedBox(
-                                                                  height: screenHeight(
+                                                                  height:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          17),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.2),
-                                                                  // color: Colors.transparent,
-                                                                  child: Row(
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,dividedBy: 1.2),
+                                                                  child:
+                                                                  Row(
                                                                     crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
+                                                                    CrossAxisAlignment
+                                                                        .center,
                                                                     children: [
                                                                       Container(
                                                                         margin: EdgeInsets.only(
-                                                                            right:
-                                                                                screenWidth(context, dividedBy: 40)),
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
                                                                         height: screenHeight(
                                                                             context,
                                                                             dividedBy:
-                                                                                40),
+                                                                            40),
                                                                         width: screenWidth(
                                                                             context,
                                                                             dividedBy:
-                                                                                15),
+                                                                            15),
                                                                         decoration:
-                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
                                                                       ),
                                                                       const Text(
                                                                         'Camera',
                                                                         style: TextStyle(
                                                                             fontFamily:
-                                                                                'Roboto',
+                                                                            'Roboto',
                                                                             fontSize:
-                                                                                17,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            color: AppColor.dropdownfont),
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -2100,96 +2077,80 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
+                                                                      100)),
                                                               child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                  SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickImage(
-                                                                    source: ImageSource
-                                                                        .gallery,
-                                                                    galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                      appTheme: AppTheme(
-                                                                          focusColor: Colors
-                                                                              .white,
-                                                                          primaryColor:
-                                                                              Colors.black),
-                                                                      cropImage:
-                                                                          true,
-                                                                      showImagePreview:
-                                                                          true,
-                                                                    ),
-                                                                  );
-                                                                  print(
-                                                                      'Details ===> ${details}');
-                                                                  if (details !=
-                                                                      null) {
-                                                                    //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                    _selectedimag1 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    setState(
-                                                                        () {});
-                                                                    print(
-                                                                        'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                                  }
-                                                                  // if (details != null) await displayDetails(details);
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.image,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag1 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
                                                                 },
                                                                 child: SizedBox(
-                                                                  height: screenHeight(
+                                                                  height:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          17),
-                                                                  width: screenWidth(
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          1.2),
+                                                                      1.2),
                                                                   child: Row(
                                                                     crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
+                                                                    CrossAxisAlignment
+                                                                        .center,
                                                                     children: [
                                                                       Container(
                                                                         margin: EdgeInsets.only(
-                                                                            right:
-                                                                                screenWidth(context, dividedBy: 40)),
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
                                                                         height: screenHeight(
                                                                             context,
                                                                             dividedBy:
-                                                                                40),
+                                                                            40),
                                                                         width: screenWidth(
                                                                             context,
                                                                             dividedBy:
-                                                                                15),
+                                                                            15),
                                                                         decoration:
-                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
                                                                       ),
                                                                       const Text(
                                                                         'Photos',
                                                                         style: TextStyle(
                                                                             fontFamily:
-                                                                                'Roboto',
+                                                                            'Roboto',
                                                                             fontSize:
-                                                                                17,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            color: AppColor.dropdownfont),
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -2201,96 +2162,80 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
+                                                                      100)),
                                                               child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                  SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickVideo(
-                                                                    source: ImageSource
-                                                                        .gallery,
-                                                                    galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                      appTheme: AppTheme(
-                                                                          focusColor: Colors
-                                                                              .white,
-                                                                          primaryColor:
-                                                                              Colors.black),
-                                                                      cropImage:
-                                                                          true,
-                                                                      showImagePreview:
-                                                                          true,
-                                                                    ),
-                                                                  );
-                                                                  print(
-                                                                      'Details ===> ${details}');
-                                                                  if (details !=
-                                                                      null) {
-                                                                    //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                    _selectedimag1 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    setState(
-                                                                        () {});
-                                                                    print(
-                                                                        'selectedByte ==> ${_selectedimag1?.selectedFile}');
-                                                                  }
-                                                                  // if (details != null) await displayDetails(details);
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.video,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag1 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
                                                                 },
                                                                 child: SizedBox(
-                                                                  height: screenHeight(
+                                                                  height:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          17),
-                                                                  width: screenWidth(
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          1.2),
+                                                                      1.2),
                                                                   child: Row(
                                                                     crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
+                                                                    CrossAxisAlignment
+                                                                        .center,
                                                                     children: [
                                                                       Container(
                                                                         margin: EdgeInsets.only(
-                                                                            right:
-                                                                                screenWidth(context, dividedBy: 40)),
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
                                                                         height: screenHeight(
                                                                             context,
                                                                             dividedBy:
-                                                                                40),
+                                                                            40),
                                                                         width: screenWidth(
                                                                             context,
                                                                             dividedBy:
-                                                                                15),
+                                                                            15),
                                                                         decoration:
-                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
                                                                       ),
                                                                       const Text(
                                                                         'Videos',
                                                                         style: TextStyle(
                                                                             fontFamily:
-                                                                                'Roboto',
+                                                                            'Roboto',
                                                                             fontSize:
-                                                                                17,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            color: AppColor.dropdownfont),
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -2435,44 +2380,43 @@ class _StepScreenState extends State<StepScreen> {
                                                     context: context,
                                                     builder: (context) {
                                                       return Container(
-                                                        height: screenHeight(
-                                                            context,
+                                                        height: screenHeight(context,
                                                             dividedBy: 3),
                                                         decoration: const BoxDecoration(
-                                                            color:
-                                                                AppColor.white,
-                                                            borderRadius: BorderRadius.only(
+                                                            color: AppColor.white,
+                                                            borderRadius:
+                                                            BorderRadius.only(
                                                                 topLeft: Radius
-                                                                    .circular(
-                                                                        15),
+                                                                    .circular(15),
                                                                 topRight: Radius
                                                                     .circular(
-                                                                        16))),
+                                                                    16))),
                                                         child: Column(
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          70)),
+                                                                      70)),
                                                               child: const Text(
                                                                 'Add Media',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        25,
+                                                                    'Roboto',
+                                                                    fontSize: 25,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                               ),
                                                             ),
                                                             const Divider(
@@ -2480,98 +2424,79 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
+                                                                      100)),
                                                               child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                  SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickBoth(
-                                                                    source: ImageSource
-                                                                        .camera,
-                                                                    multiSelection:
-                                                                        true,
-                                                                    galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                      appTheme: AppTheme(
-                                                                          focusColor: Colors
-                                                                              .white,
-                                                                          primaryColor:
-                                                                              Colors.black),
-                                                                      cropImage:
-                                                                          true,
-                                                                      showImagePreview:
-                                                                          true,
-                                                                    ),
-                                                                  );
-                                                                  print(
-                                                                      'Details ===> ${details}');
-                                                                  if (details !=
-                                                                      null) {
-                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                    _selectedimag2 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    setState(
-                                                                        () {});
-                                                                    print(
-                                                                        'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                                  }
-                                                                  // if (details != null) await displayDetails(details);
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.camera,
+                                                                          pickerSource: PickerSource.both,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag2 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
                                                                 },
                                                                 child: SizedBox(
-                                                                  height: screenHeight(
+                                                                  height:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          17),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.2),
-                                                                  child: Row(
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,dividedBy: 1.2),
+                                                                  child:
+                                                                  Row(
                                                                     crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
+                                                                    CrossAxisAlignment
+                                                                        .center,
                                                                     children: [
                                                                       Container(
                                                                         margin: EdgeInsets.only(
-                                                                            right:
-                                                                                screenWidth(context, dividedBy: 40)),
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
                                                                         height: screenHeight(
                                                                             context,
                                                                             dividedBy:
-                                                                                40),
+                                                                            40),
                                                                         width: screenWidth(
                                                                             context,
                                                                             dividedBy:
-                                                                                15),
+                                                                            15),
                                                                         decoration:
-                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
                                                                       ),
                                                                       const Text(
                                                                         'Camera',
                                                                         style: TextStyle(
                                                                             fontFamily:
-                                                                                'Roboto',
+                                                                            'Roboto',
                                                                             fontSize:
-                                                                                17,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            color: AppColor.dropdownfont),
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -2583,111 +2508,82 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  GestureDetector(
-                                                                // onTap: () async {
-                                                                //   final ImagePicker picker =
-                                                                //   ImagePicker();
-                                                                //   final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-                                                                //   print("pickedfile ==> ${pickedFile?.path}");
-                                                                //   var result = await FlutterImageCompress
-                                                                //       .compressAndGetFile(
-                                                                //     pickedFile!.path,
-                                                                //     pickedFile.path + '_compressed.jpg',
-                                                                //     quality:
-                                                                //     10, // Adjust the quality as needed
-                                                                //   );
-                                                                //   image1 = File(result!.path);
-                                                                //   setState(() {});
-                                                                //   Navigator.pop(context);
-                                                                // },
-                                                                child: InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    ImagePickerPlus
-                                                                        picker =
-                                                                        ImagePickerPlus(
-                                                                            context);
-                                                                    SelectedImagesDetails?
-                                                                        details =
-                                                                        await picker
-                                                                            .pickImage(
-                                                                      source: ImageSource
-                                                                          .gallery,
-                                                                      galleryDisplaySettings:
-                                                                          GalleryDisplaySettings(
-                                                                        appTheme: AppTheme(
-                                                                            focusColor:
-                                                                                Colors.white,
-                                                                            primaryColor: Colors.black),
-                                                                        cropImage:
-                                                                            true,
-                                                                        showImagePreview:
-                                                                            true,
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.image,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag2 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
                                                                       ),
-                                                                    );
-                                                                    print(
-                                                                        'Details ===> ${details}');
-                                                                    if (details !=
-                                                                        null) {
-                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                      _selectedimag2 =
-                                                                          details
-                                                                              .selectedFiles[0];
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                      setState(
-                                                                          () {});
-                                                                      print(
-                                                                          'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                                    }
-                                                                    // if (details != null) await displayDetails(details);
-                                                                  },
-                                                                  child:
-                                                                      SizedBox(
-                                                                    height: screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            17),
-                                                                    width: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            1.2),
-                                                                    child: Row(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Container(
-                                                                          margin:
-                                                                              EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 40),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 15),
-                                                                          decoration:
-                                                                              const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
-                                                                        ),
-                                                                        const Text(
-                                                                          'Photos',
-                                                                          style: TextStyle(
-                                                                              fontFamily: 'Roboto',
-                                                                              fontSize: 17,
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: AppColor.dropdownfont),
-                                                                        ),
-                                                                      ],
-                                                                    ),
+                                                                      const Text(
+                                                                        'Photos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ),
                                                               ),
@@ -2697,95 +2593,82 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  GestureDetector(
-                                                                child: InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    ImagePickerPlus
-                                                                        picker =
-                                                                        ImagePickerPlus(
-                                                                            context);
-                                                                    SelectedImagesDetails?
-                                                                        details =
-                                                                        await picker
-                                                                            .pickVideo(
-                                                                      source: ImageSource
-                                                                          .gallery,
-                                                                      galleryDisplaySettings:
-                                                                          GalleryDisplaySettings(
-                                                                        appTheme: AppTheme(
-                                                                            focusColor:
-                                                                                Colors.white,
-                                                                            primaryColor: Colors.black),
-                                                                        cropImage:
-                                                                            true,
-                                                                        showImagePreview:
-                                                                            true,
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.video,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag2 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
                                                                       ),
-                                                                    );
-                                                                    print(
-                                                                        'Details ===> ${details}');
-                                                                    if (details !=
-                                                                        null) {
-                                                                      //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                      _selectedimag2 =
-                                                                          details
-                                                                              .selectedFiles[0];
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                      setState(
-                                                                          () {});
-                                                                      print(
-                                                                          'selectedByte ==> ${_selectedimag2?.selectedFile}');
-                                                                    }
-                                                                    // if (details != null) await displayDetails(details);
-                                                                  },
-                                                                  child:
-                                                                      SizedBox(
-                                                                    height: screenHeight(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            17),
-                                                                    width: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            1.2),
-                                                                    child: Row(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Container(
-                                                                          margin:
-                                                                              EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 40),
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 15),
-                                                                          decoration:
-                                                                              const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
-                                                                        ),
-                                                                        const Text(
-                                                                          'Videos',
-                                                                          style: TextStyle(
-                                                                              fontFamily: 'Roboto',
-                                                                              fontSize: 17,
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: AppColor.dropdownfont),
-                                                                        ),
-                                                                      ],
-                                                                    ),
+                                                                      const Text(
+                                                                        'Videos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ),
                                                               ),
@@ -2933,44 +2816,43 @@ class _StepScreenState extends State<StepScreen> {
                                                     context: context,
                                                     builder: (context) {
                                                       return Container(
-                                                        height: screenHeight(
-                                                            context,
+                                                        height: screenHeight(context,
                                                             dividedBy: 3),
                                                         decoration: const BoxDecoration(
-                                                            color:
-                                                                AppColor.white,
-                                                            borderRadius: BorderRadius.only(
+                                                            color: AppColor.white,
+                                                            borderRadius:
+                                                            BorderRadius.only(
                                                                 topLeft: Radius
-                                                                    .circular(
-                                                                        15),
+                                                                    .circular(15),
                                                                 topRight: Radius
                                                                     .circular(
-                                                                        16))),
+                                                                    16))),
                                                         child: Column(
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          70)),
+                                                                      70)),
                                                               child: const Text(
                                                                 'Add Media',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        25,
+                                                                    'Roboto',
+                                                                    fontSize: 25,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                               ),
                                                             ),
                                                             const Divider(
@@ -2978,91 +2860,79 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
+                                                                      100)),
                                                               child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  // final ImagePicker picker = ImagePicker();
-                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                  // print("image ===> $image");
-                                                                  ImagePickerPlus
-                                                                  picker =
-                                                                  ImagePickerPlus(context);
-                                                                  SelectedImagesDetails?
-                                                                  details =
-                                                                  await picker.pickBoth(
-                                                                    source:
-                                                                    ImageSource.camera,
-
-                                                                    /// On long tap, it will be available.
-                                                                    multiSelection:
-                                                                    true,
-                                                                    galleryDisplaySettings:
-                                                                    GalleryDisplaySettings(
-                                                                      appTheme:
-                                                                      AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                      cropImage:
-                                                                      true,
-                                                                      showImagePreview:
-                                                                      true,
-                                                                    ),
-                                                                  );
-                                                                  print(
-                                                                      'Details ===> ${details}');
-                                                                  if (details !=
-                                                                      null) {
-                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                    _selectedimag3 =
-                                                                    details.selectedFiles[0];
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    setState(
-                                                                            () {});
-                                                                    print(
-                                                                        'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                                  }
-                                                                  // if (details != null) await displayDetails(details);
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.camera,
+                                                                          pickerSource: PickerSource.both,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag3 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
                                                                 },
                                                                 child: SizedBox(
-                                                                  height: screenHeight(
+                                                                  height:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          17),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.2),
-                                                                  child: Row(
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,dividedBy: 1.2),
+                                                                  child:
+                                                                  Row(
                                                                     crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
+                                                                    CrossAxisAlignment
+                                                                        .center,
                                                                     children: [
                                                                       Container(
-                                                                        margin:
-                                                                            EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
                                                                         height: screenHeight(
                                                                             context,
-                                                                            dividedBy: 40),
+                                                                            dividedBy:
+                                                                            40),
                                                                         width: screenWidth(
                                                                             context,
-                                                                            dividedBy: 15),
+                                                                            dividedBy:
+                                                                            15),
                                                                         decoration:
-                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
                                                                       ),
                                                                       const Text(
                                                                         'Camera',
                                                                         style: TextStyle(
-                                                                            fontFamily: 'Roboto',
-                                                                            fontSize: 17,
-                                                                            fontWeight: FontWeight.w500,
-                                                                            color: AppColor.dropdownfont),
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -3074,191 +2944,170 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickImage(
-                                                                        source: ImageSource
-                                                                            .gallery,
-
-                                                                        /// On long tap, it will be available.
-
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme: AppTheme(
-                                                                              focusColor: Colors
-                                                                                  .white,
-                                                                              primaryColor:
-                                                                              Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag3 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.image,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Photos',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                        ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag3 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
                                                                       ),
-                                                                    ),
+                                                                      const Text(
+                                                                        'Photos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                ),
+                                                              ),
                                                             ),
                                                             const Divider(
                                                               height: 0,
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickVideo(
-                                                                        source: ImageSource
-                                                                            .gallery,
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme: AppTheme(
-                                                                              focusColor: Colors
-                                                                                  .white,
-                                                                              primaryColor:
-                                                                              Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag3 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag3?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.video,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Videos',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                        ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag3 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
                                                                       ),
-                                                                    ),
+                                                                      const Text(
+                                                                        'Videos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -3408,44 +3257,43 @@ class _StepScreenState extends State<StepScreen> {
                                                     context: context,
                                                     builder: (context) {
                                                       return Container(
-                                                        height: screenHeight(
-                                                            context,
+                                                        height: screenHeight(context,
                                                             dividedBy: 3),
                                                         decoration: const BoxDecoration(
-                                                            color:
-                                                                AppColor.white,
-                                                            borderRadius: BorderRadius.only(
+                                                            color: AppColor.white,
+                                                            borderRadius:
+                                                            BorderRadius.only(
                                                                 topLeft: Radius
-                                                                    .circular(
-                                                                        15),
+                                                                    .circular(15),
                                                                 topRight: Radius
                                                                     .circular(
-                                                                        16))),
+                                                                    16))),
                                                         child: Column(
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          70)),
+                                                                      70)),
                                                               child: const Text(
                                                                 'Add Media',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        25,
+                                                                    'Roboto',
+                                                                    fontSize: 25,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                               ),
                                                             ),
                                                             const Divider(
@@ -3453,92 +3301,82 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
+                                                                      100)),
                                                               child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  // final ImagePicker picker = ImagePicker();
-                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                  // print("image ===> $image");
-                                                                  ImagePickerPlus
-                                                                  picker =
-                                                                  ImagePickerPlus(context);
-                                                                  SelectedImagesDetails?
-                                                                  details =
-                                                                  await picker.pickBoth(
-                                                                    source:
-                                                                    ImageSource.camera,
-
-                                                                    /// On long tap, it will be available.
-                                                                    multiSelection:
-                                                                    true,
-                                                                    galleryDisplaySettings:
-                                                                    GalleryDisplaySettings(
-                                                                      appTheme:
-                                                                      AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                      cropImage:
-                                                                      true,
-                                                                      showImagePreview:
-                                                                      true,
-                                                                    ),
-                                                                  );
-                                                                  print(
-                                                                      'Details ===> ${details}');
-                                                                  if (details !=
-                                                                      null) {
-                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                    _selectedimag4 =
-                                                                    details.selectedFiles[0];
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    setState(
-                                                                            () {});
-                                                                    print(
-                                                                        'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                                  }
-                                                                  // if (details != null) await displayDetails(details);
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.camera,
+                                                                          pickerSource: PickerSource.both,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag4 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
                                                                 },
                                                                 child: SizedBox(
-                                                                  height: screenHeight(
+                                                                  height:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          17),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          1.2),
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,dividedBy: 1.2),
                                                                   child:
-                                                                      Row(
-                                                                      crossAxisAlignment:
-                                                                        CrossAxisAlignment.center,
-                                                                      children: [
+                                                                  Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
                                                                       Container(
-                                                                        margin:
-                                                                            EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                        height:
-                                                                            screenHeight(context, dividedBy: 40),
-                                                                        width:
-                                                                            screenWidth(context, dividedBy: 15),
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
                                                                         decoration:
-                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
                                                                       ),
                                                                       const Text(
                                                                         'Camera',
                                                                         style: TextStyle(
-                                                                            fontFamily: 'Roboto',
-                                                                            fontSize: 17,
-                                                                            fontWeight: FontWeight.w500,
-                                                                            color: AppColor.dropdownfont),
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
                                                                       ),
-                                                                      ],
-                                                                    ),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -3547,188 +3385,170 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickImage(
-                                                                        source: ImageSource
-                                                                            .gallery,
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme: AppTheme(
-                                                                              focusColor: Colors
-                                                                                  .white,
-                                                                              primaryColor:
-                                                                              Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag4 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.image,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Photos',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                        ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag4 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
                                                                       ),
-                                                                    ),
+                                                                      const Text(
+                                                                        'Photos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                ),
+                                                              ),
                                                             ),
                                                             const Divider(
                                                               height: 0,
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickVideo(
-                                                                        source: ImageSource
-                                                                            .gallery,
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme: AppTheme(
-                                                                              focusColor: Colors
-                                                                                  .white,
-                                                                              primaryColor:
-                                                                              Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag4 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag4?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.video,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Videos',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                        ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag4 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
                                                                       ),
-                                                                    ),
+                                                                      const Text(
+                                                                        'Videos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -3868,44 +3688,43 @@ class _StepScreenState extends State<StepScreen> {
                                                     context: context,
                                                     builder: (context) {
                                                       return Container(
-                                                        height: screenHeight(
-                                                            context,
+                                                        height: screenHeight(context,
                                                             dividedBy: 3),
                                                         decoration: const BoxDecoration(
-                                                            color:
-                                                                AppColor.white,
-                                                            borderRadius: BorderRadius.only(
+                                                            color: AppColor.white,
+                                                            borderRadius:
+                                                            BorderRadius.only(
                                                                 topLeft: Radius
-                                                                    .circular(
-                                                                        15),
+                                                                    .circular(15),
                                                                 topRight: Radius
                                                                     .circular(
-                                                                        16))),
+                                                                    16))),
                                                         child: Column(
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          70)),
+                                                                      70)),
                                                               child: const Text(
                                                                 'Add Media',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        25,
+                                                                    'Roboto',
+                                                                    fontSize: 25,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                               ),
                                                             ),
                                                             const Divider(
@@ -3913,92 +3732,82 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
+                                                                      100)),
                                                               child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  // final ImagePicker picker = ImagePicker();
-                                                                  // final image = picker.pickImage(source: ImageSource.gallery);
-                                                                  // print("image ===> $image");
-                                                                  ImagePickerPlus
-                                                                  picker =
-                                                                  ImagePickerPlus(context);
-                                                                  SelectedImagesDetails?
-                                                                  details =
-                                                                  await picker.pickBoth(
-                                                                    source:
-                                                                    ImageSource.camera,
-
-                                                                    /// On long tap, it will be available.
-                                                                    multiSelection:
-                                                                    true,
-                                                                    galleryDisplaySettings:
-                                                                    GalleryDisplaySettings(
-                                                                      appTheme:
-                                                                      AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                      cropImage:
-                                                                      true,
-                                                                      showImagePreview:
-                                                                      true,
-                                                                    ),
-                                                                  );
-                                                                  print(
-                                                                      'Details ===> ${details}');
-                                                                  if (details !=
-                                                                      null) {
-                                                                    // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                    _selectedimag5 =
-                                                                    details.selectedFiles[0];
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    setState(
-                                                                            () {});
-                                                                    print(
-                                                                        'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                                  }
-                                                                  // if (details != null) await displayDetails(details);
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.camera,
+                                                                          pickerSource: PickerSource.both,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
+                                                                          ),
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag5 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
                                                                 },
                                                                 child: SizedBox(
-                                                                  height: screenHeight(
+                                                                  height:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          17),
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          2),
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,dividedBy: 1.2),
                                                                   child:
-                                                                      Row(
-                                                                      crossAxisAlignment:
-                                                                        CrossAxisAlignment.center,
-                                                                      children: [
+                                                                  Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
                                                                       Container(
-                                                                        margin:
-                                                                            EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                        height:
-                                                                            screenHeight(context, dividedBy: 40),
-                                                                        width:
-                                                                            screenWidth(context, dividedBy: 15),
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
                                                                         decoration:
-                                                                            const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
                                                                       ),
                                                                       const Text(
                                                                         'Camera',
                                                                         style: TextStyle(
-                                                                            fontFamily: 'Roboto',
-                                                                            fontSize: 17,
-                                                                            fontWeight: FontWeight.w500,
-                                                                            color: AppColor.dropdownfont),
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
                                                                       ),
-                                                                      ],
-                                                                    ),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -4007,188 +3816,170 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickImage(
-                                                                        source: ImageSource
-                                                                            .gallery,
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme: AppTheme(
-                                                                              focusColor: Colors
-                                                                                  .white,
-                                                                              primaryColor:
-                                                                              Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag5 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.image,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Photos',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                        ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag5 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
                                                                       ),
-                                                                    ),
+                                                                      const Text(
+                                                                        'Photos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                ),
+                                                              ),
                                                             ),
                                                             const Divider(
                                                               height: 0,
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickVideo(
-                                                                        source: ImageSource
-                                                                            .gallery,
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme: AppTheme(
-                                                                              focusColor: Colors
-                                                                                  .white,
-                                                                              primaryColor:
-                                                                              Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag5 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.video,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Videos',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                        ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag5 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
                                                                       ),
-                                                                    ),
+                                                                      const Text(
+                                                                        'Videos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -4328,44 +4119,43 @@ class _StepScreenState extends State<StepScreen> {
                                                     context: context,
                                                     builder: (context) {
                                                       return Container(
-                                                        height: screenHeight(
-                                                            context,
+                                                        height: screenHeight(context,
                                                             dividedBy: 3),
                                                         decoration: const BoxDecoration(
-                                                            color:
-                                                                AppColor.white,
-                                                            borderRadius: BorderRadius.only(
+                                                            color: AppColor.white,
+                                                            borderRadius:
+                                                            BorderRadius.only(
                                                                 topLeft: Radius
-                                                                    .circular(
-                                                                        15),
+                                                                    .circular(15),
                                                                 topRight: Radius
                                                                     .circular(
-                                                                        16))),
+                                                                    16))),
                                                         child: Column(
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          70)),
+                                                                      70)),
                                                               child: const Text(
                                                                 'Add Media',
                                                                 style: TextStyle(
                                                                     fontFamily:
-                                                                        'Roboto',
-                                                                    fontSize:
-                                                                        25,
+                                                                    'Roboto',
+                                                                    fontSize: 25,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                    FontWeight
+                                                                        .w600),
                                                               ),
                                                             ),
                                                             const Divider(
@@ -4373,92 +4163,83 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child: Row(
-                                                                children: [
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker.pickBoth(
-                                                                        source:
-                                                                        ImageSource.camera,
-                                                                        multiSelection:
-                                                                        true,
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme:
-                                                                          AppTheme(focusColor: Colors.white, primaryColor: Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        // compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag6 =
-                                                                        details.selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                          crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                          children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.camera,
+                                                                          pickerSource: PickerSource.both,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Camera',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                          ],
-                                                                        ),
-                                                                    ),
-                                                                  )
-                                                                ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag6 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,dividedBy: 1.2),
+                                                                  child:
+                                                                  Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/camera.png'))),
+                                                                      ),
+                                                                      const Text(
+                                                                        'Camera',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
                                                             const Divider(
@@ -4466,188 +4247,170 @@ class _StepScreenState extends State<StepScreen> {
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickImage(
-                                                                        source: ImageSource
-                                                                            .gallery,
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme: AppTheme(
-                                                                              focusColor: Colors
-                                                                                  .white,
-                                                                              primaryColor:
-                                                                              Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag6 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.image,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Photos',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                        ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag6 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/placeholder.png'))),
                                                                       ),
-                                                                    ),
+                                                                      const Text(
+                                                                        'Photos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                ),
+                                                              ),
                                                             ),
                                                             const Divider(
                                                               height: 0,
                                                             ),
                                                             Padding(
                                                               padding: EdgeInsets.symmetric(
-                                                                  horizontal: screenWidth(
+                                                                  horizontal:
+                                                                  screenWidth(
                                                                       context,
                                                                       dividedBy:
-                                                                          15),
-                                                                  vertical: screenHeight(
+                                                                      15),
+                                                                  vertical:
+                                                                  screenHeight(
                                                                       context,
                                                                       dividedBy:
-                                                                          100)),
-                                                              child:
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      ImagePickerPlus
-                                                                      picker =
-                                                                      ImagePickerPlus(
-                                                                          context);
-                                                                      SelectedImagesDetails?
-                                                                      details =
-                                                                      await picker
-                                                                          .pickVideo(
-                                                                        source: ImageSource
-                                                                            .gallery,
-                                                                        galleryDisplaySettings:
-                                                                        GalleryDisplaySettings(
-                                                                          appTheme: AppTheme(
-                                                                              focusColor: Colors
-                                                                                  .white,
-                                                                              primaryColor:
-                                                                              Colors.black),
-                                                                          cropImage:
-                                                                          true,
-                                                                          showImagePreview:
-                                                                          true,
-                                                                        ),
-                                                                      );
-                                                                      print(
-                                                                          'Details ===> ${details}');
-                                                                      if (details !=
-                                                                          null) {
-                                                                        //compressToHighQuality(File(details.selectedFiles[0].toString()));
-                                                                        _selectedimag6 =
-                                                                        details
-                                                                            .selectedFiles[0];
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        setState(
-                                                                                () {});
-                                                                        print(
-                                                                            'selectedByte ==> ${_selectedimag6?.selectedFile}');
-                                                                      }
-                                                                      // if (details != null) await displayDetails(details);
-                                                                    },
-                                                                    child: SizedBox(
-                                                                      height: screenHeight(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              17),
-                                                                      width: screenWidth(
-                                                                          context,
-                                                                          dividedBy:
-                                                                              1.2),
-                                                                      child:
-                                                                          Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Container(
-                                                                            margin:
-                                                                                EdgeInsets.only(right: screenWidth(context, dividedBy: 40)),
-                                                                            height:
-                                                                                screenHeight(context, dividedBy: 40),
-                                                                            width:
-                                                                                screenWidth(context, dividedBy: 15),
-                                                                            decoration:
-                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
+                                                                      100)),
+                                                              child: InkWell(
+                                                                onTap: () async {
+                                                                  Navigator.of(context).push(CupertinoDialogRoute(
+                                                                      builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                                                          displaySource: DisplaySource.gallery,
+                                                                          pickerSource: PickerSource.video,
+                                                                          multiSelection: true,
+                                                                          cropImage: false,
+                                                                          galleryDisplaySettings: GalleryDisplaySettings(
+                                                                            appTheme: AppTheme(
+                                                                                primaryColor: Colors.black, focusColor: Colors.white),
                                                                           ),
-                                                                          const Text(
-                                                                            'Videos',
-                                                                            style: TextStyle(
-                                                                                fontFamily: 'Roboto',
-                                                                                fontSize: 17,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: AppColor.dropdownfont),
-                                                                          ),
-                                                                        ],
+                                                                          onDone: (SelectedImagesDetails details) async {
+                                                                            print("details ==>${details.selectedFiles.toString()}");
+                                                                            _selectedimag6 = details.selectedFiles.first;
+                                                                            setState(() {});
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                      context: context)).then((value) => Navigator.pop(context));
+                                                                },
+                                                                child: SizedBox(
+                                                                  height:
+                                                                  screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      17),
+                                                                  width:
+                                                                  screenWidth(
+                                                                      context,
+                                                                      dividedBy:
+                                                                      1.2),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            right: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 40)),
+                                                                        height: screenHeight(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            40),
+                                                                        width: screenWidth(
+                                                                            context,
+                                                                            dividedBy:
+                                                                            15),
+                                                                        decoration:
+                                                                        const BoxDecoration(
+                                                                            image: DecorationImage(image: AssetImage('assets/Images/video.png'))),
                                                                       ),
-                                                                    ),
+                                                                      const Text(
+                                                                        'Videos',
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Roboto',
+                                                                            fontSize:
+                                                                            17,
+                                                                            fontWeight: FontWeight
+                                                                                .w500,
+                                                                            color:
+                                                                            AppColor.dropdownfont),
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -4805,90 +4568,90 @@ class _StepScreenState extends State<StepScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              DottedBorder(
-                                                color: AppColor.skyBlue,
-                                                strokeWidth: 1,
-                                                child: GestureDetector(
-                                                  onTap: () async {
-                                                    FilePickerResult? result =
-                                                        await FilePicker
-                                                            .platform
-                                                            .pickFiles(
-                                                      type: FileType.custom,
-                                                      // allowMultiple: true,
-                                                      allowedExtensions: [
-                                                        'jpg',
-                                                        'pdf',
-                                                        'doc'
-                                                      ],
-                                                    );
-                                                    print("fille1 ======> " +
-                                                        result!.count
-                                                            .toString());
-                                                    if (filelist.length < 3) {
-                                                      filelist.add(result!.files
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  FilePickerResult? result =
+                                                  await FilePicker
+                                                      .platform
+                                                      .pickFiles(
+                                                    type: FileType.custom,
+                                                    // allowMultiple: true,
+                                                    allowedExtensions: [
+                                                      'jpg',
+                                                      'pdf',
+                                                      'doc'
+                                                    ],
+                                                  );
+                                                  print("fille1 ======> " +
+                                                      result!.count
                                                           .toString());
-                                                      if (filelist.length ==
-                                                          1) {
-                                                        file1 =
-                                                            result.files.first;
-                                                        openFile1 = result
-                                                            .paths.first
-                                                            .toString();
-                                                        files1 = result
-                                                            .names.first
-                                                            .toString();
-                                                        print("fille1 ======> " +
-                                                            file1.toString());
-                                                        print("fille1 ======> " +
-                                                            result.count
-                                                                .toString());
-                                                      } else if (filelist
-                                                              .length ==
-                                                          2) {
-                                                        openFile2 = result
-                                                            .paths.first
-                                                            .toString();
-                                                        files2 = result
-                                                            .names.first
-                                                            .toString();
-                                                        file2 =
-                                                            result.files.first;
-                                                        print("fille2 ======> " +
-                                                            file2.toString());
-                                                      } else if (filelist
-                                                              .length ==
-                                                          3) {
-                                                        openFile3 = result
-                                                            .paths.first
-                                                            .toString();
-                                                        files3 = result
-                                                            .names.first
-                                                            .toString();
-                                                        file3 =
-                                                            result.files.first;
-                                                        print("fille3 ======> " +
-                                                            file3.toString());
-                                                      }
-                                                    } else {
-                                                      flutterToast(
-                                                          'Only 3 items Add',
-                                                          false);
+                                                  if (filelist.length < 3) {
+                                                    filelist.add(result!.files
+                                                        .toString());
+                                                    if (filelist.length ==
+                                                        1) {
+                                                      file1 =
+                                                          result.files.first;
+                                                      openFile1 = result
+                                                          .paths.first
+                                                          .toString();
+                                                      files1 = result
+                                                          .names.first
+                                                          .toString();
+                                                      print("fille1 ======> " +
+                                                          file1.toString());
+                                                      print("fille1 ======> " +
+                                                          result.count
+                                                              .toString());
+                                                    } else if (filelist
+                                                        .length ==
+                                                        2) {
+                                                      openFile2 = result
+                                                          .paths.first
+                                                          .toString();
+                                                      files2 = result
+                                                          .names.first
+                                                          .toString();
+                                                      file2 =
+                                                          result.files.first;
+                                                      print("fille2 ======> " +
+                                                          file2.toString());
+                                                    } else if (filelist
+                                                        .length ==
+                                                        3) {
+                                                      openFile3 = result
+                                                          .paths.first
+                                                          .toString();
+                                                      files3 = result
+                                                          .names.first
+                                                          .toString();
+                                                      file3 =
+                                                          result.files.first;
+                                                      print("fille3 ======> " +
+                                                          file3.toString());
                                                     }
+                                                  } else {
+                                                    flutterToast(
+                                                        'Only 3 items Add',
+                                                        false);
+                                                  }
 
-                                                    // if(file1.bytes == null){
-                                                    //   file1 = ;
-                                                    //
-                                                    // } else if(file2.bytes == null){
-                                                    //   file2 = result!.files.first;
-                                                    //   print("fille2 ======> " + file2.toString());
-                                                    // } else {
-                                                    //   file3 = result!.files.first;
-                                                    //   print("fille3 ======> " + file3.toString());
-                                                    // }
+                                                  // if(file1.bytes == null){
+                                                  //   file1 = ;
+                                                  //
+                                                  // } else if(file2.bytes == null){
+                                                  //   file2 = result!.files.first;
+                                                  //   print("fille2 ======> " + file2.toString());
+                                                  // } else {
+                                                  //   file3 = result!.files.first;
+                                                  //   print("fille3 ======> " + file3.toString());
+                                                  // }
 
-                                                    setState(() {});
-                                                  },
+                                                  setState(() {});
+                                                },
+                                                child: DottedBorder(
+                                                  color: AppColor.skyBlue,
+                                                  strokeWidth: 1,
                                                   child: SizedBox(
                                                     height: screenHeight(
                                                         context,
