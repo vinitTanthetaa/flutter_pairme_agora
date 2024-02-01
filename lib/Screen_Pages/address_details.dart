@@ -1,14 +1,11 @@
 import 'package:country_picker/country_picker.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/city&state.dart';
-import 'package:pair_me/Screen_Pages/professional_details.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
-import 'package:pair_me/Widgets/stepper.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/cubits/City&state.dart';
 import 'package:pair_me/cubits/address_update.dart';

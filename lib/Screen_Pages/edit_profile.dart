@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
@@ -24,7 +22,6 @@ import 'package:pair_me/cubits/user_update_cubit.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
-
 import 'login_page.dart';
 
 class Edit_Profile extends StatefulWidget {

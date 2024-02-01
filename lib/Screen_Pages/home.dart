@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pair_me/Modal/alluserprofile.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
-import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Screen_Pages/connections_page.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';

@@ -3,7 +3,6 @@ import 'package:pair_me/Screen_Pages/home.dart';
 import 'package:pair_me/Screen_Pages/message.dart';
 import 'package:pair_me/Screen_Pages/notification.dart';
 import 'package:pair_me/Screen_Pages/premium_membership.dart';
-import 'package:pair_me/Screen_Pages/profile.dart';
 import 'package:pair_me/Screen_Pages/setting.dart';
 import 'package:pair_me/Widgets/bottom_navigation_bar.dart';
 

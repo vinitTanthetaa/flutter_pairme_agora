@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
-import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/cubits/connected_user_data.dart';
@@ -12,9 +11,7 @@ import 'package:pair_me/cubits/message_user.dart';
 import 'package:pair_me/cubits/remove_connect_user.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
-
 import '../helper/App_Colors.dart';
-import 'chat.dart';
 
 class Connection_Page extends StatefulWidget {
   const Connection_Page({super.key});

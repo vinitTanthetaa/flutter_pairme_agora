@@ -5,7 +5,6 @@ import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/Screen_Pages/set_password_page.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
