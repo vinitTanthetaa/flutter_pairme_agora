@@ -148,7 +148,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                         return Container(
                                           height: screenHeight(
                                               context,
-                                              dividedBy: 4.3),
+                                              dividedBy: 4.2),
                                           decoration: const BoxDecoration(
                                               color: AppColor
                                                   .white,
@@ -285,7 +285,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                                     Navigator.of(context).push(CupertinoDialogRoute(
                                                         builder: (context) => CustomGalleryDisplay.instagramDisplay(
                                                             displaySource: DisplaySource.gallery,
-                                                            pickerSource: PickerSource.both,
+                                                            pickerSource: PickerSource.image,
                                                             multiSelection: true,
                                                             cropImage: false,
                                                             galleryDisplaySettings: GalleryDisplaySettings(
