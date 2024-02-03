@@ -17,5 +17,5 @@ int selectedStep = 0;
 bool showcase = true;
 int showcasetime = 0;
 String Authtoken = '';
-String AgoraAppid = '08317f6ee1cb4b50825e1e572c307f62';
-String AgoraAppkey = '611031492#1211760';
+String AgoraAppid = 'fc8477ee017544e5a6fa9edaaf7986ca';
+String AgoraAppkey = '411091611#1272083';

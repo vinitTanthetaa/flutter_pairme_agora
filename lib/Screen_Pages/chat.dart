@@ -23,7 +23,11 @@ class Chatting_Page extends StatefulWidget {
 }
 
 class _Chatting_PageState extends State<Chatting_Page> {
+  String appid = "71acb4aa29c343b99145d14ecbe23c1f";
+  String appkey  = "611026121#1198524";
+ // String appkey  = "611031492#1280036";
   ScrollController scrollController = ScrollController();
+  List messages = [];
   String? _messageContent, _chatId;
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
   GlobalKey<ScaffoldMessengerState>();
@@ -34,25 +38,32 @@ class _Chatting_PageState extends State<Chatting_Page> {
   BlockUserCubit blockUserCubit = BlockUserCubit();
   late ChatClient agoraChatClient;
   String messageContent = "", recipientId = "";
-  final List<Widget> messageList = [];
+  final List messageList = [];
   bool showCard = false;
   bool emojiShowing = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //setupChatClient();
-   // _initSDK();
+   _initSDK();
     _addChatListener();
+   // setupChatClient();
   }
   void _initSDK() async {
     ChatOptions options = ChatOptions(
-      appKey: AgoraAppid,
-      autoLogin: true,
+      appKey: appkey,
     );
-    print(options);
     await ChatClient.getInstance.init(options);
-    await ChatClient.getInstance.startCallback();
+   final name = await ChatClient.getInstance.getCurrentUserId();
+    // await ChatClient.getInstance.startCallback();
+    print('name ===> $name');
+    if(name == null){
+      print("hello");
+      setupChatClient();
+    }
+    print('data ===> ${widget.id}');
+    // setupChatClient();
+    setState(() {});
   }
   @override
   void dispose() {
@@ -73,8 +84,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
           children: [
             GestureDetector(
               onTap: () {
-                blockUserCubit.AcceptNotification(id: widget.id);
-                rejectUserCubit.GetRejectUser(id: widget.id).then((value) => Navigator.pop(context,"refresh"));
+                blockUserCubit.AcceptNotification(id: widget.id).then((value) => Navigator.pop(context,"refresh"));
+                // rejectUserCubit.GetRejectUser(id: widget.id).then((value) => );
               },
               child: Container(
                 alignment: Alignment.center,
@@ -275,7 +286,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                         SizedBox(
                           width: screenWidth(context, dividedBy: 25),
                         ),
-                        widget.name == 'Request' ? SizedBox() : GestureDetector(
+                        widget.name == 'Request' ? const SizedBox() : GestureDetector(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
                               return const VideoCallPage();
@@ -295,7 +306,57 @@ class _Chatting_PageState extends State<Chatting_Page> {
                 Expanded(child: ListView.builder(
                   controller: scrollController,
                   itemBuilder: (_, index) {
-                    return messageList[index];
+                    return  Row(
+                      mainAxisAlignment:
+                     // snapshot.data[index]['from'] == widget.userId
+                           MainAxisAlignment.end
+                         // : MainAxisAlignment.start
+                      ,children: [
+                        Flexible(
+                          child: Container(
+                          //alignment: Alignment.centerRight,
+                          margin: EdgeInsets.only(top: screenHeight(context,dividedBy: 100),right: 15,left: 15),
+                          //width: screenWidth(context, dividedBy: 1.5),
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(26),
+                                  topRight: Radius.circular(26),
+                                  topLeft: Radius.circular(26)
+                              ),
+                              color: AppColor.skyBlue),
+                          child: Padding(
+                            padding:
+                            EdgeInsets.symmetric(horizontal: screenWidth(context, dividedBy: 30),vertical: screenWidth(context,dividedBy: 50)),
+                            child:  Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  messageList[index],
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                     // height: 1,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Roboto',
+                                      color: Colors.white),
+                                ),
+                                const Text(
+                                  '01:32 PM',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 10,
+                                      color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                                              ),
+
+                        ),
+
+                      ],
+                    );
+
                   },
                   itemCount: messageList.length,
                 ),
@@ -524,7 +585,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                     ],
                   ),
                 ) : const SizedBox(),
-                widget.name == 'Request' ? SizedBox() : Container(
+                widget.name == 'Request' ? const SizedBox() : Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(
                       right: screenWidth(context, dividedBy: 15),
@@ -672,22 +733,15 @@ class _Chatting_PageState extends State<Chatting_Page> {
     );
   }
   void setupChatClient() async {
-    ChatOptions options = ChatOptions(
-      appKey: '611031492#1211760',
-      autoLogin: false
-    );
-    agoraChatClient = ChatClient.getInstance;
-    await agoraChatClient.init(options);
-    await ChatClient.getInstance.startCallback();
     try {
-      await agoraChatClient.getCurrentUserId();
-      print("================ successfully ================");
+      await ChatClient.getInstance.loginWithAgoraToken(
+        "1","006f010699b1eee4b79a79092f5770b117bIACItAiDUhH3dTrJ/9V3sPe911B1JaKsDbVaLwpzdYSHmcJBJDW379yDIgBki3HRjmS/ZQQAAQAeIb5lAgAeIb5lAwAeIb5lBAAeIb5l"
+      //   "virat_kohli",
+      // "007eJxTYHDiO/HLR23Dwb4rEqc6/ZMW5+Z5qHc86jyVfyX4zC2D9f4KDOaGiclJJomJRpbJxibGSZaWhiamKYYmqclJqUbGyYZpM+7sTW0IZGTYxbOTgZGBFYgZGUB8FQbLZKPU5GQTA91kI1NzXUPD1FTdJNMUU12DNFODVMMUCwujxFQAF70piQ=="
+      );
+      print("login succeed ");
     } on ChatError catch (e) {
-      if (e.code == 200) { // Already logged in
-      } else {
-        showLog("Login failed, code: ${e.code}, desc: ${e.description}");
-        print("================ Failed ================");
-      }
+      print("login failed, code: $e, desc: ${e.description}");
     }
 // Notify the SDK that the Ul is ready. After the following method is executed, callbacks within ChatRoomEventHandler and ChatGroupEventHandler can be triggered.
   }
@@ -698,30 +752,18 @@ class _Chatting_PageState extends State<Chatting_Page> {
     ));
   }
   void _sendMessage() async {
-
-
     var msg = ChatMessage.createTxtSendMessage(
-      targetId: widget.Username,
+      targetId: widget.id,
       content:messageController.text,
     );
-
-    ChatClient.getInstance.chatManager.sendMessage(msg);
+    print("msg ===> $msg");
+   // await ChatClient.getInstance.startCallback();
+    ChatClient.getInstance.chatManager.sendMessage(msg).then((value) {
+      messageList.add(messageController.text);
+      messageController.clear();
+    });
   }
-  // void _sendMessage() async {
-  //   // if (_chatId == null || _messageContent == null) {
-  //   //   _addLogToConsole("single chat id or message content is null");
-  //   //   return;
-  //   // }
-  //
-  //   var msg = ChatMessage.createTxtSendMessage(
-  //     targetId: "Jhon wick",
-  //     content: messageController.text,
-  //     chatType: ChatType.Chat
-  //   );
-  //   print("msg ===> $msg");
-  //   ChatClient.getInstance.chatManager.sendMessage(msg,);
-  //   messageController.clear();
-  // }
+
   void onMessagesReceived(List<ChatMessage> messages) {
     for (var msg in messages) {
       switch (msg.body.type) {
