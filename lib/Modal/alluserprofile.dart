@@ -11,23 +11,27 @@ String allUsersdetailsToJson(AllUsersdetails data) => json.encode(data.toJson())
 class AllUsersdetails {
   bool? status;
   int? code;
+  String? loginUserId;
   List<List<Datum>>? data;
 
   AllUsersdetails({
      this.status,
      this.code,
+     this.loginUserId,
      this.data,
   });
 
   factory AllUsersdetails.fromJson(Map<String, dynamic> json) => AllUsersdetails(
     status: json["status"],
     code: json["code"],
+    loginUserId: json["loginUserId"],
     data: List<List<Datum>>.from(json["data"].map((x) => List<Datum>.from(x.map((x) => Datum.fromJson(x))))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
+    "loginUserId": loginUserId,
     "data": List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
   };
 }

@@ -2,10 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pair_me/Modal/message_request_id.dart';
-import 'package:pair_me/Modal/message_user_infornation.dart';
-import 'package:pair_me/Screen_Pages/bottom_bar/message_bottom_page.dart';
-import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
 

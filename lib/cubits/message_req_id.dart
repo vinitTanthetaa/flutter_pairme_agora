@@ -1,10 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pair_me/Modal/message_request_id.dart';
-import 'package:pair_me/Modal/message_user_infornation.dart';
-import 'package:pair_me/Screen_Pages/bottom_bar/message_bottom_page.dart';
 import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -22,7 +18,6 @@ class MsgReqbyIDSuccess extends MsgReqbyIDState {}
 
 class MsgReqbyIDCubit extends Cubit<MsgReqbyIDState> {
   MsgReqbyIDCubit() : super(MsgReqbyIDInitials());
-  UserMsgReq userMsgReq = UserMsgReq();
   final dio = Dio();
   Future AcceptNotification(BuildContext context,{required String id,required String name,required String image}) async {
     print("id ==> $id");
@@ -38,24 +33,24 @@ class MsgReqbyIDCubit extends Cubit<MsgReqbyIDState> {
       if(response.statusCode == 200 && response.data != null)
       {
         emit(MsgReqbyIDSuccess());
-        if(hello['msg'] == "This User Already In messagePage"){
-          Navigator.push(context,MaterialPageRoute(builder: (context) {
-            return Chatting_Page(
-              name: 'chatting',
-              Username:  name,
-              image: image, id: id,
-            );
-          },));
-        }else{
-          userMsgReq = UserMsgReq.fromJson(response.data);
-          Navigator.push(context,MaterialPageRoute(builder: (context) {
-            return Chatting_Page(
-              name: 'chatting',
-              Username:  name,
-              image: image, id: id,
-            );
-          },));
-        }
+        // if(hello['msg'] == "This User Already In messagePage"){
+        //   Navigator.push(context,MaterialPageRoute(builder: (context) {
+        //     return Chatting_Page(
+        //       name: 'chatting',
+        //       Username:  name,
+        //       image: image, id: id, uid: '',
+        //     );
+        //   },));
+        // }else{
+        //   userMsgReq = UserMsgReq.fromJson(response.data);
+        //   Navigator.push(context,MaterialPageRoute(builder: (context) {
+        //     return Chatting_Page(
+        //       name: 'chatting',
+        //       Username:  name,
+        //       image: image, id: id, uid: '',
+        //     );
+        //   },));
+        // }
       }
       return response.data;
     } on Exception catch (e) {

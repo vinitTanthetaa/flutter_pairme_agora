@@ -44,6 +44,7 @@ import 'package:pair_me/cubits/user_profile_cubit.dart';
 import 'package:pair_me/cubits/user_update_cubit.dart';
 import 'package:pair_me/cubits/verify_forgot_otp.dart';
 import 'package:pair_me/helper/App_Colors.dart';
+import 'package:pair_me/helper/Size_page.dart';
 
 import 'Screen_Pages/Step_Screens.dart';
 import 'Screen_Pages/connections_page.dart';
@@ -53,7 +54,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   final options = ChatOptions(
-    appKey: "611031492#1280036",
+    appKey: AgoraAppkey,
     autoLogin: false,
   );
   await ChatClient.getInstance.init(options);

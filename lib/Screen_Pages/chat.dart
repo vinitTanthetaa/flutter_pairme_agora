@@ -18,17 +18,14 @@ import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class Chatting_Page extends StatefulWidget {
-  String name,Username,image,id;
-   Chatting_Page({super.key,required this.name,required this.id,required this.Username,required this.image});
+  String name,Username,image,id,uid;
+   Chatting_Page({super.key,required this.name,required this.uid,required this.id,required this.Username,required this.image});
 
   @override
   State<Chatting_Page> createState() => _Chatting_PageState();
 }
 
 class _Chatting_PageState extends State<Chatting_Page> {
-  String appid = "71acb4aa29c343b99145d14ecbe23c1f";
- // String appkey  = "611026121#1198524";
-  String appkey  = "611031492#1280036";
   ScrollController scrollController = ScrollController();
   Dio dio = Dio();
   List messages = [];
@@ -49,50 +46,12 @@ class _Chatting_PageState extends State<Chatting_Page> {
     // TODO: implement initState
     super.initState();
    // createUser();
-  _initSDK();
-  // setupListeners();
-   setupChatClient();
+  //_initSDK();
+    setupChatClient();
+   setupListeners();
   }
-  void _initSDK() async {
-    ChatOptions options = ChatOptions(
-      appKey: appkey,
-    );
-    await ChatClient.getInstance.init(options);
-    final name = await ChatClient.getInstance.getCurrentUserId();
-    // await ChatClient.getInstance.startCallback();
-    print('name ===> $name');
-    if(name == null){
-      print("hello");
-      //createUser();
-     // setupChatClient();
-    }
-    print('data ===> ${widget.id}');
-    // setupChatClient();
-    setState(() {});
-  }
-  createUser() async {
-    print("nice to meet you");
-    Map<String, dynamic> body = {
-      "username": widget.id,
-      "password": "123",
-    };
-    try {
-      final response = await dio.get("http://a61.chat.agora.io/chat/app/token",options:Options(headers: {
-        'Content-Type': 'application/json',
-        'Authorization': "Bearer 007eJxTYJhsf93MufhIADPLeT/eqS9zrzN6zP038y6f51PHdLMKN0UFBnPDxOQkk8REI8tkYxPjJEtLQxPTFEOT1OSkVCPjZMO0ao39qQ2BjAxPC5exMDKwMjAyMDGA+AwMACUwHLU="
-      }) );
-      // final response = await dio.post("http://a61.chat.agora.io/611031492/1280036/users", data: jsonEncode(body),options:Options(headers: {
-      //   'Content-Type': 'application/json',
-      //   'Authorization': "Bearer 007eJxTYJhsf93MufhIADPLeT/eqS9zrzN6zP038y6f51PHdLMKN0UFBnPDxOQkk8REI8tkYxPjJEtLQxPTFEOT1OSkVCPjZMO0ao39qQ2BjAxPC5exMDKwMjAyMDGA+AwMACUwHLU="
-      // }) );
-      print("Response ===> ${response.data}");
 
-    } on Exception catch (e) {
-      print("fail ====> " +e.toString());
 
-      // TODO
-    }
-  }
   @override
   void dispose() {
     ChatClient.getInstance.chatManager.removeEventHandler('UNIQUE_HANDLER_ID');
@@ -716,18 +675,38 @@ class _Chatting_PageState extends State<Chatting_Page> {
       content: Text(message),
     ));
   }
+
   void setupChatClient() async {
+    print("id =====> ${widget.id}");
+    print("id =====> ${widget.uid}");
     ChatOptions options = ChatOptions(
-      appKey: appkey,
+      appKey: AgoraAppkey,
       autoLogin: false,
     );
     agoraChatClient = ChatClient.getInstance;
     await agoraChatClient.init(options);
+    try {
+      await agoraChatClient.login(widget.uid, "123");
+      showLog("Logged in successfully as ${widget.uid}");
+
+    } on ChatError catch (e) {
+      if (e.code == 200) { // Already logged in
+      } else {
+        showLog("Login failed, code: ${e.code}, desc: ${e.description}");
+      }
+    }
 // Notify the SDK that the Ul is ready. After the following method is executed, callbacks within ChatRoomEventHandler and ChatGroupEventHandler can be triggered.
     await ChatClient.getInstance.startCallback();
+
+    String Name = await ChatClient.getInstance.getCurrentUserId() ?? '';
+    print("=======> $Name");
+    if(Name.isEmpty){
+      print("=======> Name is null");
+
+    }
   }
   void setupListeners() {
-
+//"countryCode":"+86","phoneNumber":"9978977897",
     agoraChatClient.addConnectionEventHandler(
       "CONNECTION_HANDLER",
       ConnectionEventHandler(
@@ -745,14 +724,17 @@ class _Chatting_PageState extends State<Chatting_Page> {
   }
   void onMessagesReceived(List<ChatMessage> messages) {
     for (var msg in messages) {
-      print("message ====> ${msg.to}");
-      if (msg.body.type == MessageType.TXT) {
-        ChatTextMessageBody body = msg.body as ChatTextMessageBody;
-        displayMessage(body.content, false);
-        showLog("Message from ${msg.from}");
-      } else {
-        String msgType = msg.body.type.name;
-        showLog("Received $msgType message, from ${msg.from}");
+      print("message ====> ${msg}");
+      if(msg.to == widget.uid && msg.from == widget.id){
+        print("message ====> ${msg.to}");
+        if (msg.body.type == MessageType.TXT) {
+          ChatTextMessageBody body = msg.body as ChatTextMessageBody;
+          displayMessage(body.content, false);
+          showLog("Message from ${msg.from}");
+        } else {
+          String msgType = msg.body.type.name;
+          showLog("Received $msgType message, from ${msg.from}");
+        }
       }
     }
   }
@@ -779,37 +761,41 @@ class _Chatting_PageState extends State<Chatting_Page> {
       Flexible(
         child: Container(
           //alignment: Alignment.centerRight,
-          margin: EdgeInsets.only(top: screenHeight(context,dividedBy: 100),right: 15,left: screenWidth(context,dividedBy: 7)),
+          margin: EdgeInsets.only(top: screenHeight(context,dividedBy: 100),right: 15,left: isSentMessage ? screenWidth(context,dividedBy: 7 ) :15),
           //width: screenWidth(context, dividedBy: 1.5),
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+          decoration:  BoxDecoration(
+              borderRadius: isSentMessage ? const BorderRadius.only(
                   bottomLeft: Radius.circular(26),
                   topRight: Radius.circular(26),
                   topLeft: Radius.circular(26)
+              ) : const BorderRadius.only(
+                  bottomRight: Radius.circular(26),
+                  topRight: Radius.circular(26),
+                  topLeft: Radius.circular(26)
               ),
-              color: AppColor.skyBlue),
+              color:isSentMessage ? AppColor.skyBlue : AppColor.gray),
           child: Padding(
             padding:
             EdgeInsets.symmetric(horizontal: screenWidth(context, dividedBy: 30),vertical: screenWidth(context,dividedBy: 50)),
             child:  Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: isSentMessage ? CrossAxisAlignment.end :CrossAxisAlignment.start,
               children: [
                 Text(
                   text,
-                  style: const TextStyle(
+                  style:  TextStyle(
                       fontSize: 15,
                       // height: 1,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Roboto',
-                      color: Colors.white),
+                      color: isSentMessage ? AppColor.white : AppColor.dropdownfont),
                 ),
-                const Text(
+                 Text(
                   '01:32 PM',
                   style: TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w500,
                       fontSize: 10,
-                      color: Colors.white),
+                      color: isSentMessage ? AppColor.white : AppColor.dropdownfont),
                 )
               ],
             ),

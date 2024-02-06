@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,7 +90,30 @@ class _Message_pageState extends State<Message_page> {
   UserMessage userMessage = UserMessage();
   RemoveMsgUserCubit removeMsgUserCubit = RemoveMsgUserCubit();
   AllMessageRequestCubit messageRequestCubit = AllMessageRequestCubit();
+  late ChatClient agoraChatClient;
 
+
+  createUser(String id) async {
+    
+    print("nice to meet you");
+    Dio dio = Dio();
+    Map<String, dynamic> body = {
+      "username": id,
+      "password": "123",
+    };
+    try {
+      final response = await dio.post("http://a61.chat.agora.io/611026121/1198524/users", data: jsonEncode(body),options:Options(headers: {
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer 007eJxTYJhsf93MufhIADPLeT/eqS9zrzN6zP038y6f51PHdLMKN0UFBnPDxOQkk8REI8tkYxPjJEtLQxPTFEOT1OSkVCPjZMO0ao39qQ2BjAxPC5exMDKwMjAyMDGA+AwMACUwHLU="
+      }) );
+      print("Response ===> ${response.data}");
+
+    } on Exception catch (e) {
+      print("fail ====> " +e.toString());
+
+      // TODO
+    }
+  }
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
     setState(() {});
@@ -193,7 +220,7 @@ class _Message_pageState extends State<Message_page> {
                                    child: InkWell(
                                      onTap: () {
                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '',);
+                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '', uid:  userMessage.data?.userId ?? '',);
                                        },));
                                      },
                                      child: SizedBox(

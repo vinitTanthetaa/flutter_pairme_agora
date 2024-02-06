@@ -183,7 +183,7 @@ class _Invitation_pageState extends State<Invitation_page> {
                                           return Chatting_Page(
                                             name: 'Request',
                                             Username: list[index]['Name'],
-                                            image: list[index]['image'], id: '',
+                                            image: list[index]['image'], id: '', uid: '',
                                           );
                                         },
                                       ));

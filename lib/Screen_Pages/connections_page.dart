@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pair_me/Screen_Pages/chat.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -320,7 +321,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                               ),
                                               InkWell(
                                                 onTap: () {
-                                                  messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '', name: connectedUsersCubit.connectedUsers.data?[index].name ?? '', image: connectedUsersCubit.connectedUsers.data?[index].profileImage ?? '');
+                                                  messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '',);
                                                 },
                                                 child: SvgPicture.asset(
                                                     "assets/Images/message.svg",
@@ -388,7 +389,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                   horizontal: screenWidth(context, dividedBy: 30),
                                   vertical: screenHeight(context, dividedBy: 70)),
                               child: Text(
-                                "${connectedUsersCubit.connectedUsers.data?.length ?? 0} Connection",
+                                "${connectedUsersCubit.connectedUsers.loginUserId?.length ?? 0} Connection",
                                 style: const TextStyle(
                                     fontSize: 17,
                                     fontFamily: 'Roboto',
@@ -604,7 +605,8 @@ class _Connection_PageState extends State<Connection_Page> {
                                                   ),
                                                   InkWell(
                                                     onTap: () {
-                                                      messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '', name: connectedUsersCubit.connectedUsers.data?[index].name ?? '', image: connectedUsersCubit.connectedUsers.data?[index].profileImage ?? '');
+                                                      // print("=====>${connectedUsersCubit.connectedUsers.loginUserId}");
+                                                      messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '',img: connectedUsersCubit.connectedUsers.data?[index].profileImage ?? '',name: connectedUsersCubit.connectedUsers.data?[index].name ?? '',uid: connectedUsersCubit.connectedUsers.loginUserId ?? '');
                                                     },
                                                     child: SvgPicture.asset(
                                                         "assets/Images/message.svg",
