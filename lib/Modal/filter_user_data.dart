@@ -12,12 +12,14 @@ class FilterUser {
   bool? status;
   int? code;
   int? data1;
+  String? loginUserId;
   List<List<Datum?>>? data;
 
   FilterUser({
     this.status,
     this.code,
     this.data1,
+    this.loginUserId,
     this.data,
   });
 
@@ -25,6 +27,7 @@ class FilterUser {
     status: json["status"],
     code: json["code"],
     data1: json["data1"],
+    loginUserId: json["loginUserId"],
     data: List<List<Datum?>>.from(json["data"].map((x) => List<Datum?>.from(x.map((x) => x == null ? null : Datum.fromJson(x))))),
   );
 
@@ -32,6 +35,7 @@ class FilterUser {
     "status": status,
     "code": code,
     "data1": data1,
+    "loginUserId": loginUserId,
     "data": List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x?.toJson())))),
   };
 }

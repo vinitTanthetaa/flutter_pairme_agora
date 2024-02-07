@@ -196,10 +196,6 @@ class _Message_pageState extends State<Message_page> {
                                    direction: DismissDirection.endToStart,
                                    onDismissed: (direction) {
                                      removeMsgUserCubit.DeleteUser(context, id: userMessage.data?.data?[index].id ?? '').then((value) {
-                                       setState(() {
-                                         messageCubit.GetMessage();
-                                         setState(() {});
-                                       });
                                      },);
                                    },
                                    key: UniqueKey(),
@@ -220,12 +216,12 @@ class _Message_pageState extends State<Message_page> {
                                    child: InkWell(
                                      onTap: () {
                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '', uid:  userMessage.data?.userId ?? '',);
+                                        return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '', uid:  userMessage.data?.userId ?? '',);
                                        },));
                                      },
                                      child: SizedBox(
                                        // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                                       height: screenHeight(context,dividedBy: 10),
+                                       height: screenHeight(context,dividedBy: 8.5),
                                        width: screenHeight(context),
                                        child: Padding(
                                          padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 17),),
@@ -241,7 +237,7 @@ class _Message_pageState extends State<Message_page> {
                                                  decoration: BoxDecoration(
                                                    image: DecorationImage(
                                                      image: imageProvider,
-                                                     fit: BoxFit.cover,
+                                                   fit: BoxFit.cover,
 
                                                      // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
                                                    ),

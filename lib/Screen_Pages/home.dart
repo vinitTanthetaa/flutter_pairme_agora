@@ -1115,7 +1115,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '');
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
                                                       },
                                                       buttonName:
                                                       "Chat",
@@ -1198,7 +1198,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '');
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
                                                       },
                                                       buttonName:
                                                       "Chat",
@@ -1257,7 +1257,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '');
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
                                                       },
                                                       buttonName:
                                                       "Chat",
@@ -2143,7 +2143,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 img:
                                                                     "assets/Images/button1.svg",
                                                                 onTap: () {
-                                                                  msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '');
+                                                                  msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                 },
                                                                 buttonName:
                                                                     "Chat",
@@ -2226,7 +2226,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
-                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '');
+                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                     },
                                                                     buttonName:
                                                                         "Chat",
@@ -2280,7 +2280,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
                                                                       print(allUsersdetails.loginUserId);
-                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '');
+                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                     },
                                                                     buttonName:
                                                                         "Chat",

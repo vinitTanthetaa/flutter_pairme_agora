@@ -321,7 +321,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                               ),
                                               InkWell(
                                                 onTap: () {
-                                                  messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '',);
+                                                  messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '', name: connectedUsersCubit.connectedUsers.data?[index].name ?? '', uid: connectedUsersCubit.connectedUsers.loginUserId ?? '', img: connectedUsersCubit.connectedUsers.data?[index].profileImage ?? '',);
                                                 },
                                                 child: SvgPicture.asset(
                                                     "assets/Images/message.svg",

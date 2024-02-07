@@ -19,7 +19,7 @@ class MsgReqbyIDSuccess extends MsgReqbyIDState {}
 class MsgReqbyIDCubit extends Cubit<MsgReqbyIDState> {
   MsgReqbyIDCubit() : super(MsgReqbyIDInitials());
   final dio = Dio();
-  Future AcceptNotification(BuildContext context,{required String id,required String name,required String image}) async {
+  Future AcceptNotification(BuildContext context,{required String id,required String uid,required String name,required String image}) async {
     print("id ==> $id");
     emit(MsgReqbyIDLoading());
     try {
@@ -34,13 +34,13 @@ class MsgReqbyIDCubit extends Cubit<MsgReqbyIDState> {
       {
         emit(MsgReqbyIDSuccess());
         // if(hello['msg'] == "This User Already In messagePage"){
-        //   Navigator.push(context,MaterialPageRoute(builder: (context) {
-        //     return Chatting_Page(
-        //       name: 'chatting',
-        //       Username:  name,
-        //       image: image, id: id, uid: '',
-        //     );
-        //   },));
+          Navigator.push(context,MaterialPageRoute(builder: (context) {
+            return Chatting_Page(
+              name: 'chatting',
+              Username:  name,
+              image: image, id: id, uid: uid,
+            );
+          },));
         // }else{
         //   userMsgReq = UserMsgReq.fromJson(response.data);
         //   Navigator.push(context,MaterialPageRoute(builder: (context) {

@@ -219,7 +219,7 @@ class _MessageRequestState extends State<MessageRequest> {
                                        builder: (context) {
                                          return Chatting_Page(name: 'Request',
                                            Username: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userName ?? '',
-                                           image: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userImage ?? '', id: messageRequestCubit.userMssageReq.data?.userId ?? '', uid: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].id ?? '',);
+                                           image: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userImage ?? '', uid: messageRequestCubit.userMssageReq.data?.userId ?? '', id: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].id ?? '',);
                                        },
                                      ));
                                      if(refresh == "refresh"){

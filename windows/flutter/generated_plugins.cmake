@@ -8,6 +8,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_windows
   geolocator_windows
   iris_method_channel
+  permission_handler_windows
   smart_auth
   syncfusion_pdfviewer_windows
   url_launcher_windows

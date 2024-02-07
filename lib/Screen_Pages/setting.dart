@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -459,7 +460,8 @@ class _Setting_pageState extends State<Setting_page> {
                     SizedBox(height: screenHeight(context,dividedBy: 60),),
                     GestureDetector(
                       onTap: () {
-                        showDialog(context: context,builder: (context) => addFolderNameDialog(name: 'Confirm Logout', describ: 'Are you sure you want to logout?', cancel: 'Cancel', remove: 'OK', onTap: () {
+                        showDialog(context: context,builder: (context) => addFolderNameDialog(name: 'Confirm Logout', describ: 'Are you sure you want to logout?', cancel: 'Cancel', remove: 'OK', onTap: () async {
+                        //  await ChatClient.getInstance.logout(true);
                           logoutUserCubit.LogoutService(context);
                         }),);
                       },
@@ -516,7 +518,7 @@ class _Setting_pageState extends State<Setting_page> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 30)),
-                          child:   Text("Delete Account".tr(),style: const TextStyle(color: Color(0xffFF0000),fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                          child: Text("Delete Account".tr(),style: const TextStyle(color: Color(0xffFF0000),fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                         ),
                       ),
                     ),

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/message_bottom_page.dart';
@@ -21,7 +20,7 @@ class MessageUserSuccess extends MessageUserState {}
 class MessageUserCubit extends Cubit<MessageUserState> {
   MessageUserCubit() : super(MessageUserInitials());
   final dio = Dio();
-  Future AcceptNotification(BuildContext context,{required String id,name,uid,img}) async {
+  Future AcceptNotification(BuildContext context,{required String id,required String name,required String uid,required String img}) async {
     print("id ==> $id");
     print("id ==> $name");
     print("id ==> $uid");
