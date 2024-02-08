@@ -238,7 +238,6 @@ class _Message_pageState extends State<Message_page> {
                                                    image: DecorationImage(
                                                      image: imageProvider,
                                                    fit: BoxFit.cover,
-
                                                      // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
                                                    ),
                                                    shape: BoxShape.circle,

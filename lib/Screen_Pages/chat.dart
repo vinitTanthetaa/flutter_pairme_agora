@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:dio/dio.dart';
@@ -43,6 +44,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   BlockUserCubit blockUserCubit = BlockUserCubit();
   late ChatClient agoraChatClient;
   final List messageList = [];
+  List<Media> mediaList = [];
   bool showCard = false;
   bool emojiShowing = false;
 
@@ -559,7 +561,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                         print(selectedList.single.size);
                                         var msg = ChatMessage.createImageSendMessage(
                                           targetId: widget.id,
-                                          filePath: selectedList.single.file!.path,
+                                          filePath: selectedList.first.file!.path,
+                                          sendOriginalImage: true,
                                           chatType: ChatType.Chat,
                                         );
                                         ChatClient.getInstance.chatManager.addMessageEvent(
@@ -569,7 +572,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                               print(" ============================> $msgId");
                                               print(" ============================> $msg");
                                               print(msg);
-                                            //  displayMessage(messageController.text, true);
+                                              setState(() => mediaList = selectedList);
+                                              displayimgMessage(mediaList[0].thumbnail!,true);
+                                              Navigator.pop(context);
                                             //  messageController.clear();
                                              // setState(() {});
                                               // messageBoxController.clear();
@@ -723,7 +728,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                 style: const ButtonStyle(
                                     overlayColor: MaterialStatePropertyAll(
                                         Colors.transparent)),
-                                onPressed: sendMessage,
+                               // onPressed: sendMessage,
+                                onPressed: Smsg,
                                 icon: Container(
                                   height: screenHeight(context, dividedBy: 30),
                                   width: screenWidth(context, dividedBy: 20),
@@ -890,7 +896,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
 
   void onMessagesReceived(List<ChatMessage> messages) {
     for (var msg in messages) {
-      log("message ====> ${msg}");
       if (msg.to == widget.uid && msg.from == widget.id) {
         print("message ====> ${msg.to}");
         if (msg.body.type == MessageType.TXT) {
@@ -987,8 +992,71 @@ class _Chatting_PageState extends State<Chatting_Page> {
       scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
     });
   }
+  void displayimgMessage(final thumbnail,bool isSentMessage) {
+    messageList.add(Row(
+      mainAxisAlignment:
+          isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        Flexible(
+          child: Container(
+            //alignment: Alignment.centerRight,
+            margin: EdgeInsets.only(
+                top: screenHeight(context, dividedBy: 100),
+                right: 15,
+                left: isSentMessage ? screenWidth(context, dividedBy: 7) : 15),
+            //width: screenWidth(context, dividedBy: 1.5),
+            decoration: BoxDecoration(
+                borderRadius: isSentMessage
+                    ? const BorderRadius.only(
+                        bottomLeft: Radius.circular(26),
+                        topRight: Radius.circular(26),
+                        topLeft: Radius.circular(26))
+                    : const BorderRadius.only(
+                        bottomRight: Radius.circular(26),
+                        topRight: Radius.circular(26),
+                        topLeft: Radius.circular(26)),
+                color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: isSentMessage
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: screenHeight(context,dividedBy: 5),
+                    width: screenWidth(context,dividedBy: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(image: MemoryImage(thumbnail),fit: BoxFit.cover)
+                    ),
+                  ),
+                  const SizedBox(height: 3,),
+                  Text(
+                    '01:32 PM',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 10,
+                        color: isSentMessage
+                            ? AppColor.white
+                            : AppColor.dropdownfont),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ));
+    setState(() {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+    });
+  }
 
   void sendMessage() async {
+
     print("call me");
     if(messageController.text.isNotEmpty){
       var msg = ChatMessage.createTxtSendMessage(
@@ -1022,6 +1090,35 @@ class _Chatting_PageState extends State<Chatting_Page> {
       );
       // ChatClient.getInstance.chatManager.removeMessageEvent("UNIQUE_HANDLER_ID");
       agoraChatClient.chatManager.sendMessage(msg);
+    }
+  }
+  Future<void> Smsg() async {
+
+    final dio = Dio();
+    Map<String, dynamic> body = {
+      "msg_id": "1244785340619688906",
+      "from": widget.uid,
+      "to": widget.id,
+      "chat_type": "chat",
+      // "body":{
+      //   "msg":"import message."
+      // },
+    };
+    print("Body is $body");
+    try {
+      // print(widget.id);
+      // print(widget.uid);
+     // final response = await dio.post("https://a61.chat.agora.io/611031492/1280036/messages/users",options:  Options(headers: {
+      final response = await dio.get("https://a61.chat.agora.io/611031492/1280036/chatmessages/2018112717",options:  Options(headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': "Bearer 007eJxTYDiQfuvMDnXnsxXaUgyPfrG4Xvx5SH2Do6PpnGP8Z+afFzyvwGBumJicZJKYaGSZbGxinGRpaWhimmJokpqclGpknGyY9m75kdSGQEaGVW+uMjAysAIxEwOIz8AAAPXlIGs=",
+      }));
+      print("Response ===> ${response.data}");
+    } on Exception catch (e) {
+      print("fail ====> " +e.toString());
+
+      // TODO
     }
   }
 }
