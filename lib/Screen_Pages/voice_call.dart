@@ -1,15 +1,25 @@
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
 class VoiceCallPage extends StatefulWidget {
-  const VoiceCallPage({super.key});
+  String img;
+  VoiceCallPage({super.key,required this.img});
 
   @override
   State<VoiceCallPage> createState() => _VoiceCallPageState();
 }
 
 class _VoiceCallPageState extends State<VoiceCallPage> {
+  late Map<String, dynamic> config; // Configuration parameters
+  int localUid = -1;
+  String appId = "", channelName = "";
+  List<int> remoteUids = []; // Uids of remote users in the channel
+  bool isJoined = false; // Indicates if the local user has joined the channel
+  bool isBroadcaster = true; // Client role
+  RtcEngine? agoraEngine; // Agora engine instance
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,10 +68,10 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
                       child: Container(
                         height: screenWidth(context,dividedBy: 1.75),
                         width: screenWidth(context,dividedBy: 1.75),
-                        decoration: const BoxDecoration(
+                        decoration:  BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.black,
-                          image: DecorationImage(image:NetworkImage('https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg'),fit: BoxFit.fill)
+                          image: DecorationImage(image:NetworkImage(widget.img),fit: BoxFit.fill)
                         ),
                       ),
                     ),

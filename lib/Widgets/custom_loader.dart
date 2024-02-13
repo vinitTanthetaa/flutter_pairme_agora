@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 
 Widget customLoader (){
-  return const SpinKitSpinningLines(
+  return const SpinKitFadingCircle(
     color: AppColor.skyBlue,
     size: 50.0,
   );

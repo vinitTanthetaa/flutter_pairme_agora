@@ -21,6 +21,7 @@ import 'package:pair_me/cubits/block_req_msg_user.dart';
 import 'package:pair_me/cubits/business_add_update.dart';
 import 'package:pair_me/cubits/business_address_cubit.dart';
 import 'package:pair_me/cubits/change_password.dart';
+import 'package:pair_me/cubits/chatdata_cubits.dart';
 import 'package:pair_me/cubits/clearAllNotification_cubit.dart';
 import 'package:pair_me/cubits/connect_user.dart';
 import 'package:pair_me/cubits/connect_with_cubit.dart';
@@ -122,6 +123,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => RemoveMsgUserCubit()),
         BlocProvider(create: (context) => AcceptReqMsgUserCubit()),
         BlocProvider(create: (context) => BlockUserCubit()),
+        BlocProvider(create: (context) => ChatDataCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

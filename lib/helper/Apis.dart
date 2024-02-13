@@ -41,6 +41,9 @@ class apis{
   static const String acceptreqUser = "$baseurl/accept_btn/";
   static const String blockreqUser = "$baseurl/block_btn/";
   static const String deleteAllreqmsgUser = "$baseurl/delete_message_request_page";
+  static const String sendMSG = "$baseurl/chat";
+  static const String retrieve_chat = "$baseurl/retrieve_chat";
+  static const String chatData = "$baseurl/chatData";
 
 
   // App Manage
