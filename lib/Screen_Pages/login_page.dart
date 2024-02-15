@@ -6,6 +6,7 @@ import 'package:pair_me/Screen_Pages/forgot_password.dart';
 import 'package:pair_me/Screen_Pages/sign_up_page.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
@@ -184,17 +185,25 @@ class _Login_pageState extends State<Login_page> {
                               ),
                             ]),
                       ),
-                    Center(
-                      child: Custom_botton(context, text: 'Login', onTap: () async {
-                        if(_Email.text.isEmpty){
-                          flutterToast('Please Enter Valid Phone number', false);
-                        } else if(_Password.text.isEmpty) {
-                          flutterToast('Please Enter Password', false);
-                        } else {
-                          loginCubit.LoginService(phoneNumber: _Email.text, otp: _Password.text, context: context);
-                        }
-                      }, height: screenHeight(context,dividedBy: 13),),
-                    ),
+                    BlocBuilder<LoginCubit,LoginState>(builder: (context, state) {
+                      if(state is LoginLoading){
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 13)),
+                          child: Center(child: customLoader(),),
+                        );
+                      }
+                      return Center(
+                        child: Custom_botton(context, text: 'Login', onTap: () async {
+                          if(_Email.text.isEmpty){
+                            flutterToast('Please Enter Valid Phone number', false);
+                          } else if(_Password.text.isEmpty) {
+                            flutterToast('Please Enter Password', false);
+                          } else {
+                            loginCubit.LoginService(phoneNumber: _Email.text, otp: _Password.text, context: context);
+                          }
+                        }, height: screenHeight(context,dividedBy: 13),),
+                      );
+                    },),
                     Row(children: <Widget>[
                         Expanded(
                           child:  Container(
@@ -243,7 +252,7 @@ class _Login_pageState extends State<Login_page> {
                             decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/Images/google.png'))),
                           ),
                            SizedBox(width: screenWidth(context,dividedBy: 40),),
-                           Text("Login with Google".tr(),style: TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
+                           Text("Login with Google".tr(),style: const TextStyle(color: Color(0xff888888),fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
                         ],
                       ),
                     ),

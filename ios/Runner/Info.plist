@@ -12,6 +12,8 @@
 		<string>zh_CN</string>
 		<string>zh_TW</string>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>Some message to describe why you need this permission</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

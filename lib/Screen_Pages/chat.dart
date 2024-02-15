@@ -1,10 +1,12 @@
-import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
-import 'package:dio/dio.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:custom_gallery_display/custom_gallery_display.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_picker_widget/media_picker_widget.dart';
@@ -21,6 +23,10 @@ import 'package:pair_me/cubits/reject_user.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:record/record.dart';
+import 'package:video_player/video_player.dart';
 
 class Chatting_Page extends StatefulWidget {
   String name, Username, image, id, uid;
@@ -38,7 +44,8 @@ class Chatting_Page extends StatefulWidget {
 
 class _Chatting_PageState extends State<Chatting_Page> {
   ScrollController scrollController = ScrollController();
-  Dio dio = Dio();
+  final record = AudioRecorder();
+  final AudioPlayer _audioPlayer = AudioPlayer();
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
   GlobalKey<ScaffoldMessengerState>();
   TextEditingController messageController = TextEditingController();
@@ -48,13 +55,75 @@ class _Chatting_PageState extends State<Chatting_Page> {
   BlockUserCubit blockUserCubit = BlockUserCubit();
   ChatDataCubit chatDataCubit = ChatDataCubit();
   late ChatClient agoraChatClient;
-  List messagedata = [];
   final List messageList = [];
-  List<Media> mediaList = [];
   bool loading = false;
   bool showCard = false;
   bool emojiShowing = false;
+  bool audioRecording = false;
+  String recordFilePath = '';
+  Future<bool> checkPermission() async {
+    if (!await Permission.microphone.isGranted) {
+      PermissionStatus status = await Permission.microphone.request();
+      if (status != PermissionStatus.granted) {
+        await [Permission.microphone].request();
+      }
+    }
+    return true;
+  }
+  int i = 0;
+  Future<String> getFilePath() async {
+    Directory storageDirectory = await getApplicationDocumentsDirectory();
+    String sdPath =
+        "${storageDirectory.path}/record${DateTime.now().microsecondsSinceEpoch}.acc";
+    var d = Directory(sdPath);
+    if (!d.existsSync()) {
+      d.createSync(recursive: true);
+    }
+    return "$sdPath/test_${i++}.mp3";
+  }
+  Future<void> _startRecording() async {
+   await Permission.microphone.request();
+      print("start");
+      recordFilePath = await getFilePath();
+      record.start(RecordConfig(), path: recordFilePath);
+      final stream = await record.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+      // RecordMp3.instance.start(recordFilePath, (type) {
+      //   setState(() {});
+      // });
 
+    setState(() {});
+  }
+  void stopRecord() async {
+    print("stop");
+    record.stop();
+   // RecordMp3.instance.stop();
+    print("file===> $recordFilePath");
+    var msg = ChatMessage.createVoiceSendMessage(
+      targetId: widget.id,
+      filePath: recordFilePath,
+      chatType: ChatType.Chat,
+    );
+    ChatClient.getInstance.chatManager
+        .addMessageEvent(
+      "UNIQUE_HANDLER_ID",
+      ChatMessageEvent(
+        onSuccess: (msgId, msg) {
+          ChatImageMessageBody body = msg.body as ChatImageMessageBody;
+          displayimgMessage(body.remotePath, true);
+          setState(() {
+            scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+          });
+        },
+        onProgress: (msgId, progress) {
+          print(" ============================> $msgId");
+        },
+        onError: (msgId, msg, error) {
+          print(" ============================> $error  === $msg");
+        },
+      ),
+    );
+    agoraChatClient.chatManager.sendMessage(msg);
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -69,7 +138,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
   void dispose() {
     ChatClient.getInstance.chatManager.removeEventHandler('UNIQUE_HANDLER_ID');
     ChatClient.getInstance.chatManager.removeMessageEvent('UNIQUE_HANDLER_ID');
-   // ChatClient.getInstance.logout(true);
     super.dispose();
   }
 
@@ -392,41 +460,83 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             screenWidth(context, dividedBy: 15),
                             vertical:
                             screenHeight(context, dividedBy: 100)),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              height:
-                              screenHeight(context, dividedBy: 17),
-                              width: screenWidth(context, dividedBy: 2),
-                              child: Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        right: screenWidth(context,
-                                            dividedBy: 40)),
-                                    height: screenHeight(context,
-                                        dividedBy: 40),
-                                    width: screenWidth(context,
-                                        dividedBy: 15),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/Images/camera.png'))),
-                                  ),
-                                  const Text(
-                                    'Camera',
-                                    style: TextStyle(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColor.dropdownfont),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                        child: GestureDetector(
+                          onTap: () async {
+                            Navigator.of(context).push(CupertinoDialogRoute(
+                                builder: (context) => CustomGalleryDisplay.instagramDisplay(
+                                    displaySource: DisplaySource.camera,
+                                    pickerSource: PickerSource.image,
+                                    multiSelection: true,
+                                    cropImage: false,
+                                    galleryDisplaySettings: GalleryDisplaySettings(
+                                      appTheme: AppTheme(
+                                          primaryColor: Colors.black, focusColor: Colors.white),
+                                    ),
+                                    onDone: (SelectedImagesDetails details) async {
+                                      print("details ==>${details.selectedFiles.first.selectedFile.path}");
+                                      var msg = ChatMessage.createImageSendMessage(
+                                        targetId: widget.id,
+                                        filePath: details.selectedFiles.first.selectedFile.path,
+                                        sendOriginalImage: true,
+                                        chatType: ChatType.Chat,
+                                      );
+                                      ChatClient.getInstance.chatManager
+                                          .addMessageEvent(
+                                        "UNIQUE_HANDLER_ID",
+                                        ChatMessageEvent(
+                                          onSuccess: (msgId, msg) {
+                                            ChatImageMessageBody body = msg.body as ChatImageMessageBody;
+                                            displayimgMessage(body.remotePath, true);
+                                            setState(() {
+                                              scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+                                            });
+                                          },
+                                          onProgress: (msgId, progress) {
+                                            print(" ============================> $msgId");
+                                          },
+                                          onError: (msgId, msg, error) {
+                                            print(" ============================> $error  === $msg");
+                                          },
+                                        ),
+                                      );
+                                      agoraChatClient.chatManager.sendMessage(msg);
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    }),
+                                context: context));
+                          },
+                          child: SizedBox(
+                            height:
+                            screenHeight(context, dividedBy: 17),
+                            width: screenWidth(context, dividedBy: 1.2),
+                            child: Row(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      right: screenWidth(context,
+                                          dividedBy: 40)),
+                                  height: screenHeight(context,
+                                      dividedBy: 40),
+                                  width: screenWidth(context,
+                                      dividedBy: 15),
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/Images/camera.png'))),
+                                ),
+                                const Text(
+                                  'Camera',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.dropdownfont),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                       const Divider(
@@ -449,7 +559,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                     var msg = ChatMessage.createVideoSendMessage(
                                       targetId: widget.id,
                                       filePath: selectedList.first.file!.path,
-                                      fileSize: 5000,
                                       chatType: ChatType.Chat,
                                     );
                                     ChatClient.getInstance.chatManager
@@ -612,7 +721,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                       dividedBy: 30),
                                   width: screenWidth(context,
                                       dividedBy: 15),
-                                  color: Color(0xff5D5D5D),
+                                  color: const Color(0xff5D5D5D),
                                 ),
                                 SizedBox(
                                   width: screenWidth(context,
@@ -732,19 +841,33 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                             'assets/Images/pin.png'))),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  right:
-                                  screenWidth(context, dividedBy: 30),
-                                  left: screenWidth(context,
-                                      dividedBy: 40)),
-                              height:
-                              screenHeight(context, dividedBy: 30),
-                              width: screenWidth(context, dividedBy: 30),
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/Images/mic.png'))),
+                            GestureDetector(
+                              onTap:  audioRecording ?() async {
+                                stopRecord();
+                                setState(() {
+                                  audioRecording = false;
+                                });
+                              } : () {
+                                print("are you there");
+                                _startRecording();
+                                setState(() {
+                                  audioRecording = true;
+                                });
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    right:
+                                    screenWidth(context, dividedBy: 30),
+                                    left: screenWidth(context,
+                                        dividedBy: 40)),
+                                height:
+                                screenHeight(context, dividedBy: 30),
+                                width: screenWidth(context, dividedBy: 30),
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/Images/mic.png'))),
+                              ) ,
                             ),
                           ],
                         )),
@@ -764,13 +887,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
       ),
     ) ;
   }
-
-  showLog(String message) {
-    scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-  }
-
   void setupChatClient() async {
     print("id===> ${widget.id}");
     print("id===> ${widget.uid}");
@@ -783,18 +899,17 @@ class _Chatting_PageState extends State<Chatting_Page> {
     await ChatClient.getInstance.startCallback();
     try {
       await agoraChatClient.login(widget.uid, "123");
-      showLog("Logged in successfully as ${widget.uid}");
+      print("Logged in successfully as ${widget.uid}");
 
     } on ChatError catch (e) {
       if (e.code == 200) {
         // Already logged in
       } else {
-        showLog("Login failed, code: ${e.code}, desc: ${e.description}");
+        print("Login failed, code: ${e.code}, desc: ${e.description}");
       }
     }
     Getdata();
   }
-
   void setupListeners() {
     agoraChatClient.addConnectionEventHandler(
       "CONNECTION_HANDLER",
@@ -812,7 +927,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
     );
     setState(() {});
   }
-
   void onMessagesReceived(List<ChatMessage> messages) {
     log("message ===>? $messages");
     for (var msg in messages) {
@@ -839,24 +953,19 @@ class _Chatting_PageState extends State<Chatting_Page> {
       }
     }
   }
-
   void onTokenWillExpire() {
     // The token is about to expire. Get a new token
     // from the token server and renew the token.
   }
-
   void onTokenDidExpire() {
     // The token has expired
   }
-
   void onDisconnected() {
     // Disconnected from the Chat server
   }
-
   void onConnected() {
-    showLog("Connected");
+    print("Connected");
   }
-
   void displayMessage(String text, bool isSentMessage) {
     messageList.add(Row(
       mainAxisAlignment:
@@ -944,7 +1053,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
     ));
 
   }
-
   void displayimgMessage(final thumbnail, bool isSentMessage) {
     messageList.add(Row(
       mainAxisAlignment:
@@ -1008,13 +1116,90 @@ class _Chatting_PageState extends State<Chatting_Page> {
     //   scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
     // });
   }
+  void displayvideoMessage(final thumbnail, bool isSentMessage) {
+    // VideoPlayerController _controller = VideoPlayerController.network(thumbnail)
+    //   ..initialize();
+    // setState(() {
+    //   _controller.setVolume(0);
+    //    _controller.pause();
+    //   _controller.setLooping(true);
+    // });
+    messageList.add(Row(
+      mainAxisAlignment:
+      isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        Flexible(
+          child: Container(
+            margin: EdgeInsets.only(
+                top: screenHeight(context, dividedBy: 100),
+                right: 15,
+                left: isSentMessage ? screenWidth(context, dividedBy: 7) : 15),
+            decoration: BoxDecoration(
+                borderRadius: isSentMessage
+                    ? const BorderRadius.only(
+                    bottomLeft: Radius.circular(26),
+                    topRight: Radius.circular(26),
+                    topLeft: Radius.circular(26))
+                    : const BorderRadius.only(
+                    bottomRight: Radius.circular(26),
+                    topRight: Radius.circular(26),
+                    topLeft: Radius.circular(26)),
+                color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: isSentMessage
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: screenHeight(context, dividedBy: 5),
+                    width: screenWidth(context, dividedBy: 2),
+                     child: // _controller.value.isInitialized
+                    //     ?
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(26),
+                          child: VideoPlayer(VideoPlayerController.network(thumbnail)
+                            ..initialize()),
+                        ),
+                        const Center(child: CircleAvatar(backgroundColor: Colors.black54,child: Icon(Icons.play_arrow,color: Colors.white,)),)
+                      ],
+                    )
+                       // : Center(child: customLoader(),),
+                  ),
+                  const SizedBox(height: 3,),
+                  Text(
+                    '01:32 PM',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 10,
+                        color: isSentMessage
+                            ? AppColor.white
+                            : AppColor.dropdownfont),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ));
+    // setState(() {
+    //   scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+    // });
+  }
   void displayfileMessage(final thumbnail,String dispalname, bool isSentMessage) {
     messageList.add(InkWell(
       onTap: () {
+        print("thumbnail ===> $thumbnail");
         Navigator.push(context,
             MaterialPageRoute(
               builder: (context) {
-                return pdfviewshow(
+                return Pdfview(
                     pdfUrl:
                     thumbnail);
               },
@@ -1132,8 +1317,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
 
     }
   }
-
- Future Getdata() async {
+  Future Getdata() async {
     final result =
     await ChatClient.getInstance.chatManager.fetchHistoryMessages(
        conversationId: widget.id,
@@ -1144,51 +1328,130 @@ class _Chatting_PageState extends State<Chatting_Page> {
     });
     log("data ===> ${result.data}");
     for(int i=0;i < result.data.length;i++){
-      print("you are here");
       if(result.data[i].body.type == MessageType.TXT){
         ChatTextMessageBody body = result.data[i].body as ChatTextMessageBody;
         displayMessage(body.content,result.data[i].from == widget.uid ? true : false);
-        print("text");
       }
       if(result.data[i].body.type == MessageType.IMAGE){
         ChatImageMessageBody body = result.data[i].body as ChatImageMessageBody;
         displayimgMessage(body.remotePath, result.data[i].from == widget.uid ? true : false);
       }
       if(result.data[i].body.type == MessageType.VIDEO){
-        print("vodeo");
-        // ChatImageMessageBody body = result.data[i].body as ChatImageMessageBody;
-        // displayimgMessage(body.remotePath, result.data[i].from == widget.uid ? true : false);
+         ChatVideoMessageBody body = result.data[i].body as ChatVideoMessageBody;
+        displayvideoMessage(body.remotePath, result.data[i].from == widget.uid ? true : false);
+        print('data ===> $body');
       }
       if(result.data[i].body.type == MessageType.FILE){
-        print("file");
          ChatFileMessageBody body = result.data[i].body as ChatFileMessageBody;
-         print("body =====> $body");
         displayfileMessage(body.remotePath,body.displayName.toString() ,result.data[i].from == widget.uid ? true : false);
       }
+      if(result.data[i].body.type == MessageType.VOICE){
+        ChatVoiceMessageBody body = result.data[i].body as ChatVoiceMessageBody;
+        print("voice ===> $body");
+        messageList.add(displayvoiceMessage(isSentMessage: result.data[i].from == widget.uid ? true : false, thumbnail: body.remotePath.toString(), dispalname: body.displayName.toString(),));
+       // displayvoiceMessage(body.remotePath,body.displayName.toString() ,result.data[i].from == widget.uid ? true : false);
+      }
     }
-    // if(result.data.isNotEmpty) {
-    //   chatDataCubit.ChatDataService(array: result.data, context: context).then((
-    //       value) {
-    //     int lenght = chatDataCubit.chatData.data?.length ?? 0;
-    //     print("lenyh ===> $lenght");
-    //     setState(() {
-    //       loading = true;
-    //     });
-    //     for (int i = 0; i < lenght; i++) {
-    //       displayMessage(
-    //           chatDataCubit.chatData.data?[i].body?.content.toString() ?? '',
-    //           chatDataCubit.chatData.data?[i].from == widget.uid
-    //               ? true
-    //               : false);
-    //     }
-    //   });
-    // } else {
-    //   setState(() {
-    //     loading = true;
-    //   });
-    // }
   }
 }
+class displayvoiceMessage extends StatefulWidget {
+  String thumbnail,dispalname;
+  bool isSentMessage;
+   displayvoiceMessage({super.key,required this.isSentMessage,required this.thumbnail,required this.dispalname});
+
+  @override
+  State<displayvoiceMessage> createState() => _displayvoiceMessageState();
+}
+
+class _displayvoiceMessageState extends State<displayvoiceMessage> {
+  final player = AudioPlayer();
+  bool play = false;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment:
+      widget.isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        Container(
+          //alignment: Alignment.centerRight,
+          margin: EdgeInsets.only(
+              top: screenHeight(context, dividedBy: 100),
+              right: 15,
+              left: widget.isSentMessage ? screenWidth(context, dividedBy: 7) : 15
+          ),
+          width: screenWidth(context, dividedBy: 2.1),
+          decoration: BoxDecoration(
+              borderRadius: widget.isSentMessage
+                  ? const BorderRadius.only(
+                  bottomLeft: Radius.circular(26),
+                  topRight: Radius.circular(26),
+                  topLeft: Radius.circular(26))
+                  : const BorderRadius.only(
+                  bottomRight: Radius.circular(26),
+                  topRight: Radius.circular(26),
+                  topLeft: Radius.circular(26)),
+              color: widget.isSentMessage ? AppColor.skyBlue : AppColor.gray),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: screenWidth(context,dividedBy: 40),
+                vertical: screenHeight(context,dividedBy: 100)
+            ),
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                play ?
+                InkWell(onTap: () async {
+                  print("pause");
+                  setState(() {
+                    play = false;
+                  });
+                   await player.pause();
+                }, child: const Icon(Icons.pause,color: Colors.black)) :
+                InkWell(onTap: () async {
+                  print("play");
+                  setState(() {
+                    play = true;
+                  });
+                  await player.play(UrlSource(widget.thumbnail));
+                }, child: const Icon(Icons.play_arrow,color: Colors.black,)),
+                Text(widget.dispalname,maxLines: 1,style: TextStyle(
+                    fontSize: 17,
+                    overflow: TextOverflow.ellipsis,
+                    // height: 1,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Roboto',
+                    color: widget.isSentMessage
+                        ? AppColor.white
+                        : AppColor.dropdownfont),),
+                SizedBox(width: screenWidth(context,dividedBy: 80),),
+                Text(
+                  '01:32 PM',
+                  style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 10,
+                      color: widget.isSentMessage
+                          ? AppColor.white
+                          : AppColor.dropdownfont),
+                )
+                // const Image(image: AssetImage("assets/Images/file.png"),height: 30,width: 30,color: Colors.white,),
+                // Expanded(
+                //   child: Column(
+                //     crossAxisAlignment: widget.isSentMessage ? CrossAxisAlignment.end :CrossAxisAlignment.start,
+                //     children: [
+                //
+                //
+                //     ],
+                //   ),
+                // )
+              ],),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 
 
 

@@ -36,6 +36,8 @@ PODS:
   - AgoraRtcEngine_iOS/VideoCodecEnc (4.2.6)
   - AgoraRtcEngine_iOS/VirtualBackground (4.2.6)
   - AgoraRtcEngine_iOS/VQA (4.2.6)
+  - audioplayers_darwin (0.0.1):
+    - Flutter
   - camera_avfoundation (0.0.1):
     - Flutter
   - device_info_plus (0.0.1):
@@ -121,6 +123,9 @@ PODS:
   - photo_manager (2.0.0):
     - Flutter
     - FlutterMacOS
+  - record_darwin (1.0.0):
+    - Flutter
+    - FlutterMacOS
   - SDWebImage (5.18.10):
     - SDWebImage/Core (= 5.18.10)
   - SDWebImage/Core (5.18.10)
@@ -148,6 +153,7 @@ PODS:
 DEPENDENCIES:
   - agora_chat_sdk (from `.symlinks/plugins/agora_chat_sdk/ios`)
   - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
@@ -164,6 +170,7 @@ DEPENDENCIES:
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - photo_gallery (from `.symlinks/plugins/photo_gallery/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
+  - record_darwin (from `.symlinks/plugins/record_darwin/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - smart_auth (from `.symlinks/plugins/smart_auth/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/darwin`)
@@ -190,6 +197,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/agora_chat_sdk/ios"
   agora_rtc_engine:
     :path: ".symlinks/plugins/agora_rtc_engine/ios"
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   camera_avfoundation:
     :path: ".symlinks/plugins/camera_avfoundation/ios"
   device_info_plus:
@@ -222,6 +231,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/photo_gallery/ios"
   photo_manager:
     :path: ".symlinks/plugins/photo_manager/ios"
+  record_darwin:
+    :path: ".symlinks/plugins/record_darwin/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   smart_auth:
@@ -242,6 +253,7 @@ SPEC CHECKSUMS:
   agora_rtc_engine: 5b2a7c221e1f3dfb8dee0fb0659f269be24fa81b
   AgoraIrisRTC_iOS: 8346499b82968a4967e3d0bec2cf14bf7c0c3f76
   AgoraRtcEngine_iOS: ac647332ad8f86d79cf810601c9e62b28c3a4de0
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   camera_avfoundation: 8b8d780bcfb6a4a02b0fbe2b4bd17b5b71946e68
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
@@ -263,6 +275,7 @@ SPEC CHECKSUMS:
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   photo_gallery: 9f95e57747cd22c10676ece3660d1ffe6c603ee5
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
+  record_darwin: 1f6619f2abac4d1ca91d3eeab038c980d76f1517
   SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
@@ -274,6 +287,6 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 02011213dab73ae3687df27ce441fbbcc82b5579
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
 
-PODFILE CHECKSUM: 7a54f4d432ce1407ea3fed4ffd2b074a8fc8ee7e
+PODFILE CHECKSUM: b1e647e50161f3449b8ec58784b95297f004b2be
 
 COCOAPODS: 1.15.0
