@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:custom_gallery_display/custom_gallery_display.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -9,7 +8,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:media_picker_widget/media_picker_widget.dart';
+import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Screen_Pages/videocall.dart';
 import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Screen_Pages/voice_call.dart';
@@ -45,7 +46,6 @@ class Chatting_Page extends StatefulWidget {
 class _Chatting_PageState extends State<Chatting_Page> {
   ScrollController scrollController = ScrollController();
   final record = AudioRecorder();
-  final AudioPlayer _audioPlayer = AudioPlayer();
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
   GlobalKey<ScaffoldMessengerState>();
   TextEditingController messageController = TextEditingController();
@@ -70,8 +70,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
     }
     return true;
   }
-  int i = 0;
+
   Future<String> getFilePath() async {
+    int i = 0;
     Directory storageDirectory = await getApplicationDocumentsDirectory();
     String sdPath =
         "${storageDirectory.path}/record${DateTime.now().microsecondsSinceEpoch}.acc";
@@ -79,23 +80,28 @@ class _Chatting_PageState extends State<Chatting_Page> {
     if (!d.existsSync()) {
       d.createSync(recursive: true);
     }
-    return "$sdPath/test_${i++}.mp3";
+    i++;
+    return "$sdPath/test_$i.mp3";
   }
   Future<void> _startRecording() async {
    await Permission.microphone.request();
       print("start");
       recordFilePath = await getFilePath();
-      record.start(RecordConfig(), path: recordFilePath);
-      final stream = await record.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+      print("recording === $recordFilePath");
+   await record.start(const RecordConfig(encoder: AudioEncoder.pcm16bits), path: recordFilePath);
+     // final stream = await record.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
       // RecordMp3.instance.start(recordFilePath, (type) {
       //   setState(() {});
       // });
-
+     audioRecording = true;
     setState(() {});
   }
   void stopRecord() async {
+    setState(() {
+      audioRecording = false;
+    });
     print("stop");
-    record.stop();
+    await record.stop();
    // RecordMp3.instance.stop();
     print("file===> $recordFilePath");
     var msg = ChatMessage.createVoiceSendMessage(
@@ -108,8 +114,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
       "UNIQUE_HANDLER_ID",
       ChatMessageEvent(
         onSuccess: (msgId, msg) {
-          ChatImageMessageBody body = msg.body as ChatImageMessageBody;
-          displayimgMessage(body.remotePath, true);
+          ChatVoiceMessageBody body = msg.body as ChatVoiceMessageBody;
+          print("voice ===> $body");
+          messageList.add(displayvoiceMessage(isSentMessage: true, thumbnail: body.remotePath.toString(), dispalname: body.displayName.toString(),));
           setState(() {
             scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
           });
@@ -841,19 +848,25 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                             'assets/Images/pin.png'))),
                               ),
                             ),
+                            audioRecording ? GestureDetector(
+                              onTap: () => stopRecord(),
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    right:
+                                    screenWidth(context, dividedBy: 30),
+                                    left: screenWidth(context,
+                                        dividedBy: 40)),
+                                height:
+                                screenHeight(context, dividedBy: 30),
+                                width: screenWidth(context, dividedBy: 30),
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/Images/recording.png'))),
+                              ) ,
+                            ) :
                             GestureDetector(
-                              onTap:  audioRecording ?() async {
-                                stopRecord();
-                                setState(() {
-                                  audioRecording = false;
-                                });
-                              } : () {
-                                print("are you there");
-                                _startRecording();
-                                setState(() {
-                                  audioRecording = true;
-                                });
-                              },
+                              onTap: () => _startRecording(),
                               child: Container(
                                 margin: EdgeInsets.only(
                                     right:
@@ -868,7 +881,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                         image: AssetImage(
                                             'assets/Images/mic.png'))),
                               ) ,
-                            ),
+                            )
                           ],
                         )),
                   ),
@@ -1054,63 +1067,72 @@ class _Chatting_PageState extends State<Chatting_Page> {
 
   }
   void displayimgMessage(final thumbnail, bool isSentMessage) {
-    messageList.add(Row(
-      mainAxisAlignment:
-      isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        Flexible(
-          child: Container(
-            //alignment: Alignment.centerRight,
-            margin: EdgeInsets.only(
-                top: screenHeight(context, dividedBy: 100),
-                right: 15,
-                left: isSentMessage ? screenWidth(context, dividedBy: 7) : 15),
-            //width: screenWidth(context, dividedBy: 1.5),
-            decoration: BoxDecoration(
-                borderRadius: isSentMessage
-                    ? const BorderRadius.only(
-                    bottomLeft: Radius.circular(26),
-                    topRight: Radius.circular(26),
-                    topLeft: Radius.circular(26))
-                    : const BorderRadius.only(
-                    bottomRight: Radius.circular(26),
-                    topRight: Radius.circular(26),
-                    topLeft: Radius.circular(26)),
-                color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: isSentMessage
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: screenHeight(context, dividedBy: 5),
-                    width: screenWidth(context, dividedBy: 2),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                            image: NetworkImage(thumbnail), fit: BoxFit.cover)
+    messageList.add(InkWell(
+      onTap: () =>  Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return Image_Screen(
+            image: thumbnail,
+          );
+        },
+      )),
+      child: Row(
+        mainAxisAlignment:
+        isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          Flexible(
+            child: Container(
+              //alignment: Alignment.centerRight,
+              margin: EdgeInsets.only(
+                  top: screenHeight(context, dividedBy: 100),
+                  right: 15,
+                  left: isSentMessage ? screenWidth(context, dividedBy: 7) : 15),
+              //width: screenWidth(context, dividedBy: 1.5),
+              decoration: BoxDecoration(
+                  borderRadius: isSentMessage
+                      ? const BorderRadius.only(
+                      bottomLeft: Radius.circular(26),
+                      topRight: Radius.circular(26),
+                      topLeft: Radius.circular(26))
+                      : const BorderRadius.only(
+                      bottomRight: Radius.circular(26),
+                      topRight: Radius.circular(26),
+                      topLeft: Radius.circular(26)),
+                  color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: isSentMessage
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      height: screenHeight(context, dividedBy: 5),
+                      width: screenWidth(context, dividedBy: 2),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                              image: NetworkImage(thumbnail), fit: BoxFit.cover)
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 3,),
-                  Text(
-                    '01:32 PM',
-                    style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10,
-                        color: isSentMessage
-                            ? AppColor.white
-                            : AppColor.dropdownfont),
-                  )
-                ],
+                    const SizedBox(height: 3,),
+                    Text(
+                      '01:32 PM',
+                      style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 10,
+                          color: isSentMessage
+                              ? AppColor.white
+                              : AppColor.dropdownfont),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ));
     // setState(() {
     //   scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
@@ -1124,69 +1146,78 @@ class _Chatting_PageState extends State<Chatting_Page> {
     //    _controller.pause();
     //   _controller.setLooping(true);
     // });
-    messageList.add(Row(
-      mainAxisAlignment:
-      isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        Flexible(
-          child: Container(
-            margin: EdgeInsets.only(
-                top: screenHeight(context, dividedBy: 100),
-                right: 15,
-                left: isSentMessage ? screenWidth(context, dividedBy: 7) : 15),
-            decoration: BoxDecoration(
-                borderRadius: isSentMessage
-                    ? const BorderRadius.only(
-                    bottomLeft: Radius.circular(26),
-                    topRight: Radius.circular(26),
-                    topLeft: Radius.circular(26))
-                    : const BorderRadius.only(
-                    bottomRight: Radius.circular(26),
-                    topRight: Radius.circular(26),
-                    topLeft: Radius.circular(26)),
-                color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: isSentMessage
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: screenHeight(context, dividedBy: 5),
-                    width: screenWidth(context, dividedBy: 2),
-                     child: // _controller.value.isInitialized
-                    //     ?
-                    Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(26),
-                          child: VideoPlayer(VideoPlayerController.network(thumbnail)
-                            ..initialize()),
-                        ),
-                        const Center(child: CircleAvatar(backgroundColor: Colors.black54,child: Icon(Icons.play_arrow,color: Colors.white,)),)
-                      ],
+    messageList.add(InkWell(
+      onTap: () =>  Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return Image_Screen(
+            image: thumbnail,
+          );
+        },
+      )),
+      child: Row(
+        mainAxisAlignment:
+        isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          Flexible(
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: screenHeight(context, dividedBy: 100),
+                  right: 15,
+                  left: isSentMessage ? screenWidth(context, dividedBy: 7) : 15),
+              decoration: BoxDecoration(
+                  borderRadius: isSentMessage
+                      ? const BorderRadius.only(
+                      bottomLeft: Radius.circular(26),
+                      topRight: Radius.circular(26),
+                      topLeft: Radius.circular(26))
+                      : const BorderRadius.only(
+                      bottomRight: Radius.circular(26),
+                      topRight: Radius.circular(26),
+                      topLeft: Radius.circular(26)),
+                  color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: isSentMessage
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      height: screenHeight(context, dividedBy: 5),
+                      width: screenWidth(context, dividedBy: 2),
+                       child: // _controller.value.isInitialized
+                      //     ?
+                      Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(26),
+                            child: VideoPlayer(VideoPlayerController.network(thumbnail)
+                              ..initialize()),
+                          ),
+                          const Center(child: CircleAvatar(backgroundColor: Colors.black54,child: Icon(Icons.play_arrow,color: Colors.white,)),)
+                        ],
+                      )
+                         // : Center(child: customLoader(),),
+                    ),
+                    const SizedBox(height: 3,),
+                    Text(
+                      '01:32 PM',
+                      style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 10,
+                          color: isSentMessage
+                              ? AppColor.white
+                              : AppColor.dropdownfont),
                     )
-                       // : Center(child: customLoader(),),
-                  ),
-                  const SizedBox(height: 3,),
-                  Text(
-                    '01:32 PM',
-                    style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10,
-                        color: isSentMessage
-                            ? AppColor.white
-                            : AppColor.dropdownfont),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ));
     // setState(() {
     //   scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
@@ -1364,7 +1395,8 @@ class displayvoiceMessage extends StatefulWidget {
 }
 
 class _displayvoiceMessageState extends State<displayvoiceMessage> {
-  final player = AudioPlayer();
+  final player = FlutterSoundPlayer();
+
   bool play = false;
   @override
   Widget build(BuildContext context) {
@@ -1405,14 +1437,14 @@ class _displayvoiceMessageState extends State<displayvoiceMessage> {
                   setState(() {
                     play = false;
                   });
-                   await player.pause();
+                   await player.closePlayer();
                 }, child: const Icon(Icons.pause,color: Colors.black)) :
                 InkWell(onTap: () async {
                   print("play");
                   setState(() {
                     play = true;
                   });
-                  await player.play(UrlSource(widget.thumbnail));
+                  await player.startPlayer(fromURI: widget.thumbnail);
                 }, child: const Icon(Icons.play_arrow,color: Colors.black,)),
                 Text(widget.dispalname,maxLines: 1,style: TextStyle(
                     fontSize: 17,

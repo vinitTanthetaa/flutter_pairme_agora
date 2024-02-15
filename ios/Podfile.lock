@@ -36,8 +36,6 @@ PODS:
   - AgoraRtcEngine_iOS/VideoCodecEnc (4.2.6)
   - AgoraRtcEngine_iOS/VirtualBackground (4.2.6)
   - AgoraRtcEngine_iOS/VQA (4.2.6)
-  - audioplayers_darwin (0.0.1):
-    - Flutter
   - camera_avfoundation (0.0.1):
     - Flutter
   - device_info_plus (0.0.1):
@@ -79,6 +77,10 @@ PODS:
     - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
+  - flutter_sound (9.2.13):
+    - Flutter
+    - flutter_sound_core (= 9.2.13)
+  - flutter_sound_core (9.2.13)
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
@@ -153,12 +155,12 @@ PODS:
 DEPENDENCIES:
   - agora_chat_sdk (from `.symlinks/plugins/agora_chat_sdk/ios`)
   - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
-  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
+  - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
@@ -185,6 +187,7 @@ SPEC REPOS:
     - AgoraRtcEngine_iOS
     - DKImagePickerController
     - DKPhotoGallery
+    - flutter_sound_core
     - GoogleMaps
     - HyphenateChat
     - libwebp
@@ -197,8 +200,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/agora_chat_sdk/ios"
   agora_rtc_engine:
     :path: ".symlinks/plugins/agora_rtc_engine/ios"
-  audioplayers_darwin:
-    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   camera_avfoundation:
     :path: ".symlinks/plugins/camera_avfoundation/ios"
   device_info_plus:
@@ -209,6 +210,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
+  flutter_sound:
+    :path: ".symlinks/plugins/flutter_sound/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   geocoding_ios:
@@ -253,7 +256,6 @@ SPEC CHECKSUMS:
   agora_rtc_engine: 5b2a7c221e1f3dfb8dee0fb0659f269be24fa81b
   AgoraIrisRTC_iOS: 8346499b82968a4967e3d0bec2cf14bf7c0c3f76
   AgoraRtcEngine_iOS: ac647332ad8f86d79cf810601c9e62b28c3a4de0
-  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   camera_avfoundation: 8b8d780bcfb6a4a02b0fbe2b4bd17b5b71946e68
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
@@ -261,6 +263,8 @@ SPEC CHECKSUMS:
   emoji_picker_flutter: fe2e6151c5b548e975d546e6eeb567daf0962a58
   file_picker: 15fd9539e4eb735dc54bae8c0534a7a9511a03de
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
+  flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   geocoding_ios: a389ea40f6f548de6e63006a2e31bf66ff80769a
   geolocator_apple: 9157311f654584b9bb72686c55fc02a97b73f461
@@ -287,6 +291,6 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 02011213dab73ae3687df27ce441fbbcc82b5579
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
 
-PODFILE CHECKSUM: b1e647e50161f3449b8ec58784b95297f004b2be
+PODFILE CHECKSUM: 4a38f48a53dec1c6452097c4f4a17c13c06abe0b
 
 COCOAPODS: 1.15.0

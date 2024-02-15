@@ -1853,61 +1853,68 @@ class _StepScreenState extends State<StepScreen> {
                                           skip_button(
                                             context,
                                             onTap: () {
-                                              if (_selectedimag1 == null) {
-                                                flutterToast(
-                                                    "Please Enter atlest 2 image or video",
-                                                    false);
-                                              } else if (_selectedimag2 ==
-                                                  null) {
-                                                flutterToast(
-                                                    "Please Enter 1 more image or video",
-                                                    false);
-                                              } else if (file1 == null) {
-                                                flutterToast(
-                                                    "Please Enter atlest 1 file like pdf,doc,etc",
-                                                    false);
-                                              } else {
-                                                businessProfileCubit.BusinessProfileService(
-                                                        photo_1: _selectedimag1
-                                                                ?.selectedFile ??
-                                                            File(''),
-                                                        bio: _bio.text,
-                                                        file_2: file2 ??
-                                                            PlatformFile(
-                                                                name: "",
-                                                                size: 0),
-                                                        file_3: file3 ??
-                                                            PlatformFile(
-                                                                name: "",
-                                                                size: 0),
-                                                        context: context,
-                                                        photo_2: _selectedimag2
-                                                                ?.selectedFile ??
-                                                            File(''),
-                                                        photo_3: _selectedimag3
-                                                                ?.selectedFile ??
-                                                            File(''),
-                                                        photo_4: _selectedimag4
-                                                                ?.selectedFile ??
-                                                            File(''),
-                                                        photo_5: _selectedimag5
-                                                                ?.selectedFile ??
-                                                            File(''),
-                                                        photo_6: _selectedimag6
-                                                                ?.selectedFile ??
-                                                            File(''),
-                                                        file_1: file1 ??
-                                                            PlatformFile(
-                                                                name: "",
-                                                                size: 0))
-                                                    .then(
-                                                  (value) {
-                                                    setState(() {
-                                                      ind++;
-                                                    });
-                                                  },
-                                                );
-                                              }
+                                              setState(() {
+                                                ind++;
+                                              });
+                                              // if (_selectedimag1 == null) {
+                                              //   flutterToast(
+                                              //       "Please Enter atlest 2 image or video",
+                                              //       false);
+                                              // } else if (_selectedimag2 ==
+                                              //     null) {
+                                              //   flutterToast(
+                                              //       "Please Enter 1 more image or video",
+                                              //       false);
+                                              // } else if (file1 == null) {
+                                              //   flutterToast(
+                                              //       "Please Enter atlest 1 file like pdf,doc,etc",
+                                              //       false);
+                                              // } else {
+                                              //   setState(() {
+                                              //     ind++;
+                                              //   });
+                                              // }
+                                              //   businessProfileCubit.BusinessProfileService(
+                                              //           photo_1: _selectedimag1
+                                              //                   ?.selectedFile ??
+                                              //               File(''),
+                                              //           bio: _bio.text,
+                                              //           file_2: file2 ??
+                                              //               PlatformFile(
+                                              //                   name: "",
+                                              //                   size: 0),
+                                              //           file_3: file3 ??
+                                              //               PlatformFile(
+                                              //                   name: "",
+                                              //                   size: 0),
+                                              //           context: context,
+                                              //           photo_2: _selectedimag2
+                                              //                   ?.selectedFile ??
+                                              //               File(''),
+                                              //           photo_3: _selectedimag3
+                                              //                   ?.selectedFile ??
+                                              //               File(''),
+                                              //           photo_4: _selectedimag4
+                                              //                   ?.selectedFile ??
+                                              //               File(''),
+                                              //           photo_5: _selectedimag5
+                                              //                   ?.selectedFile ??
+                                              //               File(''),
+                                              //           photo_6: _selectedimag6
+                                              //                   ?.selectedFile ??
+                                              //               File(''),
+                                              //           file_1: file1 ??
+                                              //               PlatformFile(
+                                              //                   name: "",
+                                              //                   size: 0))
+                                              //       .then(
+                                              //     (value) {
+                                              //       setState(() {
+                                              //         ind++;
+                                              //       });
+                                              //     },
+                                              //   );
+                                              // }
                                             },
                                           )
                                         ],
@@ -5519,27 +5526,30 @@ class _StepScreenState extends State<StepScreen> {
                                               skip_button(
                                                 context,
                                                 onTap: () {
-                                                  if (selectedlookingFor
-                                                      .isEmpty) {
-                                                    flutterToast(
-                                                        "Please Enter select a atlest 1 tag",
-                                                        false);
-                                                  } else {
-                                                    describeYourSelfCubit
-                                                            .DescribeYourSelfService(
-                                                                array:
-                                                                    selectedlookingFor,
-                                                                context:
-                                                                    context)
-                                                        .then((value) {
-                                                      setState(() {
-                                                        ind++;
-                                                      });
-                                                    });
-                                                  }
                                                   setState(() {
                                                     ind++;
                                                   });
+                                                  // if (selectedlookingFor
+                                                  //     .isEmpty) {
+                                                  //   flutterToast(
+                                                  //       "Please Enter select a atlest 1 tag",
+                                                  //       false);
+                                                  // } else {
+                                                  //   describeYourSelfCubit
+                                                  //           .DescribeYourSelfService(
+                                                  //               array:
+                                                  //                   selectedlookingFor,
+                                                  //               context:
+                                                  //                   context)
+                                                  //       .then((value) {
+                                                  //     setState(() {
+                                                  //       ind++;
+                                                  //     });
+                                                  //   });
+                                                  // }
+                                                  // setState(() {
+                                                  //   ind++;
+                                                  // });
                                                 },
                                               )
                                             ],
@@ -5679,40 +5689,40 @@ class _StepScreenState extends State<StepScreen> {
                                                           "Who are you looking to connect with? Select up to 3 of the following:")),
                                               skip_button(
                                                 context,
-                                                // onTap: () {
-                                                //   Navigator.push(context,
-                                                //       MaterialPageRoute(
-                                                //     builder: (context) {
-                                                //       return const Home_screen();
-                                                //     },
-                                                //   ));
-                                                // },
                                                 onTap: () {
-                                                  if (selectedlookingFor1
-                                                          .length <=
-                                                      0) {
-                                                    flutterToast(
-                                                        "Select atlist 1 looking for tag",
-                                                        false);
-                                                  } else {
-                                                    connectwithCubit
-                                                            .ConnectwithService(
-                                                                array:
-                                                                    selectedlookingFor,
-                                                                context:
-                                                                    context)
-                                                        .then(
-                                                      (value) {
-                                                        Navigator.push(context,
-                                                            MaterialPageRoute(
-                                                          builder: (context) {
-                                                            return const Home_screen();
-                                                          },
-                                                        ));
-                                                      },
-                                                    );
-                                                  }
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return const Home_screen();
+                                                    },
+                                                  ));
                                                 },
+                                                // onTap: () {
+                                                //   if (selectedlookingFor1
+                                                //           .length <=
+                                                //       0) {
+                                                //     flutterToast(
+                                                //         "Select atlist 1 looking for tag",
+                                                //         false);
+                                                //   } else {
+                                                //     connectwithCubit
+                                                //             .ConnectwithService(
+                                                //                 array:
+                                                //                     selectedlookingFor,
+                                                //                 context:
+                                                //                     context)
+                                                //         .then(
+                                                //       (value) {
+                                                //         Navigator.push(context,
+                                                //             MaterialPageRoute(
+                                                //           builder: (context) {
+                                                //             return const Home_screen();
+                                                //           },
+                                                //         ));
+                                                //       },
+                                                //     );
+                                                //   }
+                                                // },
                                               )
                                             ],
                                           ),

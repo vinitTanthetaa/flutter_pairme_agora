@@ -370,7 +370,7 @@ class _Profile_pageState extends State<Profile_page> {
                                     width:
                                         screenWidth(context, dividedBy: 1.25),
                                     lineHeight: 7.0,
-                                    percent: userProfile.data?.first.score == 1
+                                    percent:  userProfile.data?.first.score == 1
                                         ? 0.2
                                         : userProfile.data?.first.score == 2
                                             ? 0.4
@@ -385,7 +385,7 @@ class _Profile_pageState extends State<Profile_page> {
                                     backgroundColor: Colors.grey.shade200,
                                     trailing: custom_text(
                                         text:
-                                            "${userProfile.data?.first.score}/5",
+                                            "${userProfile.data?.first.score ?? 5}/5",
                                         color: const Color(0xff434343)),
                                     // progressColor: Colors.blue,
                                     linearGradient: const LinearGradient(
