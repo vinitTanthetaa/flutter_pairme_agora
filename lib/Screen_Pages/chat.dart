@@ -8,7 +8,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
+import 'package:google_translate/extensions/string_extension.dart';
 import 'package:media_picker_widget/media_picker_widget.dart';
 import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Screen_Pages/videocall.dart';
@@ -45,6 +47,8 @@ class Chatting_Page extends StatefulWidget {
 
 class _Chatting_PageState extends State<Chatting_Page> {
   ScrollController scrollController = ScrollController();
+  FlutterSoundRecorder _soundRecorder = FlutterSoundRecorder();
+  String _path ='';
   final record = AudioRecorder();
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
   GlobalKey<ScaffoldMessengerState>();
@@ -86,13 +90,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
   Future<void> _startRecording() async {
    await Permission.microphone.request();
       print("start");
-      recordFilePath = await getFilePath();
-      print("recording === $recordFilePath");
-   await record.start(const RecordConfig(encoder: AudioEncoder.pcm16bits), path: recordFilePath);
-     // final stream = await record.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
-      // RecordMp3.instance.start(recordFilePath, (type) {
-      //   setState(() {});
-      // });
+   _path = await _soundRecorder.startRecorder(toFile: 'example.aac').toString();
+   print('Recording started: $_path');
      audioRecording = true;
     setState(() {});
   }
@@ -696,11 +695,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
                               "UNIQUE_HANDLER_ID",
                               ChatMessageEvent(
                                 onSuccess: (msgId, msg) {
-                                  ChatImageMessageBody body = msg.body as ChatImageMessageBody;
-                                  //  displayimgMessage(body.remotePath, true);
-                                  //   setState(() {
-                                  //     scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
-                                  //   });
+                                  ChatFileMessageBody body = msg.body as ChatFileMessageBody;
+                                  messageList.add(displayvoiceMessage(isSentMessage: true , thumbnail: body.remotePath.toString(), dispalname: body.displayName.toString(),));
                                 },
                                 onProgress: (msgId, progress) {
                                   print(" ============================> $msgId");
@@ -1306,7 +1302,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
     //   scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
     // });
   }
-
   void sendMessage() async {
     print("call me");
     if (messageController.text.isNotEmpty) {
