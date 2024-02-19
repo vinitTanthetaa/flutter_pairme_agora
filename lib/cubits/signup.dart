@@ -9,6 +9,7 @@ import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/Screen_Pages/verification_code.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/helper/Apis.dart';
+import 'package:pair_me/helper/Size_page.dart';
 
 
 abstract class SignUpState {}
@@ -47,7 +48,8 @@ class SignUpCubit extends Cubit<SignUpState> {
         "email": email,
         "teamsAndCondition": terms,
         "password": password,
-        "confirmPassword": confirmPassword
+        "confirmPassword": confirmPassword,
+        "language":Language
     };
     print("Body is $body");
     try {

@@ -18,6 +18,8 @@ class apis{
   static const String verify_forgot_otp = "$baseurl/verify_forgot_otp";
   static const String reset_password = "$baseurl/reset_password";
   static const String resendOtp = "$baseurl/resendOtp";
+  static const String translation = "$baseurl/translation";
+  static const String languageUpdate = "$baseurl/language_Update";
 
 
 

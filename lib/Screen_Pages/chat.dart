@@ -9,8 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:flutter_sound/public/flutter_sound_player.dart';
-import 'package:google_translate/extensions/string_extension.dart';
 import 'package:media_picker_widget/media_picker_widget.dart';
 import 'package:pair_me/Screen_Pages/image_page.dart';
 import 'package:pair_me/Screen_Pages/videocall.dart';
@@ -23,12 +21,12 @@ import 'package:pair_me/cubits/block_req_msg_user.dart';
 import 'package:pair_me/cubits/chatdata_cubits.dart';
 import 'package:pair_me/cubits/delete_msg_users.dart';
 import 'package:pair_me/cubits/reject_user.dart';
+import 'package:pair_me/cubits/translate_language.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:record/record.dart';
 import 'package:video_player/video_player.dart';
 
 class Chatting_Page extends StatefulWidget {
@@ -47,9 +45,10 @@ class Chatting_Page extends StatefulWidget {
 
 class _Chatting_PageState extends State<Chatting_Page> {
   ScrollController scrollController = ScrollController();
-  FlutterSoundRecorder _soundRecorder = FlutterSoundRecorder();
+  final FlutterSoundRecorder _soundRecorder = FlutterSoundRecorder();
+  final Codec _codec = Codec.aacMP4;
   String _path ='';
-  final record = AudioRecorder();
+  int i = 0;
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
   GlobalKey<ScaffoldMessengerState>();
   TextEditingController messageController = TextEditingController();
@@ -65,32 +64,30 @@ class _Chatting_PageState extends State<Chatting_Page> {
   bool emojiShowing = false;
   bool audioRecording = false;
   String recordFilePath = '';
-  Future<bool> checkPermission() async {
-    if (!await Permission.microphone.isGranted) {
-      PermissionStatus status = await Permission.microphone.request();
-      if (status != PermissionStatus.granted) {
-        await [Permission.microphone].request();
-      }
+  Future<void> _openAudioRecording() async {
+    final status = await Permission.microphone.request();
+    if (status != PermissionStatus.granted) {
+      throw RecordingPermissionException('Mic permission not allowed!');
     }
-    return true;
+    await _soundRecorder.openRecorder();
+    await _soundRecorder.isEncoderSupported(Codec.opusWebM);
   }
-
   Future<String> getFilePath() async {
-    int i = 0;
-    Directory storageDirectory = await getApplicationDocumentsDirectory();
-    String sdPath =
-        "${storageDirectory.path}/record${DateTime.now().microsecondsSinceEpoch}.acc";
-    var d = Directory(sdPath);
-    if (!d.existsSync()) {
-      d.createSync(recursive: true);
-    }
-    i++;
-    return "$sdPath/test_$i.mp3";
+    String sdPath = "";
+      Directory storageDirectory = await getApplicationDocumentsDirectory();
+      sdPath = "${storageDirectory.path}/flutter_sound.aac";
+      var d = Directory(sdPath);
+      if (!d.existsSync()) {
+        d.createSync(recursive: true);
+      }
+
+    return sdPath;
   }
   Future<void> _startRecording() async {
-   await Permission.microphone.request();
       print("start");
-   _path = await _soundRecorder.startRecorder(toFile: 'example.aac').toString();
+      _path = await getFilePath();
+   print('Recording: $_path');
+    _soundRecorder.startRecorder(toFile: _path);
    print('Recording started: $_path');
      audioRecording = true;
     setState(() {});
@@ -100,12 +97,10 @@ class _Chatting_PageState extends State<Chatting_Page> {
       audioRecording = false;
     });
     print("stop");
-    await record.stop();
-   // RecordMp3.instance.stop();
-    print("file===> $recordFilePath");
+    _soundRecorder.stopRecorder();
     var msg = ChatMessage.createVoiceSendMessage(
       targetId: widget.id,
-      filePath: recordFilePath,
+      filePath: _path,
       chatType: ChatType.Chat,
     );
     ChatClient.getInstance.chatManager
@@ -137,6 +132,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
     chatDataCubit = BlocProvider.of<ChatDataCubit>(context);
     setupChatClient();
     setupListeners();
+    _openAudioRecording();
     setState(() {});
   }
 
@@ -943,7 +939,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
         print("message ====> ${msg.to}");
         if (msg.body.type == MessageType.TXT) {
           ChatTextMessageBody body = msg.body as ChatTextMessageBody;
-          displayMessage(body.content, false);
+          displayMessage(text: body.content, isSentMessage: false,);
           setState(() {
             scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
           });
@@ -975,93 +971,103 @@ class _Chatting_PageState extends State<Chatting_Page> {
   void onConnected() {
     print("Connected");
   }
-  void displayMessage(String text, bool isSentMessage) {
-    messageList.add(Row(
-      mainAxisAlignment:
-      isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        Flexible(
-          child: Container(
-            margin: EdgeInsets.only(
-                top: screenHeight(context, dividedBy: 100),
-                right: isSentMessage == false ? screenWidth(context, dividedBy: 5) : 15,
-                left: isSentMessage ? screenWidth(context, dividedBy: 5) : 15),
-            decoration: BoxDecoration(
-                borderRadius: isSentMessage
-                    ? const BorderRadius.only(
-                    bottomLeft: Radius.circular(26),
-                    topRight: Radius.circular(26),
-                    topLeft: Radius.circular(26))
-                    : const BorderRadius.only(
-                    bottomRight: Radius.circular(26),
-                    topRight: Radius.circular(26),
-                    topLeft: Radius.circular(26)),
-                color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth(context, dividedBy: 30),
-                  vertical: screenWidth(context, dividedBy: 50)),
-              child: Column(
-                crossAxisAlignment: isSentMessage
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-                children: [
-                  if(text.length >= 25 )...[
-                    Text(text,style: TextStyle(
-                        fontSize: 17,
-                        // height: 1,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Roboto',
-                        color: isSentMessage
-                            ? AppColor.white
-                            : AppColor.dropdownfont),),
-                    Text('01:32 pm',style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10,
-                        color: isSentMessage
-                            ? AppColor.white
-                            : AppColor.dropdownfont),),
-                  ]else ...[
-                     RichText(text: TextSpan(
-                      children: [
-                        TextSpan(text: text, style:
-                        TextStyle(
-                            fontSize: 17,
-                            // height: 1,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Roboto',
-                            color: isSentMessage
-                                ? AppColor.white
-                                : AppColor.dropdownfont)
-                        ),
-                        TextSpan(text:'   ', style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: isSentMessage
-                                ? AppColor.white
-                                : AppColor.dropdownfont),),
-                        TextSpan(text: '01:32 PM', style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: isSentMessage
-                                ? AppColor.white
-                                : AppColor.dropdownfont),),
-                      ],
-
-                    ))
-                  ],
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    ));
-
-  }
+  // void displayMessage(String text, bool isSentMessage) {
+  //   messageList.add(
+  //       Row(
+  //     mainAxisAlignment:
+  //     isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+  //     children: [
+  //       Flexible(
+  //         child: Container(
+  //           margin: EdgeInsets.only(
+  //               top: screenHeight(context, dividedBy: 100),
+  //               right: isSentMessage == false ? screenWidth(context, dividedBy: 5) : 15,
+  //               left: isSentMessage ? screenWidth(context, dividedBy: 5) : 15),
+  //           decoration: BoxDecoration(
+  //               borderRadius: isSentMessage
+  //                   ? const BorderRadius.only(
+  //                   bottomLeft: Radius.circular(26),
+  //                   topRight: Radius.circular(26),
+  //                   topLeft: Radius.circular(26))
+  //                   : const BorderRadius.only(
+  //                   bottomRight: Radius.circular(26),
+  //                   topRight: Radius.circular(26),
+  //                   topLeft: Radius.circular(26)),
+  //               color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
+  //           child: Padding(
+  //             padding: EdgeInsets.symmetric(
+  //                 horizontal: screenWidth(context, dividedBy: 30),
+  //                 vertical: screenWidth(context, dividedBy: 50)),
+  //             child: Column(
+  //               crossAxisAlignment: isSentMessage
+  //                   ? CrossAxisAlignment.end
+  //                   : CrossAxisAlignment.start,
+  //               children: [
+  //                 if(text.length >= 25 )...[
+  //                   Text(text,style: TextStyle(
+  //                       fontSize: 17,
+  //                       // height: 1,
+  //                       fontWeight: FontWeight.w500,
+  //                       fontFamily: 'Roboto',
+  //                       color: isSentMessage
+  //                           ? AppColor.white
+  //                           : AppColor.dropdownfont),),
+  //                   Text('01:32 pm',style: TextStyle(
+  //                       fontFamily: 'Roboto',
+  //                       fontWeight: FontWeight.w500,
+  //                       fontSize: 10,
+  //                       color: isSentMessage
+  //                           ? AppColor.white
+  //                           : AppColor.dropdownfont),),
+  //                   Icon(Icons.language)
+  //                 ]else ...[
+  //                    RichText(text: TextSpan(
+  //                     children: [
+  //                       TextSpan(text: text, style:
+  //                       TextStyle(
+  //                           fontSize: 17,
+  //                           // height: 1,
+  //                           fontWeight: FontWeight.w500,
+  //                           fontFamily: 'Roboto',
+  //                           color: isSentMessage
+  //                               ? AppColor.white
+  //                               : AppColor.dropdownfont)
+  //                       ),
+  //                       TextSpan(text:'   ', style: TextStyle(
+  //                           fontFamily: 'Roboto',
+  //                           fontWeight: FontWeight.w500,
+  //                           fontSize: 10,
+  //                           color: isSentMessage
+  //                               ? AppColor.white
+  //                               : AppColor.dropdownfont),),
+  //                       TextSpan(text: '01:32 PM', style: TextStyle(
+  //                           fontFamily: 'Roboto',
+  //                           fontWeight: FontWeight.w500,
+  //                           fontSize: 10,
+  //                           color: isSentMessage
+  //                               ? AppColor.white
+  //                               : AppColor.dropdownfont),),
+  //                     ],
+  //
+  //                   )),
+  //                   GestureDetector(
+  //                     onTap: () {
+  //                       translatLanguageCubit.TranslatLanguageService(array: text, context: context).then((value) {
+  //
+  //                       },);
+  //                     },
+  //                       child: const Icon(Icons.language))
+  //                 ],
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   )
+  //   );
+  //
+  // }
   void displayimgMessage(final thumbnail, bool isSentMessage) {
     messageList.add(InkWell(
       onTap: () =>  Navigator.push(context, MaterialPageRoute(
@@ -1319,7 +1325,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
             print(" ============================> $msgId");
             print(" ============================> $msg");
             print(msg);
-            displayMessage(messageController.text, true);
+            ChatTextMessageBody body = msg.body as ChatTextMessageBody;
+            messageList.add(displayMessage( text: body.content, isSentMessage:  true ,));
             scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
             messageController.clear();
             setState(() {});
@@ -1356,7 +1363,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
     for(int i=0;i < result.data.length;i++){
       if(result.data[i].body.type == MessageType.TXT){
         ChatTextMessageBody body = result.data[i].body as ChatTextMessageBody;
-        displayMessage(body.content,result.data[i].from == widget.uid ? true : false);
+        messageList.add(displayMessage( text: body.content, isSentMessage: result.data[i].from == widget.uid ? true : false,));
       }
       if(result.data[i].body.type == MessageType.IMAGE){
         ChatImageMessageBody body = result.data[i].body as ChatImageMessageBody;
@@ -1380,6 +1387,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
     }
   }
 }
+
+// voice message
 class displayvoiceMessage extends StatefulWidget {
   String thumbnail,dispalname;
   bool isSentMessage;
@@ -1478,7 +1487,123 @@ class _displayvoiceMessageState extends State<displayvoiceMessage> {
     );
   }
 }
+ // text message
+class displayMessage extends StatefulWidget {
+  String text;
+  bool isSentMessage;
+  displayMessage({super.key,required this.text, required this.isSentMessage});
 
+  @override
+  State<displayMessage> createState() => _displayMessageState();
+}
+
+class _displayMessageState extends State<displayMessage> {
+  TranslatLanguageCubit translatLanguageCubit = TranslatLanguageCubit();
+  String msg = '';
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    msg = widget.text;
+    setState(() {});
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment:
+      widget.isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        Flexible(
+          child: Container(
+            margin: EdgeInsets.only(
+                top: screenHeight(context, dividedBy: 100),
+                right: widget.isSentMessage == false ? screenWidth(context, dividedBy: 5) : 15,
+                left: widget.isSentMessage ? screenWidth(context, dividedBy: 5) : 15),
+            decoration: BoxDecoration(
+                borderRadius: widget.isSentMessage
+                    ? const BorderRadius.only(
+                    bottomLeft: Radius.circular(26),
+                    topRight: Radius.circular(26),
+                    topLeft: Radius.circular(26))
+                    : const BorderRadius.only(
+                    bottomRight: Radius.circular(26),
+                    topRight: Radius.circular(26),
+                    topLeft: Radius.circular(26)),
+                color: widget.isSentMessage  ? AppColor.skyBlue : AppColor.gray),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth(context, dividedBy: 30),
+                  vertical: screenWidth(context, dividedBy: 50)),
+              child: Column(
+                crossAxisAlignment: widget.isSentMessage
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  if(widget.text.length >= 25 )...[
+                    Text(msg,style: TextStyle(
+                        fontSize: 17,
+                        // height: 1,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Roboto',
+                        color: widget.isSentMessage
+                            ? AppColor.white
+                            : AppColor.dropdownfont),),
+                    Text('01:32 pm',style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 10,
+                        color: widget.isSentMessage
+                            ? AppColor.white
+                            : AppColor.dropdownfont),),
+                    Icon(Icons.language)
+                  ]else ...[
+                    RichText(text: TextSpan(
+                      children: [
+                        TextSpan(text: msg, style:
+                        TextStyle(
+                            fontSize: 17,
+                            // height: 1,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Roboto',
+                            color: widget.isSentMessage
+                                ? AppColor.white
+                                : AppColor.dropdownfont)
+                        ),
+                        TextSpan(text:'   ', style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10,
+                            color: widget.isSentMessage
+                                ? AppColor.white
+                                : AppColor.dropdownfont),),
+                        TextSpan(text: '01:32 PM', style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10,
+                            color: widget.isSentMessage
+                                ? AppColor.white
+                                : AppColor.dropdownfont),),
+                      ],
+
+                    )),
+                    GestureDetector(
+                        onTap: () {
+                          translatLanguageCubit.TranslatLanguageService(array: widget.text, context: context).then((value) {
+                            msg = value.toString();
+                            setState(() {});
+                          },);
+                        },
+                        child: const Icon(Icons.language))
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 
 

@@ -273,22 +273,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.6"
-  dio_cache_interceptor:
-    dependency: transitive
-    description:
-      name: dio_cache_interceptor
-      sha256: a89166e6fb9c90a4bf2b7f20b5c055087969bc445ced3282e32505543e296e0f
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.4.2"
-  dio_cache_interceptor_hive_store:
-    dependency: transitive
-    description:
-      name: dio_cache_interceptor_hive_store
-      sha256: "7a376b1db0a153e16ad51ce0cf1d2549ca14a2ddf462523c362fac9e077c5f14"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.1"
   dotted_border:
     dependency: "direct main"
     description:
@@ -637,22 +621,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.4+3"
-  google_translate:
-    dependency: "direct main"
-    description:
-      name: google_translate
-      sha256: "8869a8c3244ebdd242d5b9c8b495d674339fd5bc44a86348ecc40b950650007b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.6"
-  hive:
-    dependency: transitive
-    description:
-      name: hive
-      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.3"
   html:
     dependency: transitive
     description:
@@ -1069,62 +1037,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
-  record:
-    dependency: "direct main"
-    description:
-      name: record
-      sha256: "5c8e12c692a4800b33f5f8b6c821ea083b12bfdbd031b36ba9322c40a4eeecc9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.4"
-  record_android:
-    dependency: transitive
-    description:
-      name: record_android
-      sha256: "805ecaa232a671aff2ee9ec4730ef6addb97c548d2db6b1fbd5197f1d4f47a5a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
-  record_darwin:
-    dependency: transitive
-    description:
-      name: record_darwin
-      sha256: ee8cb1bb1712d7ce38140ecabe70e5c286c02f05296d66043bee865ace7eb1b9
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
-  record_linux:
-    dependency: transitive
-    description:
-      name: record_linux
-      sha256: "7d0e70cd51635128fe9d37d89bafd6011d7cbba9af8dc323079ae60f23546aef"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.1"
-  record_platform_interface:
-    dependency: transitive
-    description:
-      name: record_platform_interface
-      sha256: "3a4b56e94ecd2a0b2b43eb1fa6f94c5b8484334f5d38ef43959c4bf97fb374cf"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
-  record_web:
-    dependency: transitive
-    description:
-      name: record_web
-      sha256: "24847cdbcf999f7a5762170792f622ac844858766becd0f2370ec8ae22f7526e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.5"
-  record_windows:
-    dependency: transitive
-    description:
-      name: record_windows
-      sha256: "39998b3ea7d8d28b04159d82220e6e5e32a7c357c6fb2794f5736beea272f6c3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   rxdart:
     dependency: transitive
     description:
