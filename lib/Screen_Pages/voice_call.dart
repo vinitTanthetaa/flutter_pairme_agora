@@ -86,7 +86,6 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
    // createchannel();
     setupVoiceSDKEngine();
   }
