@@ -49,13 +49,11 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
   Future<void> setupVoiceSDKEngine() async {
     // retrieve or request microphone permission
     await [Permission.microphone].request();
-
     //create an instance of the Agora engine
     agoraEngine = createAgoraRtcEngine();
     await agoraEngine.initialize( RtcEngineContext(
         appId: AgoraAppid
     ));
-
     // Register the event handler
     agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
@@ -79,8 +77,6 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
           });
         },
       ),
-
-
     );
   }
 
