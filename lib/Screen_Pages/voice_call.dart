@@ -53,7 +53,9 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
     agoraEngine = createAgoraRtcEngine();
     await agoraEngine.initialize( RtcEngineContext(
         appId: AgoraAppid
-    ));
+    )).then((value) {
+      join();
+    });
     // Register the event handler
     agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
@@ -211,7 +213,10 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
               ),
               SizedBox(height: screenHeight(context,dividedBy: 50),),
               GestureDetector(
-                onTap: () => createchannel(),
+                onTap: () {
+                  agoraEngine.leaveChannel();
+                },
+               // onTap: () => createchannel(),
                   child: Container(
                     height: screenHeight(context,dividedBy: 10),
                     width: screenHeight(context,dividedBy: 10),
@@ -236,39 +241,40 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
       ),
     );
   }
-  // void  join() async {
-  //   // Set channel options including the client role and channel profile
-  //   ChannelMediaOptions options = const ChannelMediaOptions(
-  //     clientRoleType: ClientRoleType.clientRoleBroadcaster,
-  //     channelProfile: ChannelProfileType.channelProfileCommunication,
-  //   );
-  //
-  //   await agoraEngine.joinChannel(
-  //     token: token,
-  //     channelId: channelName,
-  //     options: options,
-  //     uid: uid,
-  //   );
-  // }
-  // void leave() {
-  //   setState(() {
-  //     _isJoined = false;
-  //     _remoteUid = null;
-  //   });
-  //   agoraEngine.leaveChannel();
-  // }
-  // Widget _status(){
-  //   String statusText;
-  //
-  //   if (!_isJoined) {
-  //     statusText = 'Join a channel';
-  //   } else if (_remoteUid == null)
-  //     statusText = 'Waiting for a remote user to join...';
-  //   else
-  //     statusText = 'Connected to remote user, uid:$_remoteUid';
-  //
-  //   return Text(
-  //     statusText,
-  //   );
-  // }
+  void  join() async {
+    // Set channel options including the client role and channel profile
+    ChannelMediaOptions options = const ChannelMediaOptions(
+      clientRoleType: ClientRoleType.clientRoleBroadcaster,
+      channelProfile: ChannelProfileType.channelProfileCommunication,
+
+    );
+
+    await agoraEngine.joinChannel(
+      token: '',
+      channelId: widget.uid,
+      options: options,
+      uid: uid,
+    );
+  }
+  void leave() {
+    setState(() {
+      _isJoined = false;
+      _remoteUid = null;
+    });
+    agoraEngine.leaveChannel();
+  }
+  Widget _status(){
+    String statusText;
+
+    if (!_isJoined) {
+      statusText = 'Join a channel';
+    } else if (_remoteUid == null)
+      statusText = 'Waiting for a remote user to join...';
+    else
+      statusText = 'Connected to remote user, uid:$_remoteUid';
+
+    return Text(
+      statusText,
+    );
+  }
 }

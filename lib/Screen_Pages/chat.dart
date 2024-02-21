@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:custom_gallery_display/custom_gallery_display.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -56,6 +57,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   RejectUserCubit rejectUserCubit = RejectUserCubit();
   BlockUserCubit blockUserCubit = BlockUserCubit();
   ChatDataCubit chatDataCubit = ChatDataCubit();
+  late RtcEngine agoraEngine; // Agora engine instance
   late ChatClient agoraChatClient;
   final List messageList = [];
   bool loading = false;
@@ -127,14 +129,12 @@ class _Chatting_PageState extends State<Chatting_Page> {
     _openAudioRecording();
     setState(() {});
   }
-
   @override
   void dispose() {
     ChatClient.getInstance.chatManager.removeEventHandler('UNIQUE_HANDLER_ID');
     ChatClient.getInstance.chatManager.removeMessageEvent('UNIQUE_HANDLER_ID');
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -922,6 +922,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
     }
     Getdata();
   }
+
   void setupListeners() {
     agoraChatClient.addConnectionEventHandler(
       "CONNECTION_HANDLER",
