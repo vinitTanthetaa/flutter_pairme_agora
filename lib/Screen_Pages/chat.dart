@@ -45,8 +45,7 @@ class Chatting_Page extends StatefulWidget {
 
 class _Chatting_PageState extends State<Chatting_Page> {
   ScrollController scrollController = ScrollController();
-  final FlutterSoundRecorder _soundRecorder = FlutterSoundRecorder();
-  final Codec _codec = Codec.aacMP4;
+  final FlutterSoundRecorder soundRecorder = FlutterSoundRecorder();
   String _path ='';
   int i = 0;
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
@@ -69,35 +68,28 @@ class _Chatting_PageState extends State<Chatting_Page> {
     if (status != PermissionStatus.granted) {
       throw RecordingPermissionException('Mic permission not allowed!');
     }
-    await _soundRecorder.openRecorder();
-    await _soundRecorder.isEncoderSupported(Codec.opusWebM);
-  }
-  Future<String> getFilePath() async {
-    String sdPath = "";
-      Directory storageDirectory = await getApplicationDocumentsDirectory();
-      sdPath = "${storageDirectory.path}/flutter_sound.aac";
-      var d = Directory(sdPath);
-      if (!d.existsSync()) {
-        d.createSync(recursive: true);
-      }
-
-    return sdPath;
+    await soundRecorder.openAudioSession();
+    await soundRecorder.setSubscriptionDuration(Duration.zero);
+    await soundRecorder.isEncoderSupported(Codec.mp3);
   }
   Future<void> _startRecording() async {
-      print("start");
-      _path = await getFilePath();
-   print('Recording: $_path');
-    _soundRecorder.startRecorder(toFile: _path);
-   print('Recording started: $_path');
-     audioRecording = true;
-    setState(() {});
+    final directory = await getApplicationDocumentsDirectory();
+    _path = '${directory.path}/recording_${i++}.aac';
+    try {
+      soundRecorder.startRecorder(toFile: _path);
+       audioRecording = true;
+      setState(() {});
+    } on Exception catch (e) {
+      print("error is $e");
+      // TODO
+    }
   }
   void stopRecord() async {
     setState(() {
       audioRecording = false;
     });
     print("stop");
-    _soundRecorder.stopRecorder();
+    soundRecorder.stopRecorder();
     var msg = ChatMessage.createVoiceSendMessage(
       targetId: widget.id,
       filePath: _path,
@@ -147,7 +139,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   Widget build(BuildContext context) {
     return  Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: widget.name == 'chatting'
+      floatingActionButton: widget.name == 'chatting' //🌎
           ? const SizedBox()
           : Padding(
         padding: EdgeInsets.symmetric(
@@ -387,7 +379,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return VoiceCallPage(
-                                  img: "${apis.baseurl}/${widget.image}",);
+                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid,);
                               },
                             ));
                           },
@@ -475,6 +467,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                           primaryColor: Colors.black, focusColor: Colors.white),
                                     ),
                                     onDone: (SelectedImagesDetails details) async {
+                                      setState(() {
+                                        showCard = !showCard;
+                                      });
                                       print("details ==>${details.selectedFiles.first.selectedFile.path}");
                                       var msg = ChatMessage.createImageSendMessage(
                                         targetId: widget.id,
@@ -490,7 +485,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                             ChatImageMessageBody body = msg.body as ChatImageMessageBody;
                                             displayimgMessage(body.remotePath, true);
                                             setState(() {
-                                              scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+                                              scrollController.jumpTo(scrollController.position.maxScrollExtent + 210);
                                             });
                                           },
                                           onProgress: (msgId, progress) {
@@ -557,22 +552,25 @@ class _Chatting_PageState extends State<Chatting_Page> {
                               return MediaPicker(
                                 onPicked: (selectedList) {
                                   if(selectedList.single.file!.path.endsWith(".mp4")){
+                                    Navigator.pop(context);
                                     print("video  ===> ${selectedList.first.file!.path}");
+                                    setState(() {
+                                      showCard = !showCard;
+                                    });
                                     var msg = ChatMessage.createVideoSendMessage(
                                       targetId: widget.id,
                                       filePath: selectedList.first.file!.path,
                                       chatType: ChatType.Chat,
                                     );
-                                    ChatClient.getInstance.chatManager
-                                        .addMessageEvent(
+                                    ChatClient.getInstance.chatManager.addMessageEvent(
                                       "UNIQUE_HANDLER_ID",
                                       ChatMessageEvent(
                                         onSuccess: (msgId, msg) {
-                                          ChatImageMessageBody body = msg.body as ChatImageMessageBody;
-                                        //  displayimgMessage(body.remotePath, true);
-                                        //   setState(() {
-                                        //     scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
-                                        //   });
+                                          ChatVideoMessageBody body = msg.body as ChatVideoMessageBody;
+                                          displayvideoMessage(body.remotePath, true);
+                                          setState(() {
+                                            scrollController.jumpTo(scrollController.position.maxScrollExtent + 210);
+                                          });
                                         },
                                         onProgress: (msgId, progress) {
                                           print(" ============================> $msgId");
@@ -584,7 +582,11 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                     );
                                     agoraChatClient.chatManager.sendMessage(msg);
                                   }else{
+                                    Navigator.pop(context);
                                     print("image");
+                                    setState(() {
+                                      showCard = !showCard;
+                                    });
                                     var msg = ChatMessage.createImageSendMessage(
                                       targetId: widget.id,
                                       filePath: selectedList.first.file!.path,
@@ -600,7 +602,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                                           ChatImageMessageBody body = msg.body as ChatImageMessageBody;
                                           displayimgMessage(body.remotePath, true);
                                           setState(() {
-                                            scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+                                            scrollController.jumpTo(scrollController.position.maxScrollExtent + 210);
                                           });
                                         },
                                         onProgress: (msgId, progress) {
@@ -680,6 +682,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
                               ],
                             );
                             print("fille1 ======> " + result!.count.toString());
+                            setState(() {
+                              showCard = !showCard;
+                            });
                             var msg = ChatMessage.createFileSendMessage(
                               targetId: widget.id,
                               filePath: result.files[0].path!,
@@ -692,7 +697,10 @@ class _Chatting_PageState extends State<Chatting_Page> {
                               ChatMessageEvent(
                                 onSuccess: (msgId, msg) {
                                   ChatFileMessageBody body = msg.body as ChatFileMessageBody;
-                                  messageList.add(displayvoiceMessage(isSentMessage: true , thumbnail: body.remotePath.toString(), dispalname: body.displayName.toString(),));
+                                  displayfileMessage(body.remotePath.toString(), body.displayName.toString(), true);
+                                  scrollController.jumpTo(scrollController.position.maxScrollExtent + 100);
+                                  setState(() {});
+                                  // messageList.add(displayvoiceMessage(isSentMessage: true , thumbnail: body.remotePath.toString(), dispalname: body.displayName.toString(),));
                                 },
                                 onProgress: (msgId, progress) {
                                   print(" ============================> $msgId");
@@ -803,8 +811,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             GestureDetector(
                               onTap: () {
                                 emojiShowing = !emojiShowing;
-                                FocusManager.instance.primaryFocus
-                                    ?.unfocus();
+                                FocusManager.instance.primaryFocus?.unfocus();
                                 setState(() {});
                               },
                               child: Container(
@@ -939,21 +946,43 @@ class _Chatting_PageState extends State<Chatting_Page> {
         print("message ====> ${msg.to}");
         if (msg.body.type == MessageType.TXT) {
           ChatTextMessageBody body = msg.body as ChatTextMessageBody;
-          displayMessage(text: body.content, isSentMessage: false,);
+         messageList.add( displayMessage(text: body.content, isSentMessage: false,));
           setState(() {
             scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
           });
          // showLog("Message from ${msg.from}");
-        } else if(msg.body.type == MessageType.IMAGE){
+        }
+        if(msg.body.type == MessageType.IMAGE){
           ChatImageMessageBody body = msg.body as ChatImageMessageBody;
           displayimgMessage(body.remotePath, false);
           setState(() {
             scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
           });
          // showLog("Message from ${msg.from}");
-        }else{
-          String msgType = msg.body.type.name;
-          log("Received $msgType message, from ${msg}");
+        }
+        if(msg.body.type == MessageType.VIDEO){
+          ChatVideoMessageBody body = msg.body as ChatVideoMessageBody;
+          displayvideoMessage(body.remotePath, false);
+          setState(() {
+            scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+          });
+         // showLog("Message from ${msg.from}");
+        }
+        if(msg.body.type == MessageType.FILE){
+          ChatFileMessageBody body = msg.body as ChatFileMessageBody;
+          displayfileMessage(body.remotePath,body.displayName.toString(),false);
+          setState(() {
+            scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+          });
+         // showLog("Message from ${msg.from}");
+        }
+        if(msg.body.type == MessageType.VOICE){
+          ChatVoiceMessageBody body = msg.body as ChatVoiceMessageBody;
+          messageList.add( displayvoiceMessage(dispalname:body.displayName.toString() ,isSentMessage: false,thumbnail: body.remotePath.toString(),));
+          setState(() {
+            scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+          });
+         // showLog("Message from ${msg.from}");
         }
       }
     }
@@ -1073,7 +1102,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
       onTap: () =>  Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return Image_Screen(
-            image: thumbnail,
+            image: thumbnail, name: 'image',
           );
         },
       )),
@@ -1136,23 +1165,13 @@ class _Chatting_PageState extends State<Chatting_Page> {
         ],
       ),
     ));
-    // setState(() {
-    //   scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
-    // });
   }
   void displayvideoMessage(final thumbnail, bool isSentMessage) {
-    // VideoPlayerController _controller = VideoPlayerController.network(thumbnail)
-    //   ..initialize();
-    // setState(() {
-    //   _controller.setVolume(0);
-    //    _controller.pause();
-    //   _controller.setLooping(true);
-    // });
     messageList.add(InkWell(
       onTap: () =>  Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return Image_Screen(
-            image: thumbnail,
+            image: thumbnail, name: 'video',
           );
         },
       )),
@@ -1320,14 +1339,13 @@ class _Chatting_PageState extends State<Chatting_Page> {
       ChatClient.getInstance.chatManager.addMessageEvent(
         "UNIQUE_HANDLER_ID",
         ChatMessageEvent(
-
           onSuccess: (msgId, msg) {
             print(" ============================> $msgId");
             print(" ============================> $msg");
             print(msg);
             ChatTextMessageBody body = msg.body as ChatTextMessageBody;
-            messageList.add(displayMessage( text: body.content, isSentMessage:  true ,));
-            scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+            messageList.add(displayMessage(text: body.content, isSentMessage:  true ,));
+            scrollController.jumpTo(scrollController.position.maxScrollExtent + 100);
             messageController.clear();
             setState(() {});
             // messageBoxController.clear();
@@ -1399,91 +1417,93 @@ class displayvoiceMessage extends StatefulWidget {
 }
 
 class _displayvoiceMessageState extends State<displayvoiceMessage> {
-  final player = FlutterSoundPlayer();
+  FlutterSoundPlayer player = FlutterSoundPlayer();
 
   bool play = false;
+  _initPlayer() async {
+    await player.openAudioSession();
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initPlayer();
+  }
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment:
-      widget.isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        Container(
-          //alignment: Alignment.centerRight,
-          margin: EdgeInsets.only(
-              top: screenHeight(context, dividedBy: 100),
-              right: 15,
-              left: widget.isSentMessage ? screenWidth(context, dividedBy: 7) : 15
-          ),
-          width: screenWidth(context, dividedBy: 2.1),
-          decoration: BoxDecoration(
-              borderRadius: widget.isSentMessage
-                  ? const BorderRadius.only(
-                  bottomLeft: Radius.circular(26),
-                  topRight: Radius.circular(26),
-                  topLeft: Radius.circular(26))
-                  : const BorderRadius.only(
-                  bottomRight: Radius.circular(26),
-                  topRight: Radius.circular(26),
-                  topLeft: Radius.circular(26)),
-              color: widget.isSentMessage ? AppColor.skyBlue : AppColor.gray),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: screenWidth(context,dividedBy: 40),
-                vertical: screenHeight(context,dividedBy: 100)
+    return Center(
+      child: Row(
+        mainAxisAlignment:
+        widget.isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          Container(
+            //alignment: Alignment.centerRight,
+            margin: EdgeInsets.only(
+                top: screenHeight(context, dividedBy: 100),
+                right: 15,
+                left: widget.isSentMessage ? screenWidth(context, dividedBy: 7) : 15
             ),
-            child: Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                play ?
-                InkWell(onTap: () async {
-                  print("pause");
-                  setState(() {
-                    play = false;
-                  });
-                   await player.closePlayer();
-                }, child: const Icon(Icons.pause,color: Colors.black)) :
-                InkWell(onTap: () async {
-                  print("play");
-                  setState(() {
-                    play = true;
-                  });
-                  await player.startPlayer(fromURI: widget.thumbnail);
-                }, child: const Icon(Icons.play_arrow,color: Colors.black,)),
-                Text(widget.dispalname,maxLines: 1,style: TextStyle(
-                    fontSize: 17,
-                    overflow: TextOverflow.ellipsis,
-                    // height: 1,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Roboto',
-                    color: widget.isSentMessage
-                        ? AppColor.white
-                        : AppColor.dropdownfont),),
-                SizedBox(width: screenWidth(context,dividedBy: 80),),
-                Text(
-                  '01:32 PM',
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
+          //  width: screenWidth(context, dividedBy: 2.1),
+            decoration: BoxDecoration(
+                borderRadius: widget.isSentMessage
+                    ? const BorderRadius.only(
+                    bottomLeft: Radius.circular(26),
+                    topRight: Radius.circular(26),
+                    topLeft: Radius.circular(26))
+                    : const BorderRadius.only(
+                    bottomRight: Radius.circular(26),
+                    topRight: Radius.circular(26),
+                    topLeft: Radius.circular(26)),
+                color: widget.isSentMessage ? AppColor.skyBlue : AppColor.gray),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth(context,dividedBy: 40),
+                  vertical: screenHeight(context,dividedBy: 100)
+              ),
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  play ?
+                  InkWell(onTap: () async {
+                    print("pause");
+                    setState(() {
+                      play = false;
+                    });
+                     await player.closePlayer();
+                  }, child: const Icon(Icons.pause,color: Colors.black)) :
+                  InkWell(onTap: () async {
+                    print("play");
+                    setState(() {
+                      play = true;
+                    });
+                    await player.startPlayer(fromURI: widget.thumbnail);
+                  }, child: const Icon(Icons.play_arrow,color: Colors.black,)),
+                  Text(widget.dispalname,maxLines: 1,style: TextStyle(
+                      fontSize: 17,
+                      overflow: TextOverflow.ellipsis,
+                       height: 1,
                       fontWeight: FontWeight.w500,
-                      fontSize: 10,
+                      fontFamily: 'Roboto',
                       color: widget.isSentMessage
                           ? AppColor.white
-                          : AppColor.dropdownfont),
-                )
-                // const Image(image: AssetImage("assets/Images/file.png"),height: 30,width: 30,color: Colors.white,),
-                // Expanded(
-                //   child: Column(
-                //     crossAxisAlignment: widget.isSentMessage ? CrossAxisAlignment.end :CrossAxisAlignment.start,
-                //     children: [
-                //
-                //
-                //     ],
-                //   ),
-                // )
-              ],),
+                          : AppColor.dropdownfont),),
+                  SizedBox(width: screenWidth(context,dividedBy: 80),),
+                  Text(
+                    '01:32 PM',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 10,
+                        color: widget.isSentMessage
+                            ? AppColor.white
+                            : AppColor.dropdownfont),
+                  )
+                ],),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -1500,6 +1520,8 @@ class displayMessage extends StatefulWidget {
 class _displayMessageState extends State<displayMessage> {
   TranslatLanguageCubit translatLanguageCubit = TranslatLanguageCubit();
   String msg = '';
+  String transmsg = '';
+  bool tmsg = true;
 @override
   void initState() {
     // TODO: implement initState
@@ -1509,97 +1531,120 @@ class _displayMessageState extends State<displayMessage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment:
-      widget.isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+    return Column(
+     // mainAxisAlignment: MainAxisAl ignment.start,
+      crossAxisAlignment: widget.isSentMessage ? CrossAxisAlignment.end :CrossAxisAlignment.start ,
       children: [
-        Flexible(
-          child: Container(
-            margin: EdgeInsets.only(
-                top: screenHeight(context, dividedBy: 100),
-                right: widget.isSentMessage == false ? screenWidth(context, dividedBy: 5) : 15,
-                left: widget.isSentMessage ? screenWidth(context, dividedBy: 5) : 15),
-            decoration: BoxDecoration(
-                borderRadius: widget.isSentMessage
-                    ? const BorderRadius.only(
-                    bottomLeft: Radius.circular(26),
-                    topRight: Radius.circular(26),
-                    topLeft: Radius.circular(26))
-                    : const BorderRadius.only(
-                    bottomRight: Radius.circular(26),
-                    topRight: Radius.circular(26),
-                    topLeft: Radius.circular(26)),
-                color: widget.isSentMessage  ? AppColor.skyBlue : AppColor.gray),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth(context, dividedBy: 30),
-                  vertical: screenWidth(context, dividedBy: 50)),
-              child: Column(
-                crossAxisAlignment: widget.isSentMessage
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-                children: [
-                  if(widget.text.length >= 25 )...[
-                    Text(msg,style: TextStyle(
-                        fontSize: 17,
-                        // height: 1,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Roboto',
-                        color: widget.isSentMessage
-                            ? AppColor.white
-                            : AppColor.dropdownfont),),
-                    Text('01:32 pm',style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10,
-                        color: widget.isSentMessage
-                            ? AppColor.white
-                            : AppColor.dropdownfont),),
-                    Icon(Icons.language)
-                  ]else ...[
-                    RichText(text: TextSpan(
-                      children: [
-                        TextSpan(text: msg, style:
-                        TextStyle(
+        Row(
+          mainAxisAlignment:
+          widget.isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Container(
+                margin: EdgeInsets.only(
+                    top: screenHeight(context, dividedBy: 100),
+                    right: widget.isSentMessage == false ? screenWidth(context, dividedBy: 5) : 15,
+                    left: widget.isSentMessage ? screenWidth(context, dividedBy: 5) : 15),
+                decoration: BoxDecoration(
+                    borderRadius: widget.isSentMessage
+                        ? const BorderRadius.only(
+                        bottomLeft: Radius.circular(26),
+                        topRight: Radius.circular(26),
+                        topLeft: Radius.circular(26))
+                        : const BorderRadius.only(
+                        bottomRight: Radius.circular(26),
+                        topRight: Radius.circular(26),
+                        topLeft: Radius.circular(26)),
+                    color: widget.isSentMessage  ? AppColor.skyBlue : AppColor.gray),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth(context, dividedBy: 30),
+                      vertical: screenWidth(context, dividedBy: 50)),
+                  child: Column(
+                    crossAxisAlignment: widget.isSentMessage
+                        ? CrossAxisAlignment.end
+                        : CrossAxisAlignment.start,
+                    children: [
+                      if(widget.text.length >= 25 )...[
+                        Text(tmsg ? msg : transmsg,style: TextStyle(
                             fontSize: 17,
                             // height: 1,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Roboto',
                             color: widget.isSentMessage
                                 ? AppColor.white
-                                : AppColor.dropdownfont)
+                                : AppColor.dropdownfont),),
+                        Wrap(
+                          children: [
+                            Text('01:32 pm',style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10,
+                                color: widget.isSentMessage
+                                    ? AppColor.white
+                                    : AppColor.dropdownfont),),
+                          ],
                         ),
-                        TextSpan(text:'   ', style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: widget.isSentMessage
-                                ? AppColor.white
-                                : AppColor.dropdownfont),),
-                        TextSpan(text: '01:32 PM', style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: widget.isSentMessage
-                                ? AppColor.white
-                                : AppColor.dropdownfont),),
-                      ],
 
-                    )),
-                    GestureDetector(
-                        onTap: () {
-                          translatLanguageCubit.TranslatLanguageService(array: widget.text, context: context).then((value) {
-                            msg = value.toString();
-                            setState(() {});
-                          },);
-                        },
-                        child: const Icon(Icons.language))
-                  ],
-                ],
+                      ]else ...[
+                        Wrap(
+                          children: [
+                            RichText(text: TextSpan(
+                              children: [
+                                TextSpan(text: tmsg ? msg : transmsg, style:
+                                TextStyle(
+                                    fontSize: 17,
+                                    // height: 1,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Roboto',
+                                    color: widget.isSentMessage
+                                        ? AppColor.white
+                                        : AppColor.dropdownfont)
+                                ),
+                                TextSpan(text:'   ', style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10,
+                                    color: widget.isSentMessage
+                                        ? AppColor.white
+                                        : AppColor.dropdownfont),),
+                                TextSpan(text: '01:32 PM', style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10,
+                                    color: widget.isSentMessage
+                                        ? AppColor.white
+                                        : AppColor.dropdownfont),),
+                              ],
+
+                            )),
+                          ],
+                        ),
+
+                      ],
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
+        GestureDetector(
+          onTap: () {
+            translatLanguageCubit.TranslatLanguageService(array: widget.text, context: context).then((value) {
+              transmsg = value.toString();
+              tmsg = !tmsg;
+              setState(() {});
+            },);
+          },
+          child: Padding(
+            padding: EdgeInsets.only(
+            right: widget.isSentMessage ? 17 : screenWidth(context, dividedBy: 5),
+            left: widget.isSentMessage ? screenWidth(context, dividedBy: 5) : 17
+            ),
+            child: Text(tmsg ? "See Translation" : "See Original",style: TextStyle(fontSize: 11,fontFamily: "Roboto"),),
+          ),
+        )
       ],
     );
   }
