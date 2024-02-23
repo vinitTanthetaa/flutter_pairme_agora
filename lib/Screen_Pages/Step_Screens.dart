@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
@@ -30,6 +31,7 @@ import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
 import 'package:video_player/video_player.dart';
+import 'package:pair_me/helper/Apis.dart';
 import '../Widgets/custom_button.dart';
 
 class StepScreen extends StatefulWidget {
@@ -50,9 +52,6 @@ class _StepScreenState extends State<StepScreen> {
   String openFile1 = "";
   String openFile2 = "";
   String openFile3 = "";
-  int KB1 = 0;
-  int KB2 = 0;
-  int KB3 = 0;
   final bool _contry = false;
   bool _state = false;
   bool _city = false;
@@ -163,7 +162,11 @@ class _StepScreenState extends State<StepScreen> {
   bool _experience = false;
   bool _skill = false;
   bool _education = false;
-  final dio = Dio();
+  bool _university = false;
+   List _states = [];
+   List _citys = [];
+   List resultstates = [];
+   List resultcity = [];
 
   addFolderNameDialog(String delete) {
     return SimpleDialog(
@@ -256,6 +259,21 @@ class _StepScreenState extends State<StepScreen> {
     cityandState = (await cityStateCubit.getcalendarEvents(country: country))!;
     setState(() {});
   }
+  Future getStateandcitys ({required String country}) async {
+    final dio = Dio();
+    try {
+      Response response = await dio.get('${apis.city}/$country');
+      Map _map = response.data;
+      final st = _map['state']['states'];
+      final st1 = _map['city']['cities'];
+      _states = st;
+      _citys = st1;
+      log("map ==> $_citys as Strin");
+    } on Exception catch (e) {
+      print("you are fully fail my friend" + e.toString());
+      // TODO
+    }
+  }
 
   @override
   void initState() {
@@ -264,8 +282,7 @@ class _StepScreenState extends State<StepScreen> {
     // getImagesPath();
     cityStateCubit = BlocProvider.of<CityStateCubit>(context);
     adressDetailsCubit = BlocProvider.of<AdressDetailsCubit>(context);
-    professionalDetailsCubit =
-        BlocProvider.of<ProfessionalDetailsCubit>(context);
+    professionalDetailsCubit = BlocProvider.of<ProfessionalDetailsCubit>(context);
     businessDetailsCubit = BlocProvider.of<BusinessDetailsCubit>(context);
     describeYourSelfCubit = BlocProvider.of<DescribeYourSelfCubit>(context);
     connectwithCubit = BlocProvider.of<ConnectwithCubit>(context);
@@ -339,9 +356,7 @@ class _StepScreenState extends State<StepScreen> {
                               )
                             ],
                           ),
-                          custom_discription(
-                              text:
-                                  "Please show some alternative font designs throughout the app"),
+                          custom_discription(text: "Please show some alternative font designs throughout the app"),
                           SizedBox(
                             height: screenHeight(context, dividedBy: 50),
                           ),
@@ -374,6 +389,7 @@ class _StepScreenState extends State<StepScreen> {
                                     print('Select country: ${country.name}');
                                     _Contry.text = country.name;
                                     GetData(_Contry.text);
+                                    getStateandcitys(country: _Contry.text);
                                     // countryCodeSelect = country.phoneCode;
                                     // countryCodeflagsvg = country.flagEmoji;
                                     //flutterToast(country.displayNameNoCountryCode, true);
@@ -399,6 +415,7 @@ class _StepScreenState extends State<StepScreen> {
                                     print('Select country: ${country.name}');
                                     _Contry.text = country.name;
                                     GetData(_Contry.text);
+                                    getStateandcitys(country:_Contry.text);
                                     // countryCodeSelect = country.phoneCode;
                                     // countryCodeflagsvg = country.flagEmoji;
                                     //flutterToast(country.displayNameNoCountryCode, true);
@@ -417,9 +434,15 @@ class _StepScreenState extends State<StepScreen> {
                                   children: [
                                     custom_textfield_header(text: 'State'),
                                     Custom_textfield(context,
+                                        onChanged: (value) {
+                                            resultstates = _states.where((element) => element['name'].toString().toLowerCase().contains(value.toLowerCase())).toList() ?? [];
+                                            print("result ==> $resultstates");
+                                            setState(() { });
+                                        },
                                         onTap: () {
                                           setState(() {
-                                            _state = !_state;
+                                            _state = true;
+                                              print("_states ===> $_states");
                                           });
                                         },
                                         show_icon: true,
@@ -473,33 +496,25 @@ class _StepScreenState extends State<StepScreen> {
                                                       horizontal: screenWidth(
                                                           context,
                                                           dividedBy: 30)),
-                                                  child: ListView.builder(
+                                                  child:ListView.builder(
                                                     physics:
                                                         const ClampingScrollPhysics(),
                                                     padding: EdgeInsets.zero,
-                                                    itemCount: cityandState
-                                                        .state?.states.length,
-                                                    itemBuilder:
-                                                        (context, index) {
+                                                    itemCount: _State.text.isNotEmpty ? resultstates.length : cityandState.state?.states.length,
+                                                    itemBuilder: (context, index) {
                                                       return InkWell(
                                                         onTap: () {
-                                                          _State.text =
-                                                              cityandState
-                                                                      .state
-                                                                      ?.states[
-                                                                          index]
-                                                                      .name ??
-                                                                  '';
+                                                          _State.text =_State.text.isNotEmpty ?
+                                                                resultstates[index]['name'].toString() : cityandState
+                                                              .state
+                                                              ?.states[
+                                                          index]
+                                                              .name;
                                                           _state = !_state;
                                                           setState(() {});
                                                         },
                                                         child: custom_text(
-                                                            text: cityandState
-                                                                    .state
-                                                                    ?.states[
-                                                                        index]
-                                                                    .name ??
-                                                                '',
+                                                            text:_State.text.isNotEmpty ? resultstates[index]['name'].toString() :  cityandState.state?.states[index].name,
                                                             color: const Color(
                                                                 0xff303030)),
                                                       );
@@ -526,9 +541,14 @@ class _StepScreenState extends State<StepScreen> {
                                   children: [
                                     custom_textfield_header(text: 'City'),
                                     Custom_textfield(
+                                        onChanged: (value) {
+                                          resultcity = _citys.where((element) => element.toString().toLowerCase().contains(value.toLowerCase())).toList() ?? [];
+                                          print("result ==> $resultcity");
+                                          setState(() { });
+                                        },
                                         onTap: () {
                                           setState(() {
-                                            _city = !_city;
+                                            _city = true;
                                           });
                                         },
                                         context,
@@ -588,27 +608,24 @@ class _StepScreenState extends State<StepScreen> {
                                                     physics:
                                                         const ClampingScrollPhysics(),
                                                     padding: EdgeInsets.zero,
-                                                    itemCount: cityandState
-                                                        .city?.cities.length,
+                                                    itemCount:_City.text.isEmpty ? cityandState.city?.cities.length : resultcity.length,
                                                     itemBuilder:
                                                         (context, index) {
                                                       return InkWell(
                                                           onTap: () {
                                                             _City
-                                                                .text = cityandState
+                                                                .text = _City.text.isEmpty ? cityandState
                                                                         .city
                                                                         ?.cities[
-                                                                    index] ??
-                                                                '';
+                                                                    index] : resultcity[index] ;
                                                             _city = !_city;
                                                             setState(() {});
                                                           },
                                                           child: custom_text(
-                                                              text: cityandState
-                                                                          .city
-                                                                          ?.cities[
-                                                                      index] ??
-                                                                  '',
+                                                              text: _City.text.isEmpty ? cityandState
+                                                                  .city
+                                                                  ?.cities[
+                                                              index] : resultcity[index],
                                                               color: const Color(
                                                                   0xff303030)));
                                                     },
@@ -957,15 +974,16 @@ class _StepScreenState extends State<StepScreen> {
                                   : const SizedBox(),
                               custom_textfield_header(text: 'Skills'),
                               Custom_textfield(context,
-                                  show_icon: true,
-                                  image: _skill
-                                      ? 'assets/Images/Vector.png'
-                                      : 'assets/Images/right_arrow.png',
+                                  show_icon: false,
+                                  image: '',
+                                  // _skill
+                                  //     ? 'assets/Images/Vector.png'
+                                  //     : 'assets/Images/right_arrow.png',
                                   onTap: () {},
                                   readOnly: false, onPress: () {
-                                setState(() {
-                                  _skill = !_skill;
-                                });
+                                // setState(() {
+                                //   _skill = !_skill;
+                                // });
                               },
                                   hint: "Select",
                                   hidetext: false,
@@ -1024,41 +1042,41 @@ class _StepScreenState extends State<StepScreen> {
                                             height: screenHeight(context,
                                                 dividedBy: 85),
                                           ),
-                                          const Divider(
-                                            height: 0,
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            height: screenHeight(context,
-                                                dividedBy: 30),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                const Text(
-                                                  'Show all 17 skills',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontFamily: 'Roboto',
-                                                      fontSize: 10,
-                                                      color: AppColor.skyBlue),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      left: screenWidth(context,
-                                                          dividedBy: 65)),
-                                                  height: screenHeight(context,
-                                                      dividedBy: 65),
-                                                  width: screenWidth(context,
-                                                      dividedBy: 30),
-                                                  child: const Image(
-                                                      image: AssetImage(
-                                                          'assets/Images/LineArrow.png')),
-                                                )
-                                              ],
-                                            ),
-                                          )
+                                          // const Divider(
+                                          //   height: 0,
+                                          // ),
+                                          // Container(
+                                          //   alignment: Alignment.center,
+                                          //   height: screenHeight(context,
+                                          //       dividedBy: 30),
+                                          //   child: Row(
+                                          //     mainAxisAlignment:
+                                          //         MainAxisAlignment.center,
+                                          //     children: [
+                                          //       const Text(
+                                          //         'Show all 17 skills',
+                                          //         style: TextStyle(
+                                          //             fontWeight:
+                                          //                 FontWeight.w400,
+                                          //             fontFamily: 'Roboto',
+                                          //             fontSize: 10,
+                                          //             color: AppColor.skyBlue),
+                                          //       ),
+                                          //       Container(
+                                          //         margin: EdgeInsets.only(
+                                          //             left: screenWidth(context,
+                                          //                 dividedBy: 65)),
+                                          //         height: screenHeight(context,
+                                          //             dividedBy: 65),
+                                          //         width: screenWidth(context,
+                                          //             dividedBy: 30),
+                                          //         child: const Image(
+                                          //             image: AssetImage(
+                                          //                 'assets/Images/LineArrow.png')),
+                                          //       )
+                                          //     ],
+                                          //   ),
+                                          // )
                                         ],
                                       ),
                                     )
@@ -1069,7 +1087,11 @@ class _StepScreenState extends State<StepScreen> {
                                   image: _education
                                       ? 'assets/Images/Vector.png'
                                       : 'assets/Images/right_arrow.png',
-                                  onTap: () {},
+                                  onTap: () {
+                                    setState(() {
+                                      _education = !_education;
+                                    });
+                                  },
                                   readOnly: false, onPress: () {
                                 setState(() {
                                   _education = !_education;
@@ -1141,19 +1163,23 @@ class _StepScreenState extends State<StepScreen> {
                               custom_textfield_header(text: 'University'),
                               Custom_textfield(context,
                                   show_icon: true,
-                                  image: _education
+                                  image: _university
                                       ? 'assets/Images/Vector.png'
                                       : 'assets/Images/right_arrow.png',
-                                  onTap: () {},
+                                  onTap: () {
+                                    setState(() {
+                                      _university = !_university;
+                                    });
+                                  },
                                   readOnly: false, onPress: () {
                                 setState(() {
-                                  _education = !_education;
+                                  _university = !_university;
                                 });
                               },
                                   hint: "Select",
                                   hidetext: false,
                                   controller: _univercitycontroller),
-                              _education
+                              _university
                                   ? Container(
                                       // height:
                                       //     screenHeight(context, dividedBy: 10),
@@ -1417,6 +1443,7 @@ class _StepScreenState extends State<StepScreen> {
                                                 'Select country: ${country.name}');
                                             _Contry1.text = country.name;
                                             GetData(_Contry1.text);
+                                            getStateandcitys(country: _Contry1.text);
                                             // countryCodeSelect = country.phoneCode;
                                             // countryCodeflagsvg = country.flagEmoji;
                                             //flutterToast(country.displayNameNoCountryCode, true);
@@ -1440,6 +1467,7 @@ class _StepScreenState extends State<StepScreen> {
                                                 'Select country: ${country.name}');
                                             _Contry1.text = country.name;
                                             GetData(_Contry1.text);
+                                            getStateandcitys(country: _Contry1.text);
                                             // countryCodeSelect = country.phoneCode;
                                             // countryCodeflagsvg = country.flagEmoji;
                                             //flutterToast(country.displayNameNoCountryCode, true);
@@ -1454,15 +1482,19 @@ class _StepScreenState extends State<StepScreen> {
                                     children: [
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            custom_textfield_header(
-                                                text: 'State'),
+                                            custom_textfield_header(text: 'State'),
                                             Custom_textfield(context,
+                                                onChanged: (value) {
+                                                  resultstates = _states.where((element) => element['name'].toString().toLowerCase().contains(value.toLowerCase())).toList() ?? [];
+                                                  print("result ==> $resultstates");
+                                                  setState(() { });
+                                                },
                                                 onTap: () {
                                                   setState(() {
-                                                    _state = !_state;
+                                                    _state = true;
+                                                    print("_states ===> $_states");
                                                   });
                                                 },
                                                 show_icon: true,
@@ -1477,123 +1509,98 @@ class _StepScreenState extends State<StepScreen> {
                                                 },
                                                 hint: "Select",
                                                 hidetext: false,
-                                                controller: _State1),
+                                                controller: _State),
                                             _state
                                                 ? Container(
-                                                    height: screenHeight(
-                                                        context,
-                                                        dividedBy: 7),
-                                                    width: screenWidth(context),
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            bottom: 10),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7),
-                                                        color: Colors.white,
-                                                        boxShadow: const [
-                                                          BoxShadow(
-                                                            color: Colors.grey,
-                                                            offset: Offset(
-                                                              1,
-                                                              1,
-                                                            ),
-                                                            blurRadius: 4,
-                                                            // spreadRadius: 1.0,
-                                                          ),
-                                                        ]),
-                                                    child: BlocBuilder<
-                                                        CityStateCubit,
-                                                        CityStateState>(
-                                                      builder:
-                                                          (context, state) {
-                                                        print(state);
-                                                        if (state
-                                                            is CityStateError)
-                                                          return const Center(
-                                                            child: Text(
-                                                                "No State"),
-                                                          );
-                                                        return Padding(
-                                                          padding: EdgeInsets.symmetric(
-                                                              vertical:
-                                                                  screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          100),
-                                                              horizontal:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          30)),
-                                                          child:
-                                                              ListView.builder(
-                                                            physics:
-                                                                const ClampingScrollPhysics(),
-                                                            padding:
-                                                                EdgeInsets.zero,
-                                                            itemCount:
-                                                                cityandState
-                                                                    .state
-                                                                    ?.states
-                                                                    .length,
-                                                            itemBuilder:
-                                                                (context,
-                                                                    index) {
-                                                              return InkWell(
-                                                                onTap: () {
-                                                                  _State1
-                                                                      .text = cityandState
-                                                                          .state
-                                                                          ?.states[
-                                                                              index]
-                                                                          .name ??
-                                                                      '';
-                                                                  _state =
-                                                                      !_state;
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                                child: custom_text(
-                                                                    text: cityandState
-                                                                            .state
-                                                                            ?.states[
-                                                                                index]
-                                                                            .name ??
-                                                                        '',
-                                                                    color: const Color(
-                                                                        0xff303030)),
-                                                              );
+                                                height: screenHeight(context,
+                                                    dividedBy: 7),
+                                                width: screenWidth(context),
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 10),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(7),
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                        color: Colors.grey,
+                                                        offset: Offset(
+                                                          1,
+                                                          1,
+                                                        ),
+                                                        blurRadius: 4,
+                                                        // spreadRadius: 1.0,
+                                                      ),
+                                                    ]),
+                                                child: BlocBuilder<CityStateCubit,
+                                                    CityStateState>(
+                                                  builder: (context, state) {
+                                                    print(state);
+                                                    if (state is CityStateError)
+                                                      return const Center(
+                                                        child: Text("No State"),
+                                                      );
+                                                    return Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          vertical: screenHeight(
+                                                              context,
+                                                              dividedBy: 100),
+                                                          horizontal: screenWidth(
+                                                              context,
+                                                              dividedBy: 30)),
+                                                      child:ListView.builder(
+                                                        physics:
+                                                        const ClampingScrollPhysics(),
+                                                        padding: EdgeInsets.zero,
+                                                        itemCount: _State.text.isNotEmpty ? resultstates.length : cityandState.state?.states.length,
+                                                        itemBuilder: (context, index) {
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              _State.text =_State.text.isNotEmpty ?
+                                                              resultstates[index]['name'].toString() : cityandState
+                                                                  .state
+                                                                  ?.states[
+                                                              index]
+                                                                  .name;
+                                                              _state = !_state;
+                                                              setState(() {});
                                                             },
-                                                          ),
-                                                        );
-                                                      },
-                                                    ))
+                                                            child: custom_text(
+                                                                text:_State.text.isNotEmpty ? resultstates[index]['name'].toString() :  cityandState.state?.states[index].name,
+                                                                color: const Color(
+                                                                    0xff303030)),
+                                                          );
+                                                        },
+                                                      ),
+                                                    );
+                                                  },
+                                                ))
                                                 : SizedBox(
-                                                    height: _city
-                                                        ? screenHeight(context,
-                                                            dividedBy: 6.35)
-                                                        : 0,
-                                                  )
+                                              height: _city
+                                                  ? screenHeight(context,
+                                                  dividedBy: 6.35)
+                                                  : 0,
+                                            )
                                           ],
                                         ),
                                       ),
                                       SizedBox(
-                                        width:
-                                            screenWidth(context, dividedBy: 50),
+                                        width: screenWidth(context, dividedBy: 50),
                                       ),
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            custom_textfield_header(
-                                                text: 'City'),
+                                            custom_textfield_header(text: 'City'),
                                             Custom_textfield(
+                                                onChanged: (value) {
+                                                  resultcity = _citys.where((element) => element.toString().toLowerCase().contains(value.toLowerCase())).toList() ?? [];
+                                                  print("result ==> $resultcity");
+                                                  setState(() { });
+                                                },
                                                 onTap: () {
                                                   setState(() {
-                                                    _city = !_city;
+                                                    _city = true;
                                                   });
                                                 },
                                                 context,
@@ -1609,100 +1616,82 @@ class _StepScreenState extends State<StepScreen> {
                                                 },
                                                 hint: "Select",
                                                 hidetext: false,
-                                                controller: _City1),
+                                                controller: _City),
                                             _city
                                                 ? Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            bottom: 10),
-                                                    height: screenHeight(
-                                                        context,
-                                                        dividedBy: 7),
-                                                    width: screenWidth(context),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7),
-                                                        color: Colors.white,
-                                                        boxShadow: const [
-                                                          BoxShadow(
-                                                            color: Colors.grey,
-                                                            offset: Offset(
-                                                              1,
-                                                              1,
-                                                            ),
-                                                            blurRadius: 4,
-                                                            // spreadRadius: 1.0,
-                                                          ),
-                                                        ]),
-                                                    child: BlocBuilder<
-                                                        CityStateCubit,
-                                                        CityStateState>(
-                                                      builder:
-                                                          (context, state) {
-                                                        print(state);
-                                                        if (state
-                                                            is CityStateError)
-                                                          return const Center(
-                                                            child: Text(
-                                                                "No State"),
-                                                          );
-                                                        return Padding(
-                                                          padding: EdgeInsets.symmetric(
-                                                              vertical:
-                                                                  screenHeight(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          100),
-                                                              horizontal:
-                                                                  screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                          30)),
-                                                          child:
-                                                              ListView.builder(
-                                                            physics:
-                                                                const ClampingScrollPhysics(),
-                                                            padding:
-                                                                EdgeInsets.zero,
-                                                            itemCount:
-                                                                cityandState
-                                                                    .city
-                                                                    ?.cities
-                                                                    .length,
-                                                            itemBuilder:
-                                                                (context,
-                                                                    index) {
-                                                              return InkWell(
-                                                                  onTap: () {
-                                                                    _City1
-                                                                        .text = cityandState
-                                                                            .city
-                                                                            ?.cities[index] ??
-                                                                        '';
-                                                                    _city =
-                                                                        !_city;
-                                                                    setState(
-                                                                        () {});
-                                                                  },
-                                                                  child: custom_text(
-                                                                      text: cityandState.city?.cities[
-                                                                              index] ??
-                                                                          '',
-                                                                      color: const Color(
-                                                                          0xff303030)));
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              height: screenHeight(context,
+                                                  dividedBy: 7),
+                                              width: screenWidth(context),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(7),
+                                                  color: Colors.white,
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      color: Colors.grey,
+                                                      offset: Offset(
+                                                        1,
+                                                        1,
+                                                      ),
+                                                      blurRadius: 4,
+                                                      // spreadRadius: 1.0,
+                                                    ),
+                                                  ]),
+                                              child: BlocBuilder<CityStateCubit,
+                                                  CityStateState>(
+                                                builder: (context, state) {
+                                                  print(state);
+                                                  if (state is CityStateError) {
+                                                    return const Center(
+                                                      child: Text("No State"),
+                                                    );
+                                                  }
+                                                  return Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                        vertical: screenHeight(
+                                                            context,
+                                                            dividedBy: 100),
+                                                        horizontal: screenWidth(
+                                                            context,
+                                                            dividedBy: 30)),
+                                                    child: ListView.builder(
+                                                      physics:
+                                                      const ClampingScrollPhysics(),
+                                                      padding: EdgeInsets.zero,
+                                                      itemCount:_City.text.isEmpty ? cityandState.city?.cities.length : resultcity.length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return InkWell(
+                                                            onTap: () {
+                                                              _City
+                                                                  .text = _City.text.isEmpty ? cityandState
+                                                                  .city
+                                                                  ?.cities[
+                                                              index] : resultcity[index] ;
+                                                              _city = !_city;
+                                                              setState(() {});
                                                             },
-                                                          ),
-                                                        );
+                                                            child: custom_text(
+                                                                text: _City.text.isEmpty ? cityandState
+                                                                    .city
+                                                                    ?.cities[
+                                                                index] : resultcity[index],
+                                                                color: const Color(
+                                                                    0xff303030)));
                                                       },
                                                     ),
-                                                  )
+                                                  );
+                                                },
+                                              ),
+                                            )
                                                 : SizedBox(
-                                                    height: _state
-                                                        ? screenHeight(context,
-                                                            dividedBy: 6.35)
-                                                        : 0,
-                                                  )
+                                              height: _state
+                                                  ? screenHeight(context,
+                                                  dividedBy: 6.35)
+                                                  : 0,
+                                            )
                                           ],
                                         ),
                                       )
@@ -1853,68 +1842,64 @@ class _StepScreenState extends State<StepScreen> {
                                           skip_button(
                                             context,
                                             onTap: () {
-                                              setState(() {
-                                                ind++;
-                                              });
-                                              // if (_selectedimag1 == null) {
-                                              //   flutterToast(
-                                              //       "Please Enter atlest 2 image or video",
-                                              //       false);
-                                              // } else if (_selectedimag2 ==
-                                              //     null) {
-                                              //   flutterToast(
-                                              //       "Please Enter 1 more image or video",
-                                              //       false);
-                                              // } else if (file1 == null) {
-                                              //   flutterToast(
-                                              //       "Please Enter atlest 1 file like pdf,doc,etc",
-                                              //       false);
-                                              // } else {
-                                              //   setState(() {
-                                              //     ind++;
-                                              //   });
-                                              // }
-                                              //   businessProfileCubit.BusinessProfileService(
-                                              //           photo_1: _selectedimag1
-                                              //                   ?.selectedFile ??
-                                              //               File(''),
-                                              //           bio: _bio.text,
-                                              //           file_2: file2 ??
-                                              //               PlatformFile(
-                                              //                   name: "",
-                                              //                   size: 0),
-                                              //           file_3: file3 ??
-                                              //               PlatformFile(
-                                              //                   name: "",
-                                              //                   size: 0),
-                                              //           context: context,
-                                              //           photo_2: _selectedimag2
-                                              //                   ?.selectedFile ??
-                                              //               File(''),
-                                              //           photo_3: _selectedimag3
-                                              //                   ?.selectedFile ??
-                                              //               File(''),
-                                              //           photo_4: _selectedimag4
-                                              //                   ?.selectedFile ??
-                                              //               File(''),
-                                              //           photo_5: _selectedimag5
-                                              //                   ?.selectedFile ??
-                                              //               File(''),
-                                              //           photo_6: _selectedimag6
-                                              //                   ?.selectedFile ??
-                                              //               File(''),
-                                              //           file_1: file1 ??
-                                              //               PlatformFile(
-                                              //                   name: "",
-                                              //                   size: 0))
-                                              //       .then(
-                                              //     (value) {
-                                              //       setState(() {
-                                              //         ind++;
-                                              //       });
-                                              //     },
-                                              //   );
-                                              // }
+                                              // setState(() {
+                                              //   ind++;
+                                              // });
+                                              if (_selectedimag1 == null) {
+                                                flutterToast(
+                                                    "Please Enter atlest 2 image or video",
+                                                    false);
+                                              } else if (_selectedimag2 ==
+                                                  null) {
+                                                flutterToast(
+                                                    "Please Enter 1 more image or video",
+                                                    false);
+                                              } else if (file1 == null) {
+                                                flutterToast(
+                                                    "Please Enter atlest 1 file like pdf,doc,etc",
+                                                    false);
+                                              } else {
+                                                businessProfileCubit.BusinessProfileService(
+                                                        photo_1: _selectedimag1
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        bio: _bio.text,
+                                                        file_2: file2 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0),
+                                                        file_3: file3 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0),
+                                                        context: context,
+                                                        photo_2: _selectedimag2
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_3: _selectedimag3
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_4: _selectedimag4
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_5: _selectedimag5
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        photo_6: _selectedimag6
+                                                                ?.selectedFile ??
+                                                            File(''),
+                                                        file_1: file1 ??
+                                                            PlatformFile(
+                                                                name: "",
+                                                                size: 0))
+                                                    .then(
+                                                  (value) {
+                                                    setState(() {
+                                                      ind++;
+                                                    });
+                                                  },
+                                                );
+                                              }
                                             },
                                           )
                                         ],

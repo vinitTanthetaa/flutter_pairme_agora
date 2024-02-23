@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/language.dart';
@@ -23,6 +24,8 @@ class _SpleshScreenState extends State<SpleshScreen> {
     Splash_Timer();
   }
   Splash_Timer() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    print("token ==> $token");
     Authtoken = (await prefsService.getStringData("Authtoken"))!;
     Timer(const Duration(seconds: 1), () async {
       if (Authtoken.length > 1) {

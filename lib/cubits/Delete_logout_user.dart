@@ -20,7 +20,7 @@ class DeleteUserSuccess extends DeleteUserState {}
 class DeleteUserCubit extends Cubit<DeleteUserState> {
   DeleteUserCubit() : super(DeleteUserInitials());
   final dio = Dio();
-  Future<CityandState?> DeleteService(BuildContext context) async {
+  Future DeleteService(BuildContext context) async {
     emit(DeleteUserLoading());
     try {
       Response response = await dio.get(apis.delete_user,options: Options(headers: {
@@ -36,7 +36,6 @@ class DeleteUserCubit extends Cubit<DeleteUserState> {
           return  Login_page();
         },), (route) => false);
       }
-      return CityandState.fromJson(response.data);
     } on Exception catch (e) {
       emit(DeleteUserError());
       print("you are fully fail my friend" + e.toString());
@@ -60,7 +59,7 @@ class LogoutUserSuccess extends LogoutUserState {}
 class LogoutUserCubit extends Cubit<LogoutUserState> {
   LogoutUserCubit() : super(LogoutUserInitials());
   final dio = Dio();
-  Future<CityandState?> LogoutService(BuildContext context) async {
+  Future LogoutService(BuildContext context) async {
     emit(LogoutUserLoading());
     try {
       Response response = await dio.get(apis.logout,options: Options(headers: {
@@ -77,7 +76,6 @@ class LogoutUserCubit extends Cubit<LogoutUserState> {
         print("passs");
 
       }
-      return CityandState.fromJson(response.data);
     } on Exception catch (e) {
       emit(LogoutUserError());
       print("you are fully fail my friend" + e.toString());

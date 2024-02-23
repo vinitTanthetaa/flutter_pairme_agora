@@ -10,6 +10,7 @@ Widget Custom_textfield(BuildContext context,
     int? mxline,
     required bool readOnly,
     Function()? onPress,
+    Function(String)? onChanged,
     Function()? onTap,
     bool number = false,
     String? image,
@@ -36,11 +37,12 @@ Widget Custom_textfield(BuildContext context,
             spreadRadius: 0.0,
           ),
         ]),
-    child: Center(
+    child: Expanded(
       child: Padding(
         padding: const EdgeInsets.only(left: 15.0,bottom: 0),
         child: TextField(
           onTap: onTap,
+          onChanged: onChanged,
           enabled: true,
           maxLines: mxline ?? 1,
           minLines: 1,

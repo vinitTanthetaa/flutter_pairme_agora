@@ -79,9 +79,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image = image;
         } else if (filterUserCubit.filterUser.data?[index].last?.image?.photo1 != null) {
           image.add(filterUserCubit.filterUser.data?[index].last?.image?.photo1);
-          int imagelength = filterUserCubit.filterUser.data?.length  ?? 0;
-          // looking_for1 = filterUserCubit.filterUser.data[index].
-         // image1.add(filterUserCubit.filterUser.data?[imagelength-1 == index ?index:index+1].last.image?.photo1);
         }
         if (filterUserCubit.filterUser.data?[index].last?.image?.photo2 == null &&
             image.contains(filterUserCubit.filterUser.data?[index].last?.image?.photo2)) {

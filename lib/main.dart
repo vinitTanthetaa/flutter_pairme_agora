@@ -1,9 +1,12 @@
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pair_me/Screen_Pages/Step_Screens.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
 import 'package:pair_me/cubits/Buisness_profile.dart';
 import 'package:pair_me/cubits/City&state.dart';
@@ -49,9 +52,27 @@ import 'package:pair_me/firebase_options.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
-import 'Screen_Pages/Step_Screens.dart';
-import 'Screen_Pages/connections_page.dart';
-import 'Screen_Pages/invitation_page.dart';
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print("message ===> $message");
+  AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: 123,
+          channelKey: "call_channel",
+        color: Colors.white,
+        title: message.notification?.title ?? '',
+        body: message.notification?.body,
+        category: NotificationCategory.Call,
+        wakeUpScreen: true,
+        fullScreenIntent: true,
+        autoDismissible: false,
+        backgroundColor: Colors.orange
+      ),
+  actionButtons: [
+    NotificationActionButton(key: "ACCEPT", label: "Accept",color: Colors.greenAccent,autoDismissible: true),
+    NotificationActionButton(key: "REJECT", label: "Reject",color: Colors.redAccent,autoDismissible: true),
+  ]
+  );
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,6 +80,19 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        channelKey: "call_channel",
+        channelName: "call_channel",
+        channelDescription: "channel of calling",
+        defaultColor: Colors.redAccent,
+        ledColor: Colors.white,
+        importance: NotificationImportance.Max,
+        channelShowBadge: true,
+        locked: true,
+        defaultRingtoneType: DefaultRingtoneType.Ringtone)
+  ]);
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   final options = ChatOptions(
     appKey: AgoraAppkey,
     autoLogin: false,
@@ -121,6 +155,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ClearAllNotificationCubit()),
         BlocProvider(create: (context) => AcceptorRejectCubit()),
         BlocProvider(create: (context) => ConnectedUsersCubit()),
+        BlocProvider(create: (context) => MessageUserCubit()),
         BlocProvider(create: (context) => RemoveUserCubit()),
         BlocProvider(create: (context) => MessageUserCubit()),
         BlocProvider(create: (context) => MsgReqbyIDCubit()),

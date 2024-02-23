@@ -104,16 +104,41 @@ class _Connection_PageState extends State<Connection_Page> {
                       padding: EdgeInsets.symmetric(
                           horizontal: screenWidth(context, dividedBy: 30),
                           vertical: screenHeight(context, dividedBy: 70)),
-                      child: Text(
-                        "${connectedUsersCubit.connectedUsers.data?.length ?? 0} Connection",
-                        style: const TextStyle(
-                            fontSize: 17,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                            color: AppColor.skyBlue),
-                        maxLines: 2,
-                      ),
+                      child: BlocBuilder<ConnectedUsersCubit,ConnectedUsersState>(builder: (context, state) {
+                        print("state is $state");
+                        if(state is ConnectedUsersSuccess){
+                          return connectedUsersCubit.connectedUsers.data!.isNotEmpty ?    Text(
+                            "${connectedUsersCubit.connectedUsers.data?.length} Connection",
+                            style: const TextStyle(
+                                fontSize: 17,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: AppColor.skyBlue),
+                            maxLines: 2,
+                          ) :   const Text(
+                            "0 Connection",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: AppColor.skyBlue),
+                            maxLines: 2,
+                          );
+                        }
+                        return  const Text(
+                          "0 Connection",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis,
+                              color: AppColor.skyBlue),
+                          maxLines: 2,
+                        );
+                      },)
+
                     ),
                     const SizedBox(
                       height: 5,

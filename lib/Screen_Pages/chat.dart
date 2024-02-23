@@ -1372,6 +1372,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   Future Getdata() async {
     final result =
     await ChatClient.getInstance.chatManager.fetchHistoryMessages(
+      type: ChatConversationType.Chat,
        conversationId: widget.id,
       pageSize: 50
     );
