@@ -92,6 +92,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
   // Clean up the resources when you leave
   @override
   void dispose() async {
+    await agoraEngine.release();
     await agoraEngine.leaveChannel();
     super.dispose();
   }

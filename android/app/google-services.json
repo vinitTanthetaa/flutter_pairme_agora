@@ -1,32 +1,13 @@
 {
   "project_info": {
-    "project_number": "373938196823",
-    "project_id": "agora-101f0",
-    "storage_bucket": "agora-101f0.appspot.com"
+    "project_number": "109927738124",
+    "project_id": "video-call-ea4a5",
+    "storage_bucket": "video-call-ea4a5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:373938196823:android:59519e0aefde106874ee12",
-        "android_client_info": {
-          "package_name": "com.example.agora_flutter"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAdBUDJu1DmFTl0jWs1gB_LiqNwHTuuq1g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:373938196823:android:fe67ccd89d603ba574ee12",
+        "mobilesdk_app_id": "1:109927738124:android:567a905422bd270288b729",
         "android_client_info": {
           "package_name": "com.example.pair_me"
         }
@@ -34,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAdBUDJu1DmFTl0jWs1gB_LiqNwHTuuq1g"
+          "current_key": "AIzaSyBfhzUoA3_L_YfPxdp7cQaM_YBmgWsCsNg"
         }
       ],
       "services": {

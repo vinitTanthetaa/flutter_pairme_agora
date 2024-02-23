@@ -45,6 +45,7 @@ import 'package:pair_me/cubits/undo_users_cubit.dart';
 import 'package:pair_me/cubits/user_profile_cubit.dart';
 import 'package:pair_me/cubits/user_update_cubit.dart';
 import 'package:pair_me/cubits/verify_forgot_otp.dart';
+import 'package:pair_me/firebase_options.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -55,6 +56,9 @@ import 'Screen_Pages/invitation_page.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final options = ChatOptions(
     appKey: AgoraAppkey,
     autoLogin: false,
