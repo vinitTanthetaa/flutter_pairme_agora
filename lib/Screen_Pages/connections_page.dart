@@ -270,10 +270,20 @@ class _Connection_PageState extends State<Connection_Page> {
                                                         width: screenWidth(
                                                             context,
                                                             dividedBy: 2.2),
-                                                        child: const Text(
-                                                            'Dis promethium, vei maximus gulag......',
+                                                        child: Text(
+                                                            serarchbar
+                                                                .text.isNotEmpty
+                                                                ? data[index]
+                                                            ['bio']
+                                                                : connectedUsersCubit
+                                                                .connectedUsers
+                                                                .data?[
+                                                            index]
+                                                                .bio ??
+                                                                '',
+                                                           // 'Dis promethium, vei maximus gulag......',
                                                             maxLines: 2,
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 color: Color(
                                                                     0xffAAAAAA),
                                                                 fontSize: 13,

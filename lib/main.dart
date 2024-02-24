@@ -72,6 +72,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
     NotificationActionButton(key: "REJECT", label: "Reject",color: Colors.redAccent,autoDismissible: true),
   ]
   );
+
 }
 
 Future<void> main() async {
