@@ -41,6 +41,7 @@ Widget Custom_textfield(BuildContext context,
       child: Padding(
         padding: const EdgeInsets.only(left: 15.0,bottom: 0),
         child: TextField(
+
           onTap: onTap,
           onChanged: onChanged,
           enabled: true,
@@ -61,6 +62,7 @@ Widget Custom_textfield(BuildContext context,
                   //    // top: screenHeight(context, dividedBy: 150),
                   //     right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
                   border: InputBorder.none,
+                  isDense: true,
 
 
                   //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
@@ -89,6 +91,7 @@ Widget Custom_textfield(BuildContext context,
                       fontSize: 14,
                       fontWeight: FontWeight.w400))
               : InputDecoration(
+              isDense: true,
                   // contentPadding: EdgeInsets.only(
                   //     left: screenWidth(context, dividedBy: 25),
                   //    // bottom: screenHeight(context, dividedBy: 150),

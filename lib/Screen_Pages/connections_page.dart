@@ -25,8 +25,10 @@ class _Connection_PageState extends State<Connection_Page> {
   ConnectedUsersCubit connectedUsersCubit = ConnectedUsersCubit();
   RemoveUserCubit removeUserCubit = RemoveUserCubit();
   MessageUserCubit messageUserCubit = MessageUserCubit();
+  TextEditingController serarchbar = TextEditingController();
+  List data = [];
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -37,7 +39,8 @@ class _Connection_PageState extends State<Connection_Page> {
       connectedUsersCubit.GetConnectedUsers();
     });
     setState(() {});
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +69,7 @@ class _Connection_PageState extends State<Connection_Page> {
                 ),
                 title: custom_header(text: "Connections"),
               ),
-              body:SizedBox(
+              body: SizedBox(
                 height: screenHeight(context),
                 width: screenWidth(context),
                 child: Column(
@@ -80,10 +83,23 @@ class _Connection_PageState extends State<Connection_Page> {
                       child: Container(
                         height: 35,
                         decoration: BoxDecoration(
-                          // color: Colors.red,
+                            // color: Colors.red,
                             border: Border.all(color: Colors.grey.shade400),
                             borderRadius: BorderRadius.circular(8)),
                         child: TextField(
+                          controller: serarchbar,
+                          onChanged: (value) {
+                            setState(() {
+                              data = connectedUsersCubit.data
+                                      .where((element) => element['name']
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains(value))
+                                      .toList() ??
+                                  [];
+                            });
+                            print(data);
+                          },
                           decoration: InputDecoration(
                             isDense: true,
                             contentPadding: const EdgeInsets.only(top: 3.5),
@@ -101,289 +117,386 @@ class _Connection_PageState extends State<Connection_Page> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth(context, dividedBy: 30),
-                          vertical: screenHeight(context, dividedBy: 70)),
-                      child: BlocBuilder<ConnectedUsersCubit,ConnectedUsersState>(builder: (context, state) {
-                        print("state is $state");
-                        if(state is ConnectedUsersSuccess){
-                          return connectedUsersCubit.connectedUsers.data!.isNotEmpty ?    Text(
-                            "${connectedUsersCubit.connectedUsers.data?.length} Connection",
-                            style: const TextStyle(
-                                fontSize: 17,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w500,
-                                overflow: TextOverflow.ellipsis,
-                                color: AppColor.skyBlue),
-                            maxLines: 2,
-                          ) :   const Text(
-                            "0 Connection",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w500,
-                                overflow: TextOverflow.ellipsis,
-                                color: AppColor.skyBlue),
-                            maxLines: 2,
-                          );
-                        }
-                        return  const Text(
-                          "0 Connection",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis,
-                              color: AppColor.skyBlue),
-                          maxLines: 2,
-                        );
-                      },)
-
-                    ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth(context, dividedBy: 30),
+                            vertical: screenHeight(context, dividedBy: 70)),
+                        child: BlocBuilder<ConnectedUsersCubit,
+                            ConnectedUsersState>(
+                          builder: (context, state) {
+                            print("state is $state");
+                            if (state is ConnectedUsersSuccess) {
+                              return connectedUsersCubit
+                                      .connectedUsers.data!.isNotEmpty
+                                  ? Text(
+                                      "${connectedUsersCubit.connectedUsers.data?.length} Connection",
+                                      style: const TextStyle(
+                                          fontSize: 17,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,
+                                          overflow: TextOverflow.ellipsis,
+                                          color: AppColor.skyBlue),
+                                      maxLines: 2,
+                                    )
+                                  : const Text(
+                                      "0 Connection",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,
+                                          overflow: TextOverflow.ellipsis,
+                                          color: AppColor.skyBlue),
+                                      maxLines: 2,
+                                    );
+                            }
+                            return const Text(
+                              "0 Connection",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w500,
+                                  overflow: TextOverflow.ellipsis,
+                                  color: AppColor.skyBlue),
+                              maxLines: 2,
+                            );
+                          },
+                        )),
                     const SizedBox(
                       height: 5,
                     ),
-                    BlocBuilder<ConnectedUsersCubit,ConnectedUsersState>(builder: (context, state) {
-                      if(state is ConnectedUsersSuccess){
-                        return connectedUsersCubit.connectedUsers.data!.isNotEmpty ?  Expanded(child: ListView.separated(
-                            physics: const ClampingScrollPhysics(),
-                            padding: EdgeInsets.only(
-                              bottom: screenHeight(context, dividedBy: 100),
-                            ),
-                            itemBuilder: (context, index) {
-                              return SizedBox(
-                                // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                                height: screenHeight(context, dividedBy: 8),
-                                width: screenHeight(context),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                    screenWidth(context, dividedBy: 30),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    children: [
-                                      CachedNetworkImage(
-                                        imageUrl: '${apis.baseurl}/${connectedUsersCubit.connectedUsers.data?[index].profileImage ?? ''}',
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                            Container(
-                                              height: screenHeight(context,
-                                                  dividedBy: 15),
-                                              width: screenHeight(context,
-                                                  dividedBy: 15),
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
+                    BlocBuilder<ConnectedUsersCubit, ConnectedUsersState>(
+                      builder: (context, state) {
+                        if (state is ConnectedUsersSuccess) {
+                          return connectedUsersCubit
+                                      .connectedUsers.data!.isNotEmpty ||
+                                  data.isNotEmpty
+                              ? Expanded(
+                                  child: ListView.separated(
+                                      physics: const ClampingScrollPhysics(),
+                                      padding: EdgeInsets.only(
+                                        bottom: screenHeight(context,
+                                            dividedBy: 100),
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        return SizedBox(
+                                          // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
+                                          height: screenHeight(context,
+                                              dividedBy: 8),
+                                          width: screenHeight(context),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: screenWidth(context,
+                                                  dividedBy: 30),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                CachedNetworkImage(
+                                                  imageUrl: serarchbar
+                                                          .text.isNotEmpty
+                                                      ? '${apis.baseurl}/${data[index]['profileImage'] ?? ''}'
+                                                      : '${apis.baseurl}/${connectedUsersCubit.connectedUsers.data?[index].profileImage ?? ''}',
+                                                  imageBuilder: (context,
+                                                          imageProvider) =>
+                                                      Container(
+                                                    height: screenHeight(
+                                                        context,
+                                                        dividedBy: 15),
+                                                    width: screenHeight(context,
+                                                        dividedBy: 15),
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover,
 
-                                                  // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                                        // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                                      ),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                  ),
+                                                  placeholder: (context, url) =>
+                                                      const CircularProgressIndicator(),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      CircleAvatar(
+                                                          radius: screenHeight(
+                                                              context,
+                                                              dividedBy: 30),
+                                                          child: const Icon(
+                                                              Icons.person)),
                                                 ),
-                                                shape: BoxShape.circle,
-                                              ),
-                                            ),
-                                        placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            CircleAvatar(
-                                                radius: screenHeight(context,
-                                                    dividedBy: 30),
-                                                child:
-                                                const Icon(Icons.person)),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                        screenWidth(context, dividedBy: 30),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: screenWidth(context,
-                                                dividedBy: 40)),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              connectedUsersCubit.connectedUsers.data?[index].name ?? '',
-                                              style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: 'Roboto'),
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight(context,
-                                                  dividedBy: 300),
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth(context,
-                                                  dividedBy: 2.2),
-                                              child: const Text(
-                                                  'Dis promethium, vei maximus gulag......',
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                      color: Color(0xffAAAAAA),
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      fontFamily: 'Roboto')),
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth(context,
-                                                  dividedBy: 2.2),
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                      "assets/Images/calendar.png",
-                                                      width: screenWidth(
+                                                SizedBox(
+                                                  width: screenWidth(context,
+                                                      dividedBy: 30),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: screenWidth(
                                                           context,
                                                           dividedBy: 40)),
-                                                  const SizedBox(
-                                                    width: 3,
-                                                  ),
-                                                  Text(DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data?[index].time ?? DateTime.now()),
-                                                      style: const TextStyle(
-                                                          color:
-                                                          Color(0xffAAAAAA),
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                          FontWeight.w400,
-                                                          fontFamily: 'Roboto'))
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: screenWidth(context,
-                                                  dividedBy: 40)),
-                                          child: Row(
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return SizedBox(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        serarchbar
+                                                                .text.isNotEmpty
+                                                            ? data[index]
+                                                                ['name']
+                                                            : connectedUsersCubit
+                                                                    .connectedUsers
+                                                                    .data?[
+                                                                        index]
+                                                                    .name ??
+                                                                '',
+                                                        style: const TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontFamily:
+                                                                'Roboto'),
+                                                      ),
+                                                      SizedBox(
                                                         height: screenHeight(
                                                             context,
-                                                            dividedBy: 7.5),
-                                                        child: Column(
+                                                            dividedBy: 300),
+                                                      ),
+                                                      SizedBox(
+                                                        width: screenWidth(
+                                                            context,
+                                                            dividedBy: 2.2),
+                                                        child: const Text(
+                                                            'Dis promethium, vei maximus gulag......',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xffAAAAAA),
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontFamily:
+                                                                    'Roboto')),
+                                                      ),
+                                                      SizedBox(
+                                                        width: screenWidth(
+                                                            context,
+                                                            dividedBy: 2.2),
+                                                        child: Row(
                                                           children: [
-                                                            Padding(
-                                                              padding:
-                                                              EdgeInsets
-                                                                  .only(top: screenHeight(context,dividedBy: 50)),
-                                                              child: Container(
-                                                                width:
-                                                                screenHeight(
+                                                            Image.asset(
+                                                                "assets/Images/calendar.png",
+                                                                width: screenWidth(
                                                                     context,
                                                                     dividedBy:
-                                                                    15),
-                                                                height: 7,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        10),
-                                                                    color: Colors
-                                                                        .black54),
-                                                              ),
+                                                                        40)),
+                                                            const SizedBox(
+                                                              width: 3,
                                                             ),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                removeUserCubit.AcceptNotification(id: connectedUsersCubit.connectedUsers.data?[index].id ?? '').then((value) {
-                                                                  Navigator.pop(context);
-                                                                },);
-                                                              },
-                                                              child: Container(
-                                                                margin: EdgeInsets.only(left: screenWidth(context,dividedBy: 50)),
-                                                                width: screenWidth(context),
-                                                                height:
-                                                                screenHeight(
-                                                                    context,
-                                                                    dividedBy:
-                                                                    10),
-                                                                decoration: const BoxDecoration(
-                                                                    color: Colors
-                                                                        .transparent,
-                                                                    borderRadius: BorderRadius.only(
-                                                                        topLeft: Radius
-                                                                            .circular(
-                                                                            15),
-                                                                        topRight:
-                                                                        Radius.circular(
-                                                                            16))),
-                                                                child:
-                                                                const Center(
-                                                                    child:
-                                                                    ListTile(
-                                                                      title: Text(
-                                                                          "Remove Connection"),
-                                                                      leading: Icon(
-                                                                          Icons
-                                                                              .delete),
-                                                                    )),
-                                                              ),
-                                                            ),
+                                                            Text(serarchbar
+                                                                .text
+                                                                .isNotEmpty
+                                                                ?DateFormat('dd/MM/yyyy').format(DateTime.parse(data[index]['time']) ?? DateTime.now()) :
+                                                                DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data?[index].time ?? DateTime.now()),
+                                                                style: const TextStyle(
+                                                                    color: Color(
+                                                                        0xffAAAAAA),
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    fontFamily:
+                                                                        'Roboto'))
                                                           ],
                                                         ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                child: SvgPicture.asset(
-                                                    "assets/Images/more.svg",
-                                                    width: screenWidth(context,
-                                                        dividedBy: 100)),
-                                              ),
-                                              SizedBox(
-                                                width: screenWidth(context,
-                                                    dividedBy: 20),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  messageUserCubit.AcceptNotification(context,id: connectedUsersCubit.connectedUsers.data?[index].id ?? '', name: connectedUsersCubit.connectedUsers.data?[index].name ?? '', uid: connectedUsersCubit.connectedUsers.loginUserId ?? '', img: connectedUsersCubit.connectedUsers.data?[index].profileImage ?? '',);
-                                                },
-                                                child: SvgPicture.asset(
-                                                    "assets/Images/message.svg",
-                                                    width: screenWidth(context,
-                                                        dividedBy: 25)),
-                                              ),
-                                            ],
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return const Divider(
-                                height: 0,
-                                thickness: 2,
-                                color: Color(0xffF5F5F5),
-                                // color: Colors.black12,
-                              );
-                            },
-                            itemCount: connectedUsersCubit.connectedUsers.data?.length ?? 0)) : Expanded(child: Center(child: NoMessage(context)));
-                      }
-                      if(state is ConnectedUsersLoading){
-                        return Expanded(child: customLoader());
-                      }
-                      if(state is ConnectedUsersError){
-                        return Expanded(child: Center(child: NoMessage(context)));
-                      }
-                      return const SizedBox();
-                    },)
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical:
+                                                                screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                        40)),
+                                                    child: Row(
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {
+                                                            showModalBottomSheet(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return SizedBox(
+                                                                  height: screenHeight(
+                                                                      context,
+                                                                      dividedBy:
+                                                                          7.5),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                            EdgeInsets.only(top: screenHeight(context, dividedBy: 50)),
+                                                                        child:
+                                                                            Container(
+                                                                          width: screenHeight(
+                                                                              context,
+                                                                              dividedBy: 15),
+                                                                          height:
+                                                                              7,
+                                                                          decoration: BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              color: Colors.black54),
+                                                                        ),
+                                                                      ),
+                                                                      InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          removeUserCubit.AcceptNotification(id: serarchbar.text.isNotEmpty ? data[index]['id'] : connectedUsersCubit.connectedUsers.data?[index].id ?? '')
+                                                                              .then(
+                                                                            (value) {
+                                                                              setState(() {
+                                                                                connectedUsersCubit.GetConnectedUsers();
+                                                                              });
+                                                                              Navigator.pop(context);
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          margin:
+                                                                              EdgeInsets.only(left: screenWidth(context, dividedBy: 50)),
+                                                                          width:
+                                                                              screenWidth(context),
+                                                                          height: screenHeight(
+                                                                              context,
+                                                                              dividedBy: 10),
+                                                                          decoration: const BoxDecoration(
+                                                                              color: Colors.transparent,
+                                                                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(16))),
+                                                                          child: const Center(
+                                                                              child: ListTile(
+                                                                            title:
+                                                                                Text("Remove Connection"),
+                                                                            leading:
+                                                                                Icon(Icons.delete),
+                                                                          )),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+                                                          },
+                                                          child: Padding(
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal: screenWidth(context, dividedBy: 30),
+                                                                vertical: screenHeight(context, dividedBy: 50),
+                                                            ),
+                                                            child: SvgPicture.asset(
+                                                                "assets/Images/more.svg",
+                                                                height: screenHeight(context,dividedBy: 50),
+                                                                width:
+                                                                    screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            100)),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            if(serarchbar.text.isNotEmpty){
+                                                              messageUserCubit.AcceptNotification(
+                                                                context,
+                                                                id: data[index]['_id'],
+                                                                name: data[index]['name'],
+                                                                uid: connectedUsersCubit.connectedUsers.loginUserId ?? '',
+                                                                img: data[index]['profileImage'],
+                                                              );
+                                                            } else {
+                                                              messageUserCubit
+                                                                  .AcceptNotification(
+                                                                context,
+                                                                id: connectedUsersCubit
+                                                                    .connectedUsers
+                                                                    .data?[index]
+                                                                    .id ?? '',
+                                                                name: connectedUsersCubit
+                                                                    .connectedUsers
+                                                                    .data?[index]
+                                                                    .name ?? '',
+                                                                uid: connectedUsersCubit
+                                                                    .connectedUsers
+                                                                    .loginUserId ??
+                                                                    '',
+                                                                img: connectedUsersCubit
+                                                                    .connectedUsers
+                                                                    .data?[index]
+                                                                    .profileImage ??
+                                                                    '',
+                                                              );
+                                                            }
+                                                          },
+                                                          child: Padding(
+                                                              padding: EdgeInsets.symmetric(
+                                                              horizontal: screenWidth(context, dividedBy: 50),
+                                                          vertical: screenHeight(context, dividedBy: 40),
+                                                        ),
+                                                            child: SvgPicture.asset(
+                                                                "assets/Images/message.svg",
+                                                                width:
+                                                                    screenWidth(
+                                                                        context,
+                                                                        dividedBy:
+                                                                            25)),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return const Divider(
+                                          height: 0,
+                                          thickness: 2,
+                                          color: Color(0xffF5F5F5),
+                                          // color: Colors.black12,
+                                        );
+                                      },
+                                      itemCount: serarchbar.text.isNotEmpty
+                                          ? data.length
+                                          : connectedUsersCubit.connectedUsers
+                                                  .data?.length ??
+                                              0))
+                              : Expanded(
+                                  child: Center(child: NoMessage(context)));
+                        }
+                        if (state is ConnectedUsersLoading) {
+                          return Expanded(child: customLoader());
+                        }
+                        if (state is ConnectedUsersError) {
+                          return Expanded(
+                              child: Center(child: NoMessage(context)));
+                        }
+                        return const SizedBox();
+                      },
+                    )
                   ],
                 ),
-              )
-             )
+              ))
         ],
       ),
     ));

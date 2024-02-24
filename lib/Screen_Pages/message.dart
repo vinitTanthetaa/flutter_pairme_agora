@@ -91,29 +91,6 @@ class _Message_pageState extends State<Message_page> {
   RemoveMsgUserCubit removeMsgUserCubit = RemoveMsgUserCubit();
   AllMessageRequestCubit messageRequestCubit = AllMessageRequestCubit();
   late ChatClient agoraChatClient;
-
-
-  createUser(String id) async {
-    
-    print("nice to meet you");
-    Dio dio = Dio();
-    Map<String, dynamic> body = {
-      "username": id,
-      "password": "123",
-    };
-    try {
-      final response = await dio.post("http://a61.chat.agora.io/611026121/1198524/users", data: jsonEncode(body),options:Options(headers: {
-        'Content-Type': 'application/json',
-        'Authorization': "Bearer 007eJxTYJhsf93MufhIADPLeT/eqS9zrzN6zP038y6f51PHdLMKN0UFBnPDxOQkk8REI8tkYxPjJEtLQxPTFEOT1OSkVCPjZMO0ao39qQ2BjAxPC5exMDKwMjAyMDGA+AwMACUwHLU="
-      }) );
-      print("Response ===> ${response.data}");
-
-    } on Exception catch (e) {
-      print("fail ====> " +e.toString());
-
-      // TODO
-    }
-  }
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
     setState(() {});
@@ -146,18 +123,28 @@ class _Message_pageState extends State<Message_page> {
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        custom_header(text: 'Message'),
-                       messageRequestCubit.userMssageReq.data != null? GestureDetector(
-                         onTap: () {
-                           Navigator.push(context, MaterialPageRoute(builder:(context) {
-                             return const MessageRequest();
-                           },));
-                         },
-                           child: Row(
-                             children: [
-                               Text('Requests'.tr(),style: const TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
-                                Text('(${messageRequestCubit.userMssageReq.data?.withoutConnect?.length ?? 0})',style: const TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
-                             ],
-                           ),) : const SizedBox(),
+                       BlocBuilder<MessageCubit,MessageState>(builder: (context, state) {
+                         if(state is MessageSuccess){
+                           return   messageRequestCubit.userMssageReq.data!.withoutConnect!.isNotEmpty ?  GestureDetector(
+                             onTap: () async {
+                               String refresh = await  Navigator.push(context, MaterialPageRoute(builder:(context) {
+                                 return const MessageRequest();
+                               },));
+                               if(refresh == "refresh"){
+                                 getData();
+                                 messageRequestCubit.GetAllMessageRequest();
+                                 setState(() {});
+                               }
+                             },
+                             child: Row(
+                               children: [
+                                 Text('Requests'.tr(),style: const TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
+                                 Text('(${messageRequestCubit.userMssageReq.data?.withoutConnect?.length ?? 0})',style: const TextStyle(fontSize: 15,fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue),),
+                               ],
+                             ),) : const SizedBox();
+                         }
+                         return const SizedBox();
+                       },),
                      ],
                    ),
                  ),
@@ -214,10 +201,14 @@ class _Message_pageState extends State<Message_page> {
                                      ) ,
                                    ),
                                    child: InkWell(
-                                     onTap: () {
-                                       Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                     onTap: () async {
+                                       String refresh = await Navigator.push(context, MaterialPageRoute(builder: (context) {
                                         return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '', uid:  userMessage.data?.userId ?? '',);
                                        },));
+                                       if(refresh == "refresh"){
+                                         getData();
+                                         setState(() {});
+                                       }
                                      },
                                      child: SizedBox(
                                        // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),

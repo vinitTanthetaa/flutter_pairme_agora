@@ -78,6 +78,14 @@ class _Business_AddressState extends State<Business_Address> {
     _City.text = widget.city;
     _Zipcode.text = widget.code;
     _date.text = widget.date;
+    _City.text.isNotEmpty ? getStateandcitys(country: _Contry.text).then((value) {
+      resultcity = _citys.where((element) => element.toString().toLowerCase().contains(_City.text.toLowerCase())).toList() ?? [];
+    }) : null;
+    _City.text.isNotEmpty ? GetData( _Contry.text) : null;
+    _State.text.isNotEmpty ? getStateandcitys(country: _Contry.text).then((value) {
+      resultstates = _states.where((element) => element['name'].toString().toLowerCase().contains( _State.text.toLowerCase())).toList() ?? [];
+    }) : null;
+    _State.text.isNotEmpty ? GetData( _Contry.text) : null;
     setState(() {});
   }
 

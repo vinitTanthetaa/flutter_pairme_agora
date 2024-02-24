@@ -223,6 +223,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
               onTap: () {
                 acceptReqMsgUserCubit.AcceptNotification(
                     context, id: widget.id);
+                setState(() {
+                  widget.name = 'chatting';
+                });
               },
               child: Container(
                 alignment: Alignment.center,
@@ -288,7 +291,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              Navigator.pop(context, "refresh");
                             },
                             child: const Icon(
                               Icons.arrow_back_ios_new,

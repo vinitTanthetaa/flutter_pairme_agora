@@ -1360,19 +1360,35 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         height = 0;
                                       });
                                     },
+                                    onSwipeBegin: (previousIndex, targetIndex, activity) {
+
+                                    },
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
                                         undoid = allUsersdetails.data?[ind].first.id ?? '';
-                                        print("undoid =======> $undoid");
-                                          activity.direction == AxisDirection.up
-                                            ? rejectUserCubit.GetRejectUser(
-                                            id: allUsersdetails
-                                                .data?[ind].first.id ??
-                                                '').then((value) =>  pageViewIndex = 0)
-                                            : connectUserCubit.GetConnectUser(
-                                            id: allUsersdetails
-                                                .data?[ind].first.id ??
-                                                '').then((value) =>  pageViewIndex = 0) ;
+                                        print("undoid =======> ${previousIndex}");
+                                        print("undoid =======> ${targetIndex}");
+                                        print("activity ===> $activity");
+                                        print("activity ===> ${activity.direction.isHorizontal}");
+                                        print("activity ===> ${activity.direction.isVertical}");
+                                        print("activity ===> ${activity.direction.opposite}");
+                                        print("activity ===> ${activity.direction.name}");
+                                        print("activity ===> ${activity.animation}");
+                                        print("activity ===> ${activity.currentOffset}");
+                                        print("activity ===> ${activity.end}");
+                                        print("activity ===> ${activity.begin}");
+                                        if(activity == SwiperActivity){
+                                          print("<====== --- hello --- ======>");
+                                        }
+                                          // activity.direction == AxisDirection.up
+                                          //   ? rejectUserCubit.GetRejectUser(
+                                          //   id: allUsersdetails
+                                          //       .data?[ind].first.id ??
+                                          //       '').then((value) =>  pageViewIndex = 0)
+                                          //   : connectUserCubit.GetConnectUser(
+                                          //   id: allUsersdetails
+                                          //       .data?[ind].first.id ??
+                                          //       '').then((value) =>  pageViewIndex = 0) ;
                                         ind >= allUsersdetails.data!.length - 1
                                             ? ind = ind
                                             : ind = targetIndex;

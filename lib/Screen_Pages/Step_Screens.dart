@@ -254,7 +254,6 @@ class _StepScreenState extends State<StepScreen> {
       ],
     );
   }
-
   GetData(String country) async {
     cityandState = (await cityStateCubit.getcalendarEvents(country: country))!;
     setState(() {});

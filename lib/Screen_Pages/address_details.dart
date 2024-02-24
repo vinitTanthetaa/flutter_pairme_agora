@@ -55,6 +55,8 @@ class _Address_DetailsState extends State<Address_Details> {
       final st1 = _map['city']['cities'];
       _states = st;
       _citys = st1;
+      setState(() {
+      });
       print("map ==> $_citys as Strin");
     } on Exception catch (e) {
       print("you are fully fail my friend" + e.toString());
@@ -68,6 +70,14 @@ class _Address_DetailsState extends State<Address_Details> {
     _State.text = widget.state;
     _City.text = widget.city;
     _Zipcode.text = widget.code;
+    _City.text.isNotEmpty ? getStateandcitys(country: _Contry.text).then((value) {
+      resultcity = _citys.where((element) => element.toString().toLowerCase().contains(_City.text.toLowerCase())).toList() ?? [];
+    }) : null;
+    _City.text.isNotEmpty ? GetData( _Contry.text) : null;
+    _State.text.isNotEmpty ? getStateandcitys(country: _Contry.text).then((value) {
+      resultstates = _states.where((element) => element['name'].toString().toLowerCase().contains( _State.text.toLowerCase())).toList() ?? [];
+    }) : null;
+    _State.text.isNotEmpty ? GetData( _Contry.text) : null;
     setState(() {
 
     });
@@ -148,10 +158,8 @@ class _Address_DetailsState extends State<Address_Details> {
                               context: context,
                               showPhoneCode: true,
                               onSelect: (Country country) {
-                                print(
-                                    'Select country: ${country.phoneCode}');
-                                print(
-                                    'Select country: ${country.name}');
+                                print('Select country: ${country.phoneCode}');
+                                print('Select country: ${country.name}');
                                 _Contry.text = country.name;
                                 GetData(_Contry.text);
                                 getStateandcitys(country: _Contry.text);
