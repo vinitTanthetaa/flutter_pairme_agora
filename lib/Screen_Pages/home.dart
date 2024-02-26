@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,6 +23,7 @@ import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:video_player/video_player.dart';
 
@@ -69,6 +69,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final PageController _pageController = PageController();
   getData() async {
     allUsersdetails = (await allUsersDetailsCubit.GetAllUsersDetails())!;
+    await Permission.notification.request();
     setState(() {});
   }
   getImage(int index) {
@@ -160,6 +161,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   @override
   void initState() {
     // allUsersDetailsCubit.GetAllUsersDetails();
+
     allUsersDetailsCubit = BlocProvider.of<AllUsersDetailsCubit>(context);
     rejectUserCubit = BlocProvider.of<RejectUserCubit>(context);
     connectUserCubit = BlocProvider.of<ConnectUserCubit>(context);
@@ -1366,29 +1368,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
                                         undoid = allUsersdetails.data?[ind].first.id ?? '';
-                                        print("undoid =======> ${previousIndex}");
-                                        print("undoid =======> ${targetIndex}");
-                                        print("activity ===> $activity");
-                                        print("activity ===> ${activity.direction.isHorizontal}");
-                                        print("activity ===> ${activity.direction.isVertical}");
-                                        print("activity ===> ${activity.direction.opposite}");
-                                        print("activity ===> ${activity.direction.name}");
-                                        print("activity ===> ${activity.animation}");
-                                        print("activity ===> ${activity.currentOffset}");
-                                        print("activity ===> ${activity.end}");
-                                        print("activity ===> ${activity.begin}");
-                                        if(activity == SwiperActivity){
-                                          print("<====== --- hello --- ======>");
-                                        }
-                                          // activity.direction == AxisDirection.up
-                                          //   ? rejectUserCubit.GetRejectUser(
-                                          //   id: allUsersdetails
-                                          //       .data?[ind].first.id ??
-                                          //       '').then((value) =>  pageViewIndex = 0)
-                                          //   : connectUserCubit.GetConnectUser(
-                                          //   id: allUsersdetails
-                                          //       .data?[ind].first.id ??
-                                          //       '').then((value) =>  pageViewIndex = 0) ;
+                                          activity.direction == AxisDirection.up
+                                            ? rejectUserCubit.GetRejectUser(
+                                            id: allUsersdetails
+                                                .data?[ind].first.id ??
+                                                '').then((value) =>  pageViewIndex = 0)
+                                            : connectUserCubit.GetConnectUser(
+                                            id: allUsersdetails
+                                                .data?[ind].first.id ??
+                                                '').then((value) =>  pageViewIndex = 0) ;
                                         ind >= allUsersdetails.data!.length - 1
                                             ? ind = ind
                                             : ind = targetIndex;

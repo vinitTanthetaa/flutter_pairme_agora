@@ -382,7 +382,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return VoiceCallPage(
-                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid,);
+                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id,);
                               },
                             ));
                           },

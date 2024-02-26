@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,9 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class VoiceCallPage extends StatefulWidget {
-  String img,name,uid;
+  String img,name,uid,id;
 
-  VoiceCallPage({super.key,required this.img,required this.name,required this.uid});
+  VoiceCallPage({super.key,required this.img,required this.name,required this.uid,required this.id});
 
   @override
   State<VoiceCallPage> createState() => _VoiceCallPageState();
@@ -161,19 +160,24 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      height: screenHeight(context ,dividedBy: 13),
-                      width: screenHeight(context ,dividedBy: 13),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color:Color(0xffC8C8C8),width: 2)
-                      ),
-                      child: Center(
-                        child:Image(
-                          image: const AssetImage('assets/Images/micoff.png'),
-                          height: screenHeight(context,dividedBy: 25),
-                          width: screenHeight(context,dividedBy: 25),
-                          color: AppColor.white,
+                    GestureDetector(
+                      onTap: () {
+                        agoraEngine.muteLocalAudioStream(true);
+                      },
+                      child: Container(
+                        height: screenHeight(context ,dividedBy: 13),
+                        width: screenHeight(context ,dividedBy: 13),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color:Color(0xffC8C8C8),width: 2)
+                        ),
+                        child: Center(
+                          child:Image(
+                            image: const AssetImage('assets/Images/micoff.png'),
+                            height: screenHeight(context,dividedBy: 25),
+                            width: screenHeight(context,dividedBy: 25),
+                            color: AppColor.white,
+                          ),
                         ),
                       ),
                     ),
@@ -193,19 +197,24 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
                         ),
                       ),
                     ),
-                    Container(
-                      height: screenHeight(context ,dividedBy: 13),
-                      width: screenHeight(context ,dividedBy: 13),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color:const Color(0xffC8C8C8),width: 2)
-                      ),
-                      child: Center(
-                        child:Image(
-                          image: const AssetImage('assets/Images/Speaker.png'),
-                          height: screenHeight(context,dividedBy: 25),
-                          width: screenHeight(context,dividedBy: 25),
-                          color: AppColor.white,
+                    GestureDetector(
+                      onTap: () {
+                       // agoraEngine.sp
+                      },
+                      child: Container(
+                        height: screenHeight(context ,dividedBy: 13),
+                        width: screenHeight(context ,dividedBy: 13),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color:const Color(0xffC8C8C8),width: 2)
+                        ),
+                        child: Center(
+                          child:Image(
+                            image: const AssetImage('assets/Images/Speaker.png'),
+                            height: screenHeight(context,dividedBy: 25),
+                            width: screenHeight(context,dividedBy: 25),
+                            color: AppColor.white,
+                          ),
                         ),
                       ),
                     ),
@@ -216,8 +225,8 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
               GestureDetector(
                 onTap: () {
                   agoraEngine.leaveChannel();
+                  agoraEngine.release();
                 },
-               // onTap: () => createchannel(),
                   child: Container(
                     height: screenHeight(context,dividedBy: 10),
                     width: screenHeight(context,dividedBy: 10),

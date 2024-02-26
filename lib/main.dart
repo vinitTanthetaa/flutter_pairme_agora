@@ -51,6 +51,7 @@ import 'package:pair_me/cubits/verify_forgot_otp.dart';
 import 'package:pair_me/firebase_options.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'Screen_Pages/voice_call.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   print("message ===> $message");
@@ -60,7 +61,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
           channelKey: "call_channel",
         color: Colors.white,
         title: message.notification?.title ?? '',
-        body: message.notification?.body,
+        body: message.notification?.body ?? '',
         category: NotificationCategory.Call,
         wakeUpScreen: true,
         fullScreenIntent: true,
@@ -72,7 +73,6 @@ Future<void> backgroundHandler(RemoteMessage message) async {
     NotificationActionButton(key: "REJECT", label: "Reject",color: Colors.redAccent,autoDismissible: true),
   ]
   );
-
 }
 
 Future<void> main() async {
@@ -84,7 +84,7 @@ Future<void> main() async {
   AwesomeNotifications().initialize(null, [
     NotificationChannel(
         channelKey: "call_channel",
-        channelName: "call_channel",
+        channelName: "Call channel",
         channelDescription: "channel of calling",
         defaultColor: Colors.redAccent,
         ledColor: Colors.white,
@@ -116,8 +116,55 @@ Future<void> main() async {
   });
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("message ===> ${message.data}");
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: 123,
+              channelKey: "call_channel",
+              color: Colors.white,
+              title: message.notification?.title ?? '',
+              body: message.notification?.body ?? '',
+              category: NotificationCategory.Call,
+              wakeUpScreen: true,
+              fullScreenIntent: true,
+              autoDismissible: false,
+             // backgroundColor: Colors.orange
+          ),
+          actionButtons: [
+            NotificationActionButton(key: "ACCEPT", label: "Accept",color: Colors.greenAccent,autoDismissible: true),
+            NotificationActionButton(key: "REJECT", label: "Reject",color: Colors.redAccent,autoDismissible: true),
+          ]
+      );
+      AwesomeNotifications()
+          .setListeners(onActionReceivedMethod: onActionReceivedMethod);
+    });
+  }
+  @pragma('vm:entry-point')
+   Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+    if (receivedAction.buttonKeyPressed == "ACCEPT") {
+      navigatorKey.currentState?.push(MaterialPageRoute(
+        builder: (context) => VoiceCallPage(img: '', name: '', uid: '', id: '',) ,
+      ));
+    }
+    if (receivedAction.buttonKeyPressed == "REJECT") {
+      print("=======REJECT=======");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,6 +214,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ChatDataCubit()),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         locale: context.locale,

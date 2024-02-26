@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -28,64 +29,6 @@ class Message_page extends StatefulWidget {
 }
 
 class _Message_pageState extends State<Message_page> {
-  List list = [
-    {
-      "Name":"Jane Koblenz",
-      "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU"
-    },
-    {
-      "Name":"Virat Kohli",
-      "image":"https://wallpapers.com/images/hd/virat-kohli-hd-black-tuxedo-fibgrtdlqvatdblj.jpg"
-    },
-    {
-      "Name":"Hardik Pandeya",
-      "image":"https://i.pinimg.com/originals/2e/31/a4/2e31a4fce6c52a98d518053d269d7eba.jpg"
-    },
-    {
-      "Name":"Amitabh Bachchan",
-      "image":"https://e1.pxfuel.com/desktop-wallpaper/85/759/desktop-wallpaper-%E2%9C%85-8-amitabh-bachchan-amitabh-bachchan-thumbnail.jpg"
-    },
-    {
-      "Name":"Vincenzo cassano",
-      "image":"https://e0.pxfuel.com/wallpapers/251/76/desktop-wallpaper-vincenzo-cassano-thumbnail.jpg"
-    },
-    {
-      "Name":"Shahrukh khan",
-      "image":"https://e0.pxfuel.com/wallpapers/531/653/desktop-wallpaper-shah-rukh-khan-actor-king-gentleman-shahrukhkhan-attitude.jpg"
-    },
-    {
-      "Name":"Robert Downey jr",
-      "image":"https://static.wikia.nocookie.net/ironman/images/7/79/Photo%28906%29.jpg/revision/latest?cb=20141019122536"
-    },
-    {
-      "Name":"Johnny Depp",
-      "image":"https://images.saymedia-content.com/.image/t_share/MTc0NDI1MDExOTk2NTk5OTQy/top-10-greatest-johnny-depp-movies-of-all-time.jpg"
-    },
-    {
-      "Name":"úrsula corberó",
-      "image":"https://www.bollywoodhungama.com/wp-content/uploads/2021/09/WhatsApp-Image-2021-09-23-at-10.45.54-AM.jpeg"
-    },
-    {
-      "Name":"Satoru Gojo",
-      "image":"https://e0.pxfuel.com/wallpapers/666/451/desktop-wallpaper-white-hair-blue-eyes-satoru-gojo-jujutsu-kaisen.jpg"
-    },
-    {
-      "Name":"Nanami Kento",
-      "image":"https://wallpaperaccess.com/full/5661539.png"
-    },
-    {
-      "Name":"Ryomen Sukuna",
-      "image":"https://i1.sndcdn.com/artworks-Ovrge2921kVbhGxA-m3FQYA-t500x500.jpg"
-    },
-    {
-      "Name":"Vijay Thalapathy",
-      "image":"https://static.toiimg.com/photo/101080781.cms"
-    },
-    {
-      "Name":"Yash",
-      "image":"https://img.mensxp.com/media/content/2021/Jan/Lesser-Known-Facts-About-Yash-7_60056adf8c66e.jpeg?w=900&h=1200&cc=1"
-    },
-  ];
   MessageCubit messageCubit = MessageCubit();
   UserMessage userMessage = UserMessage();
   RemoveMsgUserCubit removeMsgUserCubit = RemoveMsgUserCubit();
@@ -93,6 +36,8 @@ class _Message_pageState extends State<Message_page> {
   late ChatClient agoraChatClient;
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
+    setupChatClient();
+    setupListeners();
     setState(() {});
   }
   @override
@@ -326,4 +271,138 @@ class _Message_pageState extends State<Message_page> {
       ),
     );
   }
+  void setupChatClient() async {
+
+    ChatOptions options = ChatOptions(
+      appKey: AgoraAppkey,
+      autoLogin: false,
+    );
+    agoraChatClient = ChatClient.getInstance;
+    await agoraChatClient.init(options);
+    await ChatClient.getInstance.startCallback();
+    try {
+      await agoraChatClient.login(userMessage.data?.userId ?? '', "123");
+      print("Logged in successfully as ${userMessage.data?.userId ?? ''}");
+
+    } on ChatError catch (e) {
+      if (e.code == 200) {
+        // Already logged in
+      } else {
+        print("Login failed, code: ${e.code}, desc: ${e.description}");
+      }
+    }
+    Getdata();
+  }
+  Future Getdata() async {
+   final result =
+     ChatClient.getInstance.chatManager.fetchConversation(
+       pageSize: 50
+       // type: ChatConversationType.Chat,
+       // conversationId: userMessage.data?.data?[index].id ?? '',
+       // conversationId: userMessage.data?.userId ?? ''
+    ) ;
+    // setState(() {
+    //   loading = true;
+    // });
+    log("data ===> ${result}");
+    // for(int i=0;i < result.data.length;i++){
+    //   if(result.data[i].body.type == MessageType.TXT){
+    //     ChatTextMessageBody body = result.data[i].body as ChatTextMessageBody;
+    //     messageList.add(displayMessage( text: body.content, isSentMessage: result.data[i].from == widget.uid ? true : false,));
+    //   }
+    //   if(result.data[i].body.type == MessageType.IMAGE){
+    //     ChatImageMessageBody body = result.data[i].body as ChatImageMessageBody;
+    //     displayimgMessage(body.remotePath, result.data[i].from == widget.uid ? true : false);
+    //   }
+    //   if(result.data[i].body.type == MessageType.VIDEO){
+    //     ChatVideoMessageBody body = result.data[i].body as ChatVideoMessageBody;
+    //     displayvideoMessage(body.remotePath, result.data[i].from == widget.uid ? true : false);
+    //     print('data ===> $body');
+    //   }
+    //   if(result.data[i].body.type == MessageType.FILE){
+    //     ChatFileMessageBody body = result.data[i].body as ChatFileMessageBody;
+    //     displayfileMessage(body.remotePath,body.displayName.toString() ,result.data[i].from == widget.uid ? true : false);
+    //   }
+    //   if(result.data[i].body.type == MessageType.VOICE){
+    //     ChatVoiceMessageBody body = result.data[i].body as ChatVoiceMessageBody;
+    //     print("voice ===> $body");
+    //     messageList.add(displayvoiceMessage(isSentMessage: result.data[i].from == widget.uid ? true : false, thumbnail: body.remotePath.toString(), dispalname: body.displayName.toString(),));
+    //     // displayvoiceMessage(body.remotePath,body.displayName.toString() ,result.data[i].from == widget.uid ? true : false);
+    //   }
+    // }
+  }
+  void setupListeners() {
+    agoraChatClient.addConnectionEventHandler(
+      "CONNECTION_HANDLER",
+      ConnectionEventHandler(
+          onConnected: () {
+
+          },
+          onDisconnected: () {
+
+          },
+          onTokenWillExpire: () {
+
+          },
+          onTokenDidExpire: () {
+
+          },),
+    );
+
+    agoraChatClient.
+    chatManager.addEventHandler(
+      "MESSAGE_HANDLER",
+      ChatEventHandler(onMessagesReceived: onMessagesReceived),
+    );
+    setState(() {});
+  }
+  void onMessagesReceived(List<ChatMessage> messages) {
+    log("message ===>? $messages");
+    // for (var msg in messages) {
+    //   if (msg.to == widget.uid && msg.from == widget.id) {
+    //     print("message ====> ${msg.to}");
+    //     if (msg.body.type == MessageType.TXT) {
+    //       ChatTextMessageBody body = msg.body as ChatTextMessageBody;
+    //       messageList.add( displayMessage(text: body.content, isSentMessage: false,));
+    //       setState(() {
+    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+    //       });
+    //       // showLog("Message from ${msg.from}");
+    //     }
+    //     if(msg.body.type == MessageType.IMAGE){
+    //       ChatImageMessageBody body = msg.body as ChatImageMessageBody;
+    //       displayimgMessage(body.remotePath, false);
+    //       setState(() {
+    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+    //       });
+    //       // showLog("Message from ${msg.from}");
+    //     }
+    //     if(msg.body.type == MessageType.VIDEO){
+    //       ChatVideoMessageBody body = msg.body as ChatVideoMessageBody;
+    //       displayvideoMessage(body.remotePath, false);
+    //       setState(() {
+    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+    //       });
+    //       // showLog("Message from ${msg.from}");
+    //     }
+    //     if(msg.body.type == MessageType.FILE){
+    //       ChatFileMessageBody body = msg.body as ChatFileMessageBody;
+    //       displayfileMessage(body.remotePath,body.displayName.toString(),false);
+    //       setState(() {
+    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+    //       });
+    //       // showLog("Message from ${msg.from}");
+    //     }
+    //     if(msg.body.type == MessageType.VOICE){
+    //       ChatVoiceMessageBody body = msg.body as ChatVoiceMessageBody;
+    //       messageList.add( displayvoiceMessage(dispalname:body.displayName.toString() ,isSentMessage: false,thumbnail: body.remotePath.toString(),));
+    //       setState(() {
+    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
+    //       });
+    //       // showLog("Message from ${msg.from}");
+    //     }
+    //   }
+    // }
+  }
+
 }

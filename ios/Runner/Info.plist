@@ -17,6 +17,7 @@
     <key>UIBackgroundModes</key>
     <array>
        <string>audio</string>
+       <string>processing</string>
     </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
