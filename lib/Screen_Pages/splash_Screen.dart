@@ -24,8 +24,8 @@ class _SpleshScreenState extends State<SpleshScreen> {
     Splash_Timer();
   }
   Splash_Timer() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    print("token ==> $token");
+    fcmtoken = await FirebaseMessaging.instance.getToken() ?? '';
+    print("token ==> $fcmtoken");
     Authtoken = (await prefsService.getStringData("Authtoken"))!;
     Timer(const Duration(seconds: 1), () async {
       if (Authtoken.length > 1) {

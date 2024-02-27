@@ -19,6 +19,7 @@ import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/cubits/accept_req_msg_user.dart';
 import 'package:pair_me/cubits/block_req_msg_user.dart';
+import 'package:pair_me/cubits/calling_cubit.dart';
 import 'package:pair_me/cubits/chatdata_cubits.dart';
 import 'package:pair_me/cubits/delete_msg_users.dart';
 import 'package:pair_me/cubits/reject_user.dart';
@@ -57,6 +58,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   RejectUserCubit rejectUserCubit = RejectUserCubit();
   BlockUserCubit blockUserCubit = BlockUserCubit();
   ChatDataCubit chatDataCubit = ChatDataCubit();
+  CallingDetailsCubit callingDetailsCubit = CallingDetailsCubit();
   late RtcEngine agoraEngine; // Agora engine instance
   late ChatClient agoraChatClient;
   final List messageList = [];
@@ -379,12 +381,12 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             ? const SizedBox()
                             : GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
+                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice", context: context).then((value) =>  Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return VoiceCallPage(
                                   img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id,);
                               },
-                            ));
+                            )));
                           },
                           child: Image(
                             image: const AssetImage(

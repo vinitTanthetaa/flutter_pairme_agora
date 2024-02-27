@@ -1773,11 +1773,11 @@ class _StepScreenState extends State<StepScreen> {
                                         flutterToast(
                                             "Please Enter Your Business or Professinoal Contry",
                                             false);
-                                      } else if (_State1.text.isEmpty) {
+                                      } else if (_State.text.isEmpty) {
                                         flutterToast(
                                             "Please Enter Your Business or Professinoal State",
                                             false);
-                                      } else if (_City1.text.isEmpty) {
+                                      } else if (_City.text.isEmpty) {
                                         flutterToast(
                                             "Please Enter Your Business or Professinoal City",
                                             false);

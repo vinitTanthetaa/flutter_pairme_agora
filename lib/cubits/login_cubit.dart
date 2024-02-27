@@ -36,6 +36,7 @@ class LoginCubit extends Cubit<LoginState> {
       "phoneNumber": phoneNumber,
       "countryCode": countryCodeSelect,
       "password": otp,
+      "fcm":fcmtoken
     };
     // print("Body is $body");
     try {

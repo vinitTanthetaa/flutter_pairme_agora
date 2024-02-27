@@ -24,6 +24,7 @@ import 'package:pair_me/cubits/adsress_drtails.dart';
 import 'package:pair_me/cubits/block_req_msg_user.dart';
 import 'package:pair_me/cubits/business_add_update.dart';
 import 'package:pair_me/cubits/business_address_cubit.dart';
+import 'package:pair_me/cubits/calling_cubit.dart';
 import 'package:pair_me/cubits/change_password.dart';
 import 'package:pair_me/cubits/chatdata_cubits.dart';
 import 'package:pair_me/cubits/clearAllNotification_cubit.dart';
@@ -49,6 +50,7 @@ import 'package:pair_me/cubits/user_profile_cubit.dart';
 import 'package:pair_me/cubits/user_update_cubit.dart';
 import 'package:pair_me/cubits/verify_forgot_otp.dart';
 import 'package:pair_me/firebase_options.dart';
+import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'Screen_Pages/voice_call.dart';
@@ -125,13 +127,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
+  Map map = {};
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("message ===> ${message.data}");
+      map = message.data;
+     print("map ===> $map");
       AwesomeNotifications().createNotification(
           content: NotificationContent(
               id: 123,
@@ -158,7 +161,7 @@ class _MyAppState extends State<MyApp> {
    Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == "ACCEPT") {
       navigatorKey.currentState?.push(MaterialPageRoute(
-        builder: (context) => VoiceCallPage(img: '', name: '', uid: '', id: '',) ,
+        builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '',) ,
       ));
     }
     if (receivedAction.buttonKeyPressed == "REJECT") {
@@ -212,6 +215,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => AcceptReqMsgUserCubit()),
         BlocProvider(create: (context) => BlockUserCubit()),
         BlocProvider(create: (context) => ChatDataCubit()),
+        BlocProvider(create: (context) => CallingDetailsCubit()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

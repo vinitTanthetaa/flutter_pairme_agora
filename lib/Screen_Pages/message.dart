@@ -295,8 +295,8 @@ class _Message_pageState extends State<Message_page> {
   }
   Future Getdata() async {
    final result =
-     ChatClient.getInstance.chatManager.fetchConversation(
-       pageSize: 50
+     ChatClient.getInstance.chatManager.fetchHistoryMessages(
+       pageSize: 50, conversationId: userMessage.data?.userId ?? ''
        // type: ChatConversationType.Chat,
        // conversationId: userMessage.data?.data?[index].id ?? '',
        // conversationId: userMessage.data?.userId ?? ''

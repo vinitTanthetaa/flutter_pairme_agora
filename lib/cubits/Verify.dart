@@ -36,6 +36,7 @@ class VerifyCubit extends Cubit<VerifyState> {
       "phoneNumber": phoneNumber,
       "countryCode": countryCodeSelect,
       "otp": otp,
+      "fcm":fcmtoken
     };
    // print("Body is $body");
     try {
