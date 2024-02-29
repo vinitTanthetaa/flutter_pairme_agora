@@ -161,7 +161,7 @@ class _MyAppState extends State<MyApp> {
    Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == "ACCEPT") {
       navigatorKey.currentState?.push(MaterialPageRoute(
-        builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '',) ,
+        builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '', token: '',) ,
       ));
     }
     if (receivedAction.buttonKeyPressed == "REJECT") {

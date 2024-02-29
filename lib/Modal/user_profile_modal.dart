@@ -161,7 +161,7 @@ class Address {
     zipCode: json["zipCode"] ?? '',
     latitude: json["latitude"]?.toDouble() ?? 0.0,
     longitude: json["longitude"]?.toDouble() ?? 0.0,
-    startdate: json["startdate"] ?? '',
+    startdate: json["start_date"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {

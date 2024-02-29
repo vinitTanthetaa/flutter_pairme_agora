@@ -36,9 +36,9 @@ class LoginCubit extends Cubit<LoginState> {
       "phoneNumber": phoneNumber,
       "countryCode": countryCodeSelect,
       "password": otp,
-      "fcm":fcmtoken
+     // "fcm":fcmtoken
     };
-    // print("Body is $body");
+     print("Body is $body");
     try {
       Response response = await dio.post(apis.Login, data: jsonEncode(body));
       final hello = response.data;

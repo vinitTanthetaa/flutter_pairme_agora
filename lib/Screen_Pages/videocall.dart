@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class VideoCallPage extends StatefulWidget {
-  const VideoCallPage({super.key});
+  String img,name,uid,id;
+
+   VideoCallPage({super.key,required this.img,required this.name,required this.uid,required this.id});
 
   @override
   State<VideoCallPage> createState() => _VideoCallPageState();
@@ -18,18 +23,44 @@ class _VideoCallPageState extends State<VideoCallPage> {
   List<int> remoteUids = []; // Uids of remote users in the channel
   bool isJoined = false; // Indicates if the local user has joined the channel
   bool isBroadcaster = true; // Client role
-  RtcEngine? agoraEngine; // Agora engine instance
+  RtcEngine agoraEngine = createAgoraRtcEngine(); // Agora engine instance
   bool  mic = false;
+  final dio = Dio();
+
+  createchannel() async {
+    Map<String, dynamic> body = {
+      "channel": widget.uid.toString(),
+    };
+    try {
+      final response = await dio.post('http://192.168.29.113:3000/rtc',data: jsonEncode(body));
+      print(response);
+    } catch (e) {
+      print("you are fully fail my friend " + e.toString());
+      // TODO
+    }
+  }
   Future<void> setupAgoraEngine() async {
     // Retrieve or request camera and microphone permissions
     await [Permission.microphone, Permission.camera].request();
 
     // Create an instance of the Agora engine
-    agoraEngine = createAgoraRtcEngine();
-    await agoraEngine!.initialize(RtcEngineContext(appId: appId));
-    await agoraEngine!.enableVideo();
+
+    await agoraEngine.initialize(RtcEngineContext(appId: AgoraAppid));
+    await agoraEngine.enableVideo();
+    await agoraEngine.enableAudio();
+    // Set channel options including the client role and channel profile
+    ChannelMediaOptions options = const ChannelMediaOptions(
+      clientRoleType: ClientRoleType.clientRoleBroadcaster,
+    );
+    print("======================================> ${widget.uid} <============================ ");
+    // await agoraEngine.renewToken()
+    await agoraEngine.joinChannel(
+      token: null.toString(),
+      channelId: widget.uid,
+      options: options, uid: 1,
+    );
     // Register the event handler
-    agoraEngine!.registerEventHandler(getEventHandler());
+    agoraEngine.registerEventHandler(getEventHandler());
   }
   RtcEngineEventHandler getEventHandler() {
     return RtcEngineEventHandler(
@@ -43,9 +74,10 @@ class _VideoCallPageState extends State<VideoCallPage> {
         }
         // Notify the UI
         Map<String, dynamic> eventArgs = {};
-        eventArgs["connection"] = connection;
-        eventArgs["state"] = state;
-        eventArgs["reason"] = reason;
+        eventArgs["connection"] = connection.channelId;
+        eventArgs["state"] = state.name;
+        eventArgs["reason"] = reason.name;
+        print("eventArgs1 ===> $eventArgs");
        // eventCallback("onConnectionStateChanged", eventArgs);
       },
       // Occurs when a local user joins a channel
@@ -57,29 +89,34 @@ class _VideoCallPageState extends State<VideoCallPage> {
         Map<String, dynamic> eventArgs = {};
         eventArgs["connection"] = connection;
         eventArgs["elapsed"] = elapsed;
+        print("eventArgs2 ===> $eventArgs");
        // eventCallback("onJoinChannelSuccess", eventArgs);
       },
       // Occurs when a remote user joins the channel
       onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
         remoteUids.add(remoteUid);
+        print("remoteUids ===> $remoteUids");
        // messageCallback("Remote user uid:$remoteUid joined the channel");
         // Notify the UI
         Map<String, dynamic> eventArgs = {};
         eventArgs["connection"] = connection;
         eventArgs["remoteUid"] = remoteUid;
         eventArgs["elapsed"] = elapsed;
+        print("eventArgs3 ===> $eventArgs");
       //  eventCallback("onUserJoined", eventArgs);
       },
       // Occurs when a remote user leaves the channel
       onUserOffline: (RtcConnection connection, int remoteUid,
           UserOfflineReasonType reason) {
         remoteUids.remove(remoteUid);
+        print("remoteUids ===> $remoteUids");
        // messageCallback("Remote user uid:$remoteUid left the channel");
         // Notify the UI
         Map<String, dynamic> eventArgs = {};
         eventArgs["connection"] = connection;
         eventArgs["remoteUid"] = remoteUid;
         eventArgs["reason"] = reason;
+        print("eventArgs4 ===> $eventArgs");
        // eventCallback("onUserOffline", eventArgs);
       },
     );
@@ -87,7 +124,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
   AgoraVideoView remoteVideoView(int remoteUid) {
     return AgoraVideoView(
       controller: VideoViewController.remote(
-        rtcEngine: agoraEngine!,
+        rtcEngine: agoraEngine,
         canvas: VideoCanvas(uid: remoteUid),
         connection: RtcConnection(channelId: channelName),
       ),
@@ -96,7 +133,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
   AgoraVideoView localVideoView() {
     return AgoraVideoView(
       controller: VideoViewController(
-        rtcEngine: agoraEngine!,
+        rtcEngine: agoraEngine,
         canvas: const VideoCanvas(uid: 0), // Use uid = 0 for local view
       ),
     );
@@ -106,9 +143,8 @@ class _VideoCallPageState extends State<VideoCallPage> {
     remoteUids.clear();
 
     // Leave the channel
-    if (agoraEngine != null) {
-      await agoraEngine!.leaveChannel();
-    }
+      await agoraEngine.leaveChannel();
+
     isJoined = false;
 
     // Destroy the Agora engine instance
@@ -116,12 +152,23 @@ class _VideoCallPageState extends State<VideoCallPage> {
   }
   void destroyAgoraEngine() {
     // Release the RtcEngine instance to free up resources
-    if (agoraEngine != null) {
-      agoraEngine!.release();
-      agoraEngine = null;
-    }
-  }
+      agoraEngine.release();
+      agoraEngine.leaveChannel();
 
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    createchannel();
+   // setupAgoraEngine();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    destroyAgoraEngine();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -495,17 +495,6 @@ class _SignUp_pageState extends State<SignUp_page> {
                           ),
                           InkWell(
                               onTap: () async {
-                                // changeLang(_firstName.text);
-                                // chatDataCubit.ChatDataService(array: [
-                                //   {
-                                //     "firstName": await translateText(_firstName.text.trim()),
-                                //     "lastName":await translateText(_lastName.text.trim()),
-                                //     "gender": await translateText(gender.trim()),
-                                //     "dateOfBirth":await translateText(_date.text.trim()),
-                                //     "phoneNumber": await translateText(_phoneNumber.text.trim()),
-                                //     "email": await translateText(_eMail.text),
-                                //   },
-                                // ], context: context);
                                 Navigator.pop(context);
                               },
                               child:  Text(

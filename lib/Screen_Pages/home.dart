@@ -161,7 +161,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   @override
   void initState() {
     // allUsersDetailsCubit.GetAllUsersDetails();
-
     allUsersDetailsCubit = BlocProvider.of<AllUsersDetailsCubit>(context);
     rejectUserCubit = BlocProvider.of<RejectUserCubit>(context);
     connectUserCubit = BlocProvider.of<ConnectUserCubit>(context);
@@ -189,7 +188,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                 scrollBehavior: const MaterialScrollBehavior(),
                 allowImplicitScrolling: true,
                 onPageChanged: (value) {},
-                physics: const ClampingScrollPhysics(),
+                physics: theEnd ? const NeverScrollableScrollPhysics() : const ClampingScrollPhysics(),
                 children: [
                   SafeArea(
                     child: Column(
@@ -1549,8 +1548,29 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           errorWidget: (context,
                                                               url,
                                                               error) =>
-                                                          const Icon(Icons
-                                                              .error),
+                                                              Container(
+                                                                height: screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    swipeDown?1.2: height1),
+                                                                width: screenWidth(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    swipeDown ?1 :wight),
+                                                                decoration: const BoxDecoration(
+                                                                    image: DecorationImage(
+                                                                        image:
+                                                                        AssetImage("assets/Images/placeHolderImage.jpg"),
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        filterQuality:
+                                                                        FilterQuality
+                                                                            .high),
+                                                                    borderRadius:
+                                                                    BorderRadius
+                                                                        .all(
+                                                                        Radius.circular(20))),
+                                                              ),
                                                         ),
                                                         Container(
                                                             height: screenHeight(
@@ -1727,7 +1747,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 key: _key1,
                                                                 controller: TabController(
                                                                     vsync: this,
-                                                                    length: image.isEmpty ? 0 :image.length,
+                                                                    length: image.isEmpty ? 1 :image.length,
                                                                     initialIndex:
                                                                         pageViewIndex),
                                                                 color: AppColor

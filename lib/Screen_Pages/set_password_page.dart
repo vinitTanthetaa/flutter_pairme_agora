@@ -64,11 +64,6 @@ class _Set_PasswordState extends State<Set_Password> {
                   },  hint: 'Enter your confirm password', image: hideconfirmPassword == false ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
                   const Spacer(),
                   Custom_botton(context, text: 'Save',
-                  // onTap: () {
-                  //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //     return  Verification_code(Forggot: false, Number: widget.number,);
-                  //   },));
-                  // },
                     onTap: () {
                     if(_Password.text.isEmpty){
                       flutterToast("Please Enter Your Password", false);

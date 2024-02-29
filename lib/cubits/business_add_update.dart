@@ -36,7 +36,7 @@ class BusinessaddressUpdatesCubit extends Cubit<BusinessaddressUpdatesState> {
       "state": state,
       "city": city,
       "zipCode":zipCode,
-      "start_date":start_date,
+      "startDate":start_date,
     };
     print("Body is $body");
     try {

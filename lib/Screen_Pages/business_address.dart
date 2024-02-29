@@ -413,9 +413,37 @@ class _Business_AddressState extends State<Business_Address> {
                       }, hint: "Post code / Zip code",number: true, hidetext: false, controller: _Zipcode),
                       custom_textfield_header(text: 'Start Date'),
                       Custom_textfield(context,onTap: () {
-                        setState(() {
-                          calendar = !calendar;
-                        });
+                        BottomPicker.date(
+                          title: 'Set your Birthday',
+                          dateOrder: DatePickerDateOrder.dmy,
+                          initialDateTime: _focusedDay,
+                          gradientColors: [AppColor.skyBlue,AppColor.whiteskyBlue],
+                          titlePadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 100)),
+                          height: screenHeight(context,dividedBy: 3),
+                          dismissable: true,
+                          displayCloseIcon: false,
+                          maxDateTime: DateTime(2050),
+                          minDateTime: DateTime(1980),
+                          pickerTextStyle: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                          titleStyle: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis,
+                              color: AppColor.black),
+                          titleAlignment: CrossAxisAlignment.center,
+                          onChange: (index) {
+
+                          },
+                          onSubmit: (index) {
+                            _date.text = DateFormat('dd MMMM yyyy').format(index);
+                          },
+                          bottomPickerTheme: BottomPickerTheme.plumPlate,
+                        ).show(context);
                       }, show_icon: true, image: 'assets/Images/calendar.png',onPress: () {
                         BottomPicker.date(
                           title: 'Set your Birthday',

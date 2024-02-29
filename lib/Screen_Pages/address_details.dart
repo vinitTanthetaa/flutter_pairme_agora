@@ -436,7 +436,7 @@ class _Address_DetailsState extends State<Address_Details> {
                         context,
                         text: 'SAVE',
                         onTap: () {
-                          addressDetailsCubit.AddressDetailsService(address: "${_Address.text},${_Address2.text}", country: _Contry.text, state: _State.text, city: _City.text, zipCode: _Zipcode.text, context: context).then((value) => Navigator.pop(context,'refresh'));
+                          addressDetailsCubit.AddressDetailsService(address: _Address.text.isNotEmpty || _Address2.text.isNotEmpty ? "${_Address.text},${_Address2.text}" : '', country: _Contry.text, state: _State.text, city: _City.text, zipCode: _Zipcode.text, context: context).then((value) => Navigator.pop(context,'refresh'));
                           //  Navigator.pop(context);
                         },
                         height: screenHeight(context, dividedBy: 20),

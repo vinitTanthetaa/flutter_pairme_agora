@@ -381,10 +381,11 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             ? const SizedBox()
                             : GestureDetector(
                           onTap: () {
-                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice", context: context).then((value) =>  Navigator.push(context, MaterialPageRoute(
+                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice", context: context)
+                            .then((value) =>  Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return VoiceCallPage(
-                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id,);
+                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id, token: '',);
                               },
                             )));
                           },
@@ -404,7 +405,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return const VideoCallPage();
+                                return VideoCallPage( img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id,);
                               },
                             ));
                           },

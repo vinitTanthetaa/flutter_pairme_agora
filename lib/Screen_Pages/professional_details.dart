@@ -72,6 +72,7 @@ class _Professional_DetailsState extends State<Professional_Details> {
   bool _experience = false;
   bool _skill = false;
   bool _education = false;
+  bool _university = false;
   getData(){
     _compnyName.text = widget.Name;
     _jobTitle.text = widget.job;
@@ -378,7 +379,9 @@ class _Professional_DetailsState extends State<Professional_Details> {
                               ? 'assets/Images/Vector.png'
                               : 'assets/Images/right_arrow.png',
                           onTap: () {
-
+                            setState(() {
+                              _education = !_education;
+                            });
                           },
                           readOnly: false,
                           onPress: () {
@@ -453,18 +456,20 @@ class _Professional_DetailsState extends State<Professional_Details> {
                               ? 'assets/Images/Vector.png'
                               : 'assets/Images/right_arrow.png',
                           onTap: () {
-
+                            setState(() {
+                              _university = !_university;
+                            });
                           },
                           readOnly: false,
                           onPress: () {
                             setState(() {
-                              _education = !_education;
+                              _university = !_university;
                             });
                           },
                           hint: "Select",
                           hidetext: false,
                           controller: _univercitycontroller),
-                      _education
+                      _university
                           ? Container(
                         // height:
                         //     screenHeight(context, dividedBy: 10),
@@ -499,7 +504,7 @@ class _Professional_DetailsState extends State<Professional_Details> {
                                     setState(() {
                                       _univercitycontroller.text =
                                       "Veer Narmad South Gujarat University";
-                                      _education = !_education;
+                                      _university = !_university;
                                     });
                                   },
                                   child: const Text(

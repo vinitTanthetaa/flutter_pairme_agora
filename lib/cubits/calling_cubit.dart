@@ -27,12 +27,27 @@ class CallingDetailsCubit extends Cubit<CallingDetailsState> {
         required BuildContext context}) async {
     emit(CallingDetailsLoading());
     final dio = Dio();
+    String rtc ='';
+    Map<String, dynamic> body1 = {
+      "channel": from,
+    };
+    try {
+      final response = await dio.post('http://192.168.29.113:3000/rtc',data: jsonEncode(body1));
+      Map hello = response.data;
+      print("hello :- $hello");
+      rtc = hello['rtcToken'];
+    } catch (e) {
+      print("you are fully fail my friend " + e.toString());
+      // TODO
+    }
+
     Map<String, dynamic> body = {
       "from": from,
       "to": to,
       "type": type,
+      "rtc": rtc
     };
-    print("Body is $body");
+     print("Body is $body");
     try {
       final response = await dio.post(apis.calling,options:  Options(headers: {
         'Content-Type': 'application/json',
