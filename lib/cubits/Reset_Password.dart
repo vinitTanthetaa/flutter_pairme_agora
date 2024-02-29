@@ -35,6 +35,8 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       "phoneNumber": phoneNumber,
       "password": password,
       "confirmPassword": confirmPassword,
+      "countryCode": countryCodeSelect,
+
     };
     print("Body is $body");
     try {

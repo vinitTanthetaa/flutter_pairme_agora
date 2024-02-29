@@ -12,12 +12,14 @@ class AllUsersdetails {
   bool? status;
   int? code;
   String? loginUserId;
+  String? loginUserName;
   List<List<Datum>>? data;
 
   AllUsersdetails({
      this.status,
      this.code,
      this.loginUserId,
+     this.loginUserName,
      this.data,
   });
 
@@ -25,6 +27,7 @@ class AllUsersdetails {
     status: json["status"],
     code: json["code"],
     loginUserId: json["loginUserId"],
+    loginUserName: json["loginUserName"],
     data: List<List<Datum>>.from(json["data"].map((x) => List<Datum>.from(x.map((x) => Datum.fromJson(x))))),
   );
 
@@ -32,6 +35,7 @@ class AllUsersdetails {
     "status": status,
     "code": code,
     "loginUserId": loginUserId,
+    "loginUserName": loginUserName,
     "data": List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
   };
 }

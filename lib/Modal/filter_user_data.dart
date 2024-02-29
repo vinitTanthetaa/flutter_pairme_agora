@@ -13,6 +13,7 @@ class FilterUser {
   int? code;
   int? data1;
   String? loginUserId;
+  String? loginUserName;
   List<List<Datum?>>? data;
 
   FilterUser({
@@ -20,6 +21,7 @@ class FilterUser {
     this.code,
     this.data1,
     this.loginUserId,
+    this.loginUserName,
     this.data,
   });
 
@@ -28,6 +30,7 @@ class FilterUser {
     code: json["code"],
     data1: json["data1"],
     loginUserId: json["loginUserId"],
+    loginUserName: json["loginUserName"],
     data: List<List<Datum?>>.from(json["data"].map((x) => List<Datum?>.from(x.map((x) => x == null ? null : Datum.fromJson(x))))),
   );
 
@@ -36,6 +39,7 @@ class FilterUser {
     "code": code,
     "data1": data1,
     "loginUserId": loginUserId,
+    "loginUserName": loginUserName,
     "data": List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x?.toJson())))),
   };
 }

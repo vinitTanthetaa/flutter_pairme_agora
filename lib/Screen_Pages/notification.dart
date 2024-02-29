@@ -9,6 +9,7 @@ import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/cubits/acceptORrejectnotification.dart';
+import 'package:pair_me/cubits/calling_cubit.dart';
 import 'package:pair_me/cubits/clearAllNotification_cubit.dart';
 import 'package:pair_me/cubits/notification_cubit.dart';
 import 'package:pair_me/helper/Apis.dart';
@@ -26,6 +27,7 @@ class _Notification_pageState extends State<Notification_page> {
   NotificationCubit notificationCubit = NotificationCubit();
   UserNotification userNotification = UserNotification();
   AcceptorRejectCubit acceptorRejectCubit = AcceptorRejectCubit();
+  CallingDetailsCubit callingDetailsCubit = CallingDetailsCubit();
   ClearAllNotificationCubit clearAllNotificationCubit =
       ClearAllNotificationCubit();
   List ids = [];
@@ -263,21 +265,21 @@ class _Notification_pageState extends State<Notification_page> {
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () {
-                                                      acceptorRejectCubit
-                                                          .RejectNotification(
-                                                              id: [
-                                                            notificationCubit
-                                                                    .userNotification
-                                                                    .data?[
-                                                                        index]
-                                                                    .sentBy
-                                                                    ?.id ??
-                                                                ''
-                                                          ]).whenComplete(
-                                                        () {
-                                                          getData();
-                                                        },
-                                                      );
+                                                        acceptorRejectCubit
+                                                            .RejectNotification(
+                                                            id: [
+                                                              notificationCubit
+                                                                  .userNotification
+                                                                  .data?[
+                                                              index]
+                                                                  .sentBy
+                                                                  ?.id ??
+                                                                  ''
+                                                            ]).whenComplete(
+                                                              () {
+                                                            getData();
+                                                          },
+                                                        );
                                                     },
                                                     child: SvgPicture.asset(
                                                         "assets/Images/cancel.svg",
@@ -291,19 +293,21 @@ class _Notification_pageState extends State<Notification_page> {
                                                   ),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      acceptorRejectCubit.AcceptNotification(
-                                                              id: notificationCubit
-                                                                      .userNotification
-                                                                      .data?[
-                                                                          index]
-                                                                      .sentBy
-                                                                      ?.id ??
-                                                                  '')
-                                                          .whenComplete(
-                                                        () {
-                                                          getData();
-                                                        },
-                                                      );
+                                                      callingDetailsCubit.CallingDetailsService(from: notificationCubit.userNotification.data?[index].receiveBy ?? '', to: notificationCubit.userNotification.data?[index].sentBy?.id ?? '', type: "Notification", context: context, msg: '${notificationCubit.userNotification.loginUserName} Accept your request').then((value) {
+                                                        acceptorRejectCubit.AcceptNotification(
+                                                            id: notificationCubit
+                                                                .userNotification
+                                                                .data?[
+                                                            index]
+                                                                .sentBy
+                                                                ?.id ??
+                                                                '')
+                                                            .whenComplete(
+                                                              () {
+                                                            getData();
+                                                          },
+                                                        );
+                                                      });
                                                     },
                                                     child: SvgPicture.asset(
                                                         "assets/Images/accept.svg",

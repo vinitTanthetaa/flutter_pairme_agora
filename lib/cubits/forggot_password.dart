@@ -30,7 +30,8 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     emit(ForgotPasswordLoading());
     final dio = Dio();
     Map<String, dynamic> body = {
-      "phoneNumber": "$countryCodeSelect$phoneNumber",
+      "phoneNumber": phoneNumber,
+      "countryCode": countryCodeSelect,
     };
     print("Body is $body");
     try {
@@ -42,7 +43,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
         print("Response ===> ${response.data}");
         emit(ForgotPasswordSuccess());
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return  Verification_code(Forggot: true, Number: "$countryCodeSelect$phoneNumber",);
+          return  Verification_code(Forggot: true, Number: phoneNumber,);
         },));
        // flutterToast(hello['message'], true);
       } else {

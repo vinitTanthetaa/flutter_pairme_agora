@@ -11,23 +11,27 @@ String userNotificationToJson(UserNotification data) => json.encode(data.toJson(
 class UserNotification {
   bool? status;
   int? code;
+  String? loginUserName;
   List<Datum>? data;
 
   UserNotification({
      this.status,
      this.code,
+     this.loginUserName,
      this.data,
   });
 
   factory UserNotification.fromJson(Map<String, dynamic> json) => UserNotification(
     status: json["status"],
     code: json["code"],
+    loginUserName: json["loginUserName"],
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
+    "loginUserName": loginUserName,
     "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }

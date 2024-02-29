@@ -160,8 +160,11 @@ class _MessageRequestState extends State<MessageRequest> {
                                      String refresh = await Navigator.push(context, MaterialPageRoute(
                                        builder: (context) {
                                          return Chatting_Page(name: 'Request',
+                                           CUName: messageRequestCubit.userMssageReq.loginUserName ?? '',
                                            Username: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userName ?? '',
-                                           image: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userImage ?? '', uid: messageRequestCubit.userMssageReq.data?.userId ?? '', id: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].id ?? '',);
+                                           image: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].userImage ?? '',
+                                           uid: messageRequestCubit.userMssageReq.data?.userId ?? '',
+                                           id: messageRequestCubit.userMssageReq.data?.withoutConnect?[index].id ?? '',);
                                        },
                                      ));
                                      if(refresh == "refresh"){

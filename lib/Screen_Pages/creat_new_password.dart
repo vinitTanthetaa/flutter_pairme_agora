@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
@@ -59,23 +60,30 @@ class _Create_New_PasswordState extends State<Create_New_Password> {
                       hideconfirmPassword = !hideconfirmPassword;
                     });
                   },  hint: 'Enter your Confirm password', image: hideconfirmPassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
-                  Spacer(),
-                  Custom_botton(context, text: 'Save', onTap: () {
-                    if(_Password.text.isEmpty){
-                      flutterToast("Enter your new password", false);
-                    }else if(regExp.hasMatch(_Password.text)){
-                      if (_confirmPassword.text.isEmpty){
-                        flutterToast("Please Enter Your Confirm Password", false);
-                      }else if (_confirmPassword.text != _Password.text){
-                        flutterToast("Please Enter Password And Confirm Password are same", false);
+                  const Spacer(),
+                  BlocBuilder<ResetPasswordCubit,ResetPasswordState>(builder: (context, state) {
+                    if(state is ResetPasswordLoading){
+                      return Padding(
+                          padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 20)),
+                          child: customLoader());
+                          }
+                    return Custom_botton(context, text: 'Save', onTap: () {
+                      if(_Password.text.isEmpty){
+                        flutterToast("Enter your new password", false);
+                      }else if(regExp.hasMatch(_Password.text)){
+                        if (_confirmPassword.text.isEmpty){
+                          flutterToast("Please Enter Your Confirm Password", false);
+                        }else if (_confirmPassword.text != _Password.text){
+                          flutterToast("Please Enter Password And Confirm Password are same", false);
+                        }else {
+                          resetPasswordCubit.ResetPasswordService(phoneNumber: widget.Phonenumber, password: _Password.text, confirmPassword: _confirmPassword.text, context: context);
+                        }
                       }else {
-                        resetPasswordCubit.ResetPasswordService(phoneNumber: widget.Phonenumber, password: _Password.text, confirmPassword: _confirmPassword.text, context: context);
-                      }
-                    }else {
-                      flutterToast("please enter at lest 1 upper case and 1 lower case and 1 digit and 1 special carecter and at least 8 characters", false);
+                        flutterToast("please enter at lest 1 upper case and 1 lower case and 1 digit and 1 special carecter and at least 8 characters", false);
 
-                    }
-                  }, height: screenHeight(context,dividedBy: 20),)
+                      }
+                    }, height: screenHeight(context,dividedBy: 20),);
+                  },)
                 ],
               ),
             )

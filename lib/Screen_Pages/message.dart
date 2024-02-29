@@ -69,8 +69,9 @@ class _Message_pageState extends State<Message_page> {
                      children: [
                        custom_header(text: 'Message'),
                        BlocBuilder<MessageCubit,MessageState>(builder: (context, state) {
+                         bool data = messageRequestCubit.userMssageReq.data?.withoutConnect?.isNotEmpty ?? false;
                          if(state is MessageSuccess){
-                           return   messageRequestCubit.userMssageReq.data!.withoutConnect!.isNotEmpty ?  GestureDetector(
+                           return   data ?  GestureDetector(
                              onTap: () async {
                                String refresh = await  Navigator.push(context, MaterialPageRoute(builder:(context) {
                                  return const MessageRequest();

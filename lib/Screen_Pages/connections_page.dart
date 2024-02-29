@@ -180,7 +180,7 @@ class _Connection_PageState extends State<Connection_Page> {
                                         return SizedBox(
                                           // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
                                           height: screenHeight(context,
-                                              dividedBy: 8),
+                                              dividedBy: 10),
                                           width: screenHeight(context),
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
@@ -229,105 +229,102 @@ class _Connection_PageState extends State<Connection_Page> {
                                                 ),
                                                 SizedBox(
                                                   width: screenWidth(context,
-                                                      dividedBy: 30),
+                                                      dividedBy: 27),
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: screenWidth(
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                  children: [
+                                                    Text(
+                                                      serarchbar
+                                                              .text.isNotEmpty
+                                                          ? data[index]
+                                                              ['name']
+                                                          : connectedUsersCubit
+                                                                  .connectedUsers
+                                                                  .data?[
+                                                                      index]
+                                                                  .name ??
+                                                              '',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          height: 0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'Roboto'),
+                                                    ),
+                                                    // SizedBox(
+                                                    //   height: screenHeight(
+                                                    //       context,
+                                                    //       dividedBy: 1000),
+                                                    // ),
+                                                    SizedBox(
+                                                      width: screenWidth(
                                                           context,
-                                                          dividedBy: 40)),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        serarchbar
-                                                                .text.isNotEmpty
-                                                            ? data[index]
-                                                                ['name']
-                                                            : connectedUsersCubit
-                                                                    .connectedUsers
-                                                                    .data?[
-                                                                        index]
-                                                                    .name ??
-                                                                '',
-                                                        style: const TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'Roboto'),
+                                                          dividedBy: 1.85),
+                                                      child: Text(
+                                                          serarchbar
+                                                              .text.isNotEmpty
+                                                              ? data[index]
+                                                          ['bio']
+                                                              : connectedUsersCubit
+                                                              .connectedUsers
+                                                              .data?[
+                                                          index]
+                                                              .bio ??
+                                                              '',
+                                                         // 'Dis promethium, vei maximus gulag......',
+                                                          maxLines: 2,
+                                                          style: const TextStyle(
+                                                              color: Color(
+                                                                  0xffAAAAAA),
+                                                              overflow: TextOverflow.ellipsis,
+                                                              fontSize: 13,
+                                                              height: 0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontFamily:
+                                                                  'Roboto')),
+                                                    ),
+                                                    SizedBox(
+                                                      width: screenWidth(
+                                                          context,
+                                                          dividedBy: 2.2),
+                                                      child: Row(
+                                                        children: [
+                                                          Image.asset(
+                                                              "assets/Images/calendar.png",
+                                                              width: screenWidth(
+                                                                  context,
+                                                                  dividedBy:
+                                                                      40)),
+                                                          const SizedBox(
+                                                            width: 3,
+                                                          ),
+                                                          Text(serarchbar
+                                                              .text
+                                                              .isNotEmpty
+                                                              ?DateFormat('dd/MM/yyyy').format(DateTime.parse(data[index]['time']) ?? DateTime.now()) :
+                                                              DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data?[index].time ?? DateTime.now()),
+                                                              style: const TextStyle(
+                                                                  color: Color(
+                                                                      0xffAAAAAA),
+                                                                  fontSize:
+                                                                      11,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Roboto'))
+                                                        ],
                                                       ),
-                                                      SizedBox(
-                                                        height: screenHeight(
-                                                            context,
-                                                            dividedBy: 300),
-                                                      ),
-                                                      SizedBox(
-                                                        width: screenWidth(
-                                                            context,
-                                                            dividedBy: 2.2),
-                                                        child: Text(
-                                                            serarchbar
-                                                                .text.isNotEmpty
-                                                                ? data[index]
-                                                            ['bio']
-                                                                : connectedUsersCubit
-                                                                .connectedUsers
-                                                                .data?[
-                                                            index]
-                                                                .bio ??
-                                                                '',
-                                                           // 'Dis promethium, vei maximus gulag......',
-                                                            maxLines: 2,
-                                                            style: const TextStyle(
-                                                                color: Color(
-                                                                    0xffAAAAAA),
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontFamily:
-                                                                    'Roboto')),
-                                                      ),
-                                                      SizedBox(
-                                                        width: screenWidth(
-                                                            context,
-                                                            dividedBy: 2.2),
-                                                        child: Row(
-                                                          children: [
-                                                            Image.asset(
-                                                                "assets/Images/calendar.png",
-                                                                width: screenWidth(
-                                                                    context,
-                                                                    dividedBy:
-                                                                        40)),
-                                                            const SizedBox(
-                                                              width: 3,
-                                                            ),
-                                                            Text(serarchbar
-                                                                .text
-                                                                .isNotEmpty
-                                                                ?DateFormat('dd/MM/yyyy').format(DateTime.parse(data[index]['time']) ?? DateTime.now()) :
-                                                                DateFormat('dd/MM/yyyy').format(connectedUsersCubit.connectedUsers.data?[index].time ?? DateTime.now()),
-                                                                style: const TextStyle(
-                                                                    color: Color(
-                                                                        0xffAAAAAA),
-                                                                    fontSize:
-                                                                        10,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Roboto'))
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
                                                 const Spacer(),
                                                 Padding(

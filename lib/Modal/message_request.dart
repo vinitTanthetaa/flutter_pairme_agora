@@ -11,23 +11,27 @@ String userMssageReqToJson(UserMssageReq data) => json.encode(data.toJson());
 class UserMssageReq {
   bool? status;
   int? code;
+  String? loginUserName;
   Data? data;
 
   UserMssageReq({
      this.status,
      this.code,
+     this.loginUserName,
      this.data,
   });
 
   factory UserMssageReq.fromJson(Map<String, dynamic> json) => UserMssageReq(
     status: json["status"],
     code: json["code"],
+    loginUserName: json["loginUserName"],
     data: Data.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "code": code,
+    "loginUserName": loginUserName,
     "data": data?.toJson(),
   };
 }

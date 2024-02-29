@@ -32,13 +32,15 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
 
 class Chatting_Page extends StatefulWidget {
-  String name, Username, image, id, uid;
+  String name, Username, image, id, uid ;
+  String? CUName;
 
   Chatting_Page({super.key,
     required this.name,
     required this.uid,
     required this.id,
     required this.Username,
+    this.CUName,
     required this.image});
 
   @override
@@ -223,10 +225,12 @@ class _Chatting_PageState extends State<Chatting_Page> {
             ),
             GestureDetector(
               onTap: () {
-                acceptReqMsgUserCubit.AcceptNotification(
-                    context, id: widget.id);
-                setState(() {
-                  widget.name = 'chatting';
+                callingDetailsCubit.CallingDetailsService(from: widget.uid ?? '', to: widget.id ?? '', type: "Notification", context: context, msg: '${widget.CUName} Accept Direct Message Request').then((value) {
+                  acceptReqMsgUserCubit.AcceptNotification(
+                      context, id: widget.id);
+                  setState(() {
+                    widget.name = 'chatting';
+                  });
                 });
               },
               child: Container(
@@ -381,7 +385,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             ? const SizedBox()
                             : GestureDetector(
                           onTap: () {
-                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice", context: context)
+                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice", context: context, msg: '')
                             .then((value) =>  Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return VoiceCallPage(

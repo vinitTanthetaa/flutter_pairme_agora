@@ -4,6 +4,7 @@ import 'package:pair_me/Screen_Pages/address_details.dart';
 import 'package:pair_me/Screen_Pages/verification_code.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
@@ -63,23 +64,31 @@ class _Set_PasswordState extends State<Set_Password> {
                     });
                   },  hint: 'Enter your confirm password', image: hideconfirmPassword == false ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
                   const Spacer(),
-                  Custom_botton(context, text: 'Save',
-                    onTap: () {
-                    if(_Password.text.isEmpty){
-                      flutterToast("Please Enter Your Password", false);
-                    }else if(regExp.hasMatch(_Password.text)){
-                      if (_confirmPassword.text.isEmpty){
-                        flutterToast("Please Enter Your Confirm Password", false);
-                      }else if (_confirmPassword.text != _Password.text){
-                        flutterToast("Please Enter Password And Confirm Password are same", false);
-                      }else {
-                        signUpCubit.signUpService(email: widget.email, firstname: widget.firstname, lastname: widget.lastname, phoneNumber: widget.number, password: _Password.text, confirmPassword: _confirmPassword.text, context: context, gender: widget.gender, dob: widget.dob, terms: widget.T_C);
-                      }
-                    }else {
-                      flutterToast("please enter at lest 1 upper case and 1 lower case and 1 digit and 1 special carecter and at least 8 characters", false);
-                    }
-                  },
-                    height: screenHeight(context,dividedBy: 20),)
+                 BlocBuilder<SignUpCubit,SignUpState>(builder: (context, state) {
+                   if(state is SignUpLoading){
+                     return Padding(
+                       padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 20)),
+                       child: customLoader(),
+                     );
+                   }
+                   return  Custom_botton(context, text: 'Save',
+                     onTap: () {
+                       if(_Password.text.isEmpty){
+                         flutterToast("Please Enter Your Password", false);
+                       }else if(regExp.hasMatch(_Password.text)){
+                         if (_confirmPassword.text.isEmpty){
+                           flutterToast("Please Enter Your Confirm Password", false);
+                         }else if (_confirmPassword.text != _Password.text){
+                           flutterToast("Please Enter Password And Confirm Password are same", false);
+                         }else {
+                           signUpCubit.signUpService(email: widget.email, firstname: widget.firstname, lastname: widget.lastname, phoneNumber: widget.number, password: _Password.text, confirmPassword: _confirmPassword.text, context: context, gender: widget.gender, dob: widget.dob, terms: widget.T_C);
+                         }
+                       }else {
+                         flutterToast("please enter at lest 1 upper case and 1 lower case and 1 digit and 1 special carecter and at least 8 characters", false);
+                       }
+                     },
+                     height: screenHeight(context,dividedBy: 20),);
+                 },)
                 ],
               ),
             )

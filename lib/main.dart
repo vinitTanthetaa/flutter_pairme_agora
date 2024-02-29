@@ -134,9 +134,22 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       map = message.data;
-     print("map ===> $map");
-      AwesomeNotifications().createNotification(
-          content: NotificationContent(
+      print(map);
+      if(map['type'] == "Notification"){
+        AwesomeNotifications().createNotification(
+            content: NotificationContent(
+              id: 123,
+              channelKey: "call_channel",
+              color: Colors.white,
+              title: message.notification?.title ?? '',
+              body: message.notification?.body ?? '',
+              category: NotificationCategory.Reminder,
+              // backgroundColor: Colors.orange
+            ),
+        );
+      } else{
+        AwesomeNotifications().createNotification(
+            content: NotificationContent(
               id: 123,
               channelKey: "call_channel",
               color: Colors.white,
@@ -146,15 +159,16 @@ class _MyAppState extends State<MyApp> {
               wakeUpScreen: true,
               fullScreenIntent: true,
               autoDismissible: false,
-             // backgroundColor: Colors.orange
-          ),
-          actionButtons: [
-            NotificationActionButton(key: "ACCEPT", label: "Accept",color: Colors.greenAccent,autoDismissible: true),
-            NotificationActionButton(key: "REJECT", label: "Reject",color: Colors.redAccent,autoDismissible: true),
-          ]
-      );
-      AwesomeNotifications()
-          .setListeners(onActionReceivedMethod: onActionReceivedMethod);
+              // backgroundColor: Colors.orange
+            ),
+            actionButtons: [
+              NotificationActionButton(key: "ACCEPT", label: "Accept",color: Colors.greenAccent,autoDismissible: true),
+              NotificationActionButton(key: "REJECT", label: "Reject",color: Colors.redAccent,autoDismissible: true),
+            ]
+        );
+        AwesomeNotifications()
+            .setListeners(onActionReceivedMethod: onActionReceivedMethod);
+      }
     });
   }
   @pragma('vm:entry-point')

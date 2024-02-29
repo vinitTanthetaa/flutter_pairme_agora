@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
+import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/Widgets/textfield.dart';
 import 'package:pair_me/cubits/change_password.dart';
 import 'package:pair_me/helper/Size_page.dart';
@@ -119,19 +121,30 @@ class _ChangePasswordState extends State<ChangePassword> {
                         controller: _confirmPassword,
                         hidetext: hideconfirmPassword,
                         readOnly: false),
-                    Spacer(),
-                    Custom_botton(
-                      context,
-                      text: 'Update Password',
-                      onTap: () {
-                        changePasswordCubit.ChangePasswordService(currentPassword: _oldPassword.text, newPassword: _Password.text, confirmPassword: _confirmPassword.text, context: context);
-                        //Navigator.pop(context);
-                        // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        //   return Login_page();
-                        // },));
-                      },
-                      height: screenHeight(context, dividedBy: 15),
-                    )
+                    const Spacer(),
+                    BlocBuilder<ChangePasswordCubit,ChangePasswordState>(builder: (context, state) {
+                      if(state is ChangePasswordLoading){
+                        return Padding(
+                            padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 15)),
+                            child: customLoader());
+                      }
+                      return  Custom_botton(
+                        context,
+                        text: 'Update Password',
+                        onTap: () {
+                          if(_oldPassword.text.isEmpty){
+                            flutterToast("Please Enter Old Password", false);
+                          } else if(_Password.text.isEmpty){
+                            flutterToast("Please Enter New Password", false);
+                          } else if(_Password.text != _confirmPassword.text){
+                            flutterToast("Please Make Sure New Password and Confirm Password are Same", false);
+                          } else {
+                            changePasswordCubit.ChangePasswordService(currentPassword: _oldPassword.text, newPassword: _Password.text, confirmPassword: _confirmPassword.text, context: context);
+                          }
+                        },
+                        height: screenHeight(context, dividedBy: 15),
+                      );
+                    },)
                   ],
                 ),
               )

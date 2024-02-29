@@ -6,6 +6,7 @@ import 'package:pair_me/Screen_Pages/address_details.dart';
 import 'package:pair_me/Screen_Pages/creat_new_password.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/flutter_toast.dart';
 import 'package:pair_me/cubits/ReSend_Otp_cubit.dart';
@@ -90,18 +91,41 @@ class _Verification_codeState extends State<Verification_code> {
                   },
                     child: Text('Resend Code'.tr(),style: const TextStyle(fontFamily: 'Roboto',fontWeight: FontWeight.w500,color: AppColor.skyBlue,decoration: TextDecoration.underline,decorationColor: AppColor.skyBlue,decorationStyle: TextDecorationStyle.solid,decorationThickness: 1.5))),
                 const Spacer(),
-                Custom_botton(context, text: 'Verify',
-
-                  onTap: () {
-                  if(pinController.text.isEmpty){
-                    flutterToast("Plese Enter Pin", true);
-                  } else if(widget.Forggot){
-                    verifyForgotOtpCubit.VerifyForgotOtpService(phoneNumber: widget.Number, otp: pinController.text, forget: true, context: context);
-                  } else {
-                    verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
+                widget.Forggot ? BlocBuilder<VerifyForgotOtpCubit,VerifyForgotOtpState>(builder: (context, state) {
+                  if(state is VerifyForgotOtpLoading){
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 20)),
+                      child: customLoader(),
+                    );
                   }
-                },
-                  height: screenHeight(context,dividedBy: 20),)
+                  return Custom_botton(context, text: 'Verify',
+                    onTap: () {
+                      if(pinController.text.isEmpty){
+                        flutterToast("Plese Enter Pin", true);
+                      } else {
+                        verifyForgotOtpCubit.VerifyForgotOtpService(phoneNumber: widget.Number, otp: pinController.text, forget: true, context: context);
+                      }
+                    },
+                    height: screenHeight(context,dividedBy: 20),);
+                },) :
+                BlocBuilder<VerifyCubit,VerifyState>(builder: (context, state) {
+                  if(state is VerifyLoading){
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 20)),
+                      child: customLoader(),
+                    );
+                  }
+                  return Custom_botton(context, text: 'Verify',
+
+                    onTap: () {
+                      if(pinController.text.isEmpty){
+                        flutterToast("Plese Enter Pin", true);
+                      }  else {
+                        verifyCubit.VerifyService(phoneNumber: widget.Number, otp: pinController.text, forget: false, context: context);
+                      }
+                    },
+                    height: screenHeight(context,dividedBy: 20),);
+                },)
               ],
             ),)
           ],

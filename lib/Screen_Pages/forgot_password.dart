@@ -6,6 +6,7 @@ import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/Screen_Pages/verification_code.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
+import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/cubits/forggot_password.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -154,22 +155,21 @@ class _Forget_PasswordState extends State<Forget_Password> {
                     ),
                   ),
                   const Spacer(),
-                  Custom_botton(
-                    context,
-                    text: 'Send',
-                    onTap: () {
-                      //forgotPasswordCubit.ForgotPasswordService(phoneNumber: _Email.text, context: context);
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return Verification_code(
-                            Forggot: true,
-                            Number: '',
-                          );
-                        },
-                      ));
-                    },
-                    height: screenHeight(context, dividedBy: 20),
-                  )
+                  BlocBuilder<ForgotPasswordCubit,ForgotPasswordState>(builder: (context, state) {
+                    if(state is ForgotPasswordLoading){
+                      return Padding(
+                          padding: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 20)),
+                          child: customLoader());
+                    }
+                    return    Custom_botton(
+                      context,
+                      text: 'Send',
+                      onTap: () {
+                        forgotPasswordCubit.ForgotPasswordService(phoneNumber: _Email.text, context: context);
+                      },
+                      height: screenHeight(context, dividedBy: 20),
+                    );
+                  },)
                 ],
               ),
             )
