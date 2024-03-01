@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/alluserprofile.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/Size_page.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 abstract class AllUsersDetailsState {}
@@ -29,6 +30,7 @@ class AllUsersDetailsCubit extends Cubit<AllUsersDetailsState> {
         'Authorization': Authtoken,
       }));
       log("response ====> $response");
+      await Permission.notification.request();
       if(response.statusCode == 200 && response.data != null)
       {
         emit(AllUsersDetailsSuccess());

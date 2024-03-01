@@ -56,13 +56,13 @@ class _Set_PasswordState extends State<Set_Password> {
                     setState(() {
                       hidePassword = !hidePassword;
                     });
-                  }, image: hidePassword == false ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png', hint: 'Enter your password', controller: _Password, hidetext: hidePassword, readOnly: false),
+                  }, image: hidePassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png', hint: 'Enter your password', controller: _Password, hidetext: hidePassword, readOnly: false),
                   custom_textfield_header(text: 'Confirm Password'),
                   Custom_textfield(context, show_icon: true, onPress: () {
                     setState(() {
                       hideconfirmPassword = !hideconfirmPassword;
                     });
-                  },  hint: 'Enter your confirm password', image: hideconfirmPassword == false ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
+                  },  hint: 'Enter your confirm password', image: hideconfirmPassword  ? 'assets/Images/visibility_off.png': 'assets/Images/visibility.png',controller: _confirmPassword, hidetext: hideconfirmPassword, readOnly: false),
                   const Spacer(),
                  BlocBuilder<SignUpCubit,SignUpState>(builder: (context, state) {
                    if(state is SignUpLoading){

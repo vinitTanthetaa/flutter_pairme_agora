@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:custom_gallery_display/custom_gallery_display.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:file_picker/file_picker.dart';
@@ -68,6 +70,8 @@ class _Chatting_PageState extends State<Chatting_Page> {
   bool showCard = false;
   bool emojiShowing = false;
   bool audioRecording = false;
+  String rtcToken = '';
+  final dio = Dio();
   String recordFilePath = '';
   Future<void> _openAudioRecording() async {
     final status = await Permission.microphone.request();
@@ -385,11 +389,11 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             ? const SizedBox()
                             : GestureDetector(
                           onTap: () {
-                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice", context: context, msg: '')
+                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice call", context: context, msg: '',rtc: rtcToken)
                             .then((value) =>  Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return VoiceCallPage(
-                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id, token: '',);
+                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id, token: rtcToken,);
                               },
                             )));
                           },
@@ -407,11 +411,12 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             ? const SizedBox()
                             : GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
+                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "video call", context: context, msg: '',rtc: rtcToken)
+                                .then((value) =>  Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return VideoCallPage( img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id,);
+                                return VideoCallPage( img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id, token: rtcToken,);
                               },
-                            ));
+                            )));
                           },
                           child: Image(
                             image: const AssetImage(
@@ -910,7 +915,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
     ) ;
   }
   void setupChatClient() async {
-    print("id===> ${widget.id}");
+    print("id===> ${widget.CUName}");
     print("id===> ${widget.uid}");
     ChatOptions options = ChatOptions(
       appKey: AgoraAppkey,
@@ -919,20 +924,20 @@ class _Chatting_PageState extends State<Chatting_Page> {
     agoraChatClient = ChatClient.getInstance;
     await agoraChatClient.init(options);
     await ChatClient.getInstance.startCallback();
+    Map<String, dynamic> body1 = {
+      "channel": widget.uid,
+    };
     try {
-      await agoraChatClient.login(widget.uid, "123");
-      print("Logged in successfully as ${widget.uid}");
-
-    } on ChatError catch (e) {
-      if (e.code == 200) {
-        // Already logged in
-      } else {
-        print("Login failed, code: ${e.code}, desc: ${e.description}");
-      }
+      final response = await dio.post('http://192.168.29.113:3000/rtc',data: jsonEncode(body1));
+      Map hello = response.data;
+      print("hello :- $hello");
+      rtcToken = hello['rtcToken'];
+    } catch (e) {
+      print("you are fully fail my friend " + e.toString());
+      // TODO
     }
     Getdata();
   }
-
   void setupListeners() {
     agoraChatClient.addConnectionEventHandler(
       "CONNECTION_HANDLER",
@@ -1011,103 +1016,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
   void onConnected() {
     print("Connected");
   }
-  // void displayMessage(String text, bool isSentMessage) {
-  //   messageList.add(
-  //       Row(
-  //     mainAxisAlignment:
-  //     isSentMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-  //     children: [
-  //       Flexible(
-  //         child: Container(
-  //           margin: EdgeInsets.only(
-  //               top: screenHeight(context, dividedBy: 100),
-  //               right: isSentMessage == false ? screenWidth(context, dividedBy: 5) : 15,
-  //               left: isSentMessage ? screenWidth(context, dividedBy: 5) : 15),
-  //           decoration: BoxDecoration(
-  //               borderRadius: isSentMessage
-  //                   ? const BorderRadius.only(
-  //                   bottomLeft: Radius.circular(26),
-  //                   topRight: Radius.circular(26),
-  //                   topLeft: Radius.circular(26))
-  //                   : const BorderRadius.only(
-  //                   bottomRight: Radius.circular(26),
-  //                   topRight: Radius.circular(26),
-  //                   topLeft: Radius.circular(26)),
-  //               color: isSentMessage ? AppColor.skyBlue : AppColor.gray),
-  //           child: Padding(
-  //             padding: EdgeInsets.symmetric(
-  //                 horizontal: screenWidth(context, dividedBy: 30),
-  //                 vertical: screenWidth(context, dividedBy: 50)),
-  //             child: Column(
-  //               crossAxisAlignment: isSentMessage
-  //                   ? CrossAxisAlignment.end
-  //                   : CrossAxisAlignment.start,
-  //               children: [
-  //                 if(text.length >= 25 )...[
-  //                   Text(text,style: TextStyle(
-  //                       fontSize: 17,
-  //                       // height: 1,
-  //                       fontWeight: FontWeight.w500,
-  //                       fontFamily: 'Roboto',
-  //                       color: isSentMessage
-  //                           ? AppColor.white
-  //                           : AppColor.dropdownfont),),
-  //                   Text('01:32 pm',style: TextStyle(
-  //                       fontFamily: 'Roboto',
-  //                       fontWeight: FontWeight.w500,
-  //                       fontSize: 10,
-  //                       color: isSentMessage
-  //                           ? AppColor.white
-  //                           : AppColor.dropdownfont),),
-  //                   Icon(Icons.language)
-  //                 ]else ...[
-  //                    RichText(text: TextSpan(
-  //                     children: [
-  //                       TextSpan(text: text, style:
-  //                       TextStyle(
-  //                           fontSize: 17,
-  //                           // height: 1,
-  //                           fontWeight: FontWeight.w500,
-  //                           fontFamily: 'Roboto',
-  //                           color: isSentMessage
-  //                               ? AppColor.white
-  //                               : AppColor.dropdownfont)
-  //                       ),
-  //                       TextSpan(text:'   ', style: TextStyle(
-  //                           fontFamily: 'Roboto',
-  //                           fontWeight: FontWeight.w500,
-  //                           fontSize: 10,
-  //                           color: isSentMessage
-  //                               ? AppColor.white
-  //                               : AppColor.dropdownfont),),
-  //                       TextSpan(text: '01:32 PM', style: TextStyle(
-  //                           fontFamily: 'Roboto',
-  //                           fontWeight: FontWeight.w500,
-  //                           fontSize: 10,
-  //                           color: isSentMessage
-  //                               ? AppColor.white
-  //                               : AppColor.dropdownfont),),
-  //                     ],
-  //
-  //                   )),
-  //                   GestureDetector(
-  //                     onTap: () {
-  //                       translatLanguageCubit.TranslatLanguageService(array: text, context: context).then((value) {
-  //
-  //                       },);
-  //                     },
-  //                       child: const Icon(Icons.language))
-  //                 ],
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   )
-  //   );
-  //
-  // }
   void displayimgMessage(final thumbnail, bool isSentMessage) {
     messageList.add(InkWell(
       onTap: () =>  Navigator.push(context, MaterialPageRoute(

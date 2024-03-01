@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Screen_Pages/Step_Screens.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
+import 'package:pair_me/Screen_Pages/videocall.dart';
 import 'package:pair_me/cubits/Buisness_profile.dart';
 import 'package:pair_me/cubits/City&state.dart';
 import 'package:pair_me/cubits/Delete_logout_user.dart';
@@ -38,6 +39,7 @@ import 'package:pair_me/cubits/message_data_cubit.dart';
 import 'package:pair_me/cubits/message_req_id.dart';
 import 'package:pair_me/cubits/message_user.dart';
 import 'package:pair_me/cubits/notification_cubit.dart';
+import 'package:pair_me/cubits/onlineoflinestatus_cubit.dart';
 import 'package:pair_me/cubits/professional_details_cubit.dart';
 import 'package:pair_me/cubits/profile_update.dart';
 import 'package:pair_me/cubits/reject_user.dart';
@@ -174,9 +176,15 @@ class _MyAppState extends State<MyApp> {
   @pragma('vm:entry-point')
    Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == "ACCEPT") {
-      navigatorKey.currentState?.push(MaterialPageRoute(
-        builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '', token: '',) ,
-      ));
+      if(map['type'] == "video call"){
+        navigatorKey.currentState?.push(MaterialPageRoute(
+          builder: (context) => VideoCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '', token: map['rtc']) ,
+        ));
+      } else {
+        navigatorKey.currentState?.push(MaterialPageRoute(
+          builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '', token: map['rtc']) ,
+        ));
+      }
     }
     if (receivedAction.buttonKeyPressed == "REJECT") {
       print("=======REJECT=======");
@@ -230,6 +238,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => BlockUserCubit()),
         BlocProvider(create: (context) => ChatDataCubit()),
         BlocProvider(create: (context) => CallingDetailsCubit()),
+        BlocProvider(create: (context) => OnlineOfflinestatusCubit()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

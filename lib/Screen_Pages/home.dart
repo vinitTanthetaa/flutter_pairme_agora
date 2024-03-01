@@ -71,7 +71,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   final PageController _pageController = PageController();
   getData() async {
     allUsersdetails = (await allUsersDetailsCubit.GetAllUsersDetails())!;
-    await Permission.notification.request();
     setState(() {});
   }
   getImage(int index) {

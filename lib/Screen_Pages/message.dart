@@ -16,6 +16,7 @@ import 'package:pair_me/Widgets/custom_texts.dart';
 import 'package:pair_me/Widgets/header_space.dart';
 import 'package:pair_me/cubits/delete_msg_users.dart';
 import 'package:pair_me/cubits/message_data_cubit.dart';
+import 'package:pair_me/cubits/onlineoflinestatus_cubit.dart';
 import 'package:pair_me/cubits/show_message_requests.dart';
 import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -33,6 +34,7 @@ class _Message_pageState extends State<Message_page> {
   UserMessage userMessage = UserMessage();
   RemoveMsgUserCubit removeMsgUserCubit = RemoveMsgUserCubit();
   AllMessageRequestCubit messageRequestCubit = AllMessageRequestCubit();
+  OnlineOfflinestatusCubit onlineOfflinestatusCubit = OnlineOfflinestatusCubit();
   late ChatClient agoraChatClient;
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
@@ -47,6 +49,7 @@ class _Message_pageState extends State<Message_page> {
     messageCubit = BlocProvider.of<MessageCubit>(context);
     removeMsgUserCubit = BlocProvider.of<RemoveMsgUserCubit>(context);
     messageRequestCubit = BlocProvider.of<AllMessageRequestCubit>(context);
+    onlineOfflinestatusCubit = BlocProvider.of<OnlineOfflinestatusCubit>(context);
     messageRequestCubit.GetAllMessageRequest();
     getData();
   }
@@ -149,10 +152,12 @@ class _Message_pageState extends State<Message_page> {
                                    child: InkWell(
                                      onTap: () async {
                                        String refresh = await Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                        return Chatting_Page(name: 'chatting', Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '', uid:  userMessage.data?.userId ?? '',);
+                                         onlineOfflinestatusCubit.OnlineStatus(context, id: userMessage.data?.data?[index].id ?? '');
+                                        return Chatting_Page(name: 'chatting', CUName: "",Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '', uid:  userMessage.data?.userId ?? '',);
                                        },));
                                        if(refresh == "refresh"){
                                          getData();
+                                         onlineOfflinestatusCubit.OfflineStatus(context, id: userMessage.data?.data?[index].id ?? '');
                                          setState(() {});
                                        }
                                      },

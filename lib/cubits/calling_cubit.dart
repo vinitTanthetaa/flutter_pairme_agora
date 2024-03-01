@@ -25,28 +25,15 @@ class CallingDetailsCubit extends Cubit<CallingDetailsState> {
         required String to,
         required String type,
         required String msg,
+         String? rtc,
         required BuildContext context}) async {
     emit(CallingDetailsLoading());
     final dio = Dio();
-    String rtc ='Hello';
-    // Map<String, dynamic> body1 = {
-    //   "channel": from,
-    // };
-    // try {
-    //   final response = await dio.post('http://192.168.29.113:3000/rtc',data: jsonEncode(body1));
-    //   Map hello = response.data;
-    //   print("hello :- $hello");
-    //   rtc = hello['rtcToken'];
-    // } catch (e) {
-    //   print("you are fully fail my friend " + e.toString());
-    //   // TODO
-    // }
-
     Map<String, dynamic> body = {
       "from": from,
       "to": to,
       "type": type,
-      "rtc": rtc,
+      "rtc": rtc ?? '',
       "msg":msg
     };
      print("Body is $body");
@@ -55,16 +42,11 @@ class CallingDetailsCubit extends Cubit<CallingDetailsState> {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }) ,data: jsonEncode(body));
-      print("Response ===> ${response.data}");
       final hello = response.data;
-      print(hello);
       if (hello['message'] == "CallingDetails Successfully") {
-        print("Response ===> ${response.data}");
         emit(CallingDetailsSuccess());
-        flutterToast(hello['message'], true);
       } else {
         emit(CallingDetailsError());
-        flutterToast(hello['message'], false);
       }
     } on Exception catch (e) {
       print("fail ====> " +e.toString());

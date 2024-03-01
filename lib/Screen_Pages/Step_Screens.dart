@@ -1912,8 +1912,8 @@ class _StepScreenState extends State<StepScreen> {
                                               address:
                                               "${_Address1.text}${_Address3.text}",
                                               country: _Contry1.text,
-                                              state: _State1.text,
-                                              city: _City1.text,
+                                              state: _State.text,
+                                              city: _City.text,
                                               zipCode: _Zipcode1.text,
                                               context: context,
                                               startDate: _date.text)
@@ -1957,72 +1957,64 @@ class _StepScreenState extends State<StepScreen> {
                                           Expanded(
                                               child: custom_header(
                                                   text: "Profile")),
-                                          BlocBuilder<BusinessProfileCubit,
-                                              BusinessProfileState>(
-                                            builder: (context, state) {
-                                              if (state is BusinessProfileLoading) {
-                                                return CustomBottonLoader();
+                                          skip_button(
+                                            context,
+                                            onTap: () {
+                                              if (_selectedimag1 == null) {
+                                                flutterToast(
+                                                    "Please Enter atlest 2 image or video",
+                                                    false);
+                                              } else if (_selectedimag2 ==
+                                                  null) {
+                                                flutterToast(
+                                                    "Please Enter 1 more image or video",
+                                                    false);
+                                              } else if (file1 == null) {
+                                                flutterToast(
+                                                    "Please Enter atlest 1 file like pdf,doc,etc",
+                                                    false);
+                                              } else {
+                                                businessProfileCubit.BusinessProfileService(
+                                                    photo_1: _selectedimag1
+                                                        ?.selectedFile ??
+                                                        File(''),
+                                                    bio: _bio.text,
+                                                    file_2: file2 ??
+                                                        PlatformFile(
+                                                            name: "",
+                                                            size: 0),
+                                                    file_3: file3 ??
+                                                        PlatformFile(
+                                                            name: "",
+                                                            size: 0),
+                                                    context: context,
+                                                    photo_2: _selectedimag2
+                                                        ?.selectedFile ??
+                                                        File(''),
+                                                    photo_3: _selectedimag3
+                                                        ?.selectedFile ??
+                                                        File(''),
+                                                    photo_4: _selectedimag4
+                                                        ?.selectedFile ??
+                                                        File(''),
+                                                    photo_5: _selectedimag5
+                                                        ?.selectedFile ??
+                                                        File(''),
+                                                    photo_6: _selectedimag6
+                                                        ?.selectedFile ??
+                                                        File(''),
+                                                    file_1: file1 ??
+                                                        PlatformFile(
+                                                            name: "",
+                                                            size: 0))
+                                                    .then(
+                                                      (value) {
+                                                    setState(() {
+                                                      ind++;
+                                                    });
+                                                  },
+                                                );
                                               }
-                                              return  skip_button(
-                                                context,
-                                                onTap: () {
-                                                  if (_selectedimag1 == null) {
-                                                    flutterToast(
-                                                        "Please Enter atlest 2 image or video",
-                                                        false);
-                                                  } else if (_selectedimag2 ==
-                                                      null) {
-                                                    flutterToast(
-                                                        "Please Enter 1 more image or video",
-                                                        false);
-                                                  } else if (file1 == null) {
-                                                    flutterToast(
-                                                        "Please Enter atlest 1 file like pdf,doc,etc",
-                                                        false);
-                                                  } else {
-                                                    businessProfileCubit.BusinessProfileService(
-                                                        photo_1: _selectedimag1
-                                                            ?.selectedFile ??
-                                                            File(''),
-                                                        bio: _bio.text,
-                                                        file_2: file2 ??
-                                                            PlatformFile(
-                                                                name: "",
-                                                                size: 0),
-                                                        file_3: file3 ??
-                                                            PlatformFile(
-                                                                name: "",
-                                                                size: 0),
-                                                        context: context,
-                                                        photo_2: _selectedimag2
-                                                            ?.selectedFile ??
-                                                            File(''),
-                                                        photo_3: _selectedimag3
-                                                            ?.selectedFile ??
-                                                            File(''),
-                                                        photo_4: _selectedimag4
-                                                            ?.selectedFile ??
-                                                            File(''),
-                                                        photo_5: _selectedimag5
-                                                            ?.selectedFile ??
-                                                            File(''),
-                                                        photo_6: _selectedimag6
-                                                            ?.selectedFile ??
-                                                            File(''),
-                                                        file_1: file1 ??
-                                                            PlatformFile(
-                                                                name: "",
-                                                                size: 0))
-                                                        .then(
-                                                          (value) {
-                                                        setState(() {
-                                                          ind++;
-                                                        });
-                                                      },
-                                                    );
-                                                  }
-                                                },
-                                              );
                                             },
                                           )
                                          

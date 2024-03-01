@@ -76,22 +76,26 @@ class Datum {
   String? id;
   String? userName;
   String? userImage;
+  String? status;
 
   Datum({
      this.id,
      this.userName,
      this.userImage,
+     this.status,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["_id"],
     userName: json["user_name"],
     userImage: json["user_image"],
+    status: json["status"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
     "user_name": userName,
     "user_image": userImage,
+    "status": status,
   };
 }
