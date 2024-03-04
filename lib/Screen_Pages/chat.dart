@@ -24,6 +24,7 @@ import 'package:pair_me/cubits/block_req_msg_user.dart';
 import 'package:pair_me/cubits/calling_cubit.dart';
 import 'package:pair_me/cubits/chatdata_cubits.dart';
 import 'package:pair_me/cubits/delete_msg_users.dart';
+import 'package:pair_me/cubits/find_user_status_cubit.dart';
 import 'package:pair_me/cubits/reject_user.dart';
 import 'package:pair_me/cubits/translate_language.dart';
 import 'package:pair_me/helper/Apis.dart';
@@ -35,7 +36,7 @@ import 'package:video_player/video_player.dart';
 
 class Chatting_Page extends StatefulWidget {
   String name, Username, image, id, uid ;
-  String? CUName;
+  String? CUName,status;
 
   Chatting_Page({super.key,
     required this.name,
@@ -43,6 +44,7 @@ class Chatting_Page extends StatefulWidget {
     required this.id,
     required this.Username,
     this.CUName,
+    this.status,
     required this.image});
 
   @override
@@ -63,6 +65,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   BlockUserCubit blockUserCubit = BlockUserCubit();
   ChatDataCubit chatDataCubit = ChatDataCubit();
   CallingDetailsCubit callingDetailsCubit = CallingDetailsCubit();
+  FindStatusCubit findStatusCubit = FindStatusCubit();
   late RtcEngine agoraEngine; // Agora engine instance
   late ChatClient agoraChatClient;
   final List messageList = [];
@@ -132,9 +135,10 @@ class _Chatting_PageState extends State<Chatting_Page> {
     // TODO: implement initState
     super.initState();
     chatDataCubit = BlocProvider.of<ChatDataCubit>(context);
+    findStatusCubit = BlocProvider.of<FindStatusCubit>(context);
     setupChatClient();
     setupListeners();
-    _openAudioRecording();
+   _openAudioRecording();
     setState(() {});
   }
   @override
@@ -924,6 +928,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
     agoraChatClient = ChatClient.getInstance;
     await agoraChatClient.init(options);
     await ChatClient.getInstance.startCallback();
+    setState(() {
+      loading = true;
+    });
     Map<String, dynamic> body1 = {
       "channel": widget.uid,
     };
@@ -1249,42 +1256,45 @@ class _Chatting_PageState extends State<Chatting_Page> {
   void sendMessage() async {
     print("call me");
     if (messageController.text.isNotEmpty) {
-      var msg = ChatMessage.createTxtSendMessage(
-
-        targetId: widget.id,
-        content: messageController.text,
-        chatType: ChatType.Chat,
-      );
-      ChatClient.getInstance.chatManager.addMessageEvent(
-        "UNIQUE_HANDLER_ID",
-        ChatMessageEvent(
-          onSuccess: (msgId, msg) {
-            print(" ============================> $msgId");
-            print(" ============================> $msg");
-            print(msg);
-            ChatTextMessageBody body = msg.body as ChatTextMessageBody;
-            messageList.add(displayMessage(text: body.content, isSentMessage:  true ,));
-            scrollController.jumpTo(scrollController.position.maxScrollExtent + 100);
-            messageController.clear();
-            setState(() {});
-            // messageBoxController.clear();
-            // _addLogToConsole("on message succeed");
-          },
-          onProgress: (msgId, progress) {
-            print(" ============================> $msgId");
-            //_addLogToConsole("on message progress");
-          },
-          onError: (msgId, msg, error) {
-            print(" ============================> $error  === $msg");
-            // _addLogToConsole(
-            //   "on message failed, code: ${error.code}, desc: ${error.description}",
-            // );
-          },
-        ),
-      );
-      // ChatClient.getInstance.chatManager.removeMessageEvent("UNIQUE_HANDLER_ID");
-      agoraChatClient.chatManager.sendMessage(msg);
-
+      findStatusCubit.FindStatus(context, id: widget.id).then((value){
+        print("satatus ===> ${findStatusCubit.findUserStatus.data?.status}");
+        if(findStatusCubit.findUserStatus.data?.status == "offline"){
+          callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice call", context: context, msg: '${messageController.text} message you');
+        }
+        var msg = ChatMessage.createTxtSendMessage(
+          targetId: widget.id,
+          content: messageController.text,
+          chatType: ChatType.Chat,
+        );
+        ChatClient.getInstance.chatManager.addMessageEvent(
+          "UNIQUE_HANDLER_ID",
+          ChatMessageEvent(
+            onSuccess: (msgId, msg) {
+              print(" ============================> $msgId");
+              print(" ============================> $msg");
+              print(msg);
+              ChatTextMessageBody body = msg.body as ChatTextMessageBody;
+              messageList.add(displayMessage(text: body.content, isSentMessage:  true ,));
+              scrollController.jumpTo(scrollController.position.maxScrollExtent + 100);
+              messageController.clear();
+              setState(() {});
+              // messageBoxController.clear();
+              // _addLogToConsole("on message succeed");
+            },
+            onProgress: (msgId, progress) {
+              print(" ============================> $msgId");
+              //_addLogToConsole("on message progress");
+            },
+            onError: (msgId, msg, error) {
+              print(" ============================> $error  === $msg");
+              // _addLogToConsole(
+              //   "on message failed, code: ${error.code}, desc: ${error.description}",
+              // );
+            },
+          ),
+        );
+        agoraChatClient.chatManager.sendMessage(msg);
+      });
     }
   }
   Future Getdata() async {

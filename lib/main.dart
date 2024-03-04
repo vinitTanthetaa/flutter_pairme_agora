@@ -33,6 +33,7 @@ import 'package:pair_me/cubits/connect_user.dart';
 import 'package:pair_me/cubits/connect_with_cubit.dart';
 import 'package:pair_me/cubits/connected_user_data.dart';
 import 'package:pair_me/cubits/delete_msg_users.dart';
+import 'package:pair_me/cubits/find_user_status_cubit.dart';
 import 'package:pair_me/cubits/forggot_password.dart';
 import 'package:pair_me/cubits/login_cubit.dart';
 import 'package:pair_me/cubits/message_data_cubit.dart';
@@ -239,6 +240,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => ChatDataCubit()),
         BlocProvider(create: (context) => CallingDetailsCubit()),
         BlocProvider(create: (context) => OnlineOfflinestatusCubit()),
+        BlocProvider(create: (context) => FindStatusCubit()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

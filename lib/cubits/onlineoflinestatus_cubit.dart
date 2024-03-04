@@ -28,7 +28,7 @@ class OnlineOfflinestatusCubit extends Cubit<OnlineOfflinestatusState> {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }));
-      print(response);
+      print("online response ====> $response. ");
       if(response.statusCode == 200 && response.data != null)
       {
         emit(OnlineOfflinestatusSuccess());
@@ -49,7 +49,7 @@ class OnlineOfflinestatusCubit extends Cubit<OnlineOfflinestatusState> {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }));
-      print(response);
+      print(" offline response ===> $response");
       if(response.statusCode == 200 && response.data != null)
       {
         emit(OnlineOfflinestatusSuccess());

@@ -36,10 +36,12 @@ class _Message_pageState extends State<Message_page> {
   AllMessageRequestCubit messageRequestCubit = AllMessageRequestCubit();
   OnlineOfflinestatusCubit onlineOfflinestatusCubit = OnlineOfflinestatusCubit();
   late ChatClient agoraChatClient;
+  Map data = {};
+  List ids = [];
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
-    setupChatClient();
-    setupListeners();
+     setupChatClient();
+    // setupListeners();
     setState(() {});
   }
   @override
@@ -151,11 +153,12 @@ class _Message_pageState extends State<Message_page> {
                                    ),
                                    child: InkWell(
                                      onTap: () async {
-                                       String refresh = await Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                         onlineOfflinestatusCubit.OnlineStatus(context, id: userMessage.data?.data?[index].id ?? '');
-                                        return Chatting_Page(name: 'chatting', CUName: "",Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '', uid:  userMessage.data?.userId ?? '',);
-                                       },));
+                                        String  refresh = await Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                           onlineOfflinestatusCubit.OnlineStatus(context, id: userMessage.data?.data?[index].id ?? '');
+                                           return Chatting_Page(name: 'chatting', status: userMessage.data?.data?[index].status ?? '',CUName: "",Username:userMessage.data?.data?[index].userName ?? '', image: userMessage.data?.data?[index].userImage ?? '', id: userMessage.data?.data?[index].id ?? '', uid:  userMessage.data?.userId ?? '',);
+                                         },));
                                        if(refresh == "refresh"){
+                                         ids.clear();
                                          getData();
                                          onlineOfflinestatusCubit.OfflineStatus(context, id: userMessage.data?.data?[index].id ?? '');
                                          setState(() {});
@@ -209,7 +212,7 @@ class _Message_pageState extends State<Message_page> {
                                                    SizedBox(height: screenHeight(context,dividedBy: 300),),
                                                    SizedBox(
                                                      width: screenWidth(context,dividedBy: 2.2),
-                                                     child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),overflow: TextOverflow.ellipsis,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
+                                                     child: Text(ids.contains(userMessage.data?.data?[index].id ?? '') ? ids[index]['msg'] :'Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),overflow: TextOverflow.ellipsis,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
                                                    )
                                                  ],
                                                ),
@@ -297,45 +300,48 @@ class _Message_pageState extends State<Message_page> {
         print("Login failed, code: ${e.code}, desc: ${e.description}");
       }
     }
-    Getdata();
+    int lenth = userMessage.data?.data?.length ?? 0;
+    for (int i = 0; i <= lenth-1; i++) {
+     data = await Getdata(userMessage.data?.data?[i].id ?? '');
+     ids.add(data);
+    }
   }
-  Future Getdata() async {
-   final result =
-     ChatClient.getInstance.chatManager.fetchHistoryMessages(
-       pageSize: 50, conversationId: userMessage.data?.userId ?? ''
-       // type: ChatConversationType.Chat,
-       // conversationId: userMessage.data?.data?[index].id ?? '',
-       // conversationId: userMessage.data?.userId ?? ''
-    ) ;
-    // setState(() {
-    //   loading = true;
-    // });
-    log("data ===> ${result}");
-    // for(int i=0;i < result.data.length;i++){
-    //   if(result.data[i].body.type == MessageType.TXT){
-    //     ChatTextMessageBody body = result.data[i].body as ChatTextMessageBody;
-    //     messageList.add(displayMessage( text: body.content, isSentMessage: result.data[i].from == widget.uid ? true : false,));
-    //   }
-    //   if(result.data[i].body.type == MessageType.IMAGE){
-    //     ChatImageMessageBody body = result.data[i].body as ChatImageMessageBody;
-    //     displayimgMessage(body.remotePath, result.data[i].from == widget.uid ? true : false);
-    //   }
-    //   if(result.data[i].body.type == MessageType.VIDEO){
-    //     ChatVideoMessageBody body = result.data[i].body as ChatVideoMessageBody;
-    //     displayvideoMessage(body.remotePath, result.data[i].from == widget.uid ? true : false);
-    //     print('data ===> $body');
-    //   }
-    //   if(result.data[i].body.type == MessageType.FILE){
-    //     ChatFileMessageBody body = result.data[i].body as ChatFileMessageBody;
-    //     displayfileMessage(body.remotePath,body.displayName.toString() ,result.data[i].from == widget.uid ? true : false);
-    //   }
-    //   if(result.data[i].body.type == MessageType.VOICE){
-    //     ChatVoiceMessageBody body = result.data[i].body as ChatVoiceMessageBody;
-    //     print("voice ===> $body");
-    //     messageList.add(displayvoiceMessage(isSentMessage: result.data[i].from == widget.uid ? true : false, thumbnail: body.remotePath.toString(), dispalname: body.displayName.toString(),));
-    //     // displayvoiceMessage(body.remotePath,body.displayName.toString() ,result.data[i].from == widget.uid ? true : false);
-    //   }
-    // }
+  Future Getdata(String id) async {
+    final result =
+    await ChatClient.getInstance.chatManager.fetchHistoryMessages(
+        conversationId: id,
+        pageSize: 1,
+        type: ChatConversationType.Chat
+    );
+    log(" data ===> ${result.data}");
+      if(result.data.last.body.type == MessageType.TXT){
+        ChatTextMessageBody body = result.data.last.body as ChatTextMessageBody;
+        data["from"] = result.data.last.from;
+        data["to"] = result.data.last.to;
+        data["msg"] = body.content;
+      } else
+      if(result.data.last.body.type == MessageType.IMAGE){
+        data["from"] = result.data.last.from;
+        data["to"] = result.data.last.to;
+        data["msg"] = "image";
+      } else
+      if(result.data.last.body.type == MessageType.VIDEO){
+        data["from"] = result.data.last.from;
+        data["to"] = result.data.last.to;
+        data["msg"] = "video";
+      } else
+      if(result.data.last.body.type == MessageType.FILE){
+        data["from"] = result.data.last.from;
+        data["to"] = result.data.last.to;
+        data["msg"] = "file";
+      }else
+      if(result.data.last.body.type == MessageType.VOICE){
+        data["from"] = result.data.last.from;
+        data["to"] = result.data.last.to;
+        data["msg"] = "voice";
+      }
+    print("ids ====> $data");
+      return data;
   }
   void setupListeners() {
     agoraChatClient.addConnectionEventHandler(
@@ -411,4 +417,10 @@ class _Message_pageState extends State<Message_page> {
     // }
   }
 
+}
+class Storedata {
+  String from;
+  String to;
+  String msg;
+  Storedata({required this.from, required this.to,required this.msg});
 }

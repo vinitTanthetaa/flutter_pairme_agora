@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -50,10 +51,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
         channelProfile: ChannelProfileType.channelProfileLiveBroadcasting
     ));
     await agoraEngine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    await agoraEngine.startPreview();
     await agoraEngine.enableAudio();
-    await agoraEngine.disableVideo();
-
     // Register the event handler
     agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
@@ -70,6 +68,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
           eventArgs["connection"] = connection;
           eventArgs["state"] = state;
           eventArgs["reason"] = reason;
+          print("joiniiiiii 11 ==> $remoteUids");
          // eventCallback("onConnectionStateChanged", eventArgs);
         },
         // Occurs when a local user joins a channel
@@ -81,6 +80,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
           Map<String, dynamic> eventArgs = {};
           eventArgs["connection"] = connection;
           eventArgs["elapsed"] = elapsed;
+          print("joiniiiiii 22 ==> $remoteUids");
          // eventCallback("onJoinChannelSuccess", eventArgs);
         },
         // Occurs when a remote user joins the channel
@@ -93,7 +93,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
           eventArgs["remoteUid"] = remoteUid;
           eventArgs["elapsed"] = elapsed;
         //  eventCallback("onUserJoined", eventArgs);
-          print("joiniiiiii ==> $remoteUids");
+          print("joiniiiiii 33 ==> $remoteUids");
         },
         // Occurs when a remote user leaves the channel
         onUserOffline: (RtcConnection connection, int remoteUid,
@@ -105,6 +105,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
           eventArgs["connection"] = connection;
           eventArgs["remoteUid"] = remoteUid;
           eventArgs["reason"] = reason;
+          print("joiniiiiii 44 ==> $remoteUids");
          // eventCallback("onUserOffline", eventArgs);
         },
       ),
@@ -283,8 +284,8 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
     await agoraEngine.joinChannel(
       token: widget.token,
       channelId: widget.uid,
-      options: const ChannelMediaOptions(),
-      uid: 5,
+      options: const ChannelMediaOptions(), uid: 0,
+     // userAccount: ChatClient.getInstance.getCurrentUserId().toString() ?? '',
     );
   }
   Widget _status(){

@@ -38,6 +38,7 @@ class apis{
   static const String messageReqUser = "$baseurl/message_requests/";
   static const String onlineStatus = "$baseurl/onlineStatus/";
   static const String offlineStatus = "$baseurl/offlineStatus/";
+  static const String findStatus = "$baseurl/findStatus/";
   static const String rejectNotification = "$baseurl/rejectNotification";
   static const String clearAll = "$baseurl/reject_all";
   static const String deletemsgUser = "$baseurl/delete_messagePage_user/";

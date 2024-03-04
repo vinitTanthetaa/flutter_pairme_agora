@@ -49,8 +49,7 @@ class _Profile_pageState extends State<Profile_page> {
   GetData() async {
     userProfile = await userDetailsCubit.GetUserdetails() ?? UserProfile();
     print("user profile ===> $userProfile");
-    length =
-        userProfile.data?.first.professionalDetails?.companyName?.length ?? 0;
+    length = userProfile.data?.first.professionalDetails?.companyName?.length ?? 0;
     _bio.text = userProfile.data?.first.bio ?? '';
     file1 = userProfile.data?.first.file?.file1?.isNotEmpty ?? false;
     file2 = userProfile.data?.first.file?.file2?.isNotEmpty ?? false;
