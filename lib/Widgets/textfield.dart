@@ -39,14 +39,13 @@ Widget Custom_textfield(BuildContext context,
         ]),
     child: Center(
       child: Padding(
-        padding: const EdgeInsets.only(left: 15.0,bottom: 0),
+        padding: show_icon ? EdgeInsets.only(left: 15.0,top: screenHeight(context,dividedBy: 200)) : EdgeInsets.only(left: 15.0,bottom: screenHeight(context,dividedBy: 200)),
         child: TextField(
           onTap: onTap,
           onChanged: onChanged,
           enabled: true,
           maxLines: mxline ?? 1,
           minLines: 1,
-          textAlign: TextAlign.justify,
           readOnly: readOnly,
           keyboardType: number ? TextInputType.number : TextInputType.text,
           controller: controller,
@@ -56,12 +55,8 @@ Widget Custom_textfield(BuildContext context,
           obscureText: show_icon ? hidetext : false,
           decoration: show_icon
               ? InputDecoration(
-                  // contentPadding: EdgeInsets.only(
-                  //     left: screenWidth(context, dividedBy: 25),
-                  //    // top: screenHeight(context, dividedBy: 150),
-                  //     right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
                   border: InputBorder.none,
-                  //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
+                 contentPadding: EdgeInsets.zero,
                   suffixIcon: IconButton(
                       splashRadius: 1,
                       style: const ButtonStyle(
@@ -75,11 +70,6 @@ Widget Custom_textfield(BuildContext context,
                         height: screenHeight(context, dividedBy: 40),
                         width: screenHeight(context, dividedBy: 40),
                       )),
-                  // SvgPicture.asset(
-                  //     'assets/Images/hide.svg',height: 10,width: 10,
-                  //   //  colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
-                  //     //semanticsLabel: 'A red up arrow'
-                  // ),
                   hintText: hint.tr(),
                   hintStyle: const TextStyle(
                       color: Color(0xffB3B3B3),
@@ -87,12 +77,11 @@ Widget Custom_textfield(BuildContext context,
                       fontSize: 14,
                       fontWeight: FontWeight.w400))
               : InputDecoration(
-                  // contentPadding: EdgeInsets.only(
-                  //     left: screenWidth(context, dividedBy: 25),
-                  //    // bottom: screenHeight(context, dividedBy: 150),
-                  //     right: show_icon ? 0 : screenWidth(context, dividedBy: 25)),
                   border: InputBorder.none,
+             //isCollapsed: true,
+              isDense: true,
                   hintText: hint.tr(),
+              contentPadding: EdgeInsets.zero,
                   hintStyle: const TextStyle(
                       color: Color(0xffB3B3B3),
                       fontFamily: 'Roboto',

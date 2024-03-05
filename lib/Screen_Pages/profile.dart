@@ -744,7 +744,7 @@ class _Profile_pageState extends State<Profile_page> {
                                           bottom: screenHeight(context,
                                               dividedBy: 70)),
                                       alignment: Alignment.centerLeft,
-                                      // height: screenHeight(context,dividedBy: 17),
+                                      // height: screenHeight(context,dividedBy: 20),
                                       width:
                                           screenWidth(context, dividedBy: 1.15),
                                       decoration: BoxDecoration(
@@ -767,15 +767,37 @@ class _Profile_pageState extends State<Profile_page> {
                                             horizontal: screenWidth(context,
                                                 dividedBy: 30),
                                             vertical: screenHeight(context,
-                                                dividedBy: 100)),
-                                        child: Text(
-                                          "${userProfile.data?.first.address?.address}, ${userProfile.data?.first.address?.city}, ${userProfile.data?.first.address?.state}, ${userProfile.data?.first.address?.country} - ${userProfile.data?.first.address?.zipCode}",
-                                          style: const TextStyle(
-                                              color: Color(0xff434343),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: "Roboto"),
-                                        ),
+                                                dividedBy: 50)),
+                                        child:  RichText(
+                                            maxLines: 2,
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(text: userProfile.data?.first.address?.address?.isNotEmpty ?? false ?  '${userProfile.data?.first.address?.address},' : '',style:
+                                                const TextStyle(fontSize: 12,color:Color(0xff434343) ,fontWeight: FontWeight.w400,fontFamily: 'Roboto')
+                                                ),
+                                                TextSpan(text: '${userProfile.data?.first.address?.city},',style:
+                                                const TextStyle(fontSize: 12,color:Color(0xff434343) ,fontWeight: FontWeight.w400,fontFamily: 'Roboto')
+                                                ),
+                                                TextSpan(text: '${userProfile.data?.first.address?.state},',style:
+                                                const TextStyle(fontSize: 12,color:Color(0xff434343) ,fontWeight: FontWeight.w400,fontFamily: 'Roboto')
+                                                ),
+                                                TextSpan(text: '${userProfile.data?.first.address?.country} - ',style:
+                                                const TextStyle(fontSize: 12,color:Color(0xff434343) ,fontWeight: FontWeight.w400,fontFamily: 'Roboto')
+                                                ),
+                                                TextSpan(text: '${userProfile.data?.first.address?.zipCode}',style:
+                                                const TextStyle(fontSize: 12,color:Color(0xff434343) ,fontWeight: FontWeight.w400,fontFamily: 'Roboto')
+                                                ),
+                                              ],
+
+                                            )),
+                                        // Text(
+                                        //   "${userProfile.data?.first.address?.address}, ${userProfile.data?.first.address?.city}, ${userProfile.data?.first.address?.state}, ${userProfile.data?.first.address?.country} - ${userProfile.data?.first.address?.zipCode}",
+                                        //   style: const TextStyle(
+                                        //       color: Color(0xff434343),
+                                        //       fontSize: 12,
+                                        //       fontWeight: FontWeight.w400,
+                                        //       fontFamily: "Roboto"),
+                                        // ),
                                       ),
                                     )
                                   : const SizedBox(),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class FindStatusCubit extends Cubit<FindStatusState> {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }));
-      print(response);
+      log("response ====>${response.data}");
       if(response.statusCode == 200 && response.data != null)
       {
         findUserStatus = FindUserStatus.fromJson(response.data);

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:custom_gallery_display/custom_gallery_display.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:media_picker_widget/media_picker_widget.dart';
 import 'package:pair_me/Screen_Pages/image_page.dart';
+import 'package:pair_me/Screen_Pages/userDetails.dart';
 import 'package:pair_me/Screen_Pages/videocall.dart';
 import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Screen_Pages/voice_call.dart';
@@ -36,7 +36,7 @@ import 'package:video_player/video_player.dart';
 
 class Chatting_Page extends StatefulWidget {
   String name, Username, image, id, uid ;
-  String? CUName,status;
+  String? CUName;
 
   Chatting_Page({super.key,
     required this.name,
@@ -44,7 +44,6 @@ class Chatting_Page extends StatefulWidget {
     required this.id,
     required this.Username,
     this.CUName,
-    this.status,
     required this.image});
 
   @override
@@ -69,6 +68,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   late RtcEngine agoraEngine; // Agora engine instance
   late ChatClient agoraChatClient;
   final List messageList = [];
+  List image = [];
   bool loading = false;
   bool showCard = false;
   bool emojiShowing = false;
@@ -314,79 +314,115 @@ class _Chatting_PageState extends State<Chatting_Page> {
                         SizedBox(
                           width: screenWidth(context, dividedBy: 35),
                         ),
-                        SizedBox(
-                          height: screenHeight(context, dividedBy: 17),
-                          width: screenHeight(context, dividedBy: 17),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                height: screenHeight(context, dividedBy: 20),
-                                width: screenHeight(context, dividedBy: 20),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            "${apis.baseurl}/${widget.image}"
-                                        ),
-                                        fit: BoxFit.cover,
-                                        filterQuality: FilterQuality.high),
-                                    border: Border.all(
-                                        color: AppColor.white, width: 1),
-                                    shape: BoxShape.circle),
-                              ),
-                              widget.name == 'Request'
-                                  ? const SizedBox()
-                                  : Positioned(
-                                  bottom: 3.0,
-                                  left: 3.0,
-                                  child: Container(
-                                    height: screenHeight(context,
-                                        dividedBy: 80),
-                                    width: screenHeight(context,
-                                        dividedBy: 80),
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xff04D364),
-                                        border: Border.all(
-                                            color: AppColor.white,
-                                            width: 1),
-                                        shape: BoxShape.circle),
-                                  ))
-                            ],
+                        GestureDetector(
+                          onTap: () {
+                            findStatusCubit.FindStatus(context, id: widget.id).then((value) {
+                              getImages();
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return UsersDetails(list: image, onTap:() => Navigator.pop(context), country: findStatusCubit.findUserStatus.data?.first.businessaddress?.country ?? '', file1: findStatusCubit.findUserStatus.data?.last.file?.file1 ?? '', file3: findStatusCubit.findUserStatus.data?.last.file?.file3 ?? '', file2: findStatusCubit.findUserStatus.data?.last.file?.file2 ?? '', bio: findStatusCubit.findUserStatus.data?.last.bio ?? '', Company: findStatusCubit.findUserStatus.data?.first.professionalDetails?.companyName ?? '', looking_for: findStatusCubit.findUserStatus.data?.first.lookingfor ?? [], Name: findStatusCubit.findUserStatus.data?.first.name ?? '', role: findStatusCubit.findUserStatus.data?.first.professionalDetails?.addRole ?? '',);
+                              },));
+                            });
+                          },
+                          child:findStatusCubit.findUserStatus.userstatus == "online" ? SizedBox(
+                            height: screenHeight(context, dividedBy: 17),
+                            width: screenHeight(context, dividedBy: 17),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  height: screenHeight(context, dividedBy: 20),
+                                  width: screenHeight(context, dividedBy: 20),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              "${apis.baseurl}/${widget.image}"
+                                          ),
+                                          fit: BoxFit.cover,
+                                          filterQuality: FilterQuality.high),
+                                      border: Border.all(
+                                          color: AppColor.white, width: 1),
+                                      shape: BoxShape.circle),
+                                ),
+                                widget.name == 'Request'
+                                    ? const SizedBox()
+                                    : Positioned(
+                                    bottom: 3.0,
+                                    left: 3.0,
+                                    child: Container(
+                                      height: screenHeight(context,
+                                          dividedBy: 80),
+                                      width: screenHeight(context,
+                                          dividedBy: 80),
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xff04D364),
+                                          border: Border.all(
+                                              color: AppColor.white,
+                                              width: 1),
+                                          shape: BoxShape.circle),
+                                    ))
+                              ],
+                            ),
+                          ) : Container(
+                            height: screenHeight(context, dividedBy: 20),
+                            width: screenHeight(context, dividedBy: 20),
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        "${apis.baseurl}/${widget.image}"
+                                    ),
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high),
+                                border: Border.all(
+                                    color: AppColor.white, width: 1),
+                                shape: BoxShape.circle),
                           ),
                         ),
                         SizedBox(
                           width: screenWidth(context, dividedBy: 95),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              widget.Username,
-                              style: const TextStyle(
-                                  color: AppColor.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'Roboto'),
-                            ),
-                            widget.name == 'Request'
-                                ? Text(
-                              'Just Joined'.tr(),
-                              style: const TextStyle(
-                                  color: AppColor.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Roboto'),
-                            )
-                                : Text(
-                              'online'.tr(),
-                              style: const TextStyle(
-                                  color: AppColor.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Roboto'),
-                            ),
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            findStatusCubit.FindStatus(context, id: widget.id).then((value) {
+                              setState(() {
+
+                              });
+                              getImages();
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return UsersDetails(list: image, onTap:() => Navigator.pop(context), country: findStatusCubit.findUserStatus.data?.first.businessaddress?.country ?? '', file1: findStatusCubit.findUserStatus.data?.last.file?.file1 ?? '', file3: findStatusCubit.findUserStatus.data?.last.file?.file3 ?? '', file2: findStatusCubit.findUserStatus.data?.last.file?.file2 ?? '', bio: findStatusCubit.findUserStatus.data?.last.bio ?? '', Company: findStatusCubit.findUserStatus.data?.first.professionalDetails?.companyName ?? '', looking_for: findStatusCubit.findUserStatus.data?.first.lookingfor ?? [], Name: findStatusCubit.findUserStatus.data?.first.name ?? '', role: findStatusCubit.findUserStatus.data?.first.professionalDetails?.addRole ?? '',);
+                              },));
+                            });
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.Username,
+                                style: const TextStyle(
+                                    color: AppColor.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Roboto'),
+                              ),
+                              widget.name == 'Request'
+                                  ? Text(
+                                'Just Joined'.tr(),
+                                style: const TextStyle(
+                                    color: AppColor.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Roboto'),
+                              )
+                                  : Text(
+                                findStatusCubit.findUserStatus.userstatus?.tr() ?? 'oofline',
+                                style: const TextStyle(
+                                    color: AppColor.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Roboto'),
+                              ),
+                            ],
+                          ),
                         ),
                         const Spacer(),
                         widget.name == 'Request'
@@ -1257,8 +1293,9 @@ class _Chatting_PageState extends State<Chatting_Page> {
     print("call me");
     if (messageController.text.isNotEmpty) {
       findStatusCubit.FindStatus(context, id: widget.id).then((value){
-        print("satatus ===> ${findStatusCubit.findUserStatus.data?.status}");
-        if(findStatusCubit.findUserStatus.data?.status == "offline"){
+        print("satatus ===> ${findStatusCubit.findUserStatus.userstatus}");
+
+        if(findStatusCubit.findUserStatus.userstatus == "offline"){
           callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice call", context: context, msg: '${messageController.text} message you');
         }
         var msg = ChatMessage.createTxtSendMessage(
@@ -1333,6 +1370,47 @@ class _Chatting_PageState extends State<Chatting_Page> {
        // displayvoiceMessage(body.remotePath,body.displayName.toString() ,result.data[i].from == widget.uid ? true : false);
       }
     }
+  }
+  getImages(){
+    if (findStatusCubit.findUserStatus.data?.last.image != null) {
+      if (findStatusCubit.findUserStatus.data?.last.image?.photo1 == null &&
+          image.contains(findStatusCubit.findUserStatus.data?.last.image?.photo1)) {
+        image = image;
+      } else if (findStatusCubit.findUserStatus.data?.last.image?.photo1 != null) {
+        image.add(findStatusCubit.findUserStatus.data?.last.image?.photo1);
+      }
+      if (findStatusCubit.findUserStatus.data?.last.image?.photo2 == null &&
+          image.contains(findStatusCubit.findUserStatus.data?.last.image?.photo2)) {
+        image = image;
+      } else if (findStatusCubit.findUserStatus.data?.last.image?.photo2 != null) {
+        image.add(findStatusCubit.findUserStatus.data?.last.image?.photo2);
+      }
+      if (findStatusCubit.findUserStatus.data?.last.image?.photo3 == null &&
+          image.contains(findStatusCubit.findUserStatus.data?.last.image?.photo3)) {
+        image = image;
+      } else if (findStatusCubit.findUserStatus.data?.last.image?.photo3 != null) {
+        image.add(findStatusCubit.findUserStatus.data?.last.image?.photo3);
+      }
+      if (findStatusCubit.findUserStatus.data?.last.image?.photo4 == null &&
+          image.contains(findStatusCubit.findUserStatus.data?.last.image?.photo4)) {
+        image = image;
+      } else if (findStatusCubit.findUserStatus.data?.last.image?.photo4 != null) {
+        image.add(findStatusCubit.findUserStatus.data?.last.image?.photo4);
+      }
+      if (findStatusCubit.findUserStatus.data?.last.image?.photo5 == null &&
+          image.contains(findStatusCubit.findUserStatus.data?.last.image?.photo5)) {
+        image = image;
+      } else if (findStatusCubit.findUserStatus.data?.last.image?.photo5 != null) {
+        image.add(findStatusCubit.findUserStatus.data?.last.image?.photo5);
+      }
+      if (findStatusCubit.findUserStatus.data?.last.image?.photo6 == null &&
+          image.contains(findStatusCubit.findUserStatus.data?.last.image?.photo6)) {
+        image = image;
+      } else if (findStatusCubit.findUserStatus.data?.last.image?.photo6 != null) {
+        image.add(findStatusCubit.findUserStatus.data?.last.image?.photo6);
+      }
+    }
+    image = image.toSet().toList();
   }
 }
 
