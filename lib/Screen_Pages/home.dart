@@ -1114,9 +1114,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} Direct Message You").then((value) {
-                                                          msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
-                                                        });                                                      },
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
+                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} Direct Message You");                                                      },
                                                       buttonName:
                                                       "Chat",
                                                       bool: month),
@@ -1128,7 +1127,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       onTap: () {
                                                         undoUsersCubit
                                                             .GetUndoUsers(
-                                                            id: undoid)
+                                                            id: undoid, key: 'connect')
                                                             .then(
                                                               (value) async {
                                                             setState(
@@ -1167,7 +1166,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       "assets/Images/button4.svg",
                                                       onTap: () {
                                                         undoUsersCubit.GetUndoUsers(
-                                                            id: undoid)
+                                                            id: undoid, key: 'skip')
                                                             .then(
                                                               (value) async {
                                                             setState(
@@ -1198,9 +1197,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} Direct Message You").then((value) {
-                                                          msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
-                                                        });                                                       },
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
+                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} Direct Message You");                                                       },
                                                       buttonName:
                                                       "Chat",
                                                       bool:
@@ -1211,9 +1209,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button2.svg",
                                                       onTap: () {
-                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} send Connection Request").then((value) {
-                                                          controller.swipeDown();
-                                                        });
+                                                        controller.swipeDown();
+                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} send Connection Request");
                                                             setState(
                                                                     () {
                                                                   bottonname =
@@ -1258,9 +1255,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button1.svg",
                                                       onTap: () {
-                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} Direct Message You").then((value) {
-                                                          msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
-                                                        });
+                                                        msgReqbyIDCubit.AcceptNotification(context, id: filterUserCubit.filterUser.data?[ind].first?.id ?? '', name: filterUserCubit.filterUser.data?[ind].first?.name ?? '', image: filterUserCubit.filterUser.data?[ind].first?.profileImage ?? '', uid: filterUserCubit.filterUser.loginUserId ?? '');
+                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} Direct Message You");
                                                       },
                                                       buttonName:
                                                       "Chat",
@@ -1272,9 +1268,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       img:
                                                       "assets/Images/button2.svg",
                                                       onTap: () {
-                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} send Connection Request").then((value) {
-                                                          controller.swipeDown();
-                                                        });
+                                                        controller.swipeDown();
+                                                        callingDetailsCubit.CallingDetailsService(from: filterUserCubit.filterUser.loginUserId ?? '', to: filterUserCubit.filterUser.data?[ind].first?.id ?? '', type: "Notification", context: context, msg: "${filterUserCubit.filterUser.loginUserName} send Connection Request");
                                                         setState(
                                                                 () {
                                                               bottonname =
@@ -2171,8 +2166,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 img:
                                                                     "assets/Images/button1.svg",
                                                                 onTap: () {
+                                                                  msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                   callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Direct Message You").then((value) {
-                                                                    msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                   });                                                                },
                                                                 buttonName:
                                                                     "Chat",
@@ -2183,9 +2178,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 img:
                                                                     "assets/Images/button4.svg",
                                                                 onTap: () {
-                                                                  undoUsersCubit
-                                                                          .GetUndoUsers(
-                                                                              id: undoid)
+                                                                  undoUsersCubit.GetUndoUsers(id: undoid, key: 'connect')
                                                                       .then(
                                                                     (value) async {
                                                                       setState(
@@ -2224,7 +2217,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         "assets/Images/button4.svg",
                                                                     onTap: () {
                                                                       undoUsersCubit.GetUndoUsers(
-                                                                              id: undoid)
+                                                                              id: undoid, key: 'skip')
                                                                           .then(
                                                                         (value) async {
                                                                           setState(
@@ -2255,8 +2248,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
+                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                       callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Direct Message You").then((value) {
-                                                                        msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                       });                                                                    },
                                                                     buttonName:
                                                                         "Chat",
@@ -2268,9 +2261,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button2.svg",
                                                                     onTap: () {
-                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Send Connection Request").then((value) {
-                                                                        controller.swipeDown();
-                                                                      });
+                                                                      controller.swipeDown();
+                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Send Connection Request");
                                                                       setState(
                                                                               () {
                                                                             bottonname =
@@ -2310,8 +2302,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
+                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                       callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Direct Message You").then((value) {
-                                                                        msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
                                                                       });
                                                                     },
                                                                     buttonName:
@@ -2324,9 +2316,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button2.svg",
                                                                     onTap: () {
-                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Send Connection Request").then((value) {
-                                                                        controller.swipeDown();
-                                                                      });
+                                                                      controller.swipeDown();
+                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Send Connection Request");
                                                                       setState(
                                                                               () {
                                                                             bottonname =
@@ -2338,7 +2329,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     bool:
                                                                         month),
                                                               ],
-                                                            )))
+                                                            )
+                                      ))
                                 ],
                               ));
                             }

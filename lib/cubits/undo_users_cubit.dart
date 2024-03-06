@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/helper/Apis.dart';
@@ -17,11 +19,13 @@ class UndoUsersSuccess extends UndoUsersState {}
 class UndoUsersCubit extends Cubit<UndoUsersState> {
   UndoUsersCubit() : super(UndoUsersInitials());
   final dio = Dio();
-  Future<void> GetUndoUsers({required String id}) async {
-    print("id ==> $id");
+  Future<void> GetUndoUsers({required String id,required String key}) async {
+    Map<String, dynamic> body = {
+      "key": key,
+    };
     emit(UndoUsersLoading());
     try {
-      Response response = await dio.get('${apis.undousers}$id',options:  Options(headers: {
+      Response response = await dio.post('${apis.undousers}$id',data: jsonEncode(body),options:  Options(headers: {
         'Content-Type': 'application/json',
         'Authorization': Authtoken,
       }));

@@ -8,9 +8,9 @@ import 'package:pair_me/helper/Size_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class VideoCallPage extends StatefulWidget {
-  String img,name,uid,id,token;
+  String img,name,uid,id;
 
-   VideoCallPage({super.key,required this.img,required this.name,required this.uid,required this.id,required this.token});
+   VideoCallPage({super.key,required this.img,required this.name,required this.uid,required this.id});
 
   @override
   State<VideoCallPage> createState() => _VideoCallPageState();
@@ -54,19 +54,31 @@ class _VideoCallPageState extends State<VideoCallPage> {
     );
     print("======================================> ${widget.uid} <============================ ");
     // await agoraEngine.renewToken()
-    await agoraEngine.joinChannel(
-      token: widget.token,
-      channelId: widget.uid,
-      options: options, uid: 1,
-    );
+   
     // Register the event handler
     agoraEngine.registerEventHandler(getEventHandler());
+    join();
+  }
+  void  join() async {
+    ChannelMediaOptions options = const ChannelMediaOptions(
+      clientRoleType: ClientRoleType.clientRoleBroadcaster,
+      channelProfile: ChannelProfileType.channelProfileCommunication,
+    );
+    print("chanel ===> ${widget.uid}");
+    await agoraEngine.joinChannel(
+      channelId: widget.uid,
+      options: options,
+      uid: 0,
+      token: '007eJxTYHi7XuXIz10Rj9PNDnm1fsrYEuCg/cH4pVNs9JVMgYjdmWkKDOaGiclJJomJRpbJxibGSZaWhiamKYYmqclJqUbGyYZpCaYvUhsCGRkunHFnZGSAQBBfgsHMNDnVwNjCwCTVzMAg0cLEwjDZ0tQ8NZWBAQCR2SWr',
+    );
   }
   RtcEngineEventHandler getEventHandler() {
     return RtcEngineEventHandler(
+      onError: (err, msg) {
+        print("error ==> ${err.name} and message ==> ${msg.toString()}");
+      },
       // Occurs when the network connection state changes
-      onConnectionStateChanged: (RtcConnection connection,
-          ConnectionStateType state, ConnectionChangedReasonType reason) {
+      onConnectionStateChanged: (RtcConnection connection, ConnectionStateType state, ConnectionChangedReasonType reason) {
         if (reason == ConnectionChangedReasonType.connectionChangedLeaveChannel) {
           remoteUids.clear();
           isJoined = false;
@@ -93,7 +105,9 @@ class _VideoCallPageState extends State<VideoCallPage> {
       },
       // Occurs when a remote user joins the channel
       onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-        remoteUids.add(remoteUid);
+        setState(() {
+          remoteUids.add(remoteUid);
+        });
         print("remoteUids ===> $remoteUids");
        // messageCallback("Remote user uid:$remoteUid joined the channel");
         // Notify the UI
@@ -109,6 +123,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
           UserOfflineReasonType reason) {
         remoteUids.remove(remoteUid);
         print("remoteUids ===> $remoteUids");
+        leave();
        // messageCallback("Remote user uid:$remoteUid left the channel");
         // Notify the UI
         Map<String, dynamic> eventArgs = {};
@@ -153,7 +168,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
     // Release the RtcEngine instance to free up resources
       agoraEngine.release();
       agoraEngine.leaveChannel();
-
+      Navigator.pop(context);
   }
 @override
   void initState() {
@@ -213,7 +228,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: GestureDetector(
-                              onTap: () => leave,
+                              onTap: () => leave(),
                               child: Container(
                                 margin: EdgeInsets.symmetric(vertical: screenHeight(context,dividedBy: 40)),
                                 height: screenHeight(context,dividedBy: 13),
@@ -244,9 +259,11 @@ class _VideoCallPageState extends State<VideoCallPage> {
                             height: screenHeight(context,dividedBy: 4.5),
                             width: screenWidth(context,dividedBy: 3),
                             decoration: BoxDecoration(
-                                color: Colors.greenAccent,
+                                // color: Colors.greenAccent,
+                              border: Border.all(color: Colors.red,width: 2),
                                 borderRadius: BorderRadius.circular(10)
                             ),
+                            child: remoteUids.isEmpty ? const Center(child: Text("Waiting...",style: TextStyle(color: AppColor.white,fontSize: 17,fontFamily: "Roboto"),),) : remoteVideoView(remoteUids[0]),
                           ),
                         ),
                       ],

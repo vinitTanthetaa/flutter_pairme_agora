@@ -73,7 +73,6 @@ class _Chatting_PageState extends State<Chatting_Page> {
   bool showCard = false;
   bool emojiShowing = false;
   bool audioRecording = false;
-  String rtcToken = '';
   final dio = Dio();
   String recordFilePath = '';
   Future<void> _openAudioRecording() async {
@@ -429,13 +428,15 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             ? const SizedBox()
                             : GestureDetector(
                           onTap: () {
-                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice call", context: context, msg: '',rtc: rtcToken)
-                            .then((value) =>  Navigator.push(context, MaterialPageRoute(
+                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice call", context: context, msg: '')
+                            .then((value) =>
+                                Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return VoiceCallPage(
-                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id, token: rtcToken,);
+                                  img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id,);
                               },
-                            )));
+                            ))
+                            );
                           },
                           child: Image(
                             image: const AssetImage(
@@ -451,10 +452,10 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             ? const SizedBox()
                             : GestureDetector(
                           onTap: () {
-                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "video call", context: context, msg: '',rtc: rtcToken)
+                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "video call", context: context, msg: '',rtc: "007eJxTYNjDkLQgdYrW7H7jFdoGR8Uf/H3ykGmyp6n8ri+nmut67qxWYDA3TExOMklMNLJMNjYxTrK0NDQxTTE0SU1OSjUyTjZMu/zleWpDICNDQNIpZkYGCATxJRjMTJNT0lLTEk1SzQwMEi1MLAyTLU3Nk5IZGACShScX")
                                 .then((value) =>  Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return VideoCallPage( img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id, token: rtcToken,);
+                                return VideoCallPage( img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id,);
                               },
                             )));
                           },
@@ -967,18 +968,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
     setState(() {
       loading = true;
     });
-    Map<String, dynamic> body1 = {
-      "channel": widget.uid,
-    };
-    try {
-      final response = await dio.post('http://192.168.29.113:3000/rtc',data: jsonEncode(body1));
-      Map hello = response.data;
-      print("hello :- $hello");
-      rtcToken = hello['rtcToken'];
-    } catch (e) {
-      print("you are fully fail my friend " + e.toString());
-      // TODO
-    }
+
     Getdata();
   }
   void setupListeners() {

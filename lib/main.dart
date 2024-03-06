@@ -70,8 +70,6 @@ Future<void> backgroundHandler(RemoteMessage message) async {
         category: NotificationCategory.Call,
         wakeUpScreen: true,
         fullScreenIntent: true,
-        autoDismissible: false,
-        backgroundColor: Colors.orange
       ),
   actionButtons: [
     NotificationActionButton(key: "ACCEPT", label: "Accept",color: Colors.greenAccent,autoDismissible: true),
@@ -95,6 +93,7 @@ Future<void> main() async {
         ledColor: Colors.white,
         importance: NotificationImportance.Max,
         channelShowBadge: true,
+        enableVibration: true,
         locked: true,
         defaultRingtoneType: DefaultRingtoneType.Ringtone)
   ]);
@@ -179,11 +178,11 @@ class _MyAppState extends State<MyApp> {
     if (receivedAction.buttonKeyPressed == "ACCEPT") {
       if(map['type'] == "video call"){
         navigatorKey.currentState?.push(MaterialPageRoute(
-          builder: (context) => VideoCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '', token: map['rtc']) ,
+          builder: (context) => VideoCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '') ,
         ));
       } else {
         navigatorKey.currentState?.push(MaterialPageRoute(
-          builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '', token: map['rtc']) ,
+          builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '') ,
         ));
       }
     }
