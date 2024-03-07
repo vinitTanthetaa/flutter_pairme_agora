@@ -19,6 +19,7 @@ import 'package:pair_me/Screen_Pages/view_pdf.dart';
 import 'package:pair_me/Screen_Pages/voice_call.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
+import 'package:pair_me/cubits/GenrateToken.dart';
 import 'package:pair_me/cubits/accept_req_msg_user.dart';
 import 'package:pair_me/cubits/block_req_msg_user.dart';
 import 'package:pair_me/cubits/calling_cubit.dart';
@@ -65,6 +66,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
   ChatDataCubit chatDataCubit = ChatDataCubit();
   CallingDetailsCubit callingDetailsCubit = CallingDetailsCubit();
   FindStatusCubit findStatusCubit = FindStatusCubit();
+  GenerateTokenCubit generateTokenCubit = GenerateTokenCubit();
   late RtcEngine agoraEngine; // Agora engine instance
   late ChatClient agoraChatClient;
   final List messageList = [];
@@ -135,6 +137,7 @@ class _Chatting_PageState extends State<Chatting_Page> {
     super.initState();
     chatDataCubit = BlocProvider.of<ChatDataCubit>(context);
     findStatusCubit = BlocProvider.of<FindStatusCubit>(context);
+    generateTokenCubit.GenerateTokenService(product: widget.uid, context: context);
     setupChatClient();
     setupListeners();
    _openAudioRecording();
@@ -428,7 +431,13 @@ class _Chatting_PageState extends State<Chatting_Page> {
                             ? const SizedBox()
                             : GestureDetector(
                           onTap: () {
-                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice call", context: context, msg: '')
+                            // Navigator.push(context, MaterialPageRoute(
+                            //   builder: (context) {
+                            //     return VoiceCallPage(
+                            //       img: "${apis.baseurl}/${widget.image}", name: widget.Username, uid: widget.uid, id: widget.id,);
+                            //   },
+                            // ));
+                            callingDetailsCubit.CallingDetailsService(from: widget.uid, to: widget.id, type: "voice call", context: context, rtc: Rtctoken, msg: '')
                             .then((value) =>
                                 Navigator.push(context, MaterialPageRoute(
                               builder: (context) {

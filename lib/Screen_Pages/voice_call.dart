@@ -18,27 +18,15 @@ class VoiceCallPage extends StatefulWidget {
 
 class _VoiceCallPageState extends State<VoiceCallPage> {
   int uid = 0; // uid of the local user
-  String token = "";
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
+  bool mic = true;
+  bool speker = true;
   late RtcEngine agoraEngine; // Agora engine instance
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey
   = GlobalKey<ScaffoldMessengerState>();
   final dio = Dio();
-  createchannel() async {
-    print(widget.uid);
-    Map<String, dynamic> body = {
-      "channel": widget.uid,
-    };
-    try {
-      final response = await dio.post('http://192.168.29.113:3000/rtc',data: jsonEncode(body));
-      token = response.data['rtcToken'];
-      print("token =====> $token");
-    } on Exception catch (e) {
-      print("you are fully fail my friend " + e.toString());
-      // TODO
-    }
-  }
+
   Future<void> setupVoiceSDKEngine() async {
     // retrieve or request microphone permission
     await [Permission.microphone].request();
@@ -47,7 +35,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
     await agoraEngine.initialize( RtcEngineContext(
         appId: AgoraAppid
     ));
-
+    await agoraEngine;
     // Register the event handler
     agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
@@ -81,7 +69,6 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    createchannel();
     setupVoiceSDKEngine();
   }
   // Clean up the resources when you leave
@@ -152,16 +139,18 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GestureDetector(
+                 mic ? GestureDetector(
                     onTap: () {
+                      mic = !mic;
                       agoraEngine.muteLocalAudioStream(true);
+                      setState(() {});
                     },
                     child: Container(
                       height: screenHeight(context ,dividedBy: 13),
                       width: screenHeight(context ,dividedBy: 13),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color:Color(0xffC8C8C8),width: 2)
+                          border: Border.all(color:const Color(0xffC8C8C8),width: 2)
                       ),
                       child: Center(
                         child:Image(
@@ -172,26 +161,56 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    height: screenHeight(context ,dividedBy: 13),
-                    width: screenHeight(context ,dividedBy: 13),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color:const Color(0xffC8C8C8),width: 2)
-                    ),
-                    child: Center(
-                      child:Image(
-                        image: const AssetImage('assets/Images/chaticon.png'),
-                        height: screenHeight(context,dividedBy: 25),
-                        width: screenHeight(context,dividedBy: 25),
-                        color: AppColor.white,
+                  ) : GestureDetector(
+                   onTap: () {
+                     mic = !mic;
+                     agoraEngine.muteLocalAudioStream(false);
+                     setState(() {});
+                   },
+                   child: Container(
+                     height: screenHeight(context ,dividedBy: 13),
+                     width: screenHeight(context ,dividedBy: 13),
+                     decoration: BoxDecoration(
+                         shape: BoxShape.circle,
+                         border: Border.all(color:const Color(0xffC8C8C8),width: 2)
+                     ),
+                     child: Center(
+                       child:Image(
+                         image: const AssetImage('assets/Images/mic.png'),
+                         height: screenHeight(context,dividedBy: 25),
+                         width: screenHeight(context,dividedBy: 25),
+                         color: AppColor.white,
+                       ),
+                     ),
+                   ),
+                 ),
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(context: context, builder: (context) {
+                        return Container(height: screenHeight(context,dividedBy: 1.5),color: Colors.red,);
+                      },);
+                    },
+                    child: Container(
+                      height: screenHeight(context ,dividedBy: 13),
+                      width: screenHeight(context ,dividedBy: 13),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color:const Color(0xffC8C8C8),width: 2)
+                      ),
+                      child: Center(
+                        child:Image(
+                          image: const AssetImage('assets/Images/chaticon.png'),
+                          height: screenHeight(context,dividedBy: 25),
+                          width: screenHeight(context,dividedBy: 25),
+                          color: AppColor.white,
+                        ),
                       ),
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      // agoraEngine.sp
+                      speker = !speker;
+                      agoraEngine.setEnableSpeakerphone(speker);
                     },
                     child: Container(
                       height: screenHeight(context ,dividedBy: 13),
@@ -241,7 +260,6 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
   }
   Widget _status(){
     String statusText;
-
     if (!_isJoined)
       statusText = 'Join a channel';
     else if (_remoteUid == null)
@@ -258,14 +276,15 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
       clientRoleType: ClientRoleType.clientRoleBroadcaster,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     );
-    print("token ===> $token}");
+    print("token ===> $Rtctoken}");
     print("chanel ===> ${widget.uid}");
-    print(token );
+    print(Rtctoken);
     await agoraEngine.joinChannel(
       channelId: widget.uid,
       options: options,
       uid: uid,
-      token: '007eJxTYHi7XuXIz10Rj9PNDnm1fsrYEuCg/cH4pVNs9JVMgYjdmWkKDOaGiclJJomJRpbJxibGSZaWhiamKYYmqclJqUbGyYZpCaYvUhsCGRkunHFnZGSAQBBfgsHMNDnVwNjCwCTVzMAg0cLEwjDZ0tQ8NZWBAQCR2SWr',
+      token: Rtctoken,
+      // token: '007eJxTYHi7XuXIz10Rj9PNDnm1fsrYEuCg/cH4pVNs9JVMgYjdmWkKDOaGiclJJomJRpbJxibGSZaWhiamKYYmqclJqUbGyYZpCaYvUhsCGRkunHFnZGSAQBBfgsHMNDnVwNjCwCTVzMAg0cLEwjDZ0tQ8NZWBAQCR2SWr',
     );
   }
   void leave() {

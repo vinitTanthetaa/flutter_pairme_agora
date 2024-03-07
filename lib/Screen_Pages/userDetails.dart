@@ -32,18 +32,8 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
   String _file1 = '';
   String _file2 = '';
   String _file3 = '';
-
   List lookingFor = [];
-  List list = [
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT1VsnxGw7Phf_Giwuc126WClsqRK5hEVzGF8-8b4fWtE-CTqwBkTf1cBfxbXepxe8aug&usqp=CAU',
-    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDE3fHx8ZW58MHx8fHx8&w=1000&q=80',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS92eisuWOx3tEjeW14mT9ACVgXDwIRBGtnww&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdX029ohIUSygq9zirl9fSNBwSLqEOaKEYuw&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCczoMDFIc77qVeqtnJ26h8Yen0WXNfyLTIg&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ0mv_NlCWaAPKCTefbXTZtdh3-d3CuK9GXA&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeHt2GDofV5sNOaTrLarqU3XmMpTNXxaw9dg&usqp=CAU',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-  ];
+
 
   getpath(var filePath){
     String fileName = path.basename(filePath);
@@ -284,7 +274,6 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                               height: screenHeight(context, dividedBy: 500),
                             ),
                           ],
-
                           widget.Company.isNotEmpty ? Row(
                             children: [
                                Text(
@@ -313,35 +302,37 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                               ),
                             ],
                           ) : const SizedBox(),
-                          SizedBox(
-                            height: screenHeight(context, dividedBy: 50) ,
-                          ),
-                          custom_textfield_header(text: 'Looking for'),
-                          SizedBox(
-                            height: screenHeight(context, dividedBy: 150),
-                          ),
-                          Wrap(
-                            spacing: 5,
-                            runSpacing: 8,
-                            children: widget.looking_for
-                                .map((e) => Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: const Color(0xff6D9Aff), width: 2.5),
-                                        borderRadius: BorderRadius.circular(20)
+                          if(widget.looking_for.isNotEmpty)...[
+                            SizedBox(
+                              height: screenHeight(context, dividedBy: 50) ,
+                            ),
+                            custom_textfield_header(text: 'Looking for'),
+                            SizedBox(
+                              height: screenHeight(context, dividedBy: 150),
+                            ),
+                            Wrap(
+                              spacing: 5,
+                              runSpacing: 8,
+                              children: widget.looking_for
+                                  .map((e) => Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: const Color(0xff6D9Aff), width: 2.5),
+                                      borderRadius: BorderRadius.circular(20)
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth(context,dividedBy: 35),
+                                      vertical: screenHeight(context,dividedBy: 250),
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: screenWidth(context,dividedBy: 35),
-                                        vertical: screenHeight(context,dividedBy: 250),
-                                      ),
-                                      child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 14,fontFamily: 'Roboto',color: AppColor.dropdownfont),),
-                                    )))
-                                .toList() ??
-                                [],
-                          ),
-                          SizedBox(
-                            height: screenHeight(context, dividedBy: 50),
-                          ),
+                                    child: Text(e,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 14,fontFamily: 'Roboto',color: AppColor.dropdownfont),),
+                                  )))
+                                  .toList() ??
+                                  [],
+                            ),
+                            SizedBox(
+                              height: screenHeight(context, dividedBy: 50),
+                            ),
+                          ],
                           if(_bio.text.isNotEmpty)...[
                             custom_textfield_header(text: 'Bio'),
                             Container(
@@ -387,10 +378,10 @@ class _UsersDetailsState extends State<UsersDetails> with TickerProviderStateMix
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: screenHeight(context, dividedBy: 50),
-                            ),
                           ],
+                          SizedBox(
+                            height: screenHeight(context, dividedBy: 50),
+                          ),
                           custom_textfield_header(text: 'Documents'),
                           file1 ? InkWell(
                             onTap: () async {

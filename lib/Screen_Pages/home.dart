@@ -51,7 +51,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   double fontsize = 70.0;
   double wight = 1;
   AllUsersDetailsCubit allUsersDetailsCubit = AllUsersDetailsCubit();
-  AllUsersdetails allUsersdetails = AllUsersdetails();
   ConnectUserCubit connectUserCubit = ConnectUserCubit();
   RejectUserCubit rejectUserCubit = RejectUserCubit();
   UndoUsersCubit undoUsersCubit = UndoUsersCubit();
@@ -70,7 +69,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   bool month = true;
   final PageController _pageController = PageController();
   getData() async {
-    allUsersdetails = (await allUsersDetailsCubit.GetAllUsersDetails())!;
+   // allUsersdetails = (await allUsersDetailsCubit.GetAllUsersDetails())!;
     setState(() {});
   }
   getImage(int index) {
@@ -115,44 +114,44 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
       }
       image = image.toSet().toList();
     } else {
-      if (allUsersdetails.data?[index].last.image != null) {
-        if (allUsersdetails.data?[index].last.image?.photo1 == null &&
-            image.contains(allUsersdetails.data?[index].last.image?.photo1)) {
+      if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image != null) {
+        if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo1 == null &&
+            image.contains(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo1)) {
           image = image;
-        } else if (allUsersdetails.data?[index].last.image?.photo1 != null) {
-          image.add(allUsersdetails.data?[index].last.image?.photo1);
+        } else if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo1 != null) {
+          image.add(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo1);
          // int imagelength = allUsersdetails.data?.length  ?? 0;
 
         }
-        if (allUsersdetails.data?[index].last.image?.photo2 == null &&
-            image.contains(allUsersdetails.data?[index].last.image?.photo2)) {
+        if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo2 == null &&
+            image.contains(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo2)) {
           image = image;
-        } else if (allUsersdetails.data?[index].last.image?.photo2 != null) {
-          image.add(allUsersdetails.data?[index].last.image?.photo2);
+        } else if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo2 != null) {
+          image.add(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo2);
         }
-        if (allUsersdetails.data?[index].last.image?.photo3 == null &&
-            image.contains(allUsersdetails.data?[index].last.image?.photo3)) {
+        if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo3 == null &&
+            image.contains(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo3)) {
           image = image;
-        } else if (allUsersdetails.data?[index].last.image?.photo3 != null) {
-          image.add(allUsersdetails.data?[index].last.image?.photo3);
+        } else if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo3 != null) {
+          image.add(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo3);
         }
-        if (allUsersdetails.data?[index].last.image?.photo4 == null &&
-            image.contains(allUsersdetails.data?[index].last.image?.photo4)) {
+        if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo4 == null &&
+            image.contains(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo4)) {
           image = image;
-        } else if (allUsersdetails.data?[index].last.image?.photo4 != null) {
-          image.add(allUsersdetails.data?[index].last.image?.photo4);
+        } else if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo4 != null) {
+          image.add(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo4);
         }
-        if (allUsersdetails.data?[index].last.image?.photo5 == null &&
-            image.contains(allUsersdetails.data?[index].last.image?.photo5)) {
+        if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo5 == null &&
+            image.contains(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo5)) {
           image = image;
-        } else if (allUsersdetails.data?[index].last.image?.photo5 != null) {
-          image.add(allUsersdetails.data?[index].last.image?.photo5);
+        } else if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo5 != null) {
+          image.add(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo5);
         }
-        if (allUsersdetails.data?[index].last.image?.photo6 == null &&
-            image.contains(allUsersdetails.data?[index].last.image?.photo6)) {
+        if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo6 == null &&
+            image.contains(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo6)) {
           image = image;
-        } else if (allUsersdetails.data?[index].last.image?.photo6 != null) {
-          image.add(allUsersdetails.data?[index].last.image?.photo6);
+        } else if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo6 != null) {
+          image.add(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo6);
         }
       }
       image = image.toSet().toList();
@@ -167,8 +166,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     connectUserCubit = BlocProvider.of<ConnectUserCubit>(context);
     undoUsersCubit = BlocProvider.of<UndoUsersCubit>(context);
     filterUserCubit = BlocProvider.of<FilterUserCubit>(context);
+    allUsersDetailsCubit.GetAllUsersDetails();
     createTutorial();
-    getData();
+   // getData();
     //_controller = AnimationController(vsync: this);
     controller = AppinioSwiperController();
     Future.delayed(Duration.zero, showTutorial);
@@ -847,7 +847,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         ),
                                                                         Text(
                                                                           10 <= filterUserCubit.filterUser.data![index].first!.businessaddress!.country!.length
-                                                                              ? "${allUsersdetails.data?[index].first.businessaddress?.country?.substring(0, 10) ?? ''}..."
+                                                                              ? "${filterUserCubit.filterUser.data?[index].first?.businessaddress?.country?.substring(0, 10) ?? ''}..."
                                                                               : filterUserCubit.filterUser.data?[ind].first?.businessaddress?.country ?? '',
                                                                           style: const TextStyle(
                                                                               fontSize: 14,
@@ -1367,17 +1367,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     },
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
-                                        undoid = allUsersdetails.data?[ind].first.id ?? '';
+                                        undoid = filterUserCubit.filterUser.data?[ind].first?.id ?? '';
                                           activity.direction == AxisDirection.up
                                             ? rejectUserCubit.GetRejectUser(
-                                            id: allUsersdetails
-                                                .data?[ind].first.id ??
+                                            id: filterUserCubit.filterUser
+                                                .data?[ind].first?.id ??
                                                 '').then((value) =>  pageViewIndex = 0)
                                             : connectUserCubit.GetConnectUser(
-                                            id: allUsersdetails
-                                                .data?[ind].first.id ??
+                                            id: filterUserCubit.filterUser
+                                                .data?[ind].first?.id ??
                                                 '').then((value) =>  pageViewIndex = 0) ;
-                                        ind >= allUsersdetails.data!.length - 1
+                                        ind >= filterUserCubit.filterUser.data!.length - 1
                                             ? ind = ind
                                             : ind = targetIndex;
                                         height = 0;
@@ -1392,7 +1392,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     threshold: screenHeight(context, dividedBy: 4.5),
                                     maxAngle: screenHeight(context, dividedBy: 7),
                                     swipeOptions: const SwipeOptions.only(down: true, up: true),
-                                    cardCount: allUsersdetails.data?.length ?? 0,
+                                    cardCount: allUsersDetailsCubit.allUsersdetails.data?.length ?? 0,
                                     cardBuilder: (BuildContext context, int index) {
                                       getImage(index);
                                       return Padding(
@@ -1775,6 +1775,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             .bottomCenter,
                                                         height: screenHeight(
                                                             context,
+                                                           // dividedBy: 7),
                                                             dividedBy: 4.1),
                                                         width: screenWidth(
                                                             context),
@@ -1821,7 +1822,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
-                                                                          allUsersdetails.data?[index].first.name?.trim() ?? '',
+                                                                          allUsersDetailsCubit.allUsersdetails.data?[index].first.name?.trim() ?? '',
                                                                           style: const TextStyle(
                                                                               color: AppColor.white,
                                                                               fontFamily: 'Roboto',
@@ -1855,7 +1856,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     direction: Axis
                                                                         .vertical,
                                                                     children: [
-                                                                      allUsersdetails.data?[index].first.professionalDetails?.addRole != null ? Row(
+                                                                      allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole != null ? Row(
                                                                         children: [
                                                                           Text(
                                                                             'Job Title'.tr(),
@@ -1874,9 +1875,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                           Text(
-                                                                            13 >= allUsersdetails.data![index].first.professionalDetails!.addRole!.length
-                                                                                ? "${allUsersdetails.data?[index].first.professionalDetails?.addRole ?? ''}"
-                                                                                : "${allUsersdetails.data?[index].first.professionalDetails?.addRole?.substring(0, 13) ?? ''}...",
+                                                                            13 >= allUsersDetailsCubit.allUsersdetails.data![index].first.professionalDetails!.addRole!.length
+                                                                                ? "${allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole ?? ''}"
+                                                                                : "${allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole?.substring(0, 13) ?? ''}...",
                                                                             style: const TextStyle(
                                                                                 overflow: TextOverflow.ellipsis,
                                                                                 fontSize: 14,
@@ -1886,7 +1887,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           ),
                                                                         ],
                                                                       ) : const SizedBox(),
-                                                                      allUsersdetails.data?[index].first.businessaddress?.country != null ? Row(
+                                                                      allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country != null ? Row(
                                                                         children: [
                                                                           Text(
                                                                             'City/Country'.tr(),
@@ -1905,9 +1906,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                           Text(
-                                                                            10 <= allUsersdetails.data![index].first.businessaddress!.country!.length
-                                                                                ? "${allUsersdetails.data?[index].first.businessaddress?.country?.substring(0, 10) ?? ''}..."
-                                                                                : "${allUsersdetails.data?[index].first.businessaddress?.country ?? ''}",
+                                                                            10 <= allUsersDetailsCubit.allUsersdetails.data![index].first.businessaddress!.country!.length
+                                                                                ? "${allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country?.substring(0, 10) ?? ''}..."
+                                                                                : "${allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country ?? ''}",
                                                                             style: const TextStyle(
                                                                                 fontSize: 14,
                                                                                 fontFamily: 'Roboto',
@@ -1916,7 +1917,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           ),
                                                                         ],
                                                                       ) : const SizedBox(),
-                                                                      allUsersdetails.data?[index].first.professionalDetails?.companyName != null ? Row(
+                                                                      allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName != null ? Row(
                                                                         children: [
                                                                           Text(
                                                                             'Company'.tr(),
@@ -1935,9 +1936,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                           Text(
-                                                                            15 <= allUsersdetails.data![index].first.professionalDetails!.companyName!.length
-                                                                                ? "${allUsersdetails.data?[index].first.professionalDetails?.companyName?.substring(0, 13) ?? ''}..."
-                                                                                : "${allUsersdetails.data?[index].first.professionalDetails?.companyName ?? ''}",
+                                                                            15 <= allUsersDetailsCubit.allUsersdetails.data![index].first.professionalDetails!.companyName!.length
+                                                                                ? "${allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName?.substring(0, 13) ?? ''}..."
+                                                                                : "${allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName ?? ''}",
                                                                             style: const TextStyle(
                                                                                 fontSize: 14,
                                                                                 fontFamily: 'Roboto',
@@ -1953,7 +1954,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     direction: Axis
                                                                         .vertical,
                                                                     spacing: 5,
-                                                                    children: allUsersdetails
+                                                                    children: allUsersDetailsCubit.allUsersdetails
                                                                             .data?[index]
                                                                             .first
                                                                             .lookingfor
@@ -2059,7 +2060,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                       );
                                     },
                                     cardBuilder1: (BuildContext context, int index) {
-                                     final image1 = allUsersdetails.data?[index].last.image?.photo1 ?? '';
+                                     final image1 = allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo1 ?? '';
                                       return CachedNetworkImage(
                                               imageUrl:
                                                   "${apis.baseurl}/${image1}",
@@ -2166,8 +2167,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 img:
                                                                     "assets/Images/button1.svg",
                                                                 onTap: () {
-                                                                  msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
-                                                                  callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Direct Message You").then((value) {
+                                                                  msgReqbyIDCubit.AcceptNotification(context, id: allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '', name: allUsersDetailsCubit.allUsersdetails.data?[ind].first.name ?? '', image: allUsersDetailsCubit.allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersDetailsCubit.allUsersdetails.loginUserId ?? '');
+                                                                  callingDetailsCubit.CallingDetailsService(from: allUsersDetailsCubit.allUsersdetails.loginUserId ?? '', to: allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersDetailsCubit.allUsersdetails.loginUserName} Direct Message You").then((value) {
                                                                   });                                                                },
                                                                 buttonName:
                                                                     "Chat",
@@ -2186,14 +2187,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         image =
                                                                             image;
                                                                       });
-                                                                      Navigator.pushReplacement(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) {
-                                                                          return const Home_screen();
-                                                                        },
-                                                                      ));
+                                                                      allUsersDetailsCubit.GetAllUsersDetails();
+                                                                      // Navigator.pushReplacement(
+                                                                      //     context,
+                                                                      //     MaterialPageRoute(
+                                                                      //   builder:
+                                                                      //       (context) {
+                                                                      //     return const Home_screen();
+                                                                      //   },
+                                                                      // ));
                                                                       setState(
                                                                           () {});
                                                                     },
@@ -2225,14 +2227,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                             image =
                                                                                 image;
                                                                           });
-                                                                          Navigator.pushReplacement(
-                                                                              context,
-                                                                              MaterialPageRoute(
-                                                                            builder:
-                                                                                (context) {
-                                                                              return const Home_screen();
-                                                                            },
-                                                                          ));
+                                                                          allUsersDetailsCubit.GetAllUsersDetails().then((value){
+
+                                                                          });
+                                                                          // Navigator.pushReplacement(
+                                                                          //     context,
+                                                                          //     MaterialPageRoute(
+                                                                          //   builder:
+                                                                          //       (context) {
+                                                                          //     return const Home_screen();
+                                                                          //   },
+                                                                          // ));
                                                                           setState(
                                                                               () {});
                                                                         },
@@ -2248,8 +2253,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
-                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
-                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Direct Message You").then((value) {
+                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '', name: allUsersDetailsCubit.allUsersdetails.data?[ind].first.name ?? '', image: allUsersDetailsCubit.allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersDetailsCubit.allUsersdetails.loginUserId ?? '');
+                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersDetailsCubit.allUsersdetails.loginUserId ?? '', to: allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersDetailsCubit.allUsersdetails.loginUserName} Direct Message You").then((value) {
                                                                       });                                                                    },
                                                                     buttonName:
                                                                         "Chat",
@@ -2262,7 +2267,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         "assets/Images/button2.svg",
                                                                     onTap: () {
                                                                       controller.swipeDown();
-                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Send Connection Request");
+                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersDetailsCubit.allUsersdetails.loginUserId ?? '', to: allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersDetailsCubit.allUsersdetails.loginUserName} Send Connection Request");
                                                                       setState(
                                                                               () {
                                                                             bottonname =
@@ -2302,8 +2307,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     img:
                                                                         "assets/Images/button1.svg",
                                                                     onTap: () {
-                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersdetails.data?[ind].first.id ?? '', name: allUsersdetails.data?[ind].first.name ?? '', image: allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersdetails.loginUserId ?? '');
-                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Direct Message You").then((value) {
+                                                                      msgReqbyIDCubit.AcceptNotification(context, id: allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '', name: allUsersDetailsCubit.allUsersdetails.data?[ind].first.name ?? '', image: allUsersDetailsCubit.allUsersdetails.data?[ind].first.profileImage ?? '', uid:allUsersDetailsCubit.allUsersdetails.loginUserId ?? '');
+                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersDetailsCubit.allUsersdetails.loginUserId ?? '', to: allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersDetailsCubit.allUsersdetails.loginUserName} Direct Message You").then((value) {
                                                                       });
                                                                     },
                                                                     buttonName:
@@ -2317,7 +2322,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         "assets/Images/button2.svg",
                                                                     onTap: () {
                                                                       controller.swipeDown();
-                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersdetails.loginUserId ?? '', to: allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersdetails.loginUserName} Send Connection Request");
+                                                                      callingDetailsCubit.CallingDetailsService(from: allUsersDetailsCubit.allUsersdetails.loginUserId ?? '', to: allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '', type: "Notification", context: context, msg: "${allUsersDetailsCubit.allUsersdetails.loginUserName} Send Connection Request");
                                                                       setState(
                                                                               () {
                                                                             bottonname =
@@ -2407,22 +2412,22 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                               curve: Curves.ease,
                             );
                           },
-                          country: allUsersdetails
+                          country: allUsersDetailsCubit.allUsersdetails
                                   .data?[ind].first.businessaddress?.country ??
                               '',
                           file1:
-                              allUsersdetails.data?[ind].last.file?.file1 ?? '',
+                          allUsersDetailsCubit.allUsersdetails.data?[ind].last.file?.file1 ?? '',
                           file3:
-                              allUsersdetails.data?[ind].last.file?.file3 ?? '',
+                          allUsersDetailsCubit.allUsersdetails.data?[ind].last.file?.file3 ?? '',
                           file2:
-                              allUsersdetails.data?[ind].last.file?.file2 ?? '',
-                          bio: allUsersdetails.data?[ind].last.bio ?? '',
-                          Company: allUsersdetails.data?[ind].first
+                          allUsersDetailsCubit.allUsersdetails.data?[ind].last.file?.file2 ?? '',
+                          bio: allUsersDetailsCubit.allUsersdetails.data?[ind].last.bio ?? '',
+                          Company: allUsersDetailsCubit.allUsersdetails.data?[ind].first
                                   .professionalDetails?.companyName ??
                               '',
-                          looking_for: allUsersdetails.data?[ind].first.lookingfor ?? [],
-                          Name: allUsersdetails.data?[ind].first.name ?? '',
-                          role: allUsersdetails.data?[ind].first
+                          looking_for: allUsersDetailsCubit.allUsersdetails.data?[ind].first.lookingfor ?? [],
+                          Name: allUsersDetailsCubit.allUsersdetails.data?[ind].first.name ?? '',
+                          role: allUsersDetailsCubit.allUsersdetails.data?[ind].first
                                   .professionalDetails?.addRole ??
                               '',
                         );

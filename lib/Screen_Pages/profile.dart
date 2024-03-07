@@ -801,16 +801,15 @@ class _Profile_pageState extends State<Profile_page> {
                                       ),
                                     )
                                   : const SizedBox(),
-                              if (userProfile.data?.first.professionalDetails !=
-                                  null) ...[
+                              if(userProfile.data?.first.professionalDetails?.businessExperience?.isNotEmpty ?? false) ...[
                                 custom_textfield_header(
                                     text: 'Business Experience'),
                                 Container(
                                   margin: EdgeInsets.only(
                                       top:
-                                          screenHeight(context, dividedBy: 100),
+                                      screenHeight(context, dividedBy: 100),
                                       bottom:
-                                          screenHeight(context, dividedBy: 70)),
+                                      screenHeight(context, dividedBy: 70)),
                                   alignment: Alignment.centerLeft,
                                   height: screenHeight(context, dividedBy: 20),
                                   width: screenWidth(context, dividedBy: 1.15),
@@ -831,15 +830,15 @@ class _Profile_pageState extends State<Profile_page> {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
-                                            screenWidth(context, dividedBy: 30),
+                                        screenWidth(context, dividedBy: 30),
                                         vertical: screenHeight(context,
                                             dividedBy: 100)),
                                     child: Text(
                                       userProfile
-                                              .data
-                                              ?.first
-                                              .professionalDetails
-                                              ?.businessExperience ??
+                                          .data
+                                          ?.first
+                                          .professionalDetails
+                                          ?.businessExperience ??
                                           '',
                                       style: TextStyle(
                                           color: Color(0xff434343),
@@ -849,13 +848,15 @@ class _Profile_pageState extends State<Profile_page> {
                                     ),
                                   ),
                                 ),
+                              ],
+                              if(userProfile.data?.first.professionalDetails?.skills?.isNotEmpty ?? false) ...[
                                 custom_textfield_header(text: 'Skills'),
                                 Container(
                                   margin: EdgeInsets.only(
                                       top:
-                                          screenHeight(context, dividedBy: 100),
+                                      screenHeight(context, dividedBy: 100),
                                       bottom:
-                                          screenHeight(context, dividedBy: 70)),
+                                      screenHeight(context, dividedBy: 70)),
                                   alignment: Alignment.centerLeft,
                                   height: screenHeight(context, dividedBy: 20),
                                   width: screenWidth(context, dividedBy: 1.15),
@@ -876,12 +877,12 @@ class _Profile_pageState extends State<Profile_page> {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
-                                            screenWidth(context, dividedBy: 30),
+                                        screenWidth(context, dividedBy: 30),
                                         vertical: screenHeight(context,
                                             dividedBy: 100)),
                                     child: Text(
                                       userProfile.data?.first
-                                              .professionalDetails?.skills ??
+                                          .professionalDetails?.skills ??
                                           '1 year',
                                       style: const TextStyle(
                                           color: Color(0xff434343),
@@ -891,13 +892,15 @@ class _Profile_pageState extends State<Profile_page> {
                                     ),
                                   ),
                                 ),
+                              ],
+                              if(userProfile.data?.first.professionalDetails?.education?.isNotEmpty ?? false) ...[
                                 custom_textfield_header(text: 'Education'),
                                 Container(
                                   margin: EdgeInsets.only(
                                       top:
-                                          screenHeight(context, dividedBy: 100),
+                                      screenHeight(context, dividedBy: 100),
                                       bottom:
-                                          screenHeight(context, dividedBy: 70)),
+                                      screenHeight(context, dividedBy: 70)),
                                   height: screenHeight(context, dividedBy: 20),
                                   width: screenWidth(context, dividedBy: 1.15),
                                   decoration: BoxDecoration(
@@ -922,10 +925,10 @@ class _Profile_pageState extends State<Profile_page> {
                                       children: [
                                         Text(
                                           userProfile
-                                                  .data
-                                                  ?.first
-                                                  .professionalDetails
-                                                  ?.education ??
+                                              .data
+                                              ?.first
+                                              .professionalDetails
+                                              ?.education ??
                                               '',
                                           style: const TextStyle(
                                               color: AppColor.black,
@@ -937,14 +940,16 @@ class _Profile_pageState extends State<Profile_page> {
                                     ),
                                   ),
                                 ),
+                              ],
+                              if(userProfile.data?.first.professionalDetails?.university?.isNotEmpty ?? false) ...[
                                 custom_textfield_header(text: 'University'),
                                 Container(
                                   alignment: Alignment.centerLeft,
                                   margin: EdgeInsets.only(
                                       top:
-                                          screenHeight(context, dividedBy: 100),
+                                      screenHeight(context, dividedBy: 100),
                                       bottom:
-                                          screenHeight(context, dividedBy: 70)),
+                                      screenHeight(context, dividedBy: 70)),
                                   height: screenHeight(context, dividedBy: 20),
                                   width: screenWidth(context, dividedBy: 1.15),
                                   decoration: BoxDecoration(
@@ -967,10 +972,10 @@ class _Profile_pageState extends State<Profile_page> {
                                             dividedBy: 30)),
                                     child: Text(
                                       userProfile
-                                              .data
-                                              ?.first
-                                              .professionalDetails
-                                              ?.university ??
+                                          .data
+                                          ?.first
+                                          .professionalDetails
+                                          ?.university ??
                                           '',
                                       style: const TextStyle(
                                           color: AppColor.black,

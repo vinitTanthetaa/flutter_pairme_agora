@@ -4,21 +4,6 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-		<string>hi</string>
-		<string>sp</string>
-		<string>zh_CN</string>
-		<string>zh_TW</string>
-	</array>
-	<key>NSMicrophoneUsageDescription</key>
-    <string>Some message to describe why you need this permission</string>
-    <key>UIBackgroundModes</key>
-    <array>
-       <string>audio</string>
-       <string>processing</string>
-    </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -29,6 +14,14 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>hi</string>
+		<string>sp</string>
+		<string>zh_CN</string>
+		<string>zh_TW</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>pair_me</string>
 	<key>CFBundlePackageType</key>
@@ -41,12 +34,14 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>your usage description here</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app needs access to location when in the background.</string>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>YourPurposeKey</key>
-		<string>The example App requires temporary access to the device&apos;s precise location.</string>
+		<string>The example App requires temporary access to the device's precise location.</string>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
@@ -54,10 +49,15 @@
 	<string>your usage description here</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>your usage description here</string>
-	<key>NSCameraUsageDescription</key>
-	<string>your usage description here</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>location</string>
+		<string>processing</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

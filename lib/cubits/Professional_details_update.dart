@@ -44,7 +44,6 @@ class ProfessionalDetailsUpdateCubit extends Cubit<ProfessionalDetailsUpdateStat
       "skills": skills,
       "education": education,
       "university": university,
-
     };
     print("Body is $body");
     emit(ProfessionalDetailsUpdateLoading());

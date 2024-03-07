@@ -181,6 +181,7 @@ class _MyAppState extends State<MyApp> {
           builder: (context) => VideoCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '') ,
         ));
       } else {
+        Rtctoken = map['rtc'];
         navigatorKey.currentState?.push(MaterialPageRoute(
           builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '') ,
         ));

@@ -21,3 +21,4 @@ String fcmtoken = '';
 String AgoraAppid = '71acb4aa29c343b99145d14ecbe23c1f';
 String AgoraAppkey = '611031492#1280036';
 String Language = 'english';
+String Rtctoken = "";

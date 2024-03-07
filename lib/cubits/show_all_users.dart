@@ -33,6 +33,7 @@ class AllUsersDetailsCubit extends Cubit<AllUsersDetailsState> {
       await Permission.notification.request();
       if(response.statusCode == 200 && response.data != null)
       {
+        allUsersdetails = AllUsersdetails.fromJson(response.data);
         emit(AllUsersDetailsSuccess());
         print("passs");
 
