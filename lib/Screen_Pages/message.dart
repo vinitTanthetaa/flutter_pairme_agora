@@ -40,7 +40,7 @@ class _Message_pageState extends State<Message_page> {
   List ids = [];
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
-     setupChatClient();
+    // setupChatClient();
     // setupListeners();
     setState(() {});
   }
@@ -370,57 +370,6 @@ class _Message_pageState extends State<Message_page> {
   }
   void onMessagesReceived(List<ChatMessage> messages) {
     log("message ===>? $messages");
-    // for (var msg in messages) {
-    //   if (msg.to == widget.uid && msg.from == widget.id) {
-    //     print("message ====> ${msg.to}");
-    //     if (msg.body.type == MessageType.TXT) {
-    //       ChatTextMessageBody body = msg.body as ChatTextMessageBody;
-    //       messageList.add( displayMessage(text: body.content, isSentMessage: false,));
-    //       setState(() {
-    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
-    //       });
-    //       // showLog("Message from ${msg.from}");
-    //     }
-    //     if(msg.body.type == MessageType.IMAGE){
-    //       ChatImageMessageBody body = msg.body as ChatImageMessageBody;
-    //       displayimgMessage(body.remotePath, false);
-    //       setState(() {
-    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
-    //       });
-    //       // showLog("Message from ${msg.from}");
-    //     }
-    //     if(msg.body.type == MessageType.VIDEO){
-    //       ChatVideoMessageBody body = msg.body as ChatVideoMessageBody;
-    //       displayvideoMessage(body.remotePath, false);
-    //       setState(() {
-    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
-    //       });
-    //       // showLog("Message from ${msg.from}");
-    //     }
-    //     if(msg.body.type == MessageType.FILE){
-    //       ChatFileMessageBody body = msg.body as ChatFileMessageBody;
-    //       displayfileMessage(body.remotePath,body.displayName.toString(),false);
-    //       setState(() {
-    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
-    //       });
-    //       // showLog("Message from ${msg.from}");
-    //     }
-    //     if(msg.body.type == MessageType.VOICE){
-    //       ChatVoiceMessageBody body = msg.body as ChatVoiceMessageBody;
-    //       messageList.add( displayvoiceMessage(dispalname:body.displayName.toString() ,isSentMessage: false,thumbnail: body.remotePath.toString(),));
-    //       setState(() {
-    //         scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
-    //       });
-    //       // showLog("Message from ${msg.from}");
-    //     }
-    //   }
-    // }
   }
 
-}
-class Storedata {
-  String from;
-  String to;
-  String msg;
-  Storedata({required this.from, required this.to,required this.msg});
 }

@@ -84,9 +84,6 @@ class _Filter_pageState extends State<Filter_page> {
                     filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text.trim(), state: _State.text.trim(), city: _City.text.trim(), gender: _gender.text.trim(), looking_for: _type, context: context).then((value) {
                       Navigator.pop(context,'refresh');
                     });
-                    // filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.text.isEmpty ? null :_Contry.text, state: _State.text.isEmpty ? null : _State.text, city: _City.text.isEmpty ? null :_City.text, gender: gender.isEmpty ?null :gender, looking_for: _type.isEmpty ? null :_type, context: context).then((value) {
-                    //   Navigator.pop(context,'refresh');
-                    // });
                   }, child: const Text("Apply",style: TextStyle(color: AppColor.skyBlue),))
                 ],
                 leading: GestureDetector(

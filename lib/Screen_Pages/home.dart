@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -58,6 +60,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   MsgReqbyIDCubit msgReqbyIDCubit = MsgReqbyIDCubit();
   CallingDetailsCubit callingDetailsCubit = CallingDetailsCubit();
   late AppinioSwiperController controller = AppinioSwiperController();
+  late VideoPlayerController _controller;
   List looking_for = [];
   bool theEnd = false;
   List looking_for1 = [];
@@ -157,6 +160,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
       image = image.toSet().toList();
       //image1 = image1.toSet().toList();
     }
+  }
+  playVideo(){
+    _controller = VideoPlayerController.network("${apis.baseurl}/${image[pageViewIndex]}")
+      ..initialize().then((_) {
+        print("${apis.baseurl}/${image[pageViewIndex]}");
+        _controller.setVolume(0);
+        swipeUp || swipeDown ? _controller.pause() :  _controller.play();
+        _controller.play();
+        _controller.setLooping(true); // Auto-repeating the video
+        setState(() { });
+      });
   }
   @override
   void initState() {
@@ -392,7 +406,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           child: Stack(
                                                             children: [
                                                               VideoWidget(
-                                                              videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: false,),
+                                                              videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: false, controller1: _controller,),
                                                               Container(
                                                                   height: screenHeight(
                                                                       context,
@@ -577,7 +591,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           .toString()
                                                           .endsWith(".3gpp")
                                                       ? VideoWidget(
-                                                      videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: true,)
+                                                      videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: true, controller1: _controller,)
                                                       : CachedNetworkImage(
                                                     imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
                                                     imageBuilder: (context, imageProvider) =>
@@ -675,6 +689,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   : null;
                                                               image = image;
                                                             });
+                                                            image[pageViewIndex]
+                                                                .toString()
+                                                                .endsWith(
+                                                                ".mp4") ||
+                                                                image[pageViewIndex]
+                                                                    .toString()
+                                                                    .endsWith(".3gpp") ? playVideo() : null;
                                                           },
                                                           child: Container(
                                                             height:
@@ -695,6 +716,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               pageViewIndex = pageViewIndex;
                                                               image = image;
                                                             });
+                                                            image[pageViewIndex]
+                                                                .toString()
+                                                                .endsWith(
+                                                                ".mp4") ||
+                                                                image[pageViewIndex]
+                                                                    .toString()
+                                                                    .endsWith(".3gpp") ? playVideo() : null;
                                                           },
                                                           child: Container(
                                                             height:
@@ -1130,21 +1158,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             id: undoid, key: 'connect')
                                                             .then(
                                                               (value) async {
-                                                            setState(
-                                                                    () {
-                                                                  image =
-                                                                      image;
-                                                                });
-                                                            Navigator.pushReplacement(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                                    return const Home_screen();
-                                                                  },
-                                                                ));
-                                                            setState(
-                                                                    () {});
+                                                                image.clear();
+                                                                bottonname = "";
+                                                               String _gender = (await prefsService.getStringData("gender"))!;
+                                                                double _slider = (await prefsService.getDoubleData("slider"))!;
+                                                                String _Contry = (await prefsService.getStringData("contry"))!;
+                                                                String _State = (await prefsService.getStringData("state"))!;
+                                                                String _City = (await prefsService.getStringData("city"))!;
+                                                                List _type = (await prefsService.getStringlistData("type"))!;
+                                                                setState(() {});
+                                                                filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.trim(), state: _State.trim(), city: _City.trim(), gender: _gender.trim(), looking_for: _type, context: context);
+                                                            setState(() {});
                                                           },
                                                         );
                                                       },
@@ -1169,21 +1193,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             id: undoid, key: 'skip')
                                                             .then(
                                                               (value) async {
-                                                            setState(
-                                                                    () {
-                                                                  image =
-                                                                      image;
-                                                                });
-                                                            Navigator.pushReplacement(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                                    return const Home_screen();
-                                                                  },
-                                                                ));
-                                                            setState(
-                                                                    () {});
+                                                                image.clear();
+                                                                bottonname = "";
+                                                                String _gender = (await prefsService.getStringData("gender"))!;
+                                                                double _slider = (await prefsService.getDoubleData("slider"))!;
+                                                                String _Contry = (await prefsService.getStringData("contry"))!;
+                                                                String _State = (await prefsService.getStringData("state"))!;
+                                                                String _City = (await prefsService.getStringData("city"))!;
+                                                                List _type = (await prefsService.getStringlistData("type"))!;
+                                                                setState(() {});
+                                                                filterUserCubit.FilterUserService(distance: _slider.toInt().toString(), country: _Contry.trim(), state: _State.trim(), city: _City.trim(), gender: _gender.trim(), looking_for: _type, context: context);
+                                                                setState(() {});
                                                           },
                                                         );
                                                       },
@@ -1367,17 +1387,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                     },
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
-                                        undoid = filterUserCubit.filterUser.data?[ind].first?.id ?? '';
+                                        undoid = allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '';
                                           activity.direction == AxisDirection.up
                                             ? rejectUserCubit.GetRejectUser(
-                                            id: filterUserCubit.filterUser
-                                                .data?[ind].first?.id ??
+                                            id: allUsersDetailsCubit.allUsersdetails
+                                                .data?[ind].first.id ??
                                                 '').then((value) =>  pageViewIndex = 0)
                                             : connectUserCubit.GetConnectUser(
-                                            id: filterUserCubit.filterUser
-                                                .data?[ind].first?.id ??
+                                            id: allUsersDetailsCubit.allUsersdetails
+                                                .data?[ind].first.id ??
                                                 '').then((value) =>  pageViewIndex = 0) ;
-                                        ind >= filterUserCubit.filterUser.data!.length - 1
+                                        ind >= allUsersDetailsCubit.allUsersdetails.data!.length - 1
                                             ? ind = ind
                                             : ind = targetIndex;
                                         height = 0;
@@ -1428,7 +1448,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                   child: Stack(
                                                     children: [
                                                       VideoWidget(
-                                                        videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: false,),
+                                                        videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: false, controller1: _controller,),
                                                       Container(
                                                           height: screenHeight(
                                                               context,
@@ -1634,7 +1654,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                       .toString()
                                                       .endsWith(".3gpp")
                                                   ? VideoWidget(
-                                                videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: true,)
+                                                videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: true, controller1: _controller,)
                                                   : CachedNetworkImage(
                                                 imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
                                                 imageBuilder: (context, imageProvider) =>
@@ -1699,6 +1719,13 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               : null;
                                                           image = image;
                                                         });
+                                                        image[pageViewIndex]
+                                                            .toString()
+                                                            .endsWith(
+                                                            ".mp4") ||
+                                                            image[pageViewIndex]
+                                                                .toString()
+                                                                .endsWith(".3gpp") ? playVideo() : null;
                                                       },
                                                       child: Container(
                                                         height:
@@ -1714,12 +1741,17 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           Colors
                                                               .transparent),
                                                       onTap: () {
-                                                        setState(() {
                                                           setState(() {
                                                             pageViewIndex >= image.length - 1 ? null : pageViewIndex++;
+                                                            image = image;
                                                           });
-                                                          image = image;
-                                                        });
+                                                          image[pageViewIndex]
+                                                              .toString()
+                                                              .endsWith(
+                                                              ".mp4") ||
+                                                              image[pageViewIndex]
+                                                                  .toString()
+                                                                  .endsWith(".3gpp") ? playVideo() : null;
                                                       },
                                                       child: Container(
                                                         height:
@@ -2182,22 +2214,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   undoUsersCubit.GetUndoUsers(id: undoid, key: 'connect')
                                                                       .then(
                                                                     (value) async {
-                                                                      setState(
-                                                                          () {
-                                                                        image =
-                                                                            image;
-                                                                      });
+                                                                      image.clear();
+                                                                        bottonname = "";
                                                                       allUsersDetailsCubit.GetAllUsersDetails();
-                                                                      // Navigator.pushReplacement(
-                                                                      //     context,
-                                                                      //     MaterialPageRoute(
-                                                                      //   builder:
-                                                                      //       (context) {
-                                                                      //     return const Home_screen();
-                                                                      //   },
-                                                                      // ));
-                                                                      setState(
-                                                                          () {});
+                                                                      setState(() {});
                                                                     },
                                                                   );
                                                                 },
@@ -2222,11 +2242,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                               id: undoid, key: 'skip')
                                                                           .then(
                                                                         (value) async {
-                                                                          setState(
-                                                                              () {
-                                                                            image =
-                                                                                image;
-                                                                          });
+                                                                          image.clear();
+                                                                          bottonname = "";
                                                                           allUsersDetailsCubit.GetAllUsersDetails().then((value){
 
                                                                           });
@@ -2714,12 +2731,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   }
 }
 
-Widget buttons(
-    {required BuildContext context,
-    required String img,
-    required Function() onTap,
-    required String buttonName,
-    required bool bool}) {
+Widget buttons({required BuildContext context, required String img, required Function() onTap, required String buttonName, required bool bool}) {
   return Container(
     height: screenHeight(context, dividedBy: 25),
     width: screenWidth(context, dividedBy: bool ? 3.7 : 4.9),
@@ -2756,8 +2768,9 @@ Widget buttons(
 
 class VideoWidget extends StatefulWidget {
   final String videoUrl;
+  VideoPlayerController controller1;
 bool play;
-   VideoWidget({Key? key, required this.videoUrl,required this.play}) : super(key: key);
+VideoWidget({Key? key, required this.videoUrl,required this.play, required this.controller1}) : super(key: key);
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
@@ -2775,28 +2788,25 @@ startvideo(){
       _controller.setLooping(true); // Auto-repeating the video
       setState(() { });
     });
-  setState(() {});
 }
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      startvideo();
-    });
+     // startvideo();
   }
   @override
   void dispose() {
-    _controller.dispose();
+    widget.controller1.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _controller.value.isInitialized
+    return widget.controller1.value.isInitialized
         ? ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: VideoPlayer(_controller),)
+            child: VideoPlayer(widget.controller1),)
         : Container(
             height: screenHeight(context),
             width: screenWidth(context),

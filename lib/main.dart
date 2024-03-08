@@ -177,11 +177,12 @@ class _MyAppState extends State<MyApp> {
    Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == "ACCEPT") {
       if(map['type'] == "video call"){
+       // Rtctoken = map['rtc'];
         navigatorKey.currentState?.push(MaterialPageRoute(
           builder: (context) => VideoCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '') ,
         ));
       } else {
-        Rtctoken = map['rtc'];
+       // Rtctoken = map['rtc'];
         navigatorKey.currentState?.push(MaterialPageRoute(
           builder: (context) => VoiceCallPage(img: '${apis.baseurl}/${map['profile']}', name: map['name'], uid: map['_id'], id: '') ,
         ));

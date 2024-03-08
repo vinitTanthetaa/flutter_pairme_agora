@@ -3,6 +3,7 @@ import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:pair_me/cubits/GenrateToken.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -23,6 +24,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
   bool mic = true;
   bool speker = true;
   late RtcEngine agoraEngine; // Agora engine instance
+  GenerateTokenCubit generateTokenCubit = GenerateTokenCubit();
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey
   = GlobalKey<ScaffoldMessengerState>();
   final dio = Dio();
@@ -62,7 +64,9 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
         },
       ),
     );
-    join();
+    generateTokenCubit.GenerateTokenService(product: widget.uid, context: context).then((value) {
+      join();
+    });
   }
 
   @override
@@ -283,6 +287,7 @@ class _VoiceCallPageState extends State<VoiceCallPage> {
       channelId: widget.uid,
       options: options,
       uid: uid,
+     // token: "00671acb4aa29c343b99145d14ecbe23c1fIACPKvVXYuBlhh6pcuMj0Rm+g+ZrLdO2I+CaNt+8Y5dI9Yd2L5oAAAAAIgAHr3uoe+7rZQQAAQAQDgAAAgAQDgAAAwAQDgAABAAQDgAA",
       token: Rtctoken,
       // token: '007eJxTYHi7XuXIz10Rj9PNDnm1fsrYEuCg/cH4pVNs9JVMgYjdmWkKDOaGiclJJomJRpbJxibGSZaWhiamKYYmqclJqUbGyYZpCaYvUhsCGRkunHFnZGSAQBBfgsHMNDnVwNjCwCTVzMAg0cLEwjDZ0tQ8NZWBAQCR2SWr',
     );

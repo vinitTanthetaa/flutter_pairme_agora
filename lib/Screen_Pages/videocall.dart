@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:pair_me/cubits/GenrateToken.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -24,6 +25,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
   bool isJoined = false; // Indicates if the local user has joined the channel
   bool isBroadcaster = true; // Client role
   RtcEngine agoraEngine = createAgoraRtcEngine(); // Agora engine instance
+  GenerateTokenCubit generateTokenCubit = GenerateTokenCubit();
   bool  mic = false;
   final dio = Dio();
 
@@ -42,34 +44,31 @@ class _VideoCallPageState extends State<VideoCallPage> {
   Future<void> setupAgoraEngine() async {
     // Retrieve or request camera and microphone permissions
     await [Permission.microphone, Permission.camera].request();
-
-    // Create an instance of the Agora engine
-
     await agoraEngine.initialize(RtcEngineContext(appId: AgoraAppid));
     await agoraEngine.enableVideo();
     await agoraEngine.enableAudio();
-    // Set channel options including the client role and channel profile
-    ChannelMediaOptions options = const ChannelMediaOptions(
-      clientRoleType: ClientRoleType.clientRoleBroadcaster,
-    );
     print("======================================> ${widget.uid} <============================ ");
-    // await agoraEngine.renewToken()
-   
-    // Register the event handler
     agoraEngine.registerEventHandler(getEventHandler());
-    join();
+    generateTokenCubit.GenerateTokenService(product: widget.uid, context: context).then((value) {
+      join();
+    });
   }
   void  join() async {
     ChannelMediaOptions options = const ChannelMediaOptions(
       clientRoleType: ClientRoleType.clientRoleBroadcaster,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     );
+    agoraEngine.renewToken(Rtctoken);
+    print("token ===> $Rtctoken}");
     print("chanel ===> ${widget.uid}");
+    print(Rtctoken);
     await agoraEngine.joinChannel(
       channelId: widget.uid,
       options: options,
       uid: 0,
-      token: '007eJxTYHi7XuXIz10Rj9PNDnm1fsrYEuCg/cH4pVNs9JVMgYjdmWkKDOaGiclJJomJRpbJxibGSZaWhiamKYYmqclJqUbGyYZpCaYvUhsCGRkunHFnZGSAQBBfgsHMNDnVwNjCwCTVzMAg0cLEwjDZ0tQ8NZWBAQCR2SWr',
+      // token: "00671acb4aa29c343b99145d14ecbe23c1fIACPKvVXYuBlhh6pcuMj0Rm+g+ZrLdO2I+CaNt+8Y5dI9Yd2L5oAAAAAIgAHr3uoe+7rZQQAAQAQDgAAAgAQDgAAAwAQDgAABAAQDgAA",
+      token: Rtctoken,
+      // token: '007eJxTYHi7XuXIz10Rj9PNDnm1fsrYEuCg/cH4pVNs9JVMgYjdmWkKDOaGiclJJomJRpbJxibGSZaWhiamKYYmqclJqUbGyYZpCaYvUhsCGRkunHFnZGSAQBBfgsHMNDnVwNjCwCTVzMAg0cLEwjDZ0tQ8NZWBAQCR2SWr',
     );
   }
   RtcEngineEventHandler getEventHandler() {
@@ -198,7 +197,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
               SizedBox(
                 height: screenHeight(context),
                 width: screenWidth(context),
-                child: localVideoView(),
+                child: remoteUids.isEmpty ? const Center(child: Text("Waiting...",style: TextStyle(color: AppColor.white,fontSize: 17,fontFamily: "Roboto"),),) :remoteVideoView(remoteUids[0]),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -263,7 +262,7 @@ class _VideoCallPageState extends State<VideoCallPage> {
                               border: Border.all(color: Colors.red,width: 2),
                                 borderRadius: BorderRadius.circular(10)
                             ),
-                            child: remoteUids.isEmpty ? const Center(child: Text("Waiting...",style: TextStyle(color: AppColor.white,fontSize: 17,fontFamily: "Roboto"),),) : remoteVideoView(remoteUids[0]),
+                            child:  localVideoView(),
                           ),
                         ),
                       ],

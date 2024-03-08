@@ -35,7 +35,7 @@ class GenerateTokenCubit extends Cubit<GenerateTokenState> {
         'Authorization': Authtoken,
       }) ,data: jsonEncode(body));
       print("response ====> $response");
-     Rtctoken = response.data['rtcToken'];
+     Rtctoken = response.data['RTCToken'] ?? '';
      print("token ====> $Rtctoken");
     } on Exception catch (e) {
       print("fail ====> " +e.toString());
