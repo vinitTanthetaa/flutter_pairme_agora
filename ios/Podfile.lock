@@ -899,6 +899,9 @@ PODS:
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
+  - in_app_purchase_storekit (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - IosAwnCore (0.8.0)
   - iris_method_channel (0.0.1):
     - Flutter
@@ -976,6 +979,7 @@ DEPENDENCIES:
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - image_crop (from `.symlinks/plugins/image_crop/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - iris_method_channel (from `.symlinks/plugins/iris_method_channel/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -1065,6 +1069,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_crop/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  in_app_purchase_storekit:
+    :path: ".symlinks/plugins/in_app_purchase_storekit/darwin"
   iris_method_channel:
     :path: ".symlinks/plugins/iris_method_channel/ios"
   path_provider_foundation:
@@ -1135,6 +1141,7 @@ SPEC CHECKSUMS:
   HyphenateChat: 95aa4abbad0e763f513acbe21ff9543f50b886cd
   image_crop: e0a67085d3ebf3cf46ca46d61c53a082507b0bc3
   image_picker_ios: 99dfe1854b4fa34d0364e74a78448a0151025425
+  in_app_purchase_storekit: 9e9931234f0adcf71ae323f8c83785b96030edf1
   IosAwnCore: ed1b2b6d84962a758354dbacd9ce525c72ce28a9
   iris_method_channel: 0617c689164d8154c020c50f63ca79f92b8a7b9d
   leveldb-library: e74c27d8fbd22854db7cb467968a0b8aa1db7126
@@ -1157,6 +1164,6 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 02011213dab73ae3687df27ce441fbbcc82b5579
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
 
-PODFILE CHECKSUM: 15cc44fa5994fa74f893df00953ddaea9d4ee782
+PODFILE CHECKSUM: b3b62bc0263a14756c3289f4ff9152c25a28ed92
 
 COCOAPODS: 1.15.0

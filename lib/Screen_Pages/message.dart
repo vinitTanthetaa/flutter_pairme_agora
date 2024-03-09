@@ -40,8 +40,8 @@ class _Message_pageState extends State<Message_page> {
   List ids = [];
   getData() async {
     userMessage = await messageCubit.GetMessage() ?? UserMessage();
-    // setupChatClient();
-    // setupListeners();
+    setupChatClient();
+    setupListeners();
     setState(() {});
   }
   @override
@@ -193,26 +193,18 @@ class _Message_pageState extends State<Message_page> {
                                                    radius: screenHeight(context,dividedBy:30),
                                                    child: const Icon(Icons.person)),
                                              ),
-                                             // Container(
-                                             //   height: screenHeight(context,dividedBy: 15),
-                                             //   width: screenHeight(context,dividedBy: 15),
-                                             //   decoration: BoxDecoration(
-                                             //       shape: BoxShape.circle,
-                                             //       image: DecorationImage(image: NetworkImage("${list[index]["image"]}"),fit: BoxFit.cover)
-                                             //   ),
-                                             // ),
                                              SizedBox(width: screenWidth(context,dividedBy: 30),),
                                              Padding(
                                                padding: EdgeInsets.symmetric(vertical: screenWidth(context,dividedBy: 40)),
                                                child: Column(
-                                                 mainAxisAlignment: MainAxisAlignment.start,
+                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                  children: [
                                                    Text(userMessage.data?.data?[index].userName ?? '',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Roboto'),),
                                                    SizedBox(height: screenHeight(context,dividedBy: 300),),
                                                    SizedBox(
                                                      width: screenWidth(context,dividedBy: 2.2),
-                                                     child: Text(ids.contains(userMessage.data?.data?[index].id ?? '') ? ids[index]['msg'] :'Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),overflow: TextOverflow.ellipsis,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
+                                                     child: const Text('Duis protium gravida denim, vei maximus ligula......',maxLines: 2,style: TextStyle(color: Color(0xffAAAAAA),overflow: TextOverflow.ellipsis,fontSize: 12,fontWeight: FontWeight.w400,fontFamily: 'Roboto')),
                                                    )
                                                  ],
                                                ),
@@ -314,30 +306,30 @@ class _Message_pageState extends State<Message_page> {
         type: ChatConversationType.Chat
     );
     log(" data ===> ${result.data}");
-      if(result.data.last.body.type == MessageType.TXT){
-        ChatTextMessageBody body = result.data.last.body as ChatTextMessageBody;
-        data["from"] = result.data.last.from;
-        data["to"] = result.data.last.to;
+      if(result.data.first.body.type == MessageType.TXT){
+        ChatTextMessageBody body = result.data.first.body as ChatTextMessageBody;
+        data["from"] = result.data.first.from;
+        data["to"] = result.data.first.to;
         data["msg"] = body.content;
       } else
-      if(result.data.last.body.type == MessageType.IMAGE){
-        data["from"] = result.data.last.from;
-        data["to"] = result.data.last.to;
+      if(result.data.first.body.type == MessageType.IMAGE){
+        data["from"] = result.data.first.from;
+        data["to"] = result.data.first.to;
         data["msg"] = "image";
       } else
-      if(result.data.last.body.type == MessageType.VIDEO){
-        data["from"] = result.data.last.from;
-        data["to"] = result.data.last.to;
+      if(result.data.first.body.type == MessageType.VIDEO){
+        data["from"] = result.data.first.from;
+        data["to"] = result.data.first.to;
         data["msg"] = "video";
       } else
-      if(result.data.last.body.type == MessageType.FILE){
-        data["from"] = result.data.last.from;
-        data["to"] = result.data.last.to;
+      if(result.data.first.body.type == MessageType.FILE){
+        data["from"] = result.data.first.from;
+        data["to"] = result.data.first.to;
         data["msg"] = "file";
       }else
-      if(result.data.last.body.type == MessageType.VOICE){
-        data["from"] = result.data.last.from;
-        data["to"] = result.data.last.to;
+      if(result.data.first.body.type == MessageType.VOICE){
+        data["from"] = result.data.first.from;
+        data["to"] = result.data.first.to;
         data["msg"] = "voice";
       }
     print("ids ====> $data");

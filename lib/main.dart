@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -6,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:pair_me/Screen_Pages/Step_Screens.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
 import 'package:pair_me/Screen_Pages/videocall.dart';
@@ -120,6 +123,11 @@ Future<void> main() async {
   });
 }
 
+InAppPurchase inAppPurchase = InAppPurchase.instance;
+late StreamSubscription streamSubscription;
+List products = [];
+
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -129,11 +137,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  CallingDetailsCubit callingDetailsCubit = CallingDetailsCubit();
   Map map = {};
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    Stream purchaseUpdate = InAppPurchase.instance.purchaseStream;
+    streamSubscription = purchaseUpdate.listen((event) { });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       map = message.data;
       print(map);
@@ -149,6 +160,9 @@ class _MyAppState extends State<MyApp> {
               // backgroundColor: Colors.orange
             ),
         );
+      }else  if(map['type'] == "DeniedCall"){
+        print("map =====? $map");
+        navigatorKey.currentState?.pop(context);
       } else{
         AwesomeNotifications().createNotification(
             content: NotificationContent(
@@ -189,7 +203,7 @@ class _MyAppState extends State<MyApp> {
       }
     }
     if (receivedAction.buttonKeyPressed == "REJECT") {
-      print("=======REJECT=======");
+      callingDetailsCubit.CallingDetailsService(from: map['_id'], to: map['_id'], type: "DeniedCall", context: context, rtc: '', msg: '');
     }
   }
 
@@ -251,6 +265,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColor.skyBlue),
           useMaterial3: true,
+          fontFamily: "Roboto",
         ),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_button.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -16,6 +19,10 @@ class PremiumMembership extends StatefulWidget {
 
 class _PremiumMembershipState extends State<PremiumMembership> {
   PremiumMembershipCubit premiumMembershipCubit = PremiumMembershipCubit();
+  InAppPurchase _inAppPurchase = InAppPurchase.instance;
+  late StreamSubscription<dynamic> _streamSubscription;
+  List _products = [];
+  static const _variant = {"amplifyabhi", "amplifyabhi pro"};
   List data = [
     {
       'month': '1 Month',
@@ -56,7 +63,21 @@ class _PremiumMembershipState extends State<PremiumMembership> {
   ];
 
   int ind = 0;
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _products = data;
+    Stream purchaseUpdated = InAppPurchase.instance.purchaseStream;
+    _streamSubscription = purchaseUpdated.listen((purchaseList) {
+      _listenToPurchase(purchaseList, context);
+    }, onDone: (){
+      _streamSubscription.cancel();
+    }, onError: (error){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error")));
+    });
+    initStore();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -311,15 +332,17 @@ class _PremiumMembershipState extends State<PremiumMembership> {
                         Newtext(text: 'In-app video call / phone call feature'),
                         Newtext(text: 'PairMe Premium badge'),
                         Newtext(text: 'Advertisements hidden'),
-                        Custom_botton(context, text: 'Continue', onTap: () {
-                          premiumMembershipCubit.PremiumMembershipService(
-                              product: ind == 0
-                                  ? "Basic"
-                                  : ind == 1
-                                      ? "Plus"
-                                      : "Pro",
-                              context: context);
-                        }, height: screenHeight(context, dividedBy: 20))
+                        Custom_botton(context, text: 'Continue', onTap: () =>  _buy(),
+                        //     onTap: () {
+                        //   premiumMembershipCubit.PremiumMembershipService(
+                        //       product: ind == 0
+                        //           ? "Basic"
+                        //           : ind == 1
+                        //               ? "Plus"
+                        //               : "Pro",
+                        //       context: context);
+                        // },
+                            height: screenHeight(context, dividedBy: 20))
                       ],
                     ),
                   ),
@@ -331,7 +354,15 @@ class _PremiumMembershipState extends State<PremiumMembership> {
       ),
     );
   }
-
+  initStore() async{
+    ProductDetailsResponse productDetailsResponse =
+    await _inAppPurchase.queryProductDetails(_variant);
+    if(productDetailsResponse.error==null){
+      setState(() {
+        _products = productDetailsResponse.productDetails;
+      });
+    }
+  }
   Widget Newtext({required String text}) {
     return Padding(
       padding: EdgeInsets.only(top: screenHeight(context, dividedBy: 90)),
@@ -394,5 +425,21 @@ class _PremiumMembershipState extends State<PremiumMembership> {
         ],
       ),
     );
+  }
+  _listenToPurchase(List<PurchaseDetails> purchaseDetailsList, BuildContext context) {
+    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
+      if (purchaseDetails.status == PurchaseStatus.pending) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Pending")));
+      } else if (purchaseDetails.status == PurchaseStatus.error) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error")));
+      } else if (purchaseDetails.status == PurchaseStatus.purchased) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Purchased")));
+      }
+    });
+
+  }
+  _buy(){
+    final PurchaseParam param = PurchaseParam(productDetails: _products[0]);
+    _inAppPurchase.buyConsumable(purchaseParam: param);
   }
 }

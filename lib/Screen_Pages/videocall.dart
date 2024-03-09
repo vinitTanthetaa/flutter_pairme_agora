@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -28,47 +27,31 @@ class _VideoCallPageState extends State<VideoCallPage> {
   GenerateTokenCubit generateTokenCubit = GenerateTokenCubit();
   bool  mic = false;
   final dio = Dio();
-
-  createchannel() async {
-    Map<String, dynamic> body = {
-      "channel": widget.uid.toString(),
-    };
-    try {
-      final response = await dio.post('http://192.168.29.113:3000/rtc',data: jsonEncode(body));
-      print(response);
-    } catch (e) {
-      print("you are fully fail my friend " + e.toString());
-      // TODO
-    }
-  }
   Future<void> setupAgoraEngine() async {
     // Retrieve or request camera and microphone permissions
     await [Permission.microphone, Permission.camera].request();
     await agoraEngine.initialize(RtcEngineContext(appId: AgoraAppid));
     await agoraEngine.enableVideo();
     await agoraEngine.enableAudio();
-    print("======================================> ${widget.uid} <============================ ");
-    agoraEngine.registerEventHandler(getEventHandler());
     generateTokenCubit.GenerateTokenService(product: widget.uid, context: context).then((value) {
       join();
     });
+    print("======================================> ${widget.uid} <============================ ");
+    agoraEngine.registerEventHandler(getEventHandler());
+  }
+  waitingCall(){
+    Timer(const Duration(seconds: 5),() => remoteUids.isEmpty ? leave() : null,);
   }
   void  join() async {
     ChannelMediaOptions options = const ChannelMediaOptions(
       clientRoleType: ClientRoleType.clientRoleBroadcaster,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     );
-    agoraEngine.renewToken(Rtctoken);
-    print("token ===> $Rtctoken}");
-    print("chanel ===> ${widget.uid}");
-    print(Rtctoken);
     await agoraEngine.joinChannel(
       channelId: widget.uid,
       options: options,
       uid: 0,
-      // token: "00671acb4aa29c343b99145d14ecbe23c1fIACPKvVXYuBlhh6pcuMj0Rm+g+ZrLdO2I+CaNt+8Y5dI9Yd2L5oAAAAAIgAHr3uoe+7rZQQAAQAQDgAAAgAQDgAAAwAQDgAABAAQDgAA",
       token: Rtctoken,
-      // token: '007eJxTYHi7XuXIz10Rj9PNDnm1fsrYEuCg/cH4pVNs9JVMgYjdmWkKDOaGiclJJomJRpbJxibGSZaWhiamKYYmqclJqUbGyYZpCaYvUhsCGRkunHFnZGSAQBBfgsHMNDnVwNjCwCTVzMAg0cLEwjDZ0tQ8NZWBAQCR2SWr',
     );
   }
   RtcEngineEventHandler getEventHandler() {
@@ -93,35 +76,29 @@ class _VideoCallPageState extends State<VideoCallPage> {
       // Occurs when a local user joins a channel
       onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
         isJoined = true;
-      //  messageCallback(
-        //    "Local user uid:${connection.localUid} joined the channel");
-        // Notify the UI
+         waitingCall();
         Map<String, dynamic> eventArgs = {};
         eventArgs["connection"] = connection.localUid;
         eventArgs["elapsed"] = elapsed;
-        print("eventArgs2 ===> $eventArgs");
-       // eventCallback("onJoinChannelSuccess", eventArgs);
       },
-      // Occurs when a remote user joins the channel
       onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
         setState(() {
           remoteUids.add(remoteUid);
         });
-        print("remoteUids ===> $remoteUids");
-       // messageCallback("Remote user uid:$remoteUid joined the channel");
-        // Notify the UI
         Map<String, dynamic> eventArgs = {};
         eventArgs["connection"] = connection;
         eventArgs["remoteUid"] = remoteUid;
         eventArgs["elapsed"] = elapsed;
         print("eventArgs3 ===> $eventArgs");
-      //  eventCallback("onUserJoined", eventArgs);
       },
       // Occurs when a remote user leaves the channel
-      onUserOffline: (RtcConnection connection, int remoteUid,
-          UserOfflineReasonType reason) {
+      onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
         remoteUids.remove(remoteUid);
         print("remoteUids ===> $remoteUids");
+        print("remoteUids ===> $connection");
+        print("remoteUids ===> ${connection.localUid}");
+        print("remoteUids ===> ${connection.channelId}");
+        print("remoteUids ===> ${reason.name}");
         leave();
        // messageCallback("Remote user uid:$remoteUid left the channel");
         // Notify the UI
@@ -173,7 +150,6 @@ class _VideoCallPageState extends State<VideoCallPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    createchannel();
     setupAgoraEngine();
   }
   @override
@@ -279,11 +255,16 @@ class _VideoCallPageState extends State<VideoCallPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image(
-                          image: const AssetImage('assets/Images/cameraposition.png'),
-                          height: screenHeight(context,dividedBy: 20),
-                          width: screenHeight(context,dividedBy: 20),
-                          color: AppColor.white,
+                        GestureDetector(
+                          onTap: () {
+                            agoraEngine.switchCamera();
+                          },
+                          child: Image(
+                            image: const AssetImage('assets/Images/cameraposition.png'),
+                            height: screenHeight(context,dividedBy: 20),
+                            width: screenHeight(context,dividedBy: 20),
+                            color: AppColor.white,
+                          ),
                         ),
                         Image(
                           image: const AssetImage('assets/Images/chaticon.png'),
@@ -291,17 +272,49 @@ class _VideoCallPageState extends State<VideoCallPage> {
                           width: screenHeight(context,dividedBy: 20),
                           color: AppColor.white,
                         ),
-                        GestureDetector(
+                        mic ? GestureDetector(
                           onTap: () {
-                            setState(() {
-                              mic = !mic;
-                            });
+                            mic = !mic;
+                            agoraEngine.muteLocalAudioStream(true);
+                            setState(() {});
                           },
-                          child: Image(
-                            image: mic ? const AssetImage('assets/Images/mic.png') :const AssetImage('assets/Images/micoff.png'),
-                            height: screenHeight(context,dividedBy: 20),
-                            width: screenHeight(context,dividedBy: 20),
-                            color: AppColor.white,
+                          child: Container(
+                            height: screenHeight(context ,dividedBy: 13),
+                            width: screenHeight(context ,dividedBy: 13),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color:const Color(0xffC8C8C8),width: 2)
+                            ),
+                            child: Center(
+                              child:Image(
+                                image: const AssetImage('assets/Images/micoff.png'),
+                                height: screenHeight(context,dividedBy: 25),
+                                width: screenHeight(context,dividedBy: 25),
+                                color: AppColor.white,
+                              ),
+                            ),
+                          ),
+                        ) : GestureDetector(
+                          onTap: () {
+                            mic = !mic;
+                            agoraEngine.muteLocalAudioStream(false);
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: screenHeight(context ,dividedBy: 13),
+                            width: screenHeight(context ,dividedBy: 13),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color:const Color(0xffC8C8C8),width: 2)
+                            ),
+                            child: Center(
+                              child:Image(
+                                image: const AssetImage('assets/Images/mic.png'),
+                                height: screenHeight(context,dividedBy: 25),
+                                width: screenHeight(context,dividedBy: 25),
+                                color: AppColor.white,
+                              ),
+                            ),
                           ),
                         ),
                       ],
