@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pair_me/Screen_Pages/ads_page.dart';
 import 'package:pair_me/Screen_Pages/change_password.dart';
 import 'package:pair_me/Screen_Pages/payment.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
@@ -387,12 +388,50 @@ class _Setting_pageState extends State<Setting_page> {
                         padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 30)),
                         child:   InkWell(
                           onTap: () {
-
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const PaymentPage();
+                            },));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                               Text("Privacy Policy".tr(),style: const TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                              Text("Payment".tr(),style: const TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
+                              icon ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: screenHeight(context,dividedBy: 60),),
+                    Container(
+                      height: screenHeight(context,dividedBy: 20),
+                      width: screenWidth(context,dividedBy: 1.15),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: Colors.white,
+                          boxShadow:  const [
+                            BoxShadow(
+                              color: AppColor.fontgray,
+                              offset: Offset(
+                                1,
+                                1,
+                              ),
+                              blurRadius: 4,
+                            ),
+                          ]
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 30)),
+                        child:   InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return AdsPage();
+                            },));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                               Text("Ads".tr(),style: const TextStyle(color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: "Roboto"),),
                               icon ? const Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: AppColor.black,) : const Icon(Icons.arrow_forward_ios_sharp,size: 15,color: AppColor.black,)
                             ],
                           ),

@@ -439,7 +439,7 @@ class _PremiumMembershipState extends State<PremiumMembership> {
 
   }
   _buy(){
-    final PurchaseParam param = PurchaseParam(productDetails: _products[0]);
+    final PurchaseParam param = PurchaseParam(productDetails:ProductDetails(id: "id", title: 'Pair me', description: "Unlock all of our features to be in completecontrol of your experience", price: '\$14.99', rawPrice: 14.99, currencyCode: '+91'));
     _inAppPurchase.buyConsumable(purchaseParam: param);
   }
 }
