@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<key>GADApplicationIdentifier</key>
-<string>ca-app-pub-################~##########</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -58,6 +56,7 @@
 		<string>audio</string>
 		<string>location</string>
 		<string>processing</string>
+		<string>push-to-talk</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

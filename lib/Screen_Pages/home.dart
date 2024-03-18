@@ -7,8 +7,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pair_me/Modal/alluserprofile.dart';
-import 'package:pair_me/Screen_Pages/bottom_bar/home_screen.dart';
 import 'package:pair_me/Screen_Pages/connections_page.dart';
 import 'package:pair_me/Screen_Pages/filter.dart';
 import 'package:pair_me/Screen_Pages/userDetails.dart';
@@ -26,7 +24,6 @@ import 'package:pair_me/helper/Apis.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 import 'package:pair_me/helper/pref_Service.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:video_player/video_player.dart';
 
@@ -174,7 +171,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
   }
   @override
   void initState() {
-    // allUsersDetailsCubit.GetAllUsersDetails();
     allUsersDetailsCubit = BlocProvider.of<AllUsersDetailsCubit>(context);
     rejectUserCubit = BlocProvider.of<RejectUserCubit>(context);
     connectUserCubit = BlocProvider.of<ConnectUserCubit>(context);
@@ -182,8 +178,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     filterUserCubit = BlocProvider.of<FilterUserCubit>(context);
     allUsersDetailsCubit.GetAllUsersDetails();
     createTutorial();
-   // getData();
-    //_controller = AnimationController(vsync: this);
     controller = AppinioSwiperController();
     Future.delayed(Duration.zero, showTutorial);
     FocusManager.instance.primaryFocus?.unfocus();
@@ -250,7 +244,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                      ind = 0;
                                      pageViewIndex=0;
                                      image.clear();
-                                     //image1.clear();
                                      setState(() {});
                                      print("hello");
                                    }
@@ -1719,13 +1712,15 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               : null;
                                                           image = image;
                                                         });
-                                                        image[pageViewIndex]
+                                                        if(image[pageViewIndex]
                                                             .toString()
                                                             .endsWith(
                                                             ".mp4") ||
                                                             image[pageViewIndex]
                                                                 .toString()
-                                                                .endsWith(".3gpp") ? playVideo() : null;
+                                                                .endsWith(".3gpp")){
+                                                          playVideo();
+                                                        }
                                                       },
                                                       child: Container(
                                                         height:
@@ -1742,16 +1737,18 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               .transparent),
                                                       onTap: () {
                                                           setState(() {
-                                                            pageViewIndex >= image.length - 1 ? null : pageViewIndex++;
+                                                            pageViewIndex >= image.length  ? null : pageViewIndex++;
                                                             image = image;
                                                           });
-                                                          image[pageViewIndex]
+                                                          if(image[pageViewIndex]
                                                               .toString()
                                                               .endsWith(
                                                               ".mp4") ||
                                                               image[pageViewIndex]
                                                                   .toString()
-                                                                  .endsWith(".3gpp") ? playVideo() : null;
+                                                                  .endsWith(".3gpp")){
+                                                            playVideo();
+                                                          }
                                                       },
                                                       child: Container(
                                                         height:

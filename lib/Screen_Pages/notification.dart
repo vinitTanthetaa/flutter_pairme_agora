@@ -185,138 +185,130 @@ class _Notification_pageState extends State<Notification_page> {
                                             width: screenWidth(context,
                                                 dividedBy: 30),
                                           ),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: screenWidth(context,
-                                                    dividedBy: 50)),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  notificationCubit
-                                                          .userNotification
-                                                          .data?[index]
-                                                          .sentBy
-                                                          ?.userName ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontFamily: 'Roboto'),
-                                                ),
-                                                SizedBox(
-                                                  height: screenHeight(context,
-                                                      dividedBy: 300),
-                                                ),
-                                                SizedBox(
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                notificationCubit
+                                                        .userNotification
+                                                        .data?[index]
+                                                        .sentBy
+                                                        ?.userName ??
+                                                    '',
+                                                style: const TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w500,
+                                                    fontFamily: 'Roboto'),
+                                              ),
+                                              SizedBox(
+                                                height: screenHeight(context,
+                                                    dividedBy: 300),
+                                              ),
+                                              SizedBox(
+                                                width: screenWidth(context,
+                                                    dividedBy: 2.2),
+                                                child: Text(
+                                                    notificationCubit
+                                                            .userNotification
+                                                            .data?[index]
+                                                            .message ??
+                                                        '',
+                                                    maxLines: 2,
+                                                    style: const TextStyle(
+                                                        color:
+                                                            Color(0xffAAAAAA),
+                                                        height: 1.3,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontFamily:
+                                                            'Roboto')),
+                                              ),
+                                              SizedBox(
+                                                height: screenHeight(context,
+                                                    dividedBy: 150),
+                                              ),
+                                              SizedBox(
                                                   width: screenWidth(context,
                                                       dividedBy: 2.2),
                                                   child: Text(
                                                       notificationCubit
                                                               .userNotification
                                                               .data?[index]
-                                                              .message ??
+                                                              .time ??
                                                           '',
-                                                      maxLines: 2,
                                                       style: const TextStyle(
-                                                          color:
-                                                              Color(0xffAAAAAA),
-                                                          height: 1.3,
-                                                          fontSize: 12,
+                                                          color: Color(
+                                                              0xffAAAAAA),
+                                                          fontSize: 10,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontFamily:
-                                                              'Roboto')),
-                                                ),
-                                                SizedBox(
-                                                  height: screenHeight(context,
-                                                      dividedBy: 150),
-                                                ),
-                                                SizedBox(
-                                                    width: screenWidth(context,
-                                                        dividedBy: 2.2),
-                                                    child: Text(
-                                                        notificationCubit
-                                                                .userNotification
-                                                                .data?[index]
-                                                                .time ??
-                                                            '',
-                                                        style: const TextStyle(
-                                                            color: Color(
-                                                                0xffAAAAAA),
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontFamily:
-                                                                'Roboto'))),
-                                              ],
-                                            ),
+                                                              'Roboto'))),
+                                            ],
                                           ),
                                           const Spacer(),
-                                          Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: screenWidth(context,
-                                                      dividedBy: 40)),
-                                              child: Row(
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                        acceptorRejectCubit
-                                                            .RejectNotification(
-                                                            id: [
-                                                              notificationCubit
-                                                                  .userNotification
-                                                                  .data?[
-                                                              index]
-                                                                  .sentBy
-                                                                  ?.id ??
-                                                                  ''
-                                                            ]).whenComplete(
-                                                              () {
-                                                            getData();
-                                                          },
-                                                        );
-                                                    },
-                                                    child: SvgPicture.asset(
-                                                        "assets/Images/cancel.svg",
-                                                        width: screenWidth(
-                                                            context,
-                                                            dividedBy: 15)),
-                                                  ),
-                                                  SizedBox(
-                                                    width: screenWidth(context,
-                                                        dividedBy: 25),
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      callingDetailsCubit.CallingDetailsService(from: notificationCubit.userNotification.data?[index].receiveBy ?? '', to: notificationCubit.userNotification.data?[index].sentBy?.id ?? '', type: "Notification", context: context, msg: '${notificationCubit.userNotification.loginUserName} Accept your request').then((value) {
-                                                        acceptorRejectCubit.AcceptNotification(
-                                                            id: notificationCubit
-                                                                .userNotification
-                                                                .data?[
-                                                            index]
-                                                                .sentBy
-                                                                ?.id ??
-                                                                '')
-                                                            .whenComplete(
-                                                              () {
-                                                            getData();
-                                                          },
-                                                        );
-                                                      });
-                                                    },
-                                                    child: SvgPicture.asset(
-                                                        "assets/Images/accept.svg",
-                                                        width: screenWidth(
-                                                            context,
-                                                            dividedBy: 15)),
-                                                  ),
-                                                ],
-                                              ))
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                    acceptorRejectCubit
+                                                        .RejectNotification(
+                                                        id: [
+                                                          notificationCubit
+                                                              .userNotification
+                                                              .data?[
+                                                          index]
+                                                              .sentBy
+                                                              ?.id ??
+                                                              ''
+                                                        ]).whenComplete(
+                                                          () {
+                                                        getData();
+                                                      },
+                                                    );
+                                                },
+                                                child: SvgPicture.asset(
+                                                    "assets/Images/cancel.svg",
+                                                    width: screenWidth(
+                                                        context,
+                                                        dividedBy: 15)),
+                                              ),
+                                              SizedBox(
+                                                width: screenWidth(context,
+                                                    dividedBy: 25),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  callingDetailsCubit.CallingDetailsService(from: notificationCubit.userNotification.data?[index].receiveBy ?? '', to: notificationCubit.userNotification.data?[index].sentBy?.id ?? '', type: "Notification", context: context, msg: '${notificationCubit.userNotification.loginUserName} Accept your request').then((value) {
+                                                    acceptorRejectCubit.AcceptNotification(
+                                                        id: notificationCubit
+                                                            .userNotification
+                                                            .data?[
+                                                        index]
+                                                            .sentBy
+                                                            ?.id ??
+                                                            '')
+                                                        .whenComplete(
+                                                          () {
+                                                        getData();
+                                                      },
+                                                    );
+                                                  });
+                                                },
+                                                child: SvgPicture.asset(
+                                                    "assets/Images/accept.svg",
+                                                    width: screenWidth(
+                                                        context,
+                                                        dividedBy: 15)),
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       ),
                                     ),

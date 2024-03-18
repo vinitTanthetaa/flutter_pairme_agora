@@ -1,7 +1,5 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:pair_me/Screen_Pages/login_page.dart';
 import 'package:pair_me/helper/App_Colors.dart';
 import 'package:pair_me/helper/Size_page.dart';
 
@@ -37,57 +35,60 @@ Widget Custom_textfield(BuildContext context,
             spreadRadius: 0.0,
           ),
         ]),
-    child: Center(
-      child: Padding(
-        padding: show_icon ? EdgeInsets.only(left: 15.0,top: screenHeight(context,dividedBy: 200)) : EdgeInsets.only(left: 15.0,bottom: screenHeight(context,dividedBy: 200)),
-        child: TextField(
-          onTap: onTap,
-          onChanged: onChanged,
-          enabled: true,
-          maxLines: mxline ?? 1,
-          minLines: 1,
-          readOnly: readOnly,
-          keyboardType: number ? TextInputType.number : TextInputType.text,
-          controller: controller,
-          cursorColor: const Color(0xffB3B3B3),
-          style: const TextStyle(fontSize: 14),
-          textInputAction: TextInputAction.next,
-          obscureText: show_icon ? hidetext : false,
-          decoration: show_icon
-              ? InputDecoration(
-                  border: InputBorder.none,
-                 contentPadding: EdgeInsets.zero,
-                  suffixIcon: IconButton(
-                      splashRadius: 1,
-                      style: const ButtonStyle(
-                          overlayColor:
-                              MaterialStatePropertyAll(Colors.transparent)),
-                      onPressed: () {
-                        onPress!();
-                      },
-                      icon: Image(
-                        image: AssetImage(image!),
-                        height: screenHeight(context, dividedBy: 40),
-                        width: screenHeight(context, dividedBy: 40),
-                      )),
-                  hintText: hint.tr(),
-                  hintStyle: const TextStyle(
-                      color: Color(0xffB3B3B3),
-                      fontFamily: 'Roboto',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400))
-              : InputDecoration(
-                  border: InputBorder.none,
-             //isCollapsed: true,
-              isDense: true,
-                  hintText: hint.tr(),
-              contentPadding: EdgeInsets.zero,
-                  hintStyle: const TextStyle(
-                      color: Color(0xffB3B3B3),
-                      fontFamily: 'Roboto',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400)),
-        ),
+    child: Padding(
+      //padding: EdgeInsets.only(left: 15.0),
+      padding: show_icon ? EdgeInsets.only(left: 15.0,top: screenHeight(context,dividedBy: 200)) : EdgeInsets.only(left: 15.0),
+      child: TextField(
+        onTap: onTap,
+        onChanged: onChanged,
+        maxLines: mxline ?? 1,
+        minLines: 1,
+        readOnly: readOnly,
+        keyboardType: number ? TextInputType.number : TextInputType.text,
+        controller: controller,
+        cursorColor: const Color(0xffB3B3B3),
+        style: const TextStyle(fontSize: 14),
+        obscureText: show_icon ? hidetext : false,
+        decoration: show_icon
+            ? InputDecoration(
+                border: InputBorder.none,
+            constraints: BoxConstraints(
+              maxHeight: screenHeight(context, dividedBy: 20),
+            ),
+               contentPadding: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 50)),
+                suffixIcon: IconButton(
+                    splashRadius: 1,
+                    style: const ButtonStyle(
+                        overlayColor:
+                            MaterialStatePropertyAll(Colors.transparent)),
+                    onPressed: () {
+                      onPress!();
+                    },
+                    icon: Image(
+                      image: AssetImage(image!),
+                      height: screenHeight(context, dividedBy: 40),
+                      width: screenHeight(context, dividedBy: 40),
+                    )),
+                hintText: hint.tr(),
+                hintStyle: const TextStyle(
+                    color: Color(0xffB3B3B3),
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400))
+            : InputDecoration(
+                border: InputBorder.none,
+           //isCollapsed: true,
+            isDense: true,
+                hintText: hint.tr(),
+            constraints: BoxConstraints(
+              maxHeight: screenHeight(context, dividedBy: 20),
+            ),
+            contentPadding: EdgeInsets.zero,
+                hintStyle: const TextStyle(
+                    color: Color(0xffB3B3B3),
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400)),
       ),
     ),
   );
