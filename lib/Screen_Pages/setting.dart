@@ -226,7 +226,7 @@ class _Setting_pageState extends State<Setting_page> {
                       from: 10,
                       child: Container(
                         margin: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 70)),
-                        height: screenHeight(context,dividedBy: 7),
+                       // height: screenHeight(context,dividedBy: 7),
                         width: screenWidth(context),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
@@ -298,7 +298,7 @@ class _Setting_pageState extends State<Setting_page> {
                       from: 10,
                       child: Container(
                         margin: EdgeInsets.only(bottom: screenHeight(context,dividedBy: 60)),
-                        height: screenHeight(context,dividedBy: 7),
+                        //height: screenHeight(context,dividedBy: 7),
                         width: screenWidth(context),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),

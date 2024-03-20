@@ -277,11 +277,11 @@ class _Notification_pageState extends State<Notification_page> {
                                                     "assets/Images/cancel.svg",
                                                     width: screenWidth(
                                                         context,
-                                                        dividedBy: 15)),
+                                                        dividedBy: 13.5)),
                                               ),
                                               SizedBox(
                                                 width: screenWidth(context,
-                                                    dividedBy: 25),
+                                                    dividedBy: 20),
                                               ),
                                               GestureDetector(
                                                 onTap: () {
@@ -305,7 +305,7 @@ class _Notification_pageState extends State<Notification_page> {
                                                     "assets/Images/accept.svg",
                                                     width: screenWidth(
                                                         context,
-                                                        dividedBy: 15)),
+                                                        dividedBy: 13.5)),
                                               ),
                                             ],
                                           )

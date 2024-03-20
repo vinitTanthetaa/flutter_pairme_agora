@@ -568,8 +568,11 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                           style: const TextStyle(fontSize: 13),
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                              // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                               border: InputBorder.none,
+                              constraints: BoxConstraints(
+                                maxHeight: screenHeight(context, dividedBy: 20),
+                              ),
+                              contentPadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 300)),
                               //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
                               prefixIcon: GestureDetector(
                                 onTap: () {

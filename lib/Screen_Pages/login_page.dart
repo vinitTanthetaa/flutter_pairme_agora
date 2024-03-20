@@ -86,6 +86,10 @@ class _Login_pageState extends State<Login_page> {
                         decoration: InputDecoration(
                           // contentPadding: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 25)),
                             border: InputBorder.none,
+                            constraints: BoxConstraints(
+                              maxHeight: screenHeight(context, dividedBy: 20),
+                            ),
+                            contentPadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 300)),
                             //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
                             prefixIcon: GestureDetector(
                               onTap: () {

@@ -5,6 +5,7 @@ import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pair_me/Screen_Pages/connections_page.dart';
@@ -810,14 +811,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 ),
                                                               ],
                                                             ),
-                                                            Row(
+                                                            Row (
                                                               children: [
                                                                 Wrap(
                                                                   spacing: 7,
                                                                   direction: Axis
                                                                       .vertical,
                                                                   children: [
-                                                                    filterUserCubit.filterUser.data?[index].first?.professionalDetails != null ?  Row(
+                                                                    filterUserCubit.filterUser.data?[index].first?.professionalDetails != null ? Row(
                                                                       children: [
                                                                         Text(
                                                                           'Job Title'.tr(),
@@ -835,19 +836,21 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                               fontWeight: FontWeight.w500,
                                                                               color: Colors.white),
                                                                         ),
-                                                                        Text(
-                                                                          13 >= filterUserCubit.filterUser.data![index].first!.professionalDetails!.addRole!.length
-                                                                              ? "${filterUserCubit.filterUser.data?[index].first?.professionalDetails?.addRole ?? ''}"
-                                                                              : "${filterUserCubit.filterUser.data?[index].first?.professionalDetails?.addRole?.substring(0, 13) ?? ''}...",
-                                                                          style: const TextStyle(
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w400,
-                                                                              color: Colors.white),
-                                                                        ),
+                                                                        SizedBox(
+                                                                          width: screenWidth(context,dividedBy: 3),
+                                                                          child:    Text(
+                                                                            filterUserCubit.filterUser.data?[index].first?.professionalDetails?.addRole ?? '',
+                                                                            maxLines: 1,
+                                                                            style: const TextStyle(
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                                fontSize: 14,
+                                                                                fontFamily: 'Roboto',
+                                                                                fontWeight: FontWeight.w400,
+                                                                                color: Colors.white),
+                                                                          ),
+                                                                        )
                                                                       ],
-                                                                    ) : SizedBox(),
+                                                                    ) : const SizedBox(),
                                                                     filterUserCubit.filterUser.data?[index].first?.businessaddress?.country != null ? Row(
                                                                       children: [
                                                                         Text(
@@ -866,19 +869,22 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                               fontWeight: FontWeight.w500,
                                                                               color: Colors.white),
                                                                         ),
-                                                                        Text(
-                                                                          10 <= filterUserCubit.filterUser.data![index].first!.businessaddress!.country!.length
-                                                                              ? "${filterUserCubit.filterUser.data?[index].first?.businessaddress?.country?.substring(0, 10) ?? ''}..."
-                                                                              : filterUserCubit.filterUser.data?[ind].first?.businessaddress?.country ?? '',
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w400,
-                                                                              color: Colors.white),
+                                                                        SizedBox(
+                                                                          width: screenWidth(context,dividedBy: 3),
+                                                                          child: Text(
+                                                                            filterUserCubit.filterUser.data?[index].first?.businessaddress?.country ?? '',
+                                                                            maxLines: 1,
+                                                                            style: const TextStyle(
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                                fontSize: 14,
+                                                                                fontFamily: 'Roboto',
+                                                                                fontWeight: FontWeight.w400,
+                                                                                color: Colors.white),
+                                                                          ),
                                                                         ),
                                                                       ],
                                                                     ) : const SizedBox(),
-                                                                    filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName != null ?Row(
+                                                                    filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName != null ? Row(
                                                                       children: [
                                                                         Text(
                                                                           'Company'.tr(),
@@ -896,18 +902,21 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                               fontWeight: FontWeight.w500,
                                                                               color: Colors.white),
                                                                         ),
-                                                                        Text(
-                                                                          15 <= filterUserCubit.filterUser.data![index].first!.professionalDetails!.companyName!.length
-                                                                              ? "${filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName?.substring(0, 13) ?? ''}..."
-                                                                              : "${filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName ?? ''}",
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w400,
-                                                                              color: Colors.white),
+                                                                        SizedBox(
+                                                                          width: screenWidth(context,dividedBy: 2.7),
+                                                                          child: Text(
+                                                                            filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName ?? '',
+                                                                            maxLines: 1,
+                                                                            style: const TextStyle(
+                                                                                fontSize: 14,
+                                                                                fontFamily: 'Roboto',
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                                fontWeight: FontWeight.w400,
+                                                                                color: Colors.white),
+                                                                          ),
                                                                         ),
                                                                       ],
-                                                                    ) : SizedBox(),
+                                                                    ) : const SizedBox(),
                                                                   ],
                                                                 ),
                                                                 const Spacer(),
@@ -915,7 +924,10 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                   direction: Axis
                                                                       .vertical,
                                                                   spacing: 5,
-                                                                  children: filterUserCubit.filterUser.data?[index].first?.lookingfor
+                                                                  children: filterUserCubit.filterUser
+                                                                      .data?[index]
+                                                                      .first
+                                                                      ?.lookingfor
                                                                       ?.map((e) => Container(
                                                                       decoration: BoxDecoration(
                                                                           border: Border.all(
@@ -1903,17 +1915,19 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 fontWeight: FontWeight.w500,
                                                                                 color: Colors.white),
                                                                           ),
-                                                                          Text(
-                                                                            13 >= allUsersDetailsCubit.allUsersdetails.data![index].first.professionalDetails!.addRole!.length
-                                                                                ? "${allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole ?? ''}"
-                                                                                : "${allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole?.substring(0, 13) ?? ''}...",
-                                                                            style: const TextStyle(
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.white),
-                                                                          ),
+                                                                       SizedBox(
+                                                                         width: screenWidth(context,dividedBy: 3),
+                                                                         child:    Text(
+                                                                           allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole ?? '',
+                                                                           maxLines: 1,
+                                                                           style: const TextStyle(
+                                                                               overflow: TextOverflow.ellipsis,
+                                                                               fontSize: 14,
+                                                                               fontFamily: 'Roboto',
+                                                                               fontWeight: FontWeight.w400,
+                                                                               color: Colors.white),
+                                                                         ),
+                                                                       )
                                                                         ],
                                                                       ) : const SizedBox(),
                                                                       allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country != null ? Row(
@@ -1934,15 +1948,18 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 fontWeight: FontWeight.w500,
                                                                                 color: Colors.white),
                                                                           ),
-                                                                          Text(
-                                                                            10 <= allUsersDetailsCubit.allUsersdetails.data![index].first.businessaddress!.country!.length
-                                                                                ? "${allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country?.substring(0, 10) ?? ''}..."
-                                                                                : "${allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country ?? ''}",
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.white),
+                                                                          SizedBox(
+                                                                            width: screenWidth(context,dividedBy: 3),
+                                                                            child: Text(
+                                                                               allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country ?? '',
+                                                                              maxLines: 1,
+                                                                              style: const TextStyle(
+                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                  fontSize: 14,
+                                                                                  fontFamily: 'Roboto',
+                                                                                  fontWeight: FontWeight.w400,
+                                                                                  color: Colors.white),
+                                                                            ),
                                                                           ),
                                                                         ],
                                                                       ) : const SizedBox(),
@@ -1964,15 +1981,18 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 fontWeight: FontWeight.w500,
                                                                                 color: Colors.white),
                                                                           ),
-                                                                          Text(
-                                                                            15 <= allUsersDetailsCubit.allUsersdetails.data![index].first.professionalDetails!.companyName!.length
-                                                                                ? "${allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName?.substring(0, 13) ?? ''}..."
-                                                                                : "${allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName ?? ''}",
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.white),
+                                                                          SizedBox(
+                                                                            width: screenWidth(context,dividedBy: 2.7),
+                                                                            child: Text(
+                                                                               allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName ?? '',
+                                                                              maxLines: 1,
+                                                                              style: const TextStyle(
+                                                                                  fontSize: 14,
+                                                                                  fontFamily: 'Roboto',
+                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                  fontWeight: FontWeight.w400,
+                                                                                  color: Colors.white),
+                                                                            ),
                                                                           ),
                                                                         ],
                                                                       ) : const SizedBox(),

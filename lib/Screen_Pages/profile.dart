@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/user_profile_modal.dart';
@@ -139,21 +140,21 @@ class _Profile_pageState extends State<Profile_page> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          userProfile.data?[0].name ?? '',
-                                          style: const TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600),
-                                        ),
+                                       SizedBox(width: screenWidth(context,dividedBy: 3),child:  Text(
+                                         userProfile.data?[0].name ?? '',maxLines: 1,
+                                         style: const TextStyle(
+                                             fontFamily: 'Roboto',
+                                             fontSize: 16,
+                                             overflow: TextOverflow.ellipsis,
+                                             fontWeight: FontWeight.w600),
+                                       ),),
                                         userProfile
                                                     .data
                                                     ?.first
                                                     .professionalDetails
-                                                    ?.addRole !=
-                                                null
+                                                    ?.addRole?.isNotEmpty ?? false
                                             ? Row(
                                                 children: [
                                                   Text(
@@ -176,30 +177,30 @@ class _Profile_pageState extends State<Profile_page> {
                                                         color:
                                                             AppColor.skyBlue),
                                                   ),
-                                                  Text(
-                                                    userProfile
-                                                            .data
-                                                            ?.first
-                                                            .professionalDetails
-                                                            ?.addRole ??
-                                                        '',
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 13,
-                                                        fontFamily: 'Roboto',
-                                                        color: AppColor
-                                                            .dropdownfont),
-                                                  ),
+                                                  SizedBox(
+                                                    width: screenWidth(context,dividedBy: 3.5),
+                                                    child:         Text(
+                                                      userProfile
+                                                          .data
+                                                          ?.first
+                                                          .professionalDetails
+                                                          ?.addRole ??
+                                                          '',
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                          FontWeight.w400,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          fontSize: 13,
+                                                          fontFamily: 'Roboto',
+                                                          color: AppColor
+                                                              .dropdownfont),
+                                                    ),
+                                                  )
                                                 ],
                                               )
-                                            : SizedBox(),
-                                        userProfile
-                                                    .data
-                                                    ?.first
-                                                    .professionalDetails
-                                                    ?.companyName !=
-                                                null
+                                            : const SizedBox(),
+                                        userProfile.data?.first.professionalDetails?.companyName?.isNotEmpty ?? false
                                             ? Row(
                                                 children: [
                                                   Text(
@@ -222,23 +223,25 @@ class _Profile_pageState extends State<Profile_page> {
                                                         color:
                                                             AppColor.skyBlue),
                                                   ),
-                                                  Text(
-                                                    length >= 10
-                                                        ? "${userProfile.data?.first.professionalDetails?.companyName?.substring(0, 10)}..."
-                                                        : userProfile
-                                                                .data
-                                                                ?.first
-                                                                .professionalDetails
-                                                                ?.companyName ??
-                                                            '',
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 13,
-                                                        fontFamily: 'Roboto',
-                                                        color: AppColor
-                                                            .dropdownfont),
-                                                  ),
+                                                  SizedBox(
+                                                    width: screenWidth(context,dividedBy: 4.3),
+                                                    child: Text(
+                                                      userProfile
+                                                          .data
+                                                          ?.first
+                                                          .professionalDetails
+                                                          ?.companyName ??
+                                                          '',maxLines: 1,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                          FontWeight.w400,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          fontSize: 13,
+                                                          fontFamily: 'Roboto',
+                                                          color: AppColor
+                                                              .dropdownfont),
+                                                    ),
+                                                  )
                                                 ],
                                               )
                                             : SizedBox(),
