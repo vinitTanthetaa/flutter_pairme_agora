@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -137,12 +138,12 @@ class _Notification_pageState extends State<Notification_page> {
                                 itemBuilder: (context, index) {
                                   return SizedBox(
                                     // margin: EdgeInsets.symmetric(horizontal: screenWidth(context,dividedBy: 15)),
-                                    height: screenHeight(context, dividedBy: 8.67),
+                                  //  height: screenHeight(context, dividedBy: 8.67),
                                     width: screenHeight(context),
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            screenWidth(context, dividedBy: 30),
+                                        horizontal: screenWidth(context, dividedBy: 30),
+                                        vertical: screenHeight(context, dividedBy: 75),
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
@@ -191,22 +192,29 @@ class _Notification_pageState extends State<Notification_page> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                notificationCubit
-                                                        .userNotification
-                                                        .data?[index]
-                                                        .sentBy
-                                                        ?.userName ??
-                                                    '',
-                                                style: const TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w500,
-                                                    fontFamily: 'Roboto'),
+                                              SizedBox(
+                                                width: screenWidth(context,
+                                                    dividedBy: 2.2),
+                                                child: Text(
+                                                  notificationCubit
+                                                          .userNotification
+                                                          .data?[index]
+                                                          .sentBy
+                                                          ?.userName ??
+                                                      '',
+                                                  maxLines: 1,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      height: 1,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      fontFamily: 'Roboto'),
+                                                ),
                                               ),
                                               SizedBox(
                                                 height: screenHeight(context,
-                                                    dividedBy: 300),
+                                                    dividedBy: 400),
                                               ),
                                               SizedBox(
                                                 width: screenWidth(context,
@@ -221,7 +229,7 @@ class _Notification_pageState extends State<Notification_page> {
                                                     style: const TextStyle(
                                                         color:
                                                             Color(0xffAAAAAA),
-                                                        height: 1.3,
+                                                        height: 1.2,
                                                         fontSize: 12,
                                                         fontWeight:
                                                             FontWeight.w400,
@@ -230,7 +238,7 @@ class _Notification_pageState extends State<Notification_page> {
                                               ),
                                               SizedBox(
                                                 height: screenHeight(context,
-                                                    dividedBy: 150),
+                                                    dividedBy: 200),
                                               ),
                                               SizedBox(
                                                   width: screenWidth(context,
