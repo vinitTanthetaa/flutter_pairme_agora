@@ -165,7 +165,6 @@ class _Notification_pageState extends State<Notification_page> {
                                                 image: DecorationImage(
                                                   image: imageProvider,
                                                   fit: BoxFit.cover,
-
                                                   // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
                                                 ),
                                                 shape: BoxShape.circle,

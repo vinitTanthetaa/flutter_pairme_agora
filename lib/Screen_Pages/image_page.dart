@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pair_me/Widgets/custom_loader.dart';
 import 'package:pair_me/helper/App_Colors.dart';
@@ -36,73 +37,41 @@ class _Image_ScreenState extends State<Image_Screen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: widget.image.endsWith('.mp4') || widget.image.endsWith('.3gpp') || widget.name == "video"
-          ? _controller!.value.isInitialized
-              ? SizedBox(
-                  height: screenHeight(context),
-                  width: screenWidth(context),
-                  child: Stack(
-                    children: [
-                      VideoPlayer(
-                        _controller!,
+      child: Stack(
+        children: [
+          widget.image.endsWith('.mp4') || widget.image.endsWith('.3gpp') || widget.name == "video"
+              ? _controller!.value.isInitialized
+                  ? SizedBox(
+                      height: screenHeight(context),
+                      width: screenWidth(context),
+                      child: Stack(
+                        children: [
+                          VideoPlayer(
+                            _controller!,
+                          ),
+                          Align(
+                              alignment: Alignment.center,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white30,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _controller!.value.isPlaying
+                                            ? _controller?.pause()
+                                            : _controller?.play();
+                                      });
+                                    },
+                                    child: Icon(
+                                      _controller!.value.isPlaying
+                                          ? Icons.pause
+                                          : Icons.play_arrow,
+                                      size: 30,color: Colors.white,
+                                    )),
+                              ))
+                        ],
                       ),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios_new,
-                            color: AppColor.white,
-                          )),
-                      Align(
-                          alignment: Alignment.center,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white30,
-                            child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _controller!.value.isPlaying
-                                        ? _controller?.pause()
-                                        : _controller?.play();
-                                  });
-                                },
-                                child: Icon(
-                                  _controller!.value.isPlaying
-                                      ? Icons.pause
-                                      : Icons.play_arrow,
-                                  size: 30,color: Colors.white,
-                                )),
-                          ))
-                    ],
-                  ),
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new,
-                          color: AppColor.white,
-                        )),
-                    Expanded(child: Center(child: customLoader()))
-                  ],
-                )
-          : InteractiveViewer(
-              child: CachedNetworkImage(
-                imageUrl: widget.image,
-                imageBuilder: (context, imageProvider) {
-                  return Container(
-                    height: screenHeight(context),
-                    width: screenWidth(context),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(widget.image),
-                          //  fit: BoxFit.fitHeight,
-                            filterQuality: FilterQuality.high)),
-                    child: Column(
+                    )
+                  : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         IconButton(
@@ -112,15 +81,42 @@ class _Image_ScreenState extends State<Image_Screen> {
                             icon: const Icon(
                               Icons.arrow_back_ios_new,
                               color: AppColor.white,
-                            ))
+                            )),
+                        Expanded(child: Center(child: customLoader()))
                       ],
-                    ),
-                  );
+                    )
+              : InteractiveViewer(
+                  child: CachedNetworkImage(
+                    imageUrl: widget.image,
+                    imageBuilder: (context, imageProvider) {
+                      return Container(
+                        height: screenHeight(context),
+                        width: screenWidth(context),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(widget.image),
+                              //  fit: BoxFit.fitHeight,
+                                filterQuality: FilterQuality.high)),
+                      );
+                    },
+                    placeholder: (context, url) => Expanded(child: customLoader()),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
+                ),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
                 },
-                placeholder: (context, url) => Expanded(child: customLoader()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AppColor.white,
+                )),
+          ),
+        ],
+      ),
     );
   }
 }

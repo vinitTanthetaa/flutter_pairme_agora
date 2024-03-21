@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pair_me/Modal/user_profile_modal.dart';
 import 'package:pair_me/Screen_Pages/edit_profile.dart';
@@ -142,7 +143,7 @@ class _Profile_pageState extends State<Profile_page> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                       SizedBox(width: screenWidth(context,dividedBy: 3),child:  Text(
+                                       SizedBox(width: screenWidth(context,dividedBy: 3.3),child:  Text(
                                          userProfile.data?[0].name ?? '',maxLines: 1,
                                          style: const TextStyle(
                                              fontFamily: 'Roboto',
@@ -224,7 +225,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                             AppColor.skyBlue),
                                                   ),
                                                   SizedBox(
-                                                    width: screenWidth(context,dividedBy: 4.3),
+                                                    width: screenWidth(context,dividedBy: 4.7),
                                                     child: Text(
                                                       userProfile
                                                           .data
@@ -244,7 +245,7 @@ class _Profile_pageState extends State<Profile_page> {
                                                   )
                                                 ],
                                               )
-                                            : SizedBox(),
+                                            : const SizedBox(),
                                       ],
                                     ),
                                     const Spacer(),

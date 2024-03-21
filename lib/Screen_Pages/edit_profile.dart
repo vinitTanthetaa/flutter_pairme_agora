@@ -572,7 +572,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                               constraints: BoxConstraints(
                                 maxHeight: screenHeight(context, dividedBy: 20),
                               ),
-                              contentPadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 300)),
+                              isDense: true,
+                             // contentPadding: EdgeInsets.only(top: screenHeight(context,dividedBy: 300)),
                               //  suffixIcon: const Image(image: AssetImage('assets/Images/unhide.png')),
                               prefixIcon: GestureDetector(
                                 onTap: () {
