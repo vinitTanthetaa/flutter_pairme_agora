@@ -8,8 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:pair_me/Screen_Pages/Step_Screens.dart';
 import 'package:pair_me/Screen_Pages/splash_Screen.dart';
 import 'package:pair_me/Screen_Pages/videocall.dart';
@@ -84,7 +82,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+ // MobileAds.instance.initialize();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -125,7 +123,7 @@ Future<void> main() async {
   });
 }
 
-InAppPurchase inAppPurchase = InAppPurchase.instance;
+//InAppPurchase inAppPurchase = InAppPurchase.instance;
 late StreamSubscription streamSubscription;
 List products = [];
 
@@ -145,8 +143,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Stream purchaseUpdate = InAppPurchase.instance.purchaseStream;
-    streamSubscription = purchaseUpdate.listen((event) { });
+   // Stream purchaseUpdate = InAppPurchase.instance.purchaseStream;
+   // streamSubscription = purchaseUpdate.listen((event) { });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       map = message.data;
       print(map);

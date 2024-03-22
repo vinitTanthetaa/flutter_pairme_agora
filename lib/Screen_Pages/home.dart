@@ -764,7 +764,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                             screenWidth(
                                                                 context,
                                                                 dividedBy:
-                                                                20)),
+                                                                25)),
                                                         child: Column(
                                                           crossAxisAlignment:
                                                           CrossAxisAlignment
@@ -870,7 +870,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                               color: Colors.white),
                                                                         ),
                                                                         SizedBox(
-                                                                          width: screenWidth(context,dividedBy: 3),
+                                                                          width: screenWidth(context,dividedBy: 3.5),
                                                                           child: Text(
                                                                             filterUserCubit.filterUser.data?[index].first?.businessaddress?.country ?? '',
                                                                             maxLines: 1,
@@ -903,7 +903,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                               color: Colors.white),
                                                                         ),
                                                                         SizedBox(
-                                                                          width: screenWidth(context,dividedBy: 2.7),
+                                                                          width: screenWidth(context,dividedBy: 2.9),
                                                                           child: Text(
                                                                             filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName ?? '',
                                                                             maxLines: 1,
@@ -1949,7 +1949,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                           SizedBox(
-                                                                            width: screenWidth(context,dividedBy: 3),
+                                                                            width: screenWidth(context,dividedBy: 3.5),
                                                                             child: Text(
                                                                                allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country ?? '',
                                                                               maxLines: 1,
@@ -1982,7 +1982,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                                 color: Colors.white),
                                                                           ),
                                                                           SizedBox(
-                                                                            width: screenWidth(context,dividedBy: 2.7),
+                                                                            width: screenWidth(context,dividedBy: 2.9),
                                                                             child: Text(
                                                                                allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName ?? '',
                                                                               maxLines: 1,

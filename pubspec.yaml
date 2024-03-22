@@ -78,8 +78,8 @@ dependencies:
   awesome_notifications: ^0.8.2
   firebase_auth:
   cloud_firestore: ^4.15.5
-  in_app_purchase: ^3.1.13
-  google_mobile_ads: ^4.0.0
+#  in_app_purchase: ^3.1.13
+#  google_mobile_ads: ^4.0.0
 
 
 #  image_picker_plus: any

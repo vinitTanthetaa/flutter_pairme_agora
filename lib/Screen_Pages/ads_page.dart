@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pair_me/Modal/ads_display.dart';
 import 'package:pair_me/Widgets/Background_img.dart';
 import 'package:pair_me/Widgets/custom_texts.dart';
@@ -16,7 +15,7 @@ class AdsPage extends StatefulWidget {
 }
 
 class _AdsPageState extends State<AdsPage> {
-  BannerAd? bannerAd;
+ // BannerAd? bannerAd;
   bool _isLoaded = false;
   @override
   Widget build(BuildContext context) {
@@ -70,18 +69,18 @@ class _AdsPageState extends State<AdsPage> {
                     SizedBox(
                       height: screenHeight(context, dividedBy: 50),
                     ),
-                    bannerAd == null
-                        ? SizedBox()
-                        : Align(
-                            alignment: Alignment.bottomCenter,
-                            child: SafeArea(
-                              child: SizedBox(
-                                width: bannerAd!.size.width.toDouble(),
-                                height: bannerAd!.size.height.toDouble(),
-                                child: AdWidget(ad: bannerAd!),
-                              ),
-                            ),
-                          ),
+                    // bannerAd == null
+                    //     ? SizedBox()
+                    //     : Align(
+                    //         alignment: Alignment.bottomCenter,
+                    //         child: SafeArea(
+                    //           child: SizedBox(
+                    //             width: bannerAd!.size.width.toDouble(),
+                    //             height: bannerAd!.size.height.toDouble(),
+                    //            // child: AdWidget(ad: bannerAd!),
+                    //           ),
+                    //         ),
+                    //       ),
                     SizedBox(
                       height: screenHeight(context, dividedBy: 50),
                     ),
@@ -307,7 +306,7 @@ class _AdsPageState extends State<AdsPage> {
                     ),
                     InkWell(
                         onTap: () {
-                          AdDisplay().LoadInterstitial();
+                         // AdDisplay().LoadInterstitial();
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -321,7 +320,7 @@ class _AdsPageState extends State<AdsPage> {
                     ),
                     InkWell(
                         onTap: () {
-                          AdDisplay().LoadRewardedInterstitialAds();
+                         // AdDisplay().LoadRewardedInterstitialAds();
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -335,7 +334,7 @@ class _AdsPageState extends State<AdsPage> {
                     ),
                     InkWell(
                         onTap: () {
-                          AdDisplay().LoadRewarded();
+                         // AdDisplay().LoadRewarded();
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -349,7 +348,7 @@ class _AdsPageState extends State<AdsPage> {
                     ),
                     InkWell(
                         onTap: () {
-                          AdDisplay().LoadAppOpenAds();
+                         // AdDisplay().LoadAppOpenAds();
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -376,29 +375,29 @@ class _AdsPageState extends State<AdsPage> {
       : 'ca-app-pub-3940256099942544/2934735716';
 
   DisplayBannerAd() {
-    bannerAd = BannerAd(
-      adUnitId: adUnitId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        // Called when an ad is successfully received.
-        onAdLoaded: (ad) {
-          print('$ad loaded.');
-          setState(() {
-            _isLoaded = true;
-          });
-          // setState(() {
-          //   _isLoaded = true;
-          // });
-        },
-        // Called when an ad request failed.
-        onAdFailedToLoad: (ad, err) {
-          print('BannerAd failed to load: $err');
-          // Dispose the ad here to free resources.
-          ad.dispose();
-        },
-      ),
-    )..load();
-    setState(() {});
+    // bannerAd = BannerAd(
+    //   adUnitId: adUnitId,
+    //   request: const AdRequest(),
+    //   size: AdSize.banner,
+    //   listener: BannerAdListener(
+    //     // Called when an ad is successfully received.
+    //     onAdLoaded: (ad) {
+    //       print('$ad loaded.');
+    //       setState(() {
+    //         _isLoaded = true;
+    //       });
+    //       // setState(() {
+    //       //   _isLoaded = true;
+    //       // });
+    //     },
+    //     // Called when an ad request failed.
+    //     onAdFailedToLoad: (ad, err) {
+    //       print('BannerAd failed to load: $err');
+    //       // Dispose the ad here to free resources.
+    //       ad.dispose();
+    //     },
+    //   ),
+    // )..load();
+    // setState(() {});
   }
 }
