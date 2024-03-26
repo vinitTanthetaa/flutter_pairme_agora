@@ -77,9 +77,7 @@ class _StepScreenState extends State<StepScreen> {
   final TextEditingController _Contry = TextEditingController();
   final TextEditingController _Contry1 = TextEditingController();
   final TextEditingController _State = TextEditingController();
-  final TextEditingController _State1 = TextEditingController();
   final TextEditingController _City = TextEditingController();
-  final TextEditingController _City1 = TextEditingController();
   final TextEditingController _compnyName = TextEditingController();
   final TextEditingController _jobTitle = TextEditingController();
   final TextEditingController _compnyDomain = TextEditingController();
@@ -160,9 +158,6 @@ class _StepScreenState extends State<StepScreen> {
   List filelist = [];
   bool _category = false;
   bool _experience = false;
-  bool _skill = false;
-  bool _education = false;
-  bool _university = false;
    List _states = [];
    List _citys = [];
    List resultstates = [];
@@ -987,246 +982,33 @@ class _StepScreenState extends State<StepScreen> {
                                 //   _skill = !_skill;
                                 // });
                               },
-                                  hint: "Select",
+                                  hint: "Your skill",
                                   hidetext: false,
                                   controller: _skillcontroller),
-                              _skill
-                                  ? Container(
-                                      height:
-                                          screenHeight(context, dividedBy: 7.5),
-                                      width: screenWidth(context),
-                                      margin: const EdgeInsets.only(bottom: 10),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(7),
-                                          color: Colors.white,
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              offset: Offset(
-                                                1,
-                                                1,
-                                              ),
-                                              blurRadius: 4,
-                                              // spreadRadius: 1.0,
-                                            ),
-                                          ]),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: screenHeight(context,
-                                                dividedBy: 85),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: custom_text(
-                                                text: _skills[0],
-                                                color: const Color(0xff303030)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 5),
-                                            child: custom_text(
-                                                text: _skills[1],
-                                                color: const Color(0xff303030)),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: custom_text(
-                                                text: _skills[2],
-                                                color: const Color(0xff303030)),
-                                          ),
-                                          SizedBox(
-                                            height: screenHeight(context,
-                                                dividedBy: 85),
-                                          ),
-                                          // const Divider(
-                                          //   height: 0,
-                                          // ),
-                                          // Container(
-                                          //   alignment: Alignment.center,
-                                          //   height: screenHeight(context,
-                                          //       dividedBy: 30),
-                                          //   child: Row(
-                                          //     mainAxisAlignment:
-                                          //         MainAxisAlignment.center,
-                                          //     children: [
-                                          //       const Text(
-                                          //         'Show all 17 skills',
-                                          //         style: TextStyle(
-                                          //             fontWeight:
-                                          //                 FontWeight.w400,
-                                          //             fontFamily: 'Roboto',
-                                          //             fontSize: 10,
-                                          //             color: AppColor.skyBlue),
-                                          //       ),
-                                          //       Container(
-                                          //         margin: EdgeInsets.only(
-                                          //             left: screenWidth(context,
-                                          //                 dividedBy: 65)),
-                                          //         height: screenHeight(context,
-                                          //             dividedBy: 65),
-                                          //         width: screenWidth(context,
-                                          //             dividedBy: 30),
-                                          //         child: const Image(
-                                          //             image: AssetImage(
-                                          //                 'assets/Images/LineArrow.png')),
-                                          //       )
-                                          //     ],
-                                          //   ),
-                                          // )
-                                        ],
-                                      ),
-                                    )
-                                  : const SizedBox(),
                               custom_textfield_header(text: 'Education'),
                               Custom_textfield(context,
-                                  show_icon: true,
-                                  image: _education
-                                      ? 'assets/Images/Vector.png'
-                                      : 'assets/Images/right_arrow.png',
+                                  show_icon: false,
                                   onTap: () {
-                                    setState(() {
-                                      _education = !_education;
-                                    });
+
                                   },
                                   readOnly: false, onPress: () {
-                                setState(() {
-                                  _education = !_education;
-                                });
+
                               },
-                                  hint: "Select",
+                                  hint: "Your education",
                                   hidetext: false,
                                   controller: _educationcontroller),
-                              _education
-                                  ? Container(
-                                      // height:
-                                      //     screenHeight(context, dividedBy: 10),
-                                      width: screenWidth(context),
-                                      margin: const EdgeInsets.only(bottom: 10),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(7),
-                                          color: Colors.white,
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              offset: Offset(
-                                                1,
-                                                1,
-                                              ),
-                                              blurRadius: 4,
-                                              // spreadRadius: 1.0,
-                                            ),
-                                          ]),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 15),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _educationcontroller.text =
-                                                        "B.Com - Bachelor of Commerce";
-                                                    _education = !_education;
-                                                  });
-                                                },
-                                                child: const Text(
-                                                    'B.Com - Bachelor of Commerce')),
-                                            SizedBox(
-                                              height: screenHeight(context,
-                                                  dividedBy: 100),
-                                            ),
-                                            InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _educationcontroller.text =
-                                                        "BCA - Bachelor of Computer Applications";
-                                                    _education = !_education;
-                                                  });
-                                                },
-                                                child: const Text(
-                                                    'BCA - Bachelor of Computer Applications')),
-                                            // SizedBox(height: screenHeight(context,dividedBy: 205),),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
                               custom_textfield_header(text: 'University'),
                               Custom_textfield(context,
-                                  show_icon: true,
-                                  image: _university
-                                      ? 'assets/Images/Vector.png'
-                                      : 'assets/Images/right_arrow.png',
+                                  show_icon: false,
                                   onTap: () {
-                                    setState(() {
-                                      _university = !_university;
-                                    });
+
                                   },
                                   readOnly: false, onPress: () {
-                                setState(() {
-                                  _university = !_university;
-                                });
+
                               },
-                                  hint: "Select",
+                                  hint: "Your university",
                                   hidetext: false,
                                   controller: _univercitycontroller),
-                              _university
-                                  ? Container(
-                                      // height:
-                                      //     screenHeight(context, dividedBy: 10),
-                                      width: screenWidth(context),
-                                      margin: const EdgeInsets.only(bottom: 10),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(7),
-                                          color: Colors.white,
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              offset: Offset(
-                                                1,
-                                                1,
-                                              ),
-                                              blurRadius: 4,
-                                              // spreadRadius: 1.0,
-                                            ),
-                                          ]),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 15),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _univercitycontroller.text =
-                                                        "Veer Narmad South Gujarat University";
-                                                    _university = !_university;
-                                                  });
-                                                },
-                                                child: const Text(
-                                                    'Veer Narmad South Gujarat University')),
-                                            // SizedBox(height: screenHeight(context,dividedBy: 205),),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
                               BlocBuilder<ProfessionalDetailsCubit ,ProfessionalDetailsState>(builder: (context, state) {
                                 if(state is ProfessionalDetailsLoading){
                                   return Padding(
@@ -1828,7 +1610,7 @@ class _StepScreenState extends State<StepScreen> {
                                       image: 'assets/Images/calendar.png',
                                       onPress: () {
                                         BottomPicker.date(
-                                          title: 'Set your Birthday',
+                                          title: 'Set Start Data',
                                           dateOrder: DatePickerDateOrder.dmy,
                                           initialDateTime: _focusedDay,
                                           gradientColors: const [

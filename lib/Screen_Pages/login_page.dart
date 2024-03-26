@@ -201,7 +201,7 @@ class _Login_pageState extends State<Login_page> {
                       return Center(
                         child: Custom_botton(context, text: 'Login', onTap: () async {
                           if(_Email.text.isEmpty){
-                            flutterToast('Please Enter Valid Phone number', false);
+                            flutterToast('Please Enter Valid Phone Number', false);
                           } else if(_Password.text.isEmpty) {
                             flutterToast('Please Enter Password', false);
                           } else {
@@ -304,13 +304,21 @@ class _Login_pageState extends State<Login_page> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                           Text("Don’t have an account?".tr(),style: TextStyle(color: Color(0xff888888),fontSize: 15  ,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
+                           Text("Don’t have an account?".tr(),style: const TextStyle(color: Color(0xff888888),fontSize: 15  ,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),),
+                          const Text(
+                            " ",
+                            style: TextStyle(
+                                color: Color(0xff888888),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Roboto'),
+                          ),
                           InkWell(onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
                               return const SignUp_page();
                             },));
                           },
-                              child: Text("Sign Up".tr(),style: TextStyle(color: Color(0xff231F20),fontSize: 15  ,fontWeight: FontWeight.w600,fontFamily: 'Roboto'),)),
+                              child: Text("Sign Up".tr(),style: const TextStyle(color: Color(0xff231F20),fontSize: 15  ,fontWeight: FontWeight.w600,fontFamily: 'Roboto'),)),
                       ],),
                     )
                   ],),

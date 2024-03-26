@@ -5,7 +5,6 @@ import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pair_me/Screen_Pages/connections_page.dart';
@@ -113,6 +112,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image.add(filterUserCubit.filterUser.data?[index].last?.image?.photo6);
         }
       }
+      ind = index;
       image = image.toSet().toList();
     } else {
       if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image != null) {
@@ -121,8 +121,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image = image;
         } else if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo1 != null) {
           image.add(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo1);
-         // int imagelength = allUsersdetails.data?.length  ?? 0;
-
         }
         if (allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo2 == null &&
             image.contains(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo2)) {
@@ -155,6 +153,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
           image.add(allUsersDetailsCubit.allUsersdetails.data?[index].last.image?.photo6);
         }
       }
+      ind = index;
       image = image.toSet().toList();
       //image1 = image1.toSet().toList();
     }
@@ -177,11 +176,14 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
     connectUserCubit = BlocProvider.of<ConnectUserCubit>(context);
     undoUsersCubit = BlocProvider.of<UndoUsersCubit>(context);
     filterUserCubit = BlocProvider.of<FilterUserCubit>(context);
-    allUsersDetailsCubit.GetAllUsersDetails();
+    setState(() {
+      allUsersDetailsCubit.GetAllUsersDetails();
+    });
     createTutorial();
     controller = AppinioSwiperController();
     Future.delayed(Duration.zero, showTutorial);
     FocusManager.instance.primaryFocus?.unfocus();
+    setState(() {});
     super.initState();
   }
   Widget build(BuildContext context) {
@@ -677,10 +679,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           onTap: () {
                                                             setState(() {
 
-                                                                  pageViewIndex >
-                                                                      0
-                                                                  ? pageViewIndex--
-                                                                  : null;
+                                                                  pageViewIndex >= 1 ? pageViewIndex-- : null;
                                                               image = image;
                                                             });
                                                             image[pageViewIndex]
@@ -737,7 +736,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                           .bottomCenter,
                                                       height: screenHeight(
                                                           context,
-                                                          dividedBy: 4.1),
+                                                          dividedBy: 5),
                                                       width: screenWidth(
                                                           context),
                                                       decoration: const BoxDecoration(
@@ -775,182 +774,301 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               MainAxisAlignment
                                                                   .spaceBetween,
                                                               children: [
-                                                                SizedBox(
-                                                                  width: screenWidth(
-                                                                      context,
-                                                                      dividedBy:
-                                                                      1.3),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        filterUserCubit.filterUser.data?[index].first?.name ??
-                                                                            '',
-                                                                        style: const TextStyle(
-                                                                            color: AppColor.white,
-                                                                            fontFamily: 'Roboto',
-                                                                            fontSize: 25,
-                                                                            fontWeight: FontWeight.w600),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width: screenWidth(
-                                                                            context,
-                                                                            dividedBy: 100),
-                                                                      ),
-                                                                      Container(
-                                                                        height: screenHeight(
-                                                                            context,
-                                                                            dividedBy: 45),
-                                                                        width: screenHeight(
-                                                                            context,
-                                                                            dividedBy: 45),
-                                                                        decoration:
-                                                                        const BoxDecoration(image: DecorationImage(image: AssetImage("assets/Images/verified.png"))),
-                                                                      )
-                                                                    ],
+                                                                Expanded(
+                                                                  child: SizedBox(
+                                                                    width: screenWidth(
+                                                                        context),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          filterUserCubit.filterUser.data?[index].first?.name ??
+                                                                              '',
+                                                                          style: const TextStyle(
+                                                                              color: AppColor.white,
+                                                                              fontFamily: 'Roboto',
+                                                                              fontSize: 25,
+                                                                              fontWeight: FontWeight.w600),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width: screenWidth(
+                                                                              context,
+                                                                              dividedBy: 100),
+                                                                        ),
+                                                                        Container(
+                                                                          height: screenHeight(
+                                                                              context,
+                                                                              dividedBy: 45),
+                                                                          width: screenHeight(
+                                                                              context,
+                                                                              dividedBy: 45),
+                                                                          decoration:
+                                                                          const BoxDecoration(image: DecorationImage(image: AssetImage("assets/Images/verified.png"))),
+                                                                        )
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],
                                                             ),
-                                                            Row (
+                                                            filterUserCubit.filterUser.data?[index].first?.professionalDetails != null ? Row(
                                                               children: [
-                                                                Wrap(
-                                                                  spacing: 7,
-                                                                  direction: Axis
-                                                                      .vertical,
-                                                                  children: [
-                                                                    filterUserCubit.filterUser.data?[index].first?.professionalDetails != null ? Row(
-                                                                      children: [
-                                                                        Text(
-                                                                          'Job Title'.tr(),
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: Colors.white),
-                                                                        ),
-                                                                        const Text(
-                                                                          ": ",
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: Colors.white),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          width: screenWidth(context,dividedBy: 3),
-                                                                          child:    Text(
-                                                                            filterUserCubit.filterUser.data?[index].first?.professionalDetails?.addRole ?? '',
-                                                                            maxLines: 1,
-                                                                            style: const TextStyle(
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                        )
-                                                                      ],
-                                                                    ) : const SizedBox(),
-                                                                    filterUserCubit.filterUser.data?[index].first?.businessaddress?.country != null ? Row(
-                                                                      children: [
-                                                                        Text(
-                                                                          'City/Country'.tr(),
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: Colors.white),
-                                                                        ),
-                                                                        const Text(
-                                                                          ": ",
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: Colors.white),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          width: screenWidth(context,dividedBy: 3.5),
-                                                                          child: Text(
-                                                                            filterUserCubit.filterUser.data?[index].first?.businessaddress?.country ?? '',
-                                                                            maxLines: 1,
-                                                                            style: const TextStyle(
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ) : const SizedBox(),
-                                                                    filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName != null ? Row(
-                                                                      children: [
-                                                                        Text(
-                                                                          'Company'.tr(),
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: Colors.white),
-                                                                        ),
-                                                                        const Text(
-                                                                          ": ",
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontWeight: FontWeight.w500,
-                                                                              color: Colors.white),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          width: screenWidth(context,dividedBy: 2.9),
-                                                                          child: Text(
-                                                                            filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName ?? '',
-                                                                            maxLines: 1,
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ) : const SizedBox(),
-                                                                  ],
+                                                                Text(
+                                                                  'Job Title'.tr(),
+                                                                  style: const TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontFamily: 'Roboto',
+                                                                      fontWeight: FontWeight.w500,
+                                                                      color: Colors.white),
                                                                 ),
-                                                                const Spacer(),
-                                                                Wrap(
-                                                                  direction: Axis
-                                                                      .vertical,
-                                                                  spacing: 5,
-                                                                  children: filterUserCubit.filterUser
-                                                                      .data?[index]
-                                                                      .first
-                                                                      ?.lookingfor
-                                                                      ?.map((e) => Container(
-                                                                      decoration: BoxDecoration(
-                                                                          border: Border.all(
-                                                                              color: AppColor.white
-                                                                              //const Color(0xff6D9Aff)
-                                                                              ,
-                                                                              width: 2),
-                                                                          borderRadius: BorderRadius.circular(20)),
-                                                                      child: Padding(
-                                                                        padding: EdgeInsets.symmetric(
-                                                                          horizontal: screenWidth(context, dividedBy: 45),
-                                                                          vertical: screenHeight(context, dividedBy: 250),
-                                                                        ),
-                                                                        child: Text(
-                                                                          e,
-                                                                          style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12.7, fontFamily: 'Roboto', color: AppColor.white),
-                                                                        ),
-                                                                      )))
-                                                                      .toList() ??
-                                                                      [],
+                                                                const Text(
+                                                                  ": ",
+                                                                  style: TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontFamily: 'Roboto',
+                                                                      fontWeight: FontWeight.w500,
+                                                                      color: Colors.white),
+                                                                ),
+                                                                Expanded(
+                                                                  child: SizedBox(
+                                                                    width: screenWidth(context),
+                                                                    child:    Text(
+                                                                      filterUserCubit.filterUser.data?[index].first?.professionalDetails?.addRole ?? '',
+                                                                      maxLines: 1,
+                                                                      style: const TextStyle(
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          fontSize: 14,
+                                                                          fontFamily: 'Roboto',
+                                                                          fontWeight: FontWeight.w400,
+                                                                          color: Colors.white),
+                                                                    ),
+                                                                  ),
                                                                 )
                                                               ],
+                                                            ) : const SizedBox(),
+                                                            SizedBox(
+                                                              height:
+                                                              screenHeight(
+                                                                  context,
+                                                                  dividedBy:
+                                                                  200),
                                                             ),
+                                                            filterUserCubit.filterUser.data?[index].first?.businessaddress?.country != null ? Row(
+                                                              children: [
+                                                                Text(
+                                                                  'City/Country'.tr(),
+                                                                  style: const TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontFamily: 'Roboto',
+                                                                      fontWeight: FontWeight.w500,
+                                                                      color: Colors.white),
+                                                                ),
+                                                                const Text(
+                                                                  ": ",
+                                                                  style: TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontFamily: 'Roboto',
+                                                                      fontWeight: FontWeight.w500,
+                                                                      color: Colors.white),
+                                                                ),
+                                                                Expanded(
+                                                                  child: SizedBox(
+                                                                    width: screenWidth(context),
+                                                                    child: Text(
+                                                                      filterUserCubit.filterUser.data?[index].first?.businessaddress?.country ?? '',
+                                                                      maxLines: 1,
+                                                                      style: const TextStyle(
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          fontSize: 14,
+                                                                          fontFamily: 'Roboto',
+                                                                          fontWeight: FontWeight.w400,
+                                                                          color: Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ) : const SizedBox(),
+                                                            SizedBox(
+                                                              height:
+                                                              screenHeight(
+                                                                  context,
+                                                                  dividedBy:
+                                                                  200),
+                                                            ),
+                                                            filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName != null ? Row(
+                                                              children: [
+                                                                Text(
+                                                                  'Company'.tr(),
+                                                                  style: const TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontFamily: 'Roboto',
+                                                                      fontWeight: FontWeight.w500,
+                                                                      color: Colors.white),
+                                                                ),
+                                                                const Text(
+                                                                  ": ",
+                                                                  style: TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontFamily: 'Roboto',
+                                                                      fontWeight: FontWeight.w500,
+                                                                      color: Colors.white),
+                                                                ),
+                                                                Expanded(
+                                                                  child: SizedBox(
+                                                                    width: screenWidth(context),
+                                                                    child: Text(
+                                                                      filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName ?? '',
+                                                                      maxLines: 1,
+                                                                      style: const TextStyle(
+                                                                          fontSize: 14,
+                                                                          fontFamily: 'Roboto',
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          fontWeight: FontWeight.w400,
+                                                                          color: Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ) : const SizedBox(),
+                                                            // Row (
+                                                            //   children: [
+                                                            //     Wrap(
+                                                            //       spacing: 7,
+                                                            //       direction: Axis
+                                                            //           .vertical,
+                                                            //       children: [
+                                                            //         filterUserCubit.filterUser.data?[index].first?.professionalDetails != null ? Row(
+                                                            //           children: [
+                                                            //             Text(
+                                                            //               'Job Title'.tr(),
+                                                            //               style: const TextStyle(
+                                                            //                   fontSize: 14,
+                                                            //                   fontFamily: 'Roboto',
+                                                            //                   fontWeight: FontWeight.w500,
+                                                            //                   color: Colors.white),
+                                                            //             ),
+                                                            //             const Text(
+                                                            //               ": ",
+                                                            //               style: TextStyle(
+                                                            //                   fontSize: 14,
+                                                            //                   fontFamily: 'Roboto',
+                                                            //                   fontWeight: FontWeight.w500,
+                                                            //                   color: Colors.white),
+                                                            //             ),
+                                                            //             SizedBox(
+                                                            //               width: screenWidth(context,dividedBy: 3),
+                                                            //               child:    Text(
+                                                            //                 filterUserCubit.filterUser.data?[index].first?.professionalDetails?.addRole ?? '',
+                                                            //                 maxLines: 1,
+                                                            //                 style: const TextStyle(
+                                                            //                     overflow: TextOverflow.ellipsis,
+                                                            //                     fontSize: 14,
+                                                            //                     fontFamily: 'Roboto',
+                                                            //                     fontWeight: FontWeight.w400,
+                                                            //                     color: Colors.white),
+                                                            //               ),
+                                                            //             )
+                                                            //           ],
+                                                            //         ) : const SizedBox(),
+                                                            //         filterUserCubit.filterUser.data?[index].first?.businessaddress?.country != null ? Row(
+                                                            //           children: [
+                                                            //             Text(
+                                                            //               'City/Country'.tr(),
+                                                            //               style: const TextStyle(
+                                                            //                   fontSize: 14,
+                                                            //                   fontFamily: 'Roboto',
+                                                            //                   fontWeight: FontWeight.w500,
+                                                            //                   color: Colors.white),
+                                                            //             ),
+                                                            //             const Text(
+                                                            //               ": ",
+                                                            //               style: TextStyle(
+                                                            //                   fontSize: 14,
+                                                            //                   fontFamily: 'Roboto',
+                                                            //                   fontWeight: FontWeight.w500,
+                                                            //                   color: Colors.white),
+                                                            //             ),
+                                                            //             SizedBox(
+                                                            //               width: screenWidth(context,dividedBy: 3.5),
+                                                            //               child: Text(
+                                                            //                 filterUserCubit.filterUser.data?[index].first?.businessaddress?.country ?? '',
+                                                            //                 maxLines: 1,
+                                                            //                 style: const TextStyle(
+                                                            //                     overflow: TextOverflow.ellipsis,
+                                                            //                     fontSize: 14,
+                                                            //                     fontFamily: 'Roboto',
+                                                            //                     fontWeight: FontWeight.w400,
+                                                            //                     color: Colors.white),
+                                                            //               ),
+                                                            //             ),
+                                                            //           ],
+                                                            //         ) : const SizedBox(),
+                                                            //         filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName != null ? Row(
+                                                            //           children: [
+                                                            //             Text(
+                                                            //               'Company'.tr(),
+                                                            //               style: const TextStyle(
+                                                            //                   fontSize: 14,
+                                                            //                   fontFamily: 'Roboto',
+                                                            //                   fontWeight: FontWeight.w500,
+                                                            //                   color: Colors.white),
+                                                            //             ),
+                                                            //             const Text(
+                                                            //               ": ",
+                                                            //               style: TextStyle(
+                                                            //                   fontSize: 14,
+                                                            //                   fontFamily: 'Roboto',
+                                                            //                   fontWeight: FontWeight.w500,
+                                                            //                   color: Colors.white),
+                                                            //             ),
+                                                            //             SizedBox(
+                                                            //               width: screenWidth(context,dividedBy: 2.9),
+                                                            //               child: Text(
+                                                            //                 filterUserCubit.filterUser.data?[index].first?.professionalDetails?.companyName ?? '',
+                                                            //                 maxLines: 1,
+                                                            //                 style: const TextStyle(
+                                                            //                     fontSize: 14,
+                                                            //                     fontFamily: 'Roboto',
+                                                            //                     overflow: TextOverflow.ellipsis,
+                                                            //                     fontWeight: FontWeight.w400,
+                                                            //                     color: Colors.white),
+                                                            //               ),
+                                                            //             ),
+                                                            //           ],
+                                                            //         ) : const SizedBox(),
+                                                            //       ],
+                                                            //     ),
+                                                            //     const Spacer(),
+                                                            //     Wrap(
+                                                            //       direction: Axis
+                                                            //           .vertical,
+                                                            //       spacing: 5,
+                                                            //       children: filterUserCubit.filterUser
+                                                            //           .data?[index]
+                                                            //           .first
+                                                            //           ?.lookingfor
+                                                            //           ?.map((e) => Container(
+                                                            //           decoration: BoxDecoration(
+                                                            //               border: Border.all(
+                                                            //                   color: AppColor.white
+                                                            //                   //const Color(0xff6D9Aff)
+                                                            //                   ,
+                                                            //                   width: 2),
+                                                            //               borderRadius: BorderRadius.circular(20)),
+                                                            //           child: Padding(
+                                                            //             padding: EdgeInsets.symmetric(
+                                                            //               horizontal: screenWidth(context, dividedBy: 45),
+                                                            //               vertical: screenHeight(context, dividedBy: 250),
+                                                            //             ),
+                                                            //             child: Text(
+                                                            //               e,
+                                                            //               style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12.7, fontFamily: 'Roboto', color: AppColor.white),
+                                                            //             ),
+                                                            //           )))
+                                                            //           .toList() ??
+                                                            //           [],
+                                                            //     )
+                                                            //   ],
+                                                            // ),
                                                             SizedBox(
                                                               height:
                                                               screenHeight(
@@ -1165,6 +1283,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               (value) async {
                                                                 image.clear();
                                                                 bottonname = "";
+                                                                ind = 0;
                                                                String _gender = (await prefsService.getStringData("gender"))!;
                                                                 double _slider = (await prefsService.getDoubleData("slider"))!;
                                                                 String _Contry = (await prefsService.getStringData("contry"))!;
@@ -1200,6 +1319,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               (value) async {
                                                                 image.clear();
                                                                 bottonname = "";
+                                                                ind = 0;
                                                                 String _gender = (await prefsService.getStringData("gender"))!;
                                                                 double _slider = (await prefsService.getDoubleData("slider"))!;
                                                                 String _Contry = (await prefsService.getStringData("contry"))!;
@@ -1387,9 +1507,6 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                         height = 0;
                                       });
                                     },
-                                    onSwipeBegin: (previousIndex, targetIndex, activity) {
-
-                                    },
                                     onSwipeEnd: (previousIndex, targetIndex, activity) {
                                       setState(() {
                                         undoid = allUsersDetailsCubit.allUsersdetails.data?[ind].first.id ?? '';
@@ -1563,12 +1680,8 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     color: Colors
                                                                         .black),
                                                                 child:
-                                                                const Center(
-                                                                  child:
-                                                                  CircularProgressIndicator(
-                                                                    color: AppColor
-                                                                        .skyBlue,
-                                                                  ),
+                                                                 Center(
+                                                                  child: customLoader()
                                                                 ),
                                                               ),
                                                           errorWidget: (context,
@@ -1662,6 +1775,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                 videoUrl: "${apis.baseurl}/${image[pageViewIndex]}", play: true, controller1: _controller,)
                                                   : CachedNetworkImage(
                                                 imageUrl: "${apis.baseurl}/${image[pageViewIndex]}",
+                                                color: Colors.black,
                                                 imageBuilder: (context, imageProvider) =>
                                                     Container(
                                                       decoration: BoxDecoration(
@@ -1693,12 +1807,9 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                               20)),
                                                           color: Colors
                                                               .black),
-                                                      child: const Center(
+                                                      child: Center(
                                                         child:
-                                                        CircularProgressIndicator(
-                                                          color: AppColor
-                                                              .skyBlue,
-                                                        ),
+                                                        customLoader()
                                                       ),
                                                     ),
                                                 errorWidget: (context, url, error) => const Center(
@@ -1817,7 +1928,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                         height: screenHeight(
                                                             context,
                                                            // dividedBy: 7),
-                                                            dividedBy: 4.1),
+                                                            dividedBy: 5),
                                                         width: screenWidth(
                                                             context),
                                                         decoration: const BoxDecoration(
@@ -1834,10 +1945,11 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                 end: Alignment
                                                                     .bottomCenter,
                                                                 colors: [
-                                                                  Colors
-                                                                      .transparent,
+                                                                  Colors.transparent,
                                                                   Colors.black
-                                                                ])),
+                                                                ]
+                                                            )
+                                                        ),
                                                         child: Padding(
                                                           padding: EdgeInsets.symmetric(
                                                               horizontal:
@@ -1855,181 +1967,300 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     MainAxisAlignment
                                                                         .spaceBetween,
                                                                 children: [
-                                                                  SizedBox(
-                                                                    width: screenWidth(
-                                                                        context,
-                                                                        dividedBy:
-                                                                            1.3),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Text(
-                                                                          allUsersDetailsCubit.allUsersdetails.data?[index].first.name?.trim() ?? '',
-                                                                          style: const TextStyle(
-                                                                              color: AppColor.white,
-                                                                              fontFamily: 'Roboto',
-                                                                              fontSize: 25,
-                                                                              fontWeight: FontWeight.w600),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          width: screenWidth(
-                                                                              context,
-                                                                              dividedBy: 100),
-                                                                        ),
-                                                                        Container(
-                                                                          height: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 45),
-                                                                          width: screenHeight(
-                                                                              context,
-                                                                              dividedBy: 45),
-                                                                          decoration:
-                                                                              const BoxDecoration(image: DecorationImage(image: AssetImage("assets/Images/verified.png"))),
-                                                                        )
-                                                                      ],
+                                                                  Expanded(
+                                                                    child: SizedBox(
+                                                                      width: screenWidth(
+                                                                          context),
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            allUsersDetailsCubit.allUsersdetails.data?[index].first.name?.trim() ?? '',
+                                                                            style: const TextStyle(
+                                                                                color: AppColor.white,
+                                                                                fontFamily: 'Roboto',
+                                                                                fontSize: 25,
+                                                                                fontWeight: FontWeight.w600),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width: screenWidth(
+                                                                                context,
+                                                                                dividedBy: 100),
+                                                                          ),
+                                                                          Container(
+                                                                            height: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 45),
+                                                                            width: screenHeight(
+                                                                                context,
+                                                                                dividedBy: 45),
+                                                                            decoration:
+                                                                                const BoxDecoration(image: DecorationImage(image: AssetImage("assets/Images/verified.png"))),
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
                                                               ),
-                                                              Row (
+                                                              allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole != null ? Row(
                                                                 children: [
-                                                                  Wrap(
-                                                                    spacing: 7,
-                                                                    direction: Axis
-                                                                        .vertical,
-                                                                    children: [
-                                                                      allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole != null ? Row(
-                                                                        children: [
-                                                                          Text(
-                                                                            'Job Title'.tr(),
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                          const Text(
-                                                                            ": ",
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                       SizedBox(
-                                                                         width: screenWidth(context,dividedBy: 3),
-                                                                         child:    Text(
-                                                                           allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole ?? '',
-                                                                           maxLines: 1,
-                                                                           style: const TextStyle(
-                                                                               overflow: TextOverflow.ellipsis,
-                                                                               fontSize: 14,
-                                                                               fontFamily: 'Roboto',
-                                                                               fontWeight: FontWeight.w400,
-                                                                               color: Colors.white),
-                                                                         ),
-                                                                       )
-                                                                        ],
-                                                                      ) : const SizedBox(),
-                                                                      allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country != null ? Row(
-                                                                        children: [
-                                                                          Text(
-                                                                            'City/Country'.tr(),
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                          const Text(
-                                                                            ": ",
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width: screenWidth(context,dividedBy: 3.5),
-                                                                            child: Text(
-                                                                               allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country ?? '',
-                                                                              maxLines: 1,
-                                                                              style: const TextStyle(
-                                                                                  overflow: TextOverflow.ellipsis,
-                                                                                  fontSize: 14,
-                                                                                  fontFamily: 'Roboto',
-                                                                                  fontWeight: FontWeight.w400,
-                                                                                  color: Colors.white),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ) : const SizedBox(),
-                                                                      allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName != null ? Row(
-                                                                        children: [
-                                                                          Text(
-                                                                            'Company'.tr(),
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                          const Text(
-                                                                            ": ",
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                fontFamily: 'Roboto',
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: Colors.white),
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width: screenWidth(context,dividedBy: 2.9),
-                                                                            child: Text(
-                                                                               allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName ?? '',
-                                                                              maxLines: 1,
-                                                                              style: const TextStyle(
-                                                                                  fontSize: 14,
-                                                                                  fontFamily: 'Roboto',
-                                                                                  overflow: TextOverflow.ellipsis,
-                                                                                  fontWeight: FontWeight.w400,
-                                                                                  color: Colors.white),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ) : const SizedBox(),
-                                                                    ],
+                                                                  Text(
+                                                                    'Job Title'.tr(),
+                                                                    style: const TextStyle(
+                                                                        fontSize: 14,
+                                                                        fontFamily: 'Roboto',
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Colors.white),
                                                                   ),
-                                                                  const Spacer(),
-                                                                  Wrap(
-                                                                    direction: Axis
-                                                                        .vertical,
-                                                                    spacing: 5,
-                                                                    children: allUsersDetailsCubit.allUsersdetails
-                                                                            .data?[index]
-                                                                            .first
-                                                                            .lookingfor
-                                                                            ?.map((e) => Container(
-                                                                                decoration: BoxDecoration(
-                                                                                    border: Border.all(
-                                                                                        color: AppColor.white
-                                                                                        //const Color(0xff6D9Aff)
-                                                                                        ,
-                                                                                        width: 2),
-                                                                                    borderRadius: BorderRadius.circular(20)),
-                                                                                child: Padding(
-                                                                                  padding: EdgeInsets.symmetric(
-                                                                                    horizontal: screenWidth(context, dividedBy: 45),
-                                                                                    vertical: screenHeight(context, dividedBy: 250),
-                                                                                  ),
-                                                                                  child: Text(
-                                                                                    e,
-                                                                                    style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12.7, fontFamily: 'Roboto', color: AppColor.white),
-                                                                                  ),
-                                                                                )))
-                                                                            .toList() ??
-                                                                        [],
+                                                                  const Text(
+                                                                    ": ",
+                                                                    style: TextStyle(
+                                                                        fontSize: 14,
+                                                                        fontFamily: 'Roboto',
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Colors.white),
+                                                                  ),
+                                                                  Expanded(
+                                                                    child: SizedBox(
+                                                                      width: screenWidth(context),
+                                                                      child:    Text(
+                                                                        allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole ?? '',
+                                                                        maxLines: 1,
+                                                                        style: const TextStyle(
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                            fontSize: 14,
+                                                                            fontFamily: 'Roboto',
+                                                                            fontWeight: FontWeight.w400,
+                                                                            color: Colors.white),
+                                                                      ),
+                                                                    ),
                                                                   )
                                                                 ],
+                                                              ) : const SizedBox(),
+                                                              SizedBox(
+                                                                height:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    200),
                                                               ),
+                                                              allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country != null ? Row(
+                                                                children: [
+                                                                  Text(
+                                                                    'City/Country'.tr(),
+                                                                    style: const TextStyle(
+                                                                        fontSize: 14,
+                                                                        fontFamily: 'Roboto',
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Colors.white),
+                                                                  ),
+                                                                  const Text(
+                                                                    ": ",
+                                                                    style: TextStyle(
+                                                                        fontSize: 14,
+                                                                        fontFamily: 'Roboto',
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Colors.white),
+                                                                  ),
+                                                                  Expanded(
+                                                                    child: SizedBox(
+                                                                      width: screenWidth(context),
+                                                                      child: Text(
+                                                                        allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country ?? '',
+                                                                        maxLines: 1,
+                                                                        style: const TextStyle(
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                            fontSize: 14,
+                                                                            fontFamily: 'Roboto',
+                                                                            fontWeight: FontWeight.w400,
+                                                                            color: Colors.white),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ) : const SizedBox(),
+                                                              SizedBox(
+                                                                height:
+                                                                screenHeight(
+                                                                    context,
+                                                                    dividedBy:
+                                                                    200),
+                                                              ),
+                                                              allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName != null ? Row(
+                                                                children: [
+                                                                  Text(
+                                                                    'Company'.tr(),
+                                                                    style: const TextStyle(
+                                                                        fontSize: 14,
+                                                                        fontFamily: 'Roboto',
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Colors.white),
+                                                                  ),
+                                                                  const Text(
+                                                                    ": ",
+                                                                    style: TextStyle(
+                                                                        fontSize: 14,
+                                                                        fontFamily: 'Roboto',
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Colors.white),
+                                                                  ),
+                                                                  Expanded(
+                                                                    child: SizedBox(
+                                                                      width: screenWidth(context),
+                                                                      child: Text(
+                                                                        allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName ?? '',
+                                                                        maxLines: 1,
+                                                                        style: const TextStyle(
+                                                                            fontSize: 14,
+                                                                            fontFamily: 'Roboto',
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                            fontWeight: FontWeight.w400,
+                                                                            color: Colors.white),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ) : const SizedBox(),
+                                                             // Row (
+                                                                // children: [
+                                                                //   Wrap(
+                                                                //     spacing: 7,
+                                                                //     direction: Axis
+                                                                //         .vertical,
+                                                                //     children: [
+                                                                //       allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole != null ? Row(
+                                                                //         children: [
+                                                                //           Text(
+                                                                //             'Job Title'.tr(),
+                                                                //             style: const TextStyle(
+                                                                //                 fontSize: 14,
+                                                                //                 fontFamily: 'Roboto',
+                                                                //                 fontWeight: FontWeight.w500,
+                                                                //                 color: Colors.white),
+                                                                //           ),
+                                                                //           const Text(
+                                                                //             ": ",
+                                                                //             style: TextStyle(
+                                                                //                 fontSize: 14,
+                                                                //                 fontFamily: 'Roboto',
+                                                                //                 fontWeight: FontWeight.w500,
+                                                                //                 color: Colors.white),
+                                                                //           ),
+                                                                //        SizedBox(
+                                                                //          width: screenWidth(context,dividedBy: 3),
+                                                                //          child:    Text(
+                                                                //            allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.addRole ?? '',
+                                                                //            maxLines: 1,
+                                                                //            style: const TextStyle(
+                                                                //                overflow: TextOverflow.ellipsis,
+                                                                //                fontSize: 14,
+                                                                //                fontFamily: 'Roboto',
+                                                                //                fontWeight: FontWeight.w400,
+                                                                //                color: Colors.white),
+                                                                //          ),
+                                                                //        )
+                                                                //         ],
+                                                                //       ) : const SizedBox(),
+                                                                //       allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country != null ? Row(
+                                                                //         children: [
+                                                                //           Text(
+                                                                //             'City/Country'.tr(),
+                                                                //             style: const TextStyle(
+                                                                //                 fontSize: 14,
+                                                                //                 fontFamily: 'Roboto',
+                                                                //                 fontWeight: FontWeight.w500,
+                                                                //                 color: Colors.white),
+                                                                //           ),
+                                                                //           const Text(
+                                                                //             ": ",
+                                                                //             style: TextStyle(
+                                                                //                 fontSize: 14,
+                                                                //                 fontFamily: 'Roboto',
+                                                                //                 fontWeight: FontWeight.w500,
+                                                                //                 color: Colors.white),
+                                                                //           ),
+                                                                //           SizedBox(
+                                                                //             width: screenWidth(context,dividedBy: 3.5),
+                                                                //             child: Text(
+                                                                //                allUsersDetailsCubit.allUsersdetails.data?[index].first.businessaddress?.country ?? '',
+                                                                //               maxLines: 1,
+                                                                //               style: const TextStyle(
+                                                                //                   overflow: TextOverflow.ellipsis,
+                                                                //                   fontSize: 14,
+                                                                //                   fontFamily: 'Roboto',
+                                                                //                   fontWeight: FontWeight.w400,
+                                                                //                   color: Colors.white),
+                                                                //             ),
+                                                                //           ),
+                                                                //         ],
+                                                                //       ) : const SizedBox(),
+                                                                //       allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName != null ? Row(
+                                                                //         children: [
+                                                                //           Text(
+                                                                //             'Company'.tr(),
+                                                                //             style: const TextStyle(
+                                                                //                 fontSize: 14,
+                                                                //                 fontFamily: 'Roboto',
+                                                                //                 fontWeight: FontWeight.w500,
+                                                                //                 color: Colors.white),
+                                                                //           ),
+                                                                //           const Text(
+                                                                //             ": ",
+                                                                //             style: TextStyle(
+                                                                //                 fontSize: 14,
+                                                                //                 fontFamily: 'Roboto',
+                                                                //                 fontWeight: FontWeight.w500,
+                                                                //                 color: Colors.white),
+                                                                //           ),
+                                                                //           SizedBox(
+                                                                //             width: screenWidth(context,dividedBy: 2.9),
+                                                                //             child: Text(
+                                                                //                allUsersDetailsCubit.allUsersdetails.data?[index].first.professionalDetails?.companyName ?? '',
+                                                                //               maxLines: 1,
+                                                                //               style: const TextStyle(
+                                                                //                   fontSize: 14,
+                                                                //                   fontFamily: 'Roboto',
+                                                                //                   overflow: TextOverflow.ellipsis,
+                                                                //                   fontWeight: FontWeight.w400,
+                                                                //                   color: Colors.white),
+                                                                //             ),
+                                                                //           ),
+                                                                //         ],
+                                                                //       ) : const SizedBox(),
+                                                                //     ],
+                                                                //   ),
+                                                                //   const Spacer(),
+                                                                //   Wrap(
+                                                                //     direction: Axis
+                                                                //         .vertical,
+                                                                //     spacing: 5,
+                                                                //     children: allUsersDetailsCubit.allUsersdetails
+                                                                //             .data?[index]
+                                                                //             .first
+                                                                //             .lookingfor
+                                                                //             ?.map((e) => Container(
+                                                                //                 decoration: BoxDecoration(
+                                                                //                     border: Border.all(
+                                                                //                         color: AppColor.white
+                                                                //                         //const Color(0xff6D9Aff)
+                                                                //                         ,
+                                                                //                         width: 2),
+                                                                //                     borderRadius: BorderRadius.circular(20)),
+                                                                //                 child: Padding(
+                                                                //                   padding: EdgeInsets.symmetric(
+                                                                //                     horizontal: screenWidth(context, dividedBy: 45),
+                                                                //                     vertical: screenHeight(context, dividedBy: 250),
+                                                                //                   ),
+                                                                //                   child: Text(
+                                                                //                     e,
+                                                                //                     style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12.7, fontFamily: 'Roboto', color: AppColor.white),
+                                                                //                   ),
+                                                                //                 )))
+                                                                //             .toList() ??
+                                                                //         [],
+                                                                //   )
+                                                                // ],
+                                                              //),
                                                               SizedBox(
                                                                 height:
                                                                     screenHeight(
@@ -2205,6 +2436,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                           () {
                                                                         bottonname =
                                                                         "Reject";
+
                                                                       });
                                                                 },
                                                                 buttonName:
@@ -2233,6 +2465,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                     (value) async {
                                                                       image.clear();
                                                                         bottonname = "";
+                                                                      ind = 0;
                                                                       allUsersDetailsCubit.GetAllUsersDetails();
                                                                       setState(() {});
                                                                     },
@@ -2261,6 +2494,7 @@ class _Home_PageState extends State<Home_Page> with TickerProviderStateMixin {
                                                                         (value) async {
                                                                           image.clear();
                                                                           bottonname = "";
+                                                                          ind = 0;
                                                                           allUsersDetailsCubit.GetAllUsersDetails().then((value){
 
                                                                           });

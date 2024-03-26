@@ -498,6 +498,14 @@ class _SignUp_pageState extends State<SignUp_page> {
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'Roboto'),
                           ),
+                           Text(
+                            " ",
+                            style: const TextStyle(
+                                color: Color(0xff888888),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Roboto'),
+                          ),
                           InkWell(
                               onTap: () async {
                                 Navigator.pop(context);

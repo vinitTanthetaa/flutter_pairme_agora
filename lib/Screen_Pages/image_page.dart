@@ -99,6 +99,7 @@ class _Image_ScreenState extends State<Image_Screen> {
                                 filterQuality: FilterQuality.high)),
                       );
                     },
+
                     placeholder: (context, url) => Expanded(child: customLoader()),
                     errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),

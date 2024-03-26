@@ -269,8 +269,8 @@ class _MyAppState extends State<MyApp> {
         ),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
-        home: const SpleshScreen(),
-       // home: const StepScreen(),
+       // home: const SpleshScreen(),
+        home: const StepScreen(),
       ),
     );
   }
